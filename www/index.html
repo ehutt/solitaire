@@ -91,7 +91,7 @@
   .ph .recy{font-size:calc(var(--cw)*0.36);opacity:0;transition:opacity .3s;font-family:var(--ui)}
   .ph.can-recycle{border-color:var(--line)}
   .ph.can-recycle .recy{opacity:.9;color:var(--muted)}
-  .ph.hint{animation:hintPulse 1.4s ease}
+  .ph.hint{animation:hintPulse .85s ease 2}
 
   /* ---------- CARDS ---------- */
   .card{
@@ -168,10 +168,10 @@
   }
   .court .cl{font-size:2.6em;line-height:1;font-weight:600}
   .court .cs{font-size:1.6em;line-height:1}
-  .card.hint{animation:hintPulse 1.4s ease}
+  .card.hint{animation:hintPulse .85s ease 2}
   @keyframes hintPulse{
     0%,100%{filter:none}
-    25%,65%{filter:drop-shadow(0 0 10px rgba(217,166,72,.95)) brightness(1.08)}
+    50%{filter:drop-shadow(0 0 14px rgba(217,166,72,1)) drop-shadow(0 0 6px rgba(217,166,72,.9)) brightness(1.14)}
   }
   .card.shake{animation:shake .35s ease}
   @keyframes shake{
@@ -291,7 +291,8 @@
 
   @media (prefers-reduced-motion: reduce){
     .card,.card .in,#sheet{transition:none !important}
-    .card.hint,.ph.hint,.chip.pulse-glow,#btnFinish.show{animation:none !important}
+    .chip.pulse-glow,#btnFinish.show{animation:none !important}
+    /* keep the hint glow — it's a highlight, not motion — so hints still read */
   }
   @media (min-width:600px){
     .chip small{display:inline}
@@ -350,6 +351,13 @@
     <div class="seg">
       <button id="segD1">One</button>
       <button id="segD3">Three</button>
+    </div>
+  </div>
+  <div class="row">
+    <div>Auto-complete<span class="sub2">Finish the game for you once the win is certain</span></div>
+    <div class="seg">
+      <button id="segAutoOn">On</button>
+      <button id="segAutoOff">Off</button>
     </div>
   </div>
   <div class="row">
@@ -413,6 +421,7 @@ function hapticWin(){
   try{ Haptics.notification({ type: "SUCCESS" }); }catch(e){}
 }
 let settings = loadJSON(KEY_SET) || { draw3: false };
+if(settings.autoComplete === undefined) settings.autoComplete = true; // auto-finish by default
 let stats = loadJSON(KEY_STATS) || {
   plays:0, wins:0, streak:0, longest:0, lastWin:null,
   freezes:1, winsToward:0, bestTime:null, bestMoves:null
@@ -494,11 +503,16 @@ function computeGeometry(){
   const bw = board.clientWidth, bh = board.clientHeight;
   const gap = Math.max(5, Math.min(14, bw*0.016));
   const pad = gap + 2;
-  const cw = Math.min((bw - pad*2 - gap*6)/7, 110);
+  const topY = 8;
+  // Width-limited card size (7 columns across).
+  let cw = Math.min((bw - pad*2 - gap*6)/7, 110);
+  // Height-limited: the top row plus a short tableau fan must fit vertically, or
+  // short/landscape viewports clip the bottom cards. Cap card width to suit.
+  const chByHeight = (bh - topY - 10) / 2.35;
+  if(chByHeight > 0) cw = Math.min(cw, chByHeight / 1.45);
   const ch = cw*1.45;
   const left = (bw - (7*cw + 6*gap))/2;
   const xs = i => left + i*(cw+gap);
-  const topY = 8;
   const tabY = topY + ch + gap*1.8;
   G = { bw, bh, gap, cw, ch, xs, topY, tabY };
   board.style.setProperty("--cw", cw+"px");
@@ -635,6 +649,7 @@ function afterMove(){
   beginPlay();
   layout(); updateHUD(); updateButtons(); saveGame();
   checkWin();
+  maybeAutoFinish();
 }
 function moveStack(stack, destKind, destIdx){
   pushUndo();
@@ -663,10 +678,13 @@ function draw(){
 }
 function smartMove(card){
   const loc = locate(card);
-  if(!loc || loc.k==="f" || !card.faceUp) return;
-  const stack = loc.k==="t" ? loc.arr.slice(loc.i) : [card];
+  if(!loc || !card.faceUp) return;
+  // only the top card of the waste / a foundation is movable by tap
   if(loc.k==="waste" && card!==topOf(P.waste)) return;
-  if(stack.length===1 && canFound(card)){ moveStack(stack,"f",card.suit); return }
+  if(loc.k==="f" && card!==topOf(loc.arr)) return;
+  const stack = loc.k==="t" ? loc.arr.slice(loc.i) : [card];
+  // send up to a foundation — but never from a foundation to itself
+  if(loc.k!=="f" && stack.length===1 && canFound(card)){ moveStack(stack,"f",card.suit); return }
   // prefer a tableau spot on a face-up card; empty column only for kings not already leading a column
   let target = -1;
   for(let c=0;c<7;c++){
@@ -787,13 +805,36 @@ function findHint(){
   if(P.stock.length || P.waste.length) return {src:[], dst:"stock"};
   return null;
 }
+function pulseEl(el){
+  if(!el) return;
+  // Clear any prior pulse, force a reflow so the animation restarts, then
+  // re-add. Remove the class once it ends so it never lingers (a stuck .hint
+  // was overriding z-index and making the card float above its column).
+  el.classList.remove("hint"); void el.offsetWidth; el.classList.add("hint");
+  const done = ()=>{ el.classList.remove("hint"); el.removeEventListener("animationend", done); el.removeEventListener("animationcancel", done); };
+  el.addEventListener("animationend", done);
+  el.addEventListener("animationcancel", done);
+}
+// The element to highlight for a hint destination: the pile's top card if it
+// has one (the placeholder is hidden behind cards), otherwise the placeholder.
+function destEl(dst){
+  if(dst==="stock") return P.stock.length ? els.get(topOf(P.stock).id)
+                                          : board.querySelector('.ph[data-slot="stock"]');
+  const kind = dst[0], idx = +dst.slice(1);
+  const pile = kind==="f" ? P.f[idx] : P.t[idx];
+  return pile.length ? els.get(topOf(pile).id)
+                     : board.querySelector(`.ph[data-slot="${dst}"]`);
+}
 function hint(){
   if(autoRunning || won) return;
   const h = findHint();
-  if(!h) return;
-  h.src.forEach(c=>{ const el=els.get(c.id); el.classList.remove("hint"); void el.offsetWidth; el.classList.add("hint") });
-  const ph = board.querySelector(`.ph[data-slot="${h.dst}"]`);
-  if(ph){ ph.classList.remove("hint"); void ph.offsetWidth; ph.classList.add("hint") }
+  if(!h){
+    // no legal move at all — nudge the stock so the tap still feels answered
+    pulseEl(board.querySelector('.ph[data-slot="stock"]'));
+    return;
+  }
+  h.src.forEach(c=> pulseEl(els.get(c.id)));
+  pulseEl(destEl(h.dst));
 }
 
 /* ================= auto-finish ================= */
@@ -801,6 +842,12 @@ function finishable(){
   return !won && P.stock.length===0 && P.waste.length===0 &&
     P.t.every(p=>p.every(c=>c.faceUp)) &&
     P.t.some(p=>p.length>0);
+}
+// Auto-trigger the finish once the outcome is certain, if the player left it on.
+function maybeAutoFinish(){
+  if(settings.autoComplete !== false && finishable() && !autoRunning && !won){
+    setTimeout(autoFinish, reduced ? 0 : 280);
+  }
 }
 function autoFinish(){
   if(!finishable() || autoRunning) return;
@@ -847,7 +894,8 @@ function updateHUD(){
 }
 function updateButtons(){
   $("btnUndo").disabled = !undoStack.length || autoRunning || won;
-  $("btnFinish").classList.toggle("show", finishable() && !autoRunning);
+  // Manual Finish button only matters when auto-complete is off; otherwise it fires itself.
+  $("btnFinish").classList.toggle("show", finishable() && !autoRunning && settings.autoComplete === false);
 }
 
 /* ================= persistence ================= */
@@ -867,6 +915,7 @@ function tryResume(){
     elapsed = g.elapsed||0; started = !!g.started; undos = g.undos||0; won=false;
     layout(); updateHUD(); updateButtons();
     if(started) startTimer();
+    maybeAutoFinish();
     return true;
   }catch(e){ return false }
 }
@@ -1028,6 +1077,8 @@ $("btnMenu").onclick = ()=>{ refreshSheet(); sheet.classList.add("open"); sheetB
 sheetBack.onclick = ()=>{ sheet.classList.remove("open"); sheetBack.classList.remove("show") };
 $("segD1").onclick = ()=>{ settings.draw3=false; saveJSON(KEY_SET,settings); refreshSheet(); layout() };
 $("segD3").onclick = ()=>{ settings.draw3=true; saveJSON(KEY_SET,settings); refreshSheet(); layout() };
+$("segAutoOn").onclick = ()=>{ settings.autoComplete=true; saveJSON(KEY_SET,settings); refreshSheet(); updateButtons(); maybeAutoFinish() };
+$("segAutoOff").onclick = ()=>{ settings.autoComplete=false; saveJSON(KEY_SET,settings); refreshSheet(); updateButtons() };
 $("btnRestart").onclick = ()=>{
   sheet.classList.remove("open"); sheetBack.classList.remove("show");
   endCascade(); $("overlay").classList.remove("show");
@@ -1036,6 +1087,8 @@ $("btnRestart").onclick = ()=>{
 function refreshSheet(){
   $("segD1").classList.toggle("on", !settings.draw3);
   $("segD3").classList.toggle("on", settings.draw3);
+  $("segAutoOn").classList.toggle("on", settings.autoComplete !== false);
+  $("segAutoOff").classList.toggle("on", settings.autoComplete === false);
   const wr = stats.plays ? Math.round(100*stats.wins/stats.plays) : 0;
   $("statline").innerHTML =
     `<span>wins <b>${stats.wins}</b></span>`+
