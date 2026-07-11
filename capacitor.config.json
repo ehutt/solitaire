@@ -1,0 +1,18 @@
+{
+  "appId": "dev.ehutt.solitaire",
+  "appName": "Better Solitaire",
+  "webDir": "www",
+  "backgroundColor": "#0f2e25",
+  "ios": {
+    "backgroundColor": "#0f2e25",
+    "contentInset": "never"
+  },
+  "plugins": {
+    "SplashScreen": {
+      "launchAutoHide": true,
+      "launchShowDuration": 600,
+      "backgroundColor": "#0f2e25",
+      "showSpinner": false
+    }
+  }
+}
