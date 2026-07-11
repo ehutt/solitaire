@@ -1,0 +1,18 @@
+# Dependencies
+node_modules/
+
+# Capacitor / native build artifacts
+ios/App/Pods/
+ios/App/App/public/
+ios/App/build/
+ios/DerivedData/
+*.xcuserstate
+ios/App/App.xcworkspace/xcuserdata/
+ios/App/App.xcodeproj/xcuserdata/
+
+# macOS
+.DS_Store
+
+# Logs / misc
+*.log
+.env
