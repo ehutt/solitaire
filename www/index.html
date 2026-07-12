@@ -12,7 +12,7 @@
 <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
 <style>
   /* ============================================================
-     PATIENCE — a quiet game of solitaire
+     Better Solitaire — an ad-free game of classic solitaire
      Palette: midnight card room
        felt      #0F2E25   felt-deep #08201A   line #2C5A49
        paper     #FAF5E9   shade     #EDE4D0
@@ -50,7 +50,7 @@
   }
   .brand{
     font-family:var(--serif);
-    font-size:1.25rem;letter-spacing:.02em;color:var(--text);
+    font-size:1.4rem;letter-spacing:.02em;color:var(--text);
     display:flex;align-items:baseline;gap:.4rem;
   }
   .brand .pip{color:var(--brass);font-size:1.05em}
@@ -96,7 +96,7 @@
   /* ---------- CARDS ---------- */
   .card{
     position:absolute;width:var(--cw);height:var(--ch);
-    font-size:calc(var(--cw)*0.13);
+    font-size:calc(var(--cw)*0.14);
     transition:transform .28s cubic-bezier(.22,.9,.3,1.1);
     will-change:transform;
     cursor:grab;
@@ -149,8 +149,8 @@
     font-size:3.1em;font-weight:700;letter-spacing:-.03em;
   }
   .ix b{font-size:1em;font-weight:600}
-  .ix.tl{top:.12em;left:.14em}
-  .ix.br{bottom:.12em;right:.14em;transform:rotate(180deg)}
+  .ix.tl{top:.06em;left:.08em}
+  .ix.br{bottom:.06em;right:.08em;transform:rotate(180deg)}
   /* center art — one bold glyph; the corner index states the value once.
      Number cards get their suit, courts a regal motif (♚ ♛ ⚜), aces go big. */
   .mid{
@@ -171,8 +171,8 @@
   }
   /* hint ghost — a translucent copy that glides to the recommended spot */
   .card.ghost{
-    opacity:.6;pointer-events:none;
-    transition:transform .55s cubic-bezier(.25,.9,.3,1), opacity .45s;
+    opacity:.82;pointer-events:none;
+    transition:transform .9s cubic-bezier(.25,.9,.3,1), opacity .6s;
   }
   .card.ghost .face{box-shadow:0 0 0 2px var(--brass), 0 0 16px rgba(217,166,72,.55)}
   .card.ghost.fade{opacity:0}
@@ -316,9 +316,28 @@
   }
   @media (max-width:599px){
     .chip small{display:none}
-    .brand{font-size:1.1rem}
+    .brand{font-size:1.25rem}
+    #chipStreak,#chipFreeze{padding:3px 7px;font-size:.74rem}
     /* phones: drop the rotated bottom-right index — one big corner reads better */
     .ix.br{display:none}
+  }
+  @media (orientation:landscape) and (max-height:500px){
+    #app{max-width:none;padding-right:92px}
+    #hud{
+      padding:calc(env(safe-area-inset-top, 0px) + 5px)
+              max(10px, env(safe-area-inset-right, 0px)) 4px
+              max(10px, env(safe-area-inset-left, 0px));
+    }
+    .brand{font-size:1.25rem}
+    .chip{padding:3px 7px;font-size:.72rem}
+    #controls{
+      position:absolute;z-index:300;right:max(6px, env(safe-area-inset-right, 0px));
+      top:calc(env(safe-area-inset-top, 0px) + 42px);bottom:env(safe-area-inset-bottom, 0px);
+      width:62px;padding:4px 0;flex-direction:column;justify-content:center;gap:5px;
+    }
+    #controls button{padding:8px 3px;font-size:.72rem;border-radius:9px}
+    .ix.br{display:none}
+    #toast{bottom:calc(env(safe-area-inset-bottom,0px) + 12px)}
   }
 </style>
 
@@ -350,7 +369,7 @@
 <div id="overlay">
   <div class="panel">
     <h2 id="winTitle">You won!</h2>
-    <div class="sub" id="winSub">A game of Patience, rewarded.</div>
+    <div class="sub" id="winSub">Solitaire is better without ads.</div>
     <div class="statgrid">
       <div class="stat"><b id="wTime">0:00</b><span>time</span></div>
       <div class="stat"><b id="wMoves">0</b><span>moves</span></div>
@@ -381,6 +400,13 @@
     </div>
   </div>
   <div class="row">
+    <div>Haptics<span class="sub2">Vibration feedback for moves and wins</span></div>
+    <div class="seg">
+      <button id="segHapticsOn">On</button>
+      <button id="segHapticsOff">Off</button>
+    </div>
+  </div>
+  <div class="row">
     <div>Restart this deal<span class="sub2">Same shuffle, from the top</span></div>
     <button id="btnRestart">Restart</button>
   </div>
@@ -389,8 +415,8 @@
     <div class="statline" id="statline"></div>
   </div>
   <div class="row" style="border:none;justify-content:center">
-    <div class="sub2" style="text-align:center">Better Solitaire — free forever, no ads, just cards. ♠︎ ♥︎ ♦︎ ♣︎<br>
-    Win daily to grow your streak. Every 10 wins earns a freeze ❄️ (max 3) that quietly covers a missed day.<br>
+    <div class="sub2" style="text-align:center">Better Solitaire — no ads, ever. ♠︎ ♥︎ ♦︎ ♣︎<br>
+    Win daily to grow your streak. Every 10 wins earns a streak freeze ❄️ (max 3).<br>
     Your first undo each game is free; after that, undos count as a move.</div>
   </div>
 </div>
@@ -420,15 +446,16 @@ let timerId = null;
    web. Suppressed while auto-finishing so the cascade doesn't machine-gun. */
 const Haptics = window.Capacitor && window.Capacitor.Plugins && window.Capacitor.Plugins.Haptics;
 function haptic(style){
-  if(!Haptics || autoRunning) return;
+  if(!Haptics || autoRunning || settings.haptics === false) return;
   try{ Haptics.impact({ style }); }catch(e){}
 }
 function hapticWin(){
-  if(!Haptics) return;
+  if(!Haptics || settings.haptics === false) return;
   try{ Haptics.notification({ type: "SUCCESS" }); }catch(e){}
 }
 let settings = loadJSON(KEY_SET) || { draw3: false };
 if(settings.autoComplete === undefined) settings.autoComplete = true; // auto-finish by default
+if(settings.haptics === undefined) settings.haptics = true;
 let stats = loadJSON(KEY_STATS) || {
   plays:0, wins:0, streak:0, longest:0, lastWin:null,
   freezes:1, winsToward:0, bestTime:null, bestMoves:null
@@ -506,14 +533,17 @@ function faceHTML(c){
 /* ================= layout ================= */
 function computeGeometry(){
   const bw = board.clientWidth, bh = board.clientHeight;
-  const gap = Math.max(3, Math.min(12, bw*0.011));
-  const pad = gap + 1;
+  const gap = Math.max(2, Math.min(10, bw*0.009));
+  const pad = gap;
   const topY = 8;
   // Width-limited card size (7 columns across).
-  let cw = Math.min((bw - pad*2 - gap*6)/7, 110);
+  let cw = Math.min((bw - pad*2 - gap*6)/7, 116);
   // Height-limited: the top row plus a short tableau fan must fit vertically, or
   // short/landscape viewports clip the bottom cards. Cap card width to suit.
-  const chByHeight = (bh - topY - 10) / 2.35;
+  // Landscape needs room for the top row, a full card, and several readable
+  // tableau fan steps. A two-row cap makes cards balloon and clips long piles.
+  const heightRows = bw > bh ? 3.8 : 2.35;
+  const chByHeight = (bh - topY - 10) / heightRows;
   if(chByHeight > 0) cw = Math.min(cw, chByHeight / 1.45);
   const ch = cw*1.45;
   const left = (bw - (7*cw + 6*gap))/2;
@@ -532,7 +562,7 @@ function place(card, x, y, z){
 }
 function layout(){
   computeGeometry();
-  const {xs, topY, tabY, ch, gap, bh, cw} = G;
+  const {xs, topY, tabY, ch, gap, bw, bh, cw} = G;
   // placeholders
   // foundations on the left, stock in the right corner, waste right beside it
   const slotPos = { stock:[xs(6),topY], waste:[xs(5),topY], f0:[xs(0),topY], f1:[xs(1),topY], f2:[xs(2),topY], f3:[xs(3),topY] };
@@ -557,10 +587,12 @@ function layout(){
   // foundations
   P.f.forEach((pile,fi)=> pile.forEach((card,i)=> place(card, xs(fi), topY, 120+i)));
   // tableau (compress fans to fit)
-  const availH = bh - tabY - 10;
+  const landscape = bw > bh;
+  const availH = bh - tabY - (landscape ? 18 : 10);
   for(let c=0;c<7;c++){
     const pile = P.t[c];
-    let offDown = ch*0.15, offUp = ch*0.34;
+    let offDown = ch*(landscape ? 0.12 : 0.15);
+    let offUp = ch*(landscape ? 0.29 : 0.34);
     let total = 0;
     pile.forEach((card,i)=>{ if(i<pile.length-1) total += card.faceUp?offUp:offDown });
     const maxTotal = Math.max(availH - ch, ch*0.4);
@@ -802,13 +834,22 @@ function findHint(){
     for(let d2=0; d2<7; d2++){
       if(d2===c || !canTab(head,d2)) continue;
       const reveals = fi>0;                       // uncovers a face-down card
-      const frees = fi===0 && P.t[d2].length>0;   // empties a column
+      // Emptying a fully exposed column is only progress when another exposed
+      // king can actually use that space. Otherwise the move is immediately
+      // reversible and Hint can bounce the same run between two columns.
+      const frees = fi===0 && P.t[d2].length>0 && hasKingForEmptyColumn(c);
       if(reveals || frees) return {src:pile.slice(fi), dst:"t"+d2};
     }
   }
   if(wTop) for(let c=0;c<7;c++) if(canTab(wTop,c)) return {src:[wTop], dst:"t"+c};
   if(P.stock.length || P.waste.length) return {src:[], dst:"stock"};
   return null;
+}
+function hasKingForEmptyColumn(excludeCol){
+  // Stock/waste cards can eventually surface because recycling is unlimited.
+  if(P.stock.concat(P.waste).some(card=>card.rank===13)) return true;
+  return P.t.some((pile,col)=> col!==excludeCol &&
+    pile.some((card,i)=> card.faceUp && card.rank===13 && i>0));
 }
 function pulseEl(el){
   if(!el) return;
@@ -829,29 +870,6 @@ function destEl(dst){
   const pile = kind==="f" ? P.f[idx] : P.t[idx];
   return pile.length ? els.get(topOf(pile).id)
                      : board.querySelector(`.ph[data-slot="${dst}"]`);
-}
-/* Any legal move at all — broader than findHint, which only surfaces *useful*
-   moves. Counts every face-up run head that can land somewhere else, except
-   the pure no-op of shuffling a king-led column onto another empty column. */
-function findAnyMove(){
-  const wTop = topOf(P.waste);
-  if(wTop){
-    if(canFound(wTop)) return {src:[wTop], dst:"f"+wTop.suit};
-    for(let c=0;c<7;c++) if(canTab(wTop,c)) return {src:[wTop], dst:"t"+c};
-  }
-  for(let c=0;c<7;c++){ const t=topOf(P.t[c]); if(t && t.faceUp && canFound(t)) return {src:[t], dst:"f"+t.suit} }
-  for(let c=0;c<7;c++){
-    const pile = P.t[c];
-    for(let i=0;i<pile.length;i++){
-      if(!pile[i].faceUp) continue;
-      for(let d=0;d<7;d++){
-        if(d===c || !canTab(pile[i],d)) continue;
-        if(i===0 && P.t[d].length===0) continue; // king column → empty column: a no-op
-        return {src:pile.slice(i), dst:"t"+d};
-      }
-    }
-  }
-  return null;
 }
 // Could any card still in the stock or waste land somewhere, once it surfaces?
 function stockPlayable(){
@@ -890,8 +908,8 @@ function ghostMove(h){
   requestAnimationFrame(()=>requestAnimationFrame(()=>{
     ghosts.forEach((g,i)=>{ g.style.transform = `translate3d(${dx}px,${dy + i*off}px,0)` });
   }));
-  ghostTimers.push(setTimeout(()=> ghosts.forEach(g=>g.classList.add("fade")), 950));
-  ghostTimers.push(setTimeout(()=> ghosts.forEach(g=>g.remove()), 1450));
+  ghostTimers.push(setTimeout(()=> ghosts.forEach(g=>g.classList.add("fade")), 1450));
+  ghostTimers.push(setTimeout(()=> ghosts.forEach(g=>g.remove()), 2100));
 }
 let toastTimer = null;
 function toast(msg){
@@ -905,15 +923,16 @@ function hint(){
   if(autoRunning || won) return;
   const h = findHint();
   if(h && h.src.length){ ghostMove(h); return }         // best move → ghost preview
-  const any = findAnyMove();
   const helps = stockPlayable();
-  if(!any && !helps){ showStuck(); return }             // nothing anywhere → game over
-  if((P.stock.length || P.waste.length) && (helps || !any)){
+  if((P.stock.length || P.waste.length) && helps){
     pulseEl(destEl("stock"));
     toast(P.stock.length ? "Draw from the stock" : "Tap the empty slot to recycle ↻");
     return;
   }
-  ghostMove(any);                                       // legal-but-quiet move: still show it
+  // Legal moves that only undo one another are not progress. If there is no
+  // foundation play, reveal, useful empty column, or playable stock card, the
+  // deal is genuinely stuck from the hint engine's perspective.
+  showStuck();
 }
 function showStuck(){
   stopTimer();
@@ -923,16 +942,15 @@ function showStuck(){
   $("wMoves").textContent = moves;
   $("wStreak").textContent = "🔥 " + displayStreak();
   $("wBadges").innerHTML = "";
-  $("wNote").textContent = "Undo a few moves to try a different line, or deal again.";
+  $("wNote").textContent = "Undo a few moves to try a different path, or deal again.";
   $("btnAdmire").textContent = "Go back & undo";
   $("overlay").classList.add("show");
 }
 
 /* ================= auto-finish ================= */
 function finishable(){
-  return !won && P.stock.length===0 && P.waste.length===0 &&
-    P.t.every(p=>p.every(c=>c.faceUp)) &&
-    P.t.some(p=>p.length>0);
+  return !won && P.t.every(p=>p.every(c=>c.faceUp)) &&
+    !P.f.every(p=>p.length===13);
 }
 // Auto-trigger the finish once the outcome is certain, if the player left it on.
 function maybeAutoFinish(){
@@ -949,6 +967,21 @@ function autoFinish(){
       const t = topOf(P.t[c]);
       if(t && canFound(t)){
         P.t[c].pop(); P.f[t.suit].push(t);
+        moves++; moved = true;
+        layout(); updateHUD();
+        break;
+      }
+    }
+    // Once every tableau card is exposed, unlimited stock recycling makes the
+    // remaining stock/waste deterministic. Collect the next needed rank from
+    // either pile as the same sequence of draws a player could make.
+    if(!moved){
+      for(const pile of [P.waste, P.stock]){
+        const i = pile.findIndex(canFound);
+        if(i<0) continue;
+        const card = pile.splice(i,1)[0];
+        card.faceUp = true;
+        P.f[card.suit].push(card);
         moves++; moved = true;
         layout(); updateHUD();
         break;
@@ -1178,6 +1211,8 @@ $("segD1").onclick = ()=>{ settings.draw3=false; saveJSON(KEY_SET,settings); ref
 $("segD3").onclick = ()=>{ settings.draw3=true; saveJSON(KEY_SET,settings); refreshSheet(); layout() };
 $("segAutoOn").onclick = ()=>{ settings.autoComplete=true; saveJSON(KEY_SET,settings); refreshSheet(); updateButtons(); maybeAutoFinish() };
 $("segAutoOff").onclick = ()=>{ settings.autoComplete=false; saveJSON(KEY_SET,settings); refreshSheet(); updateButtons() };
+$("segHapticsOn").onclick = ()=>{ settings.haptics=true; saveJSON(KEY_SET,settings); refreshSheet(); haptic("LIGHT") };
+$("segHapticsOff").onclick = ()=>{ settings.haptics=false; saveJSON(KEY_SET,settings); refreshSheet() };
 $("btnRestart").onclick = ()=>{
   sheet.classList.remove("open"); sheetBack.classList.remove("show");
   endCascade(); $("overlay").classList.remove("show");
@@ -1188,6 +1223,8 @@ function refreshSheet(){
   $("segD3").classList.toggle("on", settings.draw3);
   $("segAutoOn").classList.toggle("on", settings.autoComplete !== false);
   $("segAutoOff").classList.toggle("on", settings.autoComplete === false);
+  $("segHapticsOn").classList.toggle("on", settings.haptics !== false);
+  $("segHapticsOff").classList.toggle("on", settings.haptics === false);
   const wr = stats.plays ? Math.round(100*stats.wins/stats.plays) : 0;
   $("statline").innerHTML =
     `<span>wins <b>${stats.wins}</b></span>`+
