@@ -1,7 +1,7 @@
 /* Better Solitaire — service worker
    Offline-first shell caching. Bump CACHE when assets change so clients
    pick up the new version (old caches are purged on activate). */
-const CACHE = "solitaire-v1";
+const CACHE = "solitaire-v5";
 const SHELL = [
   ".",
   "index.html",

@@ -96,7 +96,7 @@
   /* ---------- CARDS ---------- */
   .card{
     position:absolute;width:var(--cw);height:var(--ch);
-    font-size:calc(var(--cw)*0.115);
+    font-size:calc(var(--cw)*0.13);
     transition:transform .28s cubic-bezier(.22,.9,.3,1.1);
     will-change:transform;
     cursor:grab;
@@ -140,39 +140,42 @@
     color:var(--brass);opacity:.75;font-size:calc(var(--cw)*0.3);
     font-family:var(--serif);
   }
-  /* corner indices */
+  /* corner indices — the primary read on a fanned card, so keep them big & bold.
+     Rank and suit sit side by side: half the vertical footprint of a stacked
+     index, so the font can grow without the next fanned card covering it. */
   .ix{
-    position:absolute;display:flex;flex-direction:column;align-items:center;
-    line-height:1.02;
-    font-size:1.5em;font-weight:600;letter-spacing:-.02em;
+    position:absolute;display:flex;align-items:baseline;gap:.1em;
+    line-height:1;
+    font-size:3.1em;font-weight:700;letter-spacing:-.03em;
   }
-  .ix b{font-size:.8em;font-weight:400}
-  .ix.tl{top:.28em;left:.34em}
-  .ix.br{bottom:.28em;right:.34em;transform:rotate(180deg)}
-  /* pips */
-  .pips{position:absolute;inset:12% 22%;pointer-events:none}
-  .pips i{
-    position:absolute;transform:translate(-50%,-50%);
-    font-style:normal;font-size:1.9em;
-  }
-  .pips i.fl{transform:translate(-50%,-50%) rotate(180deg)}
-  .ace{
+  .ix b{font-size:1em;font-weight:600}
+  .ix.tl{top:.12em;left:.14em}
+  .ix.br{bottom:.12em;right:.14em;transform:rotate(180deg)}
+  /* center art — one bold glyph; the corner index states the value once.
+     Number cards get their suit, courts a regal motif (♚ ♛ ⚜), aces go big. */
+  .mid{
     position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
-    font-size:4.4em;
+    pointer-events:none;
+    font-size:5em;opacity:.95;
   }
-  .court{
-    position:absolute;inset:16% 20%;
-    border:1.5px solid currentColor;border-radius:.35em;
-    display:flex;flex-direction:column;align-items:center;justify-content:center;
-    gap:.05em;opacity:.92;
-  }
-  .court .cl{font-size:2.6em;line-height:1;font-weight:600}
-  .court .cs{font-size:1.6em;line-height:1}
+  .mid.ace{font-size:5.8em;opacity:1}
+  /* court motifs — per-glyph scale so their ink height matches (♚ draws small
+     in its em box, ⚜ large; measured against ♛ at 5.3em) */
+  .mid.court.k{font-size:6em}
+  .mid.court.q{font-size:5.3em}
+  .mid.court.j{font-size:4.8em}
   .card.hint{animation:hintPulse .85s ease 2}
   @keyframes hintPulse{
     0%,100%{filter:none}
     50%{filter:drop-shadow(0 0 14px rgba(217,166,72,1)) drop-shadow(0 0 6px rgba(217,166,72,.9)) brightness(1.14)}
   }
+  /* hint ghost — a translucent copy that glides to the recommended spot */
+  .card.ghost{
+    opacity:.6;pointer-events:none;
+    transition:transform .55s cubic-bezier(.25,.9,.3,1), opacity .45s;
+  }
+  .card.ghost .face{box-shadow:0 0 0 2px var(--brass), 0 0 16px rgba(217,166,72,.55)}
+  .card.ghost.fade{opacity:0}
   .card.shake{animation:shake .35s ease}
   @keyframes shake{
     0%,100%{margin-left:0}25%{margin-left:-5px}50%{margin-left:5px}75%{margin-left:-3px}
@@ -202,6 +205,20 @@
   }
   #btnFinish.show{display:inline-block;animation:chipGlow 1.2s ease}
   #btnNew.confirm{background:rgba(191,59,51,.35);border-color:rgba(191,59,51,.6)}
+
+  /* ---------- TOAST ---------- */
+  #toast{
+    position:fixed;left:50%;bottom:calc(env(safe-area-inset-bottom,0px) + 78px);
+    transform:translateX(-50%) translateY(8px);
+    background:rgba(8,28,22,.94);
+    border:1px solid rgba(217,166,72,.5);
+    color:var(--text);
+    padding:9px 18px;border-radius:999px;
+    font-size:.9rem;white-space:nowrap;
+    opacity:0;transition:opacity .25s, transform .25s;
+    pointer-events:none;z-index:700;
+  }
+  #toast.show{opacity:1;transform:translateX(-50%)}
 
   /* ---------- FX CANVAS ---------- */
   #fx{
@@ -300,6 +317,8 @@
   @media (max-width:599px){
     .chip small{display:none}
     .brand{font-size:1.1rem}
+    /* phones: drop the rotated bottom-right index — one big corner reads better */
+    .ix.br{display:none}
   }
 </style>
 
@@ -317,14 +336,15 @@
   <div id="board"></div>
 
   <div id="controls">
-    <button id="btnUndo" disabled>↩︎ Undo</button>
+    <button id="btnNew">♻︎ New</button>
     <button id="btnHint">💡 Hint</button>
     <button id="btnFinish">✨ Finish</button>
-    <button id="btnNew">♻︎ New</button>
+    <button id="btnUndo" disabled>↩︎ Undo</button>
     <button id="btnMenu" aria-label="Menu">⋯</button>
   </div>
 </div>
 
+<div id="toast"></div>
 <canvas id="fx"></canvas>
 
 <div id="overlay">
@@ -385,19 +405,6 @@ const KEY_GAME = "patience.v1.game";
 const KEY_STATS = "patience.v1.stats";
 const KEY_SET = "patience.v1.settings";
 const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-// pip layouts: [x, y, flipped] as fractions of the pip area
-const PIPS = {
-  2:[[.5,.1],[.5,.9,1]],
-  3:[[.5,.1],[.5,.5],[.5,.9,1]],
-  4:[[.22,.14],[.78,.14],[.22,.86,1],[.78,.86,1]],
-  5:[[.22,.14],[.78,.14],[.5,.5],[.22,.86,1],[.78,.86,1]],
-  6:[[.22,.12],[.78,.12],[.22,.5],[.78,.5],[.22,.88,1],[.78,.88,1]],
-  7:[[.22,.12],[.78,.12],[.5,.3],[.22,.5],[.78,.5],[.22,.88,1],[.78,.88,1]],
-  8:[[.22,.12],[.78,.12],[.5,.3],[.22,.5],[.78,.5],[.5,.7,1],[.22,.88,1],[.78,.88,1]],
-  9:[[.22,.1],[.78,.1],[.22,.36],[.78,.36],[.5,.5],[.22,.64,1],[.78,.64,1],[.22,.9,1],[.78,.9,1]],
-  10:[[.22,.1],[.78,.1],[.5,.23],[.22,.36],[.78,.36],[.22,.64,1],[.78,.64,1],[.5,.77,1],[.22,.9,1],[.78,.9,1]],
-};
 
 let cards = [];            // 52 card objects {id, suit, rank, faceUp, x, y}
 let P = null;              // piles {stock:[], waste:[], f:[[]x4], t:[[]x7]}
@@ -486,23 +493,21 @@ function buildDOM(){
     els.set(card.id, el);
   }
 }
+const MOTIF = { 11:"⚜︎", 12:"♛", 13:"♚" }; // ⚜ jack, ♛ queen, ♚ king (text presentation)
 function faceHTML(c){
   const s = SUITS[c.suit], r = RANKS[c.rank];
-  let mid = "";
-  if(c.rank === 1) mid = `<div class="ace">${s}</div>`;
-  else if(c.rank >= 11) mid = `<div class="court"><span class="cl">${r}</span><span class="cs">${s}</span></div>`;
-  else {
-    mid = '<div class="pips">' + PIPS[c.rank].map(([x,y,fl]) =>
-      `<i class="${fl?'fl':''}" style="left:${x*100}%;top:${y*100}%">${s}</i>`).join("") + "</div>";
-  }
+  let mid;
+  if(c.rank === 1) mid = `<div class="mid ace">${s}</div>`;
+  else if(c.rank >= 11) mid = `<div class="mid court ${["j","q","k"][c.rank-11]}">${MOTIF[c.rank]}</div>`;
+  else mid = `<div class="mid">${s}</div>`;
   return `<div class="ix tl"><i>${r}</i><b>${s}</b></div><div class="ix br"><i>${r}</i><b>${s}</b></div>` + mid;
 }
 
 /* ================= layout ================= */
 function computeGeometry(){
   const bw = board.clientWidth, bh = board.clientHeight;
-  const gap = Math.max(5, Math.min(14, bw*0.016));
-  const pad = gap + 2;
+  const gap = Math.max(3, Math.min(12, bw*0.011));
+  const pad = gap + 1;
   const topY = 8;
   // Width-limited card size (7 columns across).
   let cw = Math.min((bw - pad*2 - gap*6)/7, 110);
@@ -529,7 +534,8 @@ function layout(){
   computeGeometry();
   const {xs, topY, tabY, ch, gap, bh, cw} = G;
   // placeholders
-  const slotPos = { stock:[xs(0),topY], waste:[xs(1),topY], f0:[xs(3),topY], f1:[xs(4),topY], f2:[xs(5),topY], f3:[xs(6),topY] };
+  // foundations on the left, stock in the right corner, waste right beside it
+  const slotPos = { stock:[xs(6),topY], waste:[xs(5),topY], f0:[xs(0),topY], f1:[xs(1),topY], f2:[xs(2),topY], f3:[xs(3),topY] };
   for(let c=0;c<7;c++) slotPos["t"+c] = [xs(c), tabY];
   for(const ph of board.querySelectorAll(".ph")){
     const [x,y] = slotPos[ph.dataset.slot];
@@ -538,24 +544,23 @@ function layout(){
       ph.classList.toggle("can-recycle", P.stock.length===0 && P.waste.length>0);
   }
   // stock
-  P.stock.forEach((card,i)=> place(card, xs(0), topY, i+1));
-  // waste — fan the top N
+  P.stock.forEach((card,i)=> place(card, xs(6), topY, i+1));
+  // waste — top card sits beside the stock, older cards peek out to the left
   const fanN = settings.draw3 ? 3 : 1;
   const n = P.waste.length;
   const fanOff = cw*0.3;
   P.waste.forEach((card,i)=>{
     const fromTop = n-1-i;                       // 0 = top card
-    const fanIdx = Math.max(0, Math.min(fanN,n)-1 - fromTop); // 0..fanN-1 for the fanned ones
-    const x = xs(1) + (fromTop < fanN ? fanIdx*fanOff : 0);
+    const x = xs(5) - Math.min(fromTop, fanN-1)*fanOff;
     place(card, x, topY, 60+i);
   });
   // foundations
-  P.f.forEach((pile,fi)=> pile.forEach((card,i)=> place(card, xs(3+fi), topY, 120+i)));
+  P.f.forEach((pile,fi)=> pile.forEach((card,i)=> place(card, xs(fi), topY, 120+i)));
   // tableau (compress fans to fit)
   const availH = bh - tabY - 10;
   for(let c=0;c<7;c++){
     const pile = P.t[c];
-    let offDown = ch*0.16, offUp = ch*0.3;
+    let offDown = ch*0.15, offUp = ch*0.34;
     let total = 0;
     pile.forEach((card,i)=>{ if(i<pile.length-1) total += card.faceUp?offUp:offDown });
     const maxTotal = Math.max(availH - ch, ch*0.4);
@@ -573,7 +578,7 @@ function dealAnimation(){
   for(const card of cards){
     const el = els.get(card.id);
     el.style.transition = "none";
-    place(card, G.xs(0), G.topY, 1);
+    place(card, G.xs(6), G.topY, 1);
   }
   // force reflow, then animate out with a stagger
   void board.offsetHeight;
@@ -756,13 +761,13 @@ window.addEventListener("pointerup", e=>{
   // foundations
   if(d.stack.length===1 && cy < G.tabY - G.gap/2){
     for(let f=0; f<4; f++){
-      const x = G.xs(3+f);
+      const x = G.xs(f);
       if(cx>x-G.gap/2 && cx<x+G.cw+G.gap/2 && canFound(d.card)){
         if(f===d.card.suit){ moveStack(d.stack,"f",f); return }
       }
     }
     // allow dropping on the correct suit slot even if aimed loosely
-    const f = d.card.suit, x=G.xs(3+f);
+    const f = d.card.suit, x=G.xs(f);
     if(canFound(d.card) && cx>x-G.cw*0.75 && cx<x+G.cw*1.75){ moveStack(d.stack,"f",f); return }
   }
   // tableau
@@ -825,16 +830,102 @@ function destEl(dst){
   return pile.length ? els.get(topOf(pile).id)
                      : board.querySelector(`.ph[data-slot="${dst}"]`);
 }
+/* Any legal move at all — broader than findHint, which only surfaces *useful*
+   moves. Counts every face-up run head that can land somewhere else, except
+   the pure no-op of shuffling a king-led column onto another empty column. */
+function findAnyMove(){
+  const wTop = topOf(P.waste);
+  if(wTop){
+    if(canFound(wTop)) return {src:[wTop], dst:"f"+wTop.suit};
+    for(let c=0;c<7;c++) if(canTab(wTop,c)) return {src:[wTop], dst:"t"+c};
+  }
+  for(let c=0;c<7;c++){ const t=topOf(P.t[c]); if(t && t.faceUp && canFound(t)) return {src:[t], dst:"f"+t.suit} }
+  for(let c=0;c<7;c++){
+    const pile = P.t[c];
+    for(let i=0;i<pile.length;i++){
+      if(!pile[i].faceUp) continue;
+      for(let d=0;d<7;d++){
+        if(d===c || !canTab(pile[i],d)) continue;
+        if(i===0 && P.t[d].length===0) continue; // king column → empty column: a no-op
+        return {src:pile.slice(i), dst:"t"+d};
+      }
+    }
+  }
+  return null;
+}
+// Could any card still in the stock or waste land somewhere, once it surfaces?
+function stockPlayable(){
+  return P.stock.concat(P.waste).some(c=>{
+    if(canFound(c)) return true;
+    for(let col=0;col<7;col++) if(canTab(c,col)) return true;
+    return false;
+  });
+}
+// The pile's landing position for a ghost preview.
+function slotXY(dst){
+  const kind = dst[0], idx = +dst.slice(1);
+  if(kind==="f") return [G.xs(idx), G.topY];
+  const pile = P.t[idx];
+  if(!pile.length) return [G.xs(idx), G.tabY];
+  const t = topOf(pile);
+  return [t.x, t.y + G.ch*0.34];
+}
+let ghostTimers = [];
+function ghostMove(h){
+  ghostTimers.forEach(clearTimeout); ghostTimers = [];
+  board.querySelectorAll(".ghost").forEach(g=>g.remove());
+  const [dx,dy] = slotXY(h.dst);
+  const off = G.ch*0.34;
+  const ghosts = h.src.map((c,i)=>{
+    const src = els.get(c.id);
+    const g = src.cloneNode(true);
+    g.classList.remove("hint","dragging");
+    g.classList.add("ghost");
+    g.style.transform = src.style.transform;
+    g.style.zIndex = 900+i;
+    board.appendChild(g);
+    return g;
+  });
+  h.src.forEach(c=> pulseEl(els.get(c.id)));
+  requestAnimationFrame(()=>requestAnimationFrame(()=>{
+    ghosts.forEach((g,i)=>{ g.style.transform = `translate3d(${dx}px,${dy + i*off}px,0)` });
+  }));
+  ghostTimers.push(setTimeout(()=> ghosts.forEach(g=>g.classList.add("fade")), 950));
+  ghostTimers.push(setTimeout(()=> ghosts.forEach(g=>g.remove()), 1450));
+}
+let toastTimer = null;
+function toast(msg){
+  const t = $("toast");
+  t.textContent = msg;
+  t.classList.add("show");
+  if(toastTimer) clearTimeout(toastTimer);
+  toastTimer = setTimeout(()=> t.classList.remove("show"), 1800);
+}
 function hint(){
   if(autoRunning || won) return;
   const h = findHint();
-  if(!h){
-    // no legal move at all — nudge the stock so the tap still feels answered
-    pulseEl(board.querySelector('.ph[data-slot="stock"]'));
+  if(h && h.src.length){ ghostMove(h); return }         // best move → ghost preview
+  const any = findAnyMove();
+  const helps = stockPlayable();
+  if(!any && !helps){ showStuck(); return }             // nothing anywhere → game over
+  if((P.stock.length || P.waste.length) && (helps || !any)){
+    pulseEl(destEl("stock"));
+    toast(P.stock.length ? "Draw from the stock" : "Tap the empty slot to recycle ↻");
     return;
   }
-  h.src.forEach(c=> pulseEl(els.get(c.id)));
-  pulseEl(destEl(h.dst));
+  ghostMove(any);                                       // legal-but-quiet move: still show it
+}
+function showStuck(){
+  stopTimer();
+  $("winTitle").textContent = "Out of moves";
+  $("winSub").textContent = "No plays remain — this deal is stuck.";
+  $("wTime").textContent = fmtTime(elapsed);
+  $("wMoves").textContent = moves;
+  $("wStreak").textContent = "🔥 " + displayStreak();
+  $("wBadges").innerHTML = "";
+  $("wNote").textContent = "Undo a few moves to try a different line, or deal again.";
+  $("btnAdmire").textContent = "Go back & undo";
+  $("overlay").classList.add("show");
 }
 
 /* ================= auto-finish ================= */
@@ -960,6 +1051,8 @@ function checkWin(){
   setTimeout(()=>showWin(r), reduced?100:2200);
 }
 function showWin(r){
+  $("winTitle").textContent = "You won!";
+  $("btnAdmire").textContent = "Admire the cascade";
   $("wTime").textContent = fmtTime(elapsed);
   $("wMoves").textContent = moves;
   $("wStreak").textContent = "🔥 " + stats.streak;
@@ -996,7 +1089,7 @@ function cascade(){
   const queue = [];
   for(let r=12;r>=0;r--) for(let f=0;f<4;f++){
     const card = P.f[f][r];
-    if(card) queue.push({ card, x: rect.left+G.xs(3+f), y: rect.top+G.topY });
+    if(card) queue.push({ card, x: rect.left+G.xs(f), y: rect.top+G.topY });
   }
   const sprites = [];
   let qi = 0, last = 0, spawnAcc = 0;
@@ -1067,9 +1160,15 @@ $("btnNew").onclick = ()=>{
   newGame();
 };
 $("btnAgain").onclick = ()=>{ endCascade(); $("overlay").classList.remove("show"); newGame() };
-$("btnAdmire").onclick = ()=>{ $("overlay").classList.remove("show"); if(!reduced && won) cascade();
-  // bring the modal back after another look
-  setTimeout(()=>{ if(won) $("overlay").classList.add("show") }, 6000);
+$("btnAdmire").onclick = ()=>{
+  $("overlay").classList.remove("show");
+  if(won){
+    if(!reduced) cascade();
+    // bring the modal back after another look
+    setTimeout(()=>{ if(won) $("overlay").classList.add("show") }, 6000);
+  } else if(started){
+    startTimer(); // stuck dialog dismissed — back to the table to undo
+  }
 };
 /* menu sheet */
 const sheet = $("sheet"), sheetBack = $("sheetBack");
