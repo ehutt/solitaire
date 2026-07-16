@@ -79,19 +79,35 @@ test("recordWin updates a daily streak immediately and marks each fifth win", ()
 test("card style switches immediately and persists without replacing the deal", () => {
   const persisted = [];
   const messages = [];
+  const statusStyles = [];
+  const themeColor = { content: "#7fa4b0" };
   global.settings = { draw3: false, cardStyle: "crehore" };
-  global.document = { body: { dataset: {} } };
+  global.document = {
+    body: { dataset: {} },
+    querySelector: (selector) =>
+      selector === 'meta[name="theme-color"]' ? themeColor : null,
+  };
   global.KEY_SET = "settings";
+  global.window = {
+    Capacitor: {
+      Plugins: {
+        StatusBar: { setStyle: ({ style }) => statusStyles.push(style) },
+      },
+    },
+  };
   global.saveJSON = (key, value) => persisted.push([key, { ...value }]);
   global.refreshSheet = () => {};
   global.haptic = () => {};
   global.toast = (message) => messages.push(message);
+  global.applyCardStyleTheme = loadFunction("applyCardStyleTheme");
   const setCardStyle = loadFunction("setCardStyle");
 
   setCardStyle("original");
 
   assert.equal(settings.cardStyle, "original");
   assert.equal(document.body.dataset.cardStyle, "original");
+  assert.equal(themeColor.content, "#0f2e25");
+  assert.deepEqual(statusStyles, ["DARK"]);
   assert.deepEqual(persisted, [["settings", { draw3: false, cardStyle: "original" }]]);
   assert.deepEqual(messages, ["Classic cards"]);
 });
