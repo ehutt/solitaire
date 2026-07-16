@@ -1,0 +1,485 @@
+{
+  "name": "Thomas Crehore c. 1820",
+  "version": 5,
+  "cardSize": {
+    "width": 360,
+    "height": 522,
+    "aspectRatio": 0.6896551724137931
+  },
+  "rankFont": {
+    "family": "Baskerville",
+    "source": "macOS system font; glyphs are baked into card images"
+  },
+  "suitOrder": [
+    "spades",
+    "hearts",
+    "diamonds",
+    "clubs"
+  ],
+  "defaultBack": "cards/back.webp",
+  "backVariants": {
+    "ornate": "cards/back-ornate.webp",
+    "plain": "cards/back-plain.webp"
+  },
+  "components": {
+    "suits": {
+      "spades": "components/suits/spades.webp",
+      "hearts": "components/suits/hearts.webp",
+      "diamonds": "components/suits/diamonds.webp",
+      "clubs": "components/suits/clubs.webp"
+    },
+    "courts": {
+      "spades-j": "components/courts/spades-j.webp",
+      "spades-q": "components/courts/spades-q.webp",
+      "spades-k": "components/courts/spades-k.webp",
+      "hearts-j": "components/courts/hearts-j.webp",
+      "hearts-q": "components/courts/hearts-q.webp",
+      "hearts-k": "components/courts/hearts-k.webp",
+      "diamonds-j": "components/courts/diamonds-j.webp",
+      "diamonds-q": "components/courts/diamonds-q.webp",
+      "diamonds-k": "components/courts/diamonds-k.webp",
+      "clubs-j": "components/courts/clubs-j.webp",
+      "clubs-q": "components/courts/clubs-q.webp",
+      "clubs-k": "components/courts/clubs-k.webp"
+    },
+    "backs": {
+      "ornate": "components/backs/ornate.webp",
+      "plain": "components/backs/plain.webp"
+    },
+    "paper": "components/paper-stock.webp"
+  },
+  "cards": [
+    {
+      "id": 0,
+      "suit": 0,
+      "suitName": "spades",
+      "rank": 1,
+      "rankLabel": "A",
+      "file": "cards/0-1.webp"
+    },
+    {
+      "id": 1,
+      "suit": 0,
+      "suitName": "spades",
+      "rank": 2,
+      "rankLabel": "2",
+      "file": "cards/0-2.webp"
+    },
+    {
+      "id": 2,
+      "suit": 0,
+      "suitName": "spades",
+      "rank": 3,
+      "rankLabel": "3",
+      "file": "cards/0-3.webp"
+    },
+    {
+      "id": 3,
+      "suit": 0,
+      "suitName": "spades",
+      "rank": 4,
+      "rankLabel": "4",
+      "file": "cards/0-4.webp"
+    },
+    {
+      "id": 4,
+      "suit": 0,
+      "suitName": "spades",
+      "rank": 5,
+      "rankLabel": "5",
+      "file": "cards/0-5.webp"
+    },
+    {
+      "id": 5,
+      "suit": 0,
+      "suitName": "spades",
+      "rank": 6,
+      "rankLabel": "6",
+      "file": "cards/0-6.webp"
+    },
+    {
+      "id": 6,
+      "suit": 0,
+      "suitName": "spades",
+      "rank": 7,
+      "rankLabel": "7",
+      "file": "cards/0-7.webp"
+    },
+    {
+      "id": 7,
+      "suit": 0,
+      "suitName": "spades",
+      "rank": 8,
+      "rankLabel": "8",
+      "file": "cards/0-8.webp"
+    },
+    {
+      "id": 8,
+      "suit": 0,
+      "suitName": "spades",
+      "rank": 9,
+      "rankLabel": "9",
+      "file": "cards/0-9.webp"
+    },
+    {
+      "id": 9,
+      "suit": 0,
+      "suitName": "spades",
+      "rank": 10,
+      "rankLabel": "10",
+      "file": "cards/0-10.webp"
+    },
+    {
+      "id": 10,
+      "suit": 0,
+      "suitName": "spades",
+      "rank": 11,
+      "rankLabel": "J",
+      "file": "cards/0-11.webp"
+    },
+    {
+      "id": 11,
+      "suit": 0,
+      "suitName": "spades",
+      "rank": 12,
+      "rankLabel": "Q",
+      "file": "cards/0-12.webp"
+    },
+    {
+      "id": 12,
+      "suit": 0,
+      "suitName": "spades",
+      "rank": 13,
+      "rankLabel": "K",
+      "file": "cards/0-13.webp"
+    },
+    {
+      "id": 13,
+      "suit": 1,
+      "suitName": "hearts",
+      "rank": 1,
+      "rankLabel": "A",
+      "file": "cards/1-1.webp"
+    },
+    {
+      "id": 14,
+      "suit": 1,
+      "suitName": "hearts",
+      "rank": 2,
+      "rankLabel": "2",
+      "file": "cards/1-2.webp"
+    },
+    {
+      "id": 15,
+      "suit": 1,
+      "suitName": "hearts",
+      "rank": 3,
+      "rankLabel": "3",
+      "file": "cards/1-3.webp"
+    },
+    {
+      "id": 16,
+      "suit": 1,
+      "suitName": "hearts",
+      "rank": 4,
+      "rankLabel": "4",
+      "file": "cards/1-4.webp"
+    },
+    {
+      "id": 17,
+      "suit": 1,
+      "suitName": "hearts",
+      "rank": 5,
+      "rankLabel": "5",
+      "file": "cards/1-5.webp"
+    },
+    {
+      "id": 18,
+      "suit": 1,
+      "suitName": "hearts",
+      "rank": 6,
+      "rankLabel": "6",
+      "file": "cards/1-6.webp"
+    },
+    {
+      "id": 19,
+      "suit": 1,
+      "suitName": "hearts",
+      "rank": 7,
+      "rankLabel": "7",
+      "file": "cards/1-7.webp"
+    },
+    {
+      "id": 20,
+      "suit": 1,
+      "suitName": "hearts",
+      "rank": 8,
+      "rankLabel": "8",
+      "file": "cards/1-8.webp"
+    },
+    {
+      "id": 21,
+      "suit": 1,
+      "suitName": "hearts",
+      "rank": 9,
+      "rankLabel": "9",
+      "file": "cards/1-9.webp"
+    },
+    {
+      "id": 22,
+      "suit": 1,
+      "suitName": "hearts",
+      "rank": 10,
+      "rankLabel": "10",
+      "file": "cards/1-10.webp"
+    },
+    {
+      "id": 23,
+      "suit": 1,
+      "suitName": "hearts",
+      "rank": 11,
+      "rankLabel": "J",
+      "file": "cards/1-11.webp"
+    },
+    {
+      "id": 24,
+      "suit": 1,
+      "suitName": "hearts",
+      "rank": 12,
+      "rankLabel": "Q",
+      "file": "cards/1-12.webp"
+    },
+    {
+      "id": 25,
+      "suit": 1,
+      "suitName": "hearts",
+      "rank": 13,
+      "rankLabel": "K",
+      "file": "cards/1-13.webp"
+    },
+    {
+      "id": 26,
+      "suit": 2,
+      "suitName": "diamonds",
+      "rank": 1,
+      "rankLabel": "A",
+      "file": "cards/2-1.webp"
+    },
+    {
+      "id": 27,
+      "suit": 2,
+      "suitName": "diamonds",
+      "rank": 2,
+      "rankLabel": "2",
+      "file": "cards/2-2.webp"
+    },
+    {
+      "id": 28,
+      "suit": 2,
+      "suitName": "diamonds",
+      "rank": 3,
+      "rankLabel": "3",
+      "file": "cards/2-3.webp"
+    },
+    {
+      "id": 29,
+      "suit": 2,
+      "suitName": "diamonds",
+      "rank": 4,
+      "rankLabel": "4",
+      "file": "cards/2-4.webp"
+    },
+    {
+      "id": 30,
+      "suit": 2,
+      "suitName": "diamonds",
+      "rank": 5,
+      "rankLabel": "5",
+      "file": "cards/2-5.webp"
+    },
+    {
+      "id": 31,
+      "suit": 2,
+      "suitName": "diamonds",
+      "rank": 6,
+      "rankLabel": "6",
+      "file": "cards/2-6.webp"
+    },
+    {
+      "id": 32,
+      "suit": 2,
+      "suitName": "diamonds",
+      "rank": 7,
+      "rankLabel": "7",
+      "file": "cards/2-7.webp"
+    },
+    {
+      "id": 33,
+      "suit": 2,
+      "suitName": "diamonds",
+      "rank": 8,
+      "rankLabel": "8",
+      "file": "cards/2-8.webp"
+    },
+    {
+      "id": 34,
+      "suit": 2,
+      "suitName": "diamonds",
+      "rank": 9,
+      "rankLabel": "9",
+      "file": "cards/2-9.webp"
+    },
+    {
+      "id": 35,
+      "suit": 2,
+      "suitName": "diamonds",
+      "rank": 10,
+      "rankLabel": "10",
+      "file": "cards/2-10.webp"
+    },
+    {
+      "id": 36,
+      "suit": 2,
+      "suitName": "diamonds",
+      "rank": 11,
+      "rankLabel": "J",
+      "file": "cards/2-11.webp"
+    },
+    {
+      "id": 37,
+      "suit": 2,
+      "suitName": "diamonds",
+      "rank": 12,
+      "rankLabel": "Q",
+      "file": "cards/2-12.webp"
+    },
+    {
+      "id": 38,
+      "suit": 2,
+      "suitName": "diamonds",
+      "rank": 13,
+      "rankLabel": "K",
+      "file": "cards/2-13.webp"
+    },
+    {
+      "id": 39,
+      "suit": 3,
+      "suitName": "clubs",
+      "rank": 1,
+      "rankLabel": "A",
+      "file": "cards/3-1.webp"
+    },
+    {
+      "id": 40,
+      "suit": 3,
+      "suitName": "clubs",
+      "rank": 2,
+      "rankLabel": "2",
+      "file": "cards/3-2.webp"
+    },
+    {
+      "id": 41,
+      "suit": 3,
+      "suitName": "clubs",
+      "rank": 3,
+      "rankLabel": "3",
+      "file": "cards/3-3.webp"
+    },
+    {
+      "id": 42,
+      "suit": 3,
+      "suitName": "clubs",
+      "rank": 4,
+      "rankLabel": "4",
+      "file": "cards/3-4.webp"
+    },
+    {
+      "id": 43,
+      "suit": 3,
+      "suitName": "clubs",
+      "rank": 5,
+      "rankLabel": "5",
+      "file": "cards/3-5.webp"
+    },
+    {
+      "id": 44,
+      "suit": 3,
+      "suitName": "clubs",
+      "rank": 6,
+      "rankLabel": "6",
+      "file": "cards/3-6.webp"
+    },
+    {
+      "id": 45,
+      "suit": 3,
+      "suitName": "clubs",
+      "rank": 7,
+      "rankLabel": "7",
+      "file": "cards/3-7.webp"
+    },
+    {
+      "id": 46,
+      "suit": 3,
+      "suitName": "clubs",
+      "rank": 8,
+      "rankLabel": "8",
+      "file": "cards/3-8.webp"
+    },
+    {
+      "id": 47,
+      "suit": 3,
+      "suitName": "clubs",
+      "rank": 9,
+      "rankLabel": "9",
+      "file": "cards/3-9.webp"
+    },
+    {
+      "id": 48,
+      "suit": 3,
+      "suitName": "clubs",
+      "rank": 10,
+      "rankLabel": "10",
+      "file": "cards/3-10.webp"
+    },
+    {
+      "id": 49,
+      "suit": 3,
+      "suitName": "clubs",
+      "rank": 11,
+      "rankLabel": "J",
+      "file": "cards/3-11.webp"
+    },
+    {
+      "id": 50,
+      "suit": 3,
+      "suitName": "clubs",
+      "rank": 12,
+      "rankLabel": "Q",
+      "file": "cards/3-12.webp"
+    },
+    {
+      "id": 51,
+      "suit": 3,
+      "suitName": "clubs",
+      "rank": 13,
+      "rankLabel": "K",
+      "file": "cards/3-13.webp"
+    }
+  ],
+  "sourceFiles": [
+    "I20 05.jpg",
+    "I20 06.jpg",
+    "I20 07.jpg",
+    "I20 08.jpg",
+    "I20 09.jpg",
+    "I20 10.jpg",
+    "I20 11.jpg",
+    "I20 12.jpg",
+    "I20 13.jpg",
+    "I20 14.jpg",
+    "I20 15.jpg",
+    "I20 16.jpg",
+    "I20 Back.jpg",
+    "I32 Back.jpg"
+  ]
+}

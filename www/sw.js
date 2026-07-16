@@ -1,7 +1,12 @@
 /* Better Solitaire — service worker
    Offline-first shell caching. Bump CACHE when assets change so clients
    pick up the new version (old caches are purged on activate). */
-const CACHE = "solitaire-v6";
+const CACHE = "solitaire-v14";
+const CARDS = Array.from({ length: 52 }, (_, id) => {
+  const suit = Math.floor(id / 13);
+  const rank = (id % 13) + 1;
+  return `assets/cards/crehore-1820/cards/${suit}-${rank}.webp`;
+});
 const SHELL = [
   ".",
   "index.html",
@@ -10,6 +15,9 @@ const SHELL = [
   "icons/icon-192.png",
   "icons/icon-512.png",
   "icons/maskable-512.png",
+  "assets/cards/crehore-1820/cards/back.webp",
+  "assets/cards/crehore-1820/manifest.json",
+  ...CARDS,
 ];
 
 self.addEventListener("install", (e) => {

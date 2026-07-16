@@ -118,19 +118,27 @@
     box-shadow:0 1px 2px rgba(0,0,0,.35), 0 3px 8px rgba(0,0,0,.22);
   }
   .front{
+    background:var(--paper) var(--front-image) center/100% 100% no-repeat;
+    border:0;
+  }
+  .back{
+    transform:rotateY(180deg);
+    background:var(--paper) url("assets/cards/crehore-1820/cards/back.webp") center/100% 100% no-repeat;
+  }
+  .ix,.mid,.bk{display:none}
+  body[data-card-style="original"] .front{
     background:linear-gradient(160deg,var(--paper) 65%,var(--paper-shade));
     border:1px solid rgba(70,60,40,.25);
     color:var(--ink);
     font-family:var(--serif);
   }
-  .card.red .front{color:var(--red)}
-  .back{
-    transform:rotateY(180deg);
+  body[data-card-style="original"] .card.red .front{color:var(--red)}
+  body[data-card-style="original"] .back{
     background:var(--paper);
     padding:calc(var(--cw)*0.055);
   }
-  .bk{
-    width:100%;height:100%;border-radius:calc(var(--cw)*0.05);
+  body[data-card-style="original"] .bk{
+    display:block;width:100%;height:100%;border-radius:calc(var(--cw)*0.05);
     background:
       radial-gradient(circle at 50% 50%, rgba(217,166,72,.28) 0, rgba(217,166,72,.28) 12%, transparent 13%),
       repeating-linear-gradient(45deg, #163f31 0 4px, #12352a 4px 8px),
@@ -138,36 +146,28 @@
     border:1px solid rgba(217,166,72,.35);
     position:relative;
   }
-  .bk::after{
+  body[data-card-style="original"] .bk::after{
     content:"♠";
     position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
     color:var(--brass);opacity:.75;font-size:calc(var(--cw)*0.3);
     font-family:var(--serif);
   }
-  /* corner indices — the primary read on a fanned card, so keep them big & bold.
-     Rank and suit sit side by side: half the vertical footprint of a stacked
-     index, so the font can grow without the next fanned card covering it. */
-  .ix{
+  /* The original app deck: large side-by-side indices and one centered motif. */
+  body[data-card-style="original"] .ix{
     position:absolute;display:flex;align-items:baseline;gap:.1em;
-    line-height:1;
-    font-size:3.1em;font-weight:700;letter-spacing:-.03em;
+    line-height:1;font-size:3.1em;font-weight:700;letter-spacing:-.03em;
   }
-  .ix b{font-size:1em;font-weight:600}
-  .ix.tl{top:.06em;left:.08em}
-  .ix.br{bottom:.06em;right:.08em;transform:rotate(180deg)}
-  /* center art — one bold glyph; the corner index states the value once.
-     Number cards get their suit, courts a regal motif (♚ ♛ ⚜), aces go big. */
-  .mid{
+  body[data-card-style="original"] .ix b{font-size:1em;font-weight:600}
+  body[data-card-style="original"] .ix.tl{top:.06em;left:.08em}
+  body[data-card-style="original"] .ix.br{bottom:.06em;right:.08em;transform:rotate(180deg)}
+  body[data-card-style="original"] .mid{
     position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
-    pointer-events:none;
-    font-size:5em;opacity:.95;
+    pointer-events:none;font-size:5em;opacity:.95;
   }
-  .mid.ace{font-size:5.8em;opacity:1}
-  /* court motifs — per-glyph scale so their ink height matches (♚ draws small
-     in its em box, ⚜ large; measured against ♛ at 5.3em) */
-  .mid.court.k{font-size:6em}
-  .mid.court.q{font-size:5.3em}
-  .mid.court.j{font-size:4.8em}
+  body[data-card-style="original"] .mid.ace{font-size:5.8em;opacity:1}
+  body[data-card-style="original"] .mid.court.k{font-size:6em}
+  body[data-card-style="original"] .mid.court.q{font-size:5.3em}
+  body[data-card-style="original"] .mid.court.j{font-size:4.8em}
   .card.hint{animation:hintPulse .85s ease 2}
   @keyframes hintPulse{
     0%,100%{filter:none}
@@ -208,7 +208,10 @@
     color:#241a05;border-color:rgba(255,255,255,.25);
   }
   #btnFinish.show{display:inline-block;animation:chipGlow 1.2s ease}
-  #btnNew.confirm{background:rgba(191,59,51,.35);border-color:rgba(191,59,51,.6)}
+  #btnNew.confirm{
+    background:rgba(217,166,72,.28);border-color:rgba(217,166,72,.72);
+    color:#fff2c8;
+  }
 
   /* ---------- TOAST ---------- */
   #toast{
@@ -255,6 +258,16 @@
     font-family:var(--serif);font-size:1.8rem;font-weight:600;
     letter-spacing:.01em;margin-bottom:2px;
   }
+  .panel.daily-win h2{font-size:2.05rem;font-weight:700;color:#8c641a}
+  .panel.milestone{
+    border:2px solid rgba(217,166,72,.72);
+    animation:panelIn .45s cubic-bezier(.2,1.1,.3,1.1), milestoneGlow 1.5s ease-in-out 2;
+  }
+  .panel.milestone h2{font-size:2.15rem;font-weight:700;color:#8c641a}
+  @keyframes milestoneGlow{
+    0%,100%{box-shadow:0 20px 60px rgba(0,0,0,.5),0 0 0 rgba(217,166,72,0)}
+    50%{box-shadow:0 20px 60px rgba(0,0,0,.5),0 0 34px rgba(217,166,72,.72)}
+  }
   .panel .sub{color:#7a6f56;font-size:.82rem;margin-bottom:16px}
   .statgrid{
     display:flex;justify-content:center;gap:18px;margin-bottom:14px;
@@ -288,7 +301,8 @@
     padding:18px 20px calc(env(safe-area-inset-bottom,0px) + 20px);
     transform:translateY(105%);
     transition:transform .32s cubic-bezier(.3,1,.35,1);
-    max-width:860px;margin:0 auto;
+    max-width:860px;max-height:calc(100dvh - env(safe-area-inset-top, 0px) - 8px);
+    overflow-y:auto;margin:0 auto;
   }
   #sheet.open{transform:none}
   #sheetBack{
@@ -312,7 +326,7 @@
 
   @media (prefers-reduced-motion: reduce){
     .card,.card .in,#sheet{transition:none !important}
-    .chip.pulse-glow,#btnFinish.show{animation:none !important}
+    .chip.pulse-glow,#btnFinish.show,.panel.milestone{animation:none !important}
     /* keep the hint glow — it's a highlight, not motion — so hints still read */
   }
   @media (min-width:600px){
@@ -322,8 +336,38 @@
     .chip small{display:none}
     .brand{font-size:1.25rem}
     #chipStreak,#chipFreeze{padding:3px 7px;font-size:.74rem}
-    /* phones: drop the rotated bottom-right index — one big corner reads better */
-    .ix.br{display:none}
+    body[data-card-style="original"] .ix.br{display:none}
+  }
+  /* iPad: use the available canvas and make every persistent control readable
+     from a relaxed playing distance. The min-height guard keeps this out of
+     the compact iPhone landscape rail. */
+  @media (min-width:700px) and (min-height:600px){
+    #app{max-width:1100px}
+    #hud{padding:calc(env(safe-area-inset-top, 0px) + 16px) 24px 12px}
+    .brand{font-size:2rem}
+    .chips{gap:10px}
+    .chip{font-size:1rem;padding:7px 13px}
+    .chip small{font-size:.82rem}
+    #controls{gap:12px;padding:16px 22px calc(env(safe-area-inset-bottom, 0px) + 20px)}
+    #controls button{min-height:56px;padding:15px 24px;border-radius:15px;font-size:1.08rem}
+    #toast{bottom:calc(env(safe-area-inset-bottom,0px) + 104px);font-size:1.08rem;padding:12px 22px}
+    .panel{width:min(440px,calc(100vw - 72px));padding:34px 32px 26px;border-radius:22px}
+    .panel h2{font-size:2.3rem}
+    .panel.daily-win h2,.panel.milestone h2{font-size:2.55rem}
+    .panel .sub{font-size:1rem;margin-bottom:22px}
+    .statgrid{gap:28px;margin-bottom:20px}
+    .stat{min-width:90px}
+    .stat b{font-size:1.9rem}
+    .stat span{font-size:.82rem}
+    .badge{font-size:.92rem;padding:5px 14px}
+    .panel .note{font-size:1rem;margin:10px 0 18px}
+    .panel button{padding:16px;font-size:1.08rem}
+    #sheet{padding:26px 30px calc(env(safe-area-inset-bottom,0px) + 28px)}
+    #sheet h3{font-size:1.55rem;margin-bottom:16px}
+    .row{padding:14px 0;font-size:1.08rem}
+    .row .sub2{font-size:.88rem;margin-top:4px}
+    .seg button{font-size:1rem;padding:9px 20px}
+    .statline{font-size:.98rem;gap:22px;padding-top:12px}
   }
   @media (orientation:landscape) and (max-height:500px){
     #app{max-width:none;padding-right:92px}
@@ -340,7 +384,7 @@
       width:62px;padding:4px 0;flex-direction:column;justify-content:center;gap:5px;
     }
     #controls button{padding:8px 3px;font-size:.72rem;border-radius:9px}
-    .ix.br{display:none}
+    body[data-card-style="original"] .ix.br{display:none}
     #toast{bottom:calc(env(safe-area-inset-bottom,0px) + 12px)}
   }
 </style>
@@ -371,7 +415,7 @@
 <canvas id="fx"></canvas>
 
 <div id="overlay">
-  <div class="panel">
+  <div class="panel" id="winPanel">
     <h2 id="winTitle">You won!</h2>
     <div class="sub" id="winSub">Solitaire is better without ads.</div>
     <div class="statgrid">
@@ -418,6 +462,13 @@
     </div>
   </div>
   <div class="row">
+    <div>Card style<span class="sub2">Change the deck without restarting your deal</span></div>
+    <div class="seg">
+      <button id="segCardsOriginal">Classic</button>
+      <button id="segCardsCrehore">Vintage</button>
+    </div>
+  </div>
+  <div class="row">
     <div>Restart this deal<span class="sub2">Same shuffle, from the top</span></div>
     <button id="btnRestart">Restart</button>
   </div>
@@ -437,6 +488,15 @@
 /* ================= constants & state ================= */
 const SUITS = ["♠","♥","♦","♣"];
 const RANKS = ["","A","2","3","4","5","6","7","8","9","10","J","Q","K"];
+const CARD_ASSET_ROOT = "assets/cards/crehore-1820/cards";
+const cardAssetPath = (suit, rank) => `${CARD_ASSET_ROOT}/${suit}-${rank}.webp`;
+// The cascade reuses the same source images as the DOM cards. Preloading here
+// also prevents a face from appearing a beat late during the initial deal.
+const CARD_IMAGES = Array.from({length:52}, (_,id)=>{
+  const image = new Image();
+  image.src = cardAssetPath(Math.floor(id/13), (id%13)+1);
+  return image;
+});
 const isRed = s => s===1 || s===2;
 const KEY_GAME = "patience.v1.game";
 const KEY_STATS = "patience.v1.stats";
@@ -451,7 +511,7 @@ let undoStack = [];
 let initialDeal = null;    // shuffle order for "restart"
 let moves = 0, elapsed = 0, started = false, won = false, autoRunning = false;
 let undos = 0; // first undo each game is free; the rest count as a move
-let timerId = null;
+let timerId = null, midnightTimer = null;
 
 /* Sound — a short CC0 recording. Fresh deals always attempt playback; browser
    autoplay policy may silence only the automatic deal at initial page load. */
@@ -492,6 +552,8 @@ let settings = loadJSON(KEY_SET) || { draw3: false };
 if(settings.autoComplete === undefined) settings.autoComplete = true; // auto-finish by default
 if(settings.sound === undefined) settings.sound = true;
 if(settings.haptics === undefined) settings.haptics = true;
+if(settings.cardStyle !== "original" && settings.cardStyle !== "crehore") settings.cardStyle = "crehore";
+document.body.dataset.cardStyle = settings.cardStyle;
 let stats = loadJSON(KEY_STATS) || {
   plays:0, wins:0, streak:0, longest:0, lastWin:null,
   freezes:1, winsToward:0, bestTime:null, bestMoves:null
@@ -553,29 +615,32 @@ function buildDOM(){
     const el = document.createElement("div");
     el.className = "card" + (isRed(card.suit) ? " red" : "");
     el.dataset.id = card.id;
-    el.innerHTML = `<div class="in"><div class="face front">${faceHTML(card)}</div><div class="face back"><div class="bk"></div></div></div>`;
+    el.style.setProperty("--front-image", `url("${cardAssetPath(card.suit, card.rank)}")`);
+    el.innerHTML = `<div class="in"><div class="face front">${originalFaceHTML(card)}</div><div class="face back"><div class="bk"></div></div></div>`;
     board.appendChild(el);
     els.set(card.id, el);
   }
 }
-const MOTIF = { 11:"⚜︎", 12:"♛", 13:"♚" }; // ⚜ jack, ♛ queen, ♚ king (text presentation)
-function faceHTML(c){
-  const s = SUITS[c.suit], r = RANKS[c.rank];
-  let mid;
-  if(c.rank === 1) mid = `<div class="mid ace">${s}</div>`;
-  else if(c.rank >= 11) mid = `<div class="mid court ${["j","q","k"][c.rank-11]}">${MOTIF[c.rank]}</div>`;
-  else mid = `<div class="mid">${s}</div>`;
-  return `<div class="ix tl"><i>${r}</i><b>${s}</b></div><div class="ix br"><i>${r}</i><b>${s}</b></div>` + mid;
+const ORIGINAL_MOTIF = { 11:"⚜︎", 12:"♛", 13:"♚" };
+function originalFaceHTML(card){
+  const suit = SUITS[card.suit], rank = RANKS[card.rank];
+  let center;
+  if(card.rank === 1) center = `<div class="mid ace">${suit}</div>`;
+  else if(card.rank >= 11) center = `<div class="mid court ${["j","q","k"][card.rank-11]}">${ORIGINAL_MOTIF[card.rank]}</div>`;
+  else center = `<div class="mid">${suit}</div>`;
+  return `<div class="ix tl"><i>${rank}</i><b>${suit}</b></div><div class="ix br"><i>${rank}</i><b>${suit}</b></div>${center}`;
 }
 
 /* ================= layout ================= */
 function computeGeometry(){
   const bw = board.clientWidth, bh = board.clientHeight;
-  const gap = Math.max(2, Math.min(10, bw*0.009));
+  const gap = Math.max(2, Math.min(8, bw*0.006));
   const pad = gap;
   const topY = 8;
-  // Width-limited card size (7 columns across).
-  let cw = Math.min((bw - pad*2 - gap*6)/7, 116);
+  // Width-limited card size (7 columns across). iPad gets the full available
+  // table instead of inheriting the desktop-sized cap.
+  const roomyTablet = bw>=700 && bh>=600;
+  let cw = Math.min((bw - pad*2 - gap*6)/7, roomyTablet ? 142 : 124);
   // Height-limited: the top row plus a short tableau fan must fit vertically, or
   // short/landscape viewports clip the bottom cards. Cap card width to suit.
   // Landscape needs room for the top row, a full card, and several readable
@@ -884,8 +949,11 @@ function findHint(){
   return null;
 }
 function hasKingForEmptyColumn(excludeCol){
-  // Stock/waste cards can eventually surface because recycling is unlimited.
-  if(P.stock.concat(P.waste).some(card=>card.rank===13)) return true;
+  // In draw-three, only cards that actually reach the top of the waste can
+  // use the newly opened column. Buried kings are handled by the draw-one
+  // offer instead of making a reversible tableau shuffle look productive.
+  const stockCards = settings.draw3 ? reachableDrawThreeCards() : P.stock.concat(P.waste);
+  if(stockCards.some(card=>card.rank===13)) return true;
   return P.t.some((pile,col)=> col!==excludeCol &&
     pile.some((card,i)=> card.faceUp && card.rank===13 && i>0));
 }
@@ -903,13 +971,34 @@ function pulseStock(){
   // layers its transparent brass ring over the entire draw pile.
   pulseEl(board.querySelector('.ph[data-slot="stock"]'), "stock-hint");
 }
-// Could any card still in the stock or waste land somewhere, once it surfaces?
-function stockPlayable(){
-  return P.stock.concat(P.waste).some(c=>{
-    if(canFound(c)) return true;
-    for(let col=0;col<7;col++) if(canTab(c,col)) return true;
-    return false;
-  });
+function cardIsPlayable(c){
+  if(canFound(c)) return true;
+  for(let col=0;col<7;col++) if(canTab(c,col)) return true;
+  return false;
+}
+// Could any supplied stock/waste card land somewhere if it reaches the top?
+function stockPlayable(pool=P.stock.concat(P.waste)){
+  return pool.some(cardIsPlayable);
+}
+// Enumerate the cards that can genuinely become the waste's top card while
+// cycling the current draw-three stock without removing anything. A buried
+// playable card outside this set is precisely the draw-three deadlock case.
+function reachableDrawThreeCards(){
+  const stock = P.stock.slice(), waste = P.waste.slice();
+  const reachable = new Map(), seen = new Set();
+  while(stock.length || waste.length){
+    const key = stock.map(c=>c.id).join(",") + "|" + waste.map(c=>c.id).join(",");
+    if(seen.has(key)) break;
+    seen.add(key);
+    const exposed = topOf(waste);
+    if(exposed) reachable.set(exposed.id, exposed);
+    if(!stock.length){
+      while(waste.length) stock.push(waste.pop());
+    } else {
+      for(let i=0;i<3 && stock.length;i++) waste.push(stock.pop());
+    }
+  }
+  return [...reachable.values()];
 }
 // The pile's landing position for a ghost preview.
 function slotXY(dst){
@@ -944,6 +1033,7 @@ function ghostMove(h){
   ghostTimers.push(setTimeout(()=> ghosts.forEach(g=>g.remove()), 2100));
 }
 let toastTimer = null;
+let overlayMode = "win";
 function toast(msg){
   const t = $("toast");
   t.textContent = msg;
@@ -957,6 +1047,10 @@ function hint(){
   if(h && h.src.length){ ghostMove(h); return }         // best move → ghost preview
   const helps = stockPlayable();
   if((P.stock.length || P.waste.length) && helps){
+    if(settings.draw3 && !stockPlayable(reachableDrawThreeCards())){
+      showDrawOneOffer();
+      return;
+    }
     pulseStock();
     toast(P.stock.length ? "Draw from the stock" : "Tap the empty slot to recycle ↻");
     return;
@@ -968,6 +1062,8 @@ function hint(){
 }
 function showStuck(){
   stopTimer();
+  overlayMode = "stuck";
+  $("winPanel").classList.remove("daily-win","milestone");
   $("winTitle").textContent = "Out of moves";
   $("winSub").textContent = "No plays remain — this deal is stuck.";
   $("wTime").textContent = fmtTime(elapsed);
@@ -975,7 +1071,23 @@ function showStuck(){
   $("wStreak").textContent = "🔥 " + displayStreak();
   $("wBadges").innerHTML = "";
   $("wNote").textContent = "Undo a few moves to try a different path, or deal again.";
+  $("btnAgain").textContent = "Deal again";
   $("btnAdmire").textContent = "Go back & undo";
+  $("overlay").classList.add("show");
+}
+function showDrawOneOffer(){
+  stopTimer();
+  overlayMode = "draw-one";
+  $("winPanel").classList.remove("daily-win","milestone");
+  $("winTitle").textContent = "A card is out of reach";
+  $("winSub").textContent = "Draw three has no reachable plays left.";
+  $("wTime").textContent = fmtTime(elapsed);
+  $("wMoves").textContent = moves;
+  $("wStreak").textContent = "🔥 " + displayStreak();
+  $("wBadges").innerHTML = '<span class="badge">Draw three</span>';
+  $("wNote").textContent = "A playable card is buried in the stock. Switch to draw one to keep this deal going.";
+  $("btnAgain").textContent = "Switch to draw one";
+  $("btnAdmire").textContent = "Stay with draw three";
   $("overlay").classList.add("show");
 }
 
@@ -1033,14 +1145,33 @@ function startTimer(){
 function stopTimer(){ if(timerId){ clearInterval(timerId); timerId=null } }
 document.addEventListener("visibilitychange", ()=>{
   if(document.hidden) stopTimer();
-  else if(started && !won) startTimer();
+  else {
+    updateHUD();
+    scheduleMidnightRefresh();
+    if(started && !won) startTimer();
+  }
 });
 function fmtTime(s){ return Math.floor(s/60)+":"+String(s%60).padStart(2,"0") }
+// Date.UTC over local calendar fields gives a DST-safe ordinal that flips at
+// the player's local midnight, regardless of their current time zone.
+function localDayNum(d=new Date()){
+  return Math.floor(Date.UTC(d.getFullYear(),d.getMonth(),d.getDate())/86400000);
+}
 function displayStreak(){
   if(stats.lastWin==null) return 0;
-  const gap = dayNum() - stats.lastWin;
+  const gap = localDayNum() - stats.lastWin;
   if(gap<=1) return stats.streak;
   return (gap-1)<=stats.freezes ? stats.streak : 0;
+}
+function scheduleMidnightRefresh(){
+  if(midnightTimer) clearTimeout(midnightTimer);
+  const now = new Date(), next = new Date(now);
+  next.setHours(24,0,0,50);
+  midnightTimer = setTimeout(()=>{
+    updateHUD();
+    if($("sheet").classList.contains("open")) refreshSheet();
+    scheduleMidnightRefresh();
+  }, Math.max(1000,next-now));
 }
 function updateHUD(){
   $("vMoves").textContent = moves;
@@ -1077,9 +1208,9 @@ function tryResume(){
 }
 
 /* ================= streak / win ================= */
-function dayNum(d=new Date()){ return Math.floor((d.getTime() - d.getTimezoneOffset()*60000)/86400000) }
 function recordWin(){
-  const today = dayNum();
+  const today = localDayNum();
+  const firstWinToday = stats.lastWin !== today;
   let usedFreeze = 0, extended = false;
   if(stats.lastWin==null){ stats.streak = 1; extended = true }
   else {
@@ -1100,9 +1231,11 @@ function recordWin(){
   const bestM = stats.bestMoves==null || moves<stats.bestMoves;
   if(bestT) stats.bestTime = elapsed;
   if(bestM) stats.bestMoves = moves;
+  const milestone = stats.wins%5===0 ? stats.wins : 0;
   saveJSON(KEY_STATS, stats);
-  return { usedFreeze, earned, bestT, bestM, extended };
+  return { usedFreeze, earned, bestT, bestM, extended, firstWinToday, milestone };
 }
+let lastWinMilestone = 0;
 function checkWin(){
   if(won || !P.f.every(p=>p.length===13)) return;
   won = true;
@@ -1110,13 +1243,22 @@ function checkWin(){
   hapticWin();
   localStorage.removeItem(KEY_GAME);
   const r = recordWin();
+  lastWinMilestone = r.milestone;
   updateHUD();
   updateButtons();
-  if(!reduced) cascade();
+  $("chipStreak").classList.add("pulse-glow");
+  setTimeout(()=>$("chipStreak").classList.remove("pulse-glow"), 1300);
+  if(!reduced) cascade(!!r.milestone);
   setTimeout(()=>showWin(r), reduced?100:2200);
 }
 function showWin(r){
-  $("winTitle").textContent = "You won!";
+  overlayMode = "win";
+  $("winPanel").classList.toggle("daily-win", r.firstWinToday && !r.milestone);
+  $("winPanel").classList.toggle("milestone", !!r.milestone);
+  if(r.milestone) $("winTitle").textContent = `✨ ${r.milestone} wins! ✨`;
+  else if(r.firstWinToday) $("winTitle").textContent = "🔥 First win of the day!";
+  else $("winTitle").textContent = "You won!";
+  $("btnAgain").textContent = "Deal again";
   $("btnAdmire").textContent = "Admire the cascade";
   $("wTime").textContent = fmtTime(elapsed);
   $("wMoves").textContent = moves;
@@ -1125,23 +1267,24 @@ function showWin(r){
   if(r.bestT && stats.wins>1) badges.push("🏆 Best time");
   if(r.bestM && stats.wins>1) badges.push("🏆 Fewest moves");
   if(r.earned) badges.push("❄️ Freeze earned");
+  if(r.milestone) badges.push(`🎉 ${r.milestone}-win milestone`);
   $("wBadges").innerHTML = badges.map(b=>`<span class="badge">${b}</span>`).join("");
   let note = "";
   if(r.usedFreeze) note = `❄️ ${r.usedFreeze} freeze${r.usedFreeze>1?"s":""} quietly covered your missed day${r.usedFreeze>1?"s":""}.`;
-  else if(stats.streak>1) note = `Day ${stats.streak} of your streak — see you tomorrow.`;
+  else if(stats.streak>1) note = `Day ${stats.streak} of your streak — keep the wins coming.`;
   else note = "A streak begins with a single win.";
   if(!r.earned && stats.freezes<3) note += ` (${10-stats.winsToward} more win${10-stats.winsToward>1?"s":""} to a freeze ❄️)`;
   $("wNote").textContent = note;
   const subs = ["Solitaire, but better.","The cards fell your way.","Order from chaos, one card at a time.","Beautifully played.","The table is yours."];
-  $("winSub").textContent = subs[Math.floor(Math.random()*subs.length)];
+  if(r.milestone) $("winSub").textContent = "That deserves an extra celebration.";
+  else if(r.firstWinToday) $("winSub").textContent = "Your daily streak is secured.";
+  else $("winSub").textContent = subs[Math.floor(Math.random()*subs.length)];
   $("overlay").classList.add("show");
-  $("chipStreak").classList.add("pulse-glow");
-  setTimeout(()=>$("chipStreak").classList.remove("pulse-glow"), 1300);
 }
 
 /* ================= win cascade (canvas, classic trails) ================= */
 let fxTimer = null;
-function cascade(){
+function cascade(special=false){
   const cv = $("fx"), ctx = cv.getContext("2d");
   const dpr = Math.min(devicePixelRatio||1, 2);
   cv.width = innerWidth*dpr; cv.height = innerHeight*dpr;
@@ -1157,12 +1300,23 @@ function cascade(){
     if(card) queue.push({ card, x: rect.left+G.xs(f), y: rect.top+G.topY });
   }
   const sprites = [];
+  const sparkles = special ? Array.from({length:110},(_,i)=>({
+    x:innerWidth*(.18+Math.random()*.64), y:-20-Math.random()*innerHeight*.35,
+    vx:-1.2+Math.random()*2.4, vy:1.4+Math.random()*3.2,
+    spin:-.18+Math.random()*.36, angle:Math.random()*Math.PI,
+    size:3+Math.random()*6, color:["#d9a648","#fff0aa","#bf3b33","#e9e2cf"][i%4]
+  })) : [];
   let qi = 0, last = 0, spawnAcc = 0;
   const start = performance.now();
   function drawCard(s){
-    const r = cw*0.09;
+    if(settings.cardStyle === "crehore"){
+      const image = CARD_IMAGES[s.card.id];
+      if(image && image.complete && image.naturalWidth) ctx.drawImage(image, s.x, s.y, cw, ch);
+      return;
+    }
+    const radius = cw*0.09;
     ctx.beginPath();
-    ctx.roundRect(s.x, s.y, cw, ch, r);
+    ctx.roundRect(s.x, s.y, cw, ch, radius);
     ctx.fillStyle = "#faf5e9"; ctx.fill();
     ctx.strokeStyle = "rgba(70,60,40,.4)"; ctx.lineWidth = 1; ctx.stroke();
     ctx.fillStyle = isRed(s.card.suit) ? "#bf3b33" : "#26282e";
@@ -1194,7 +1348,14 @@ function cascade(){
       if(s.x < -cw*1.5 || s.x > innerWidth+cw*0.5) s.dead = true;
       else drawCard(s);
     }
-    if(t-start < 9000 && sprites.some(s=>!s.dead) || qi<queue.length){
+    for(const p of sparkles){
+      if(p.dead) continue;
+      p.vy += .035*dt; p.x += p.vx*dt; p.y += p.vy*dt; p.angle += p.spin*dt;
+      if(p.y>innerHeight+20){ p.dead=true; continue }
+      ctx.save(); ctx.translate(p.x,p.y); ctx.rotate(p.angle); ctx.fillStyle=p.color;
+      ctx.fillRect(-p.size/2,-p.size,p.size,p.size*2); ctx.restore();
+    }
+    if((t-start < 9000 && (sprites.some(s=>!s.dead) || sparkles.some(p=>!p.dead))) || qi<queue.length){
       fxTimer = requestAnimationFrame(frame);
     } else endCascade();
   }
@@ -1215,7 +1376,8 @@ let newConfirm = null;
 $("btnNew").onclick = ()=>{
   const b = $("btnNew");
   if(started && moves>0 && !won && !newConfirm){
-    b.textContent = "Sure?"; b.classList.add("confirm");
+    b.textContent = "Confirm"; b.classList.add("confirm");
+    toast("Tap Confirm to start a new deal");
     newConfirm = setTimeout(()=>{ b.textContent="♻︎ New"; b.classList.remove("confirm"); newConfirm=null }, 2500);
     return;
   }
@@ -1224,11 +1386,23 @@ $("btnNew").onclick = ()=>{
   endCascade(); $("overlay").classList.remove("show");
   newGame();
 };
-$("btnAgain").onclick = ()=>{ endCascade(); $("overlay").classList.remove("show"); newGame() };
+$("btnAgain").onclick = ()=>{
+  if(overlayMode==="draw-one"){
+    settings.draw3=false;
+    saveJSON(KEY_SET,settings);
+    $("overlay").classList.remove("show");
+    layout(); updateButtons(); saveGame();
+    if(started && !won) startTimer();
+    toast("Switched to draw one");
+    maybeAutoFinish();
+    return;
+  }
+  endCascade(); $("overlay").classList.remove("show"); newGame();
+};
 $("btnAdmire").onclick = ()=>{
   $("overlay").classList.remove("show");
   if(won){
-    if(!reduced) cascade();
+    if(!reduced) cascade(!!lastWinMilestone);
     // bring the modal back after another look
     setTimeout(()=>{ if(won) $("overlay").classList.add("show") }, 6000);
   } else if(started){
@@ -1247,6 +1421,16 @@ $("segSoundOn").onclick = ()=>setSound(true);
 $("segSoundOff").onclick = ()=>setSound(false);
 $("segHapticsOn").onclick = ()=>{ settings.haptics=true; saveJSON(KEY_SET,settings); refreshSheet(); haptic("LIGHT") };
 $("segHapticsOff").onclick = ()=>{ settings.haptics=false; saveJSON(KEY_SET,settings); refreshSheet() };
+function setCardStyle(cardStyle){
+  settings.cardStyle = cardStyle;
+  document.body.dataset.cardStyle = cardStyle;
+  saveJSON(KEY_SET,settings);
+  refreshSheet();
+  haptic("LIGHT");
+  toast(cardStyle === "original" ? "Classic cards" : "Vintage cards");
+}
+$("segCardsOriginal").onclick = ()=>setCardStyle("original");
+$("segCardsCrehore").onclick = ()=>setCardStyle("crehore");
 $("btnRestart").onclick = ()=>{
   sheet.classList.remove("open"); sheetBack.classList.remove("show");
   endCascade(); $("overlay").classList.remove("show");
@@ -1261,6 +1445,8 @@ function refreshSheet(){
   $("segSoundOff").classList.toggle("on", settings.sound === false);
   $("segHapticsOn").classList.toggle("on", settings.haptics !== false);
   $("segHapticsOff").classList.toggle("on", settings.haptics === false);
+  $("segCardsOriginal").classList.toggle("on", settings.cardStyle === "original");
+  $("segCardsCrehore").classList.toggle("on", settings.cardStyle === "crehore");
   const wr = stats.plays ? Math.round(100*stats.wins/stats.plays) : 0;
   $("statline").innerHTML =
     `<span>wins <b>${stats.wins}</b></span>`+
@@ -1281,6 +1467,7 @@ window.addEventListener("resize", ()=>{ if(P) layout() });
 /* ================= boot ================= */
 if(!tryResume()) newGame();
 updateHUD();
+scheduleMidnightRefresh();
 
 /* Register the service worker for offline/installable web play.
    Skip inside the native Capacitor shell (it serves locally and a SW under
