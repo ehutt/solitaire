@@ -28,6 +28,7 @@ for a native iOS build.
   Windows original), painted on canvas, followed by a stats card
 - **Deal animation, 3D card flips, restart-same-deal**, and full persistence —
   close the tab mid-game and it resumes exactly where you left off
+- **Recorded card-shuffle sound** on fresh deals, with a persistent mute setting
 - Respects `prefers-reduced-motion`
 
 ## Design

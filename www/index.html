@@ -92,6 +92,10 @@
   .ph.can-recycle{border-color:var(--line)}
   .ph.can-recycle .recy{opacity:.9;color:var(--muted)}
   .ph.hint{animation:hintPulse .85s ease 2}
+  .ph.stock-hint{
+    z-index:800;pointer-events:none;
+    animation:hintPulse .85s ease 2;
+  }
 
   /* ---------- CARDS ---------- */
   .card{
@@ -400,6 +404,13 @@
     </div>
   </div>
   <div class="row">
+    <div>Sound<span class="sub2">Card shuffle when a new game is dealt</span></div>
+    <div class="seg">
+      <button id="segSoundOn">On</button>
+      <button id="segSoundOff">Muted</button>
+    </div>
+  </div>
+  <div class="row">
     <div>Haptics<span class="sub2">Vibration feedback for moves and wins</span></div>
     <div class="seg">
       <button id="segHapticsOn">On</button>
@@ -442,6 +453,30 @@ let moves = 0, elapsed = 0, started = false, won = false, autoRunning = false;
 let undos = 0; // first undo each game is free; the rest count as a move
 let timerId = null;
 
+/* Sound — a short CC0 recording. Fresh deals always attempt playback; browser
+   autoplay policy may silence only the automatic deal at initial page load. */
+const shuffleAudio = new Audio("assets/audio/card-shuffle.mp3");
+shuffleAudio.preload = "auto";
+shuffleAudio.volume = .65;
+function playShuffleSound(){
+  if(settings.sound === false) return;
+  try{
+    shuffleAudio.pause();
+    shuffleAudio.currentTime = 0;
+    const playing = shuffleAudio.play();
+    if(playing) playing.catch(()=>{});
+  }catch(e){}
+}
+function setSound(enabled){
+  settings.sound = enabled;
+  saveJSON(KEY_SET,settings);
+  if(!enabled){
+    shuffleAudio.pause();
+    shuffleAudio.currentTime = 0;
+  }
+  refreshSheet();
+}
+
 /* Haptics — real taps inside the native Capacitor shell, a silent no-op on the
    web. Suppressed while auto-finishing so the cascade doesn't machine-gun. */
 const Haptics = window.Capacitor && window.Capacitor.Plugins && window.Capacitor.Plugins.Haptics;
@@ -455,6 +490,7 @@ function hapticWin(){
 }
 let settings = loadJSON(KEY_SET) || { draw3: false };
 if(settings.autoComplete === undefined) settings.autoComplete = true; // auto-finish by default
+if(settings.sound === undefined) settings.sound = true;
 if(settings.haptics === undefined) settings.haptics = true;
 let stats = loadJSON(KEY_STATS) || {
   plays:0, wins:0, streak:0, longest:0, lastWin:null,
@@ -474,6 +510,7 @@ function makeShuffle(){
   return ids;
 }
 function newGame(order){
+  const shuffled = !order;
   order = order || makeShuffle();
   initialDeal = order.slice();
   cards = order.map(id => ({ id, suit: Math.floor(id/13), rank: (id%13)+1, faceUp:false, x:0, y:0 }));
@@ -488,6 +525,7 @@ function newGame(order){
   undoStack = [];
   stopTimer();
   buildDOM();
+  if(shuffled) playShuffleSound();
   dealAnimation();
   updateHUD(); updateButtons(); saveGame();
 }
@@ -851,25 +889,19 @@ function hasKingForEmptyColumn(excludeCol){
   return P.t.some((pile,col)=> col!==excludeCol &&
     pile.some((card,i)=> card.faceUp && card.rank===13 && i>0));
 }
-function pulseEl(el){
+function pulseEl(el, className="hint"){
   if(!el) return;
   // Clear any prior pulse, force a reflow so the animation restarts, then
-  // re-add. Remove the class once it ends so it never lingers (a stuck .hint
-  // was overriding z-index and making the card float above its column).
-  el.classList.remove("hint"); void el.offsetWidth; el.classList.add("hint");
-  const done = ()=>{ el.classList.remove("hint"); el.removeEventListener("animationend", done); el.removeEventListener("animationcancel", done); };
+  // re-add. Remove the class once it ends so it never lingers.
+  el.classList.remove(className); void el.offsetWidth; el.classList.add(className);
+  const done = ()=>{ el.classList.remove(className); el.removeEventListener("animationend", done); el.removeEventListener("animationcancel", done); };
   el.addEventListener("animationend", done);
   el.addEventListener("animationcancel", done);
 }
-// The element to highlight for a hint destination: the pile's top card if it
-// has one (the placeholder is hidden behind cards), otherwise the placeholder.
-function destEl(dst){
-  if(dst==="stock") return P.stock.length ? els.get(topOf(P.stock).id)
-                                          : board.querySelector('.ph[data-slot="stock"]');
-  const kind = dst[0], idx = +dst.slice(1);
-  const pile = kind==="f" ? P.f[idx] : P.t[idx];
-  return pile.length ? els.get(topOf(pile).id)
-                     : board.querySelector(`.ph[data-slot="${dst}"]`);
+function pulseStock(){
+  // The placeholder is normally behind the cards. stock-hint temporarily
+  // layers its transparent brass ring over the entire draw pile.
+  pulseEl(board.querySelector('.ph[data-slot="stock"]'), "stock-hint");
 }
 // Could any card still in the stock or waste land somewhere, once it surfaces?
 function stockPlayable(){
@@ -925,7 +957,7 @@ function hint(){
   if(h && h.src.length){ ghostMove(h); return }         // best move → ghost preview
   const helps = stockPlayable();
   if((P.stock.length || P.waste.length) && helps){
-    pulseEl(destEl("stock"));
+    pulseStock();
     toast(P.stock.length ? "Draw from the stock" : "Tap the empty slot to recycle ↻");
     return;
   }
@@ -1211,6 +1243,8 @@ $("segD1").onclick = ()=>{ settings.draw3=false; saveJSON(KEY_SET,settings); ref
 $("segD3").onclick = ()=>{ settings.draw3=true; saveJSON(KEY_SET,settings); refreshSheet(); layout() };
 $("segAutoOn").onclick = ()=>{ settings.autoComplete=true; saveJSON(KEY_SET,settings); refreshSheet(); updateButtons(); maybeAutoFinish() };
 $("segAutoOff").onclick = ()=>{ settings.autoComplete=false; saveJSON(KEY_SET,settings); refreshSheet(); updateButtons() };
+$("segSoundOn").onclick = ()=>setSound(true);
+$("segSoundOff").onclick = ()=>setSound(false);
 $("segHapticsOn").onclick = ()=>{ settings.haptics=true; saveJSON(KEY_SET,settings); refreshSheet(); haptic("LIGHT") };
 $("segHapticsOff").onclick = ()=>{ settings.haptics=false; saveJSON(KEY_SET,settings); refreshSheet() };
 $("btnRestart").onclick = ()=>{
@@ -1223,6 +1257,8 @@ function refreshSheet(){
   $("segD3").classList.toggle("on", settings.draw3);
   $("segAutoOn").classList.toggle("on", settings.autoComplete !== false);
   $("segAutoOff").classList.toggle("on", settings.autoComplete === false);
+  $("segSoundOn").classList.toggle("on", settings.sound !== false);
+  $("segSoundOff").classList.toggle("on", settings.sound === false);
   $("segHapticsOn").classList.toggle("on", settings.haptics !== false);
   $("segHapticsOff").classList.toggle("on", settings.haptics === false);
   const wr = stats.plays ? Math.round(100*stats.wins/stats.plays) : 0;

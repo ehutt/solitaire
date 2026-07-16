@@ -1,11 +1,12 @@
 /* Better Solitaire — service worker
    Offline-first shell caching. Bump CACHE when assets change so clients
    pick up the new version (old caches are purged on activate). */
-const CACHE = "solitaire-v5";
+const CACHE = "solitaire-v6";
 const SHELL = [
   ".",
   "index.html",
   "manifest.json",
+  "assets/audio/card-shuffle.mp3",
   "icons/icon-192.png",
   "icons/icon-512.png",
   "icons/maskable-512.png",
