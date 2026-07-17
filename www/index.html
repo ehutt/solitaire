@@ -382,8 +382,8 @@
   }
 
   /* ============================================================
-     Vintage table — light Federal blue, inspired by early-American
-     letterpress and the Crehore deck. Everything is scoped to the
+     Vintage table — muted verdigris, inspired by early-American painted
+     furniture, letterpress, and the Crehore deck. Everything is scoped to the
      Vintage card style so Classic keeps its original green card room.
      ============================================================ */
   .brand-rosette,.vintage-icon{display:none}
@@ -391,26 +391,35 @@
   .control-label{white-space:nowrap}
 
   body[data-card-style="crehore"]{
-    --felt:#83aab5; --felt-deep:#759da9;
-    --line:#1b4966; --line-soft:rgba(24,66,91,.5);
+    --felt:#7f9e94; --felt-deep:#6e8a82;
+    --line:#21495b; --line-soft:rgba(33,73,91,.48);
     --brass:#cf952f; --brass-soft:#ad7420;
-    --text:#173d5b; --muted:#3b647a;
+    --text:#163e54; --muted:#365c69;
+    --vintage-ink:#163e54; --vintage-ink-strong:#12374b; --vintage-ink-mid:#365c69;
+    --vintage-ink-rgb:22,62,84; --vintage-rule-rgb:18,55,75;
+    --vintage-slot-rgb:37,78,94; --vintage-shadow-rgb:27,48,51;
+    --vintage-wash-rgb:31,72,70; --vintage-button-rgb:108,141,132;
+    --vintage-accent:#a94736;
+    --vintage-deep:#244f64; --vintage-sheet-top:#8ca39a; --vintage-sheet-bottom:#748e86;
     --vintage-display:"Baskerville","Iowan Old Style","Big Caslon",Georgia,serif;
     --vintage-text:"Baskerville","Iowan Old Style","Palatino Nova",Palatino,Georgia,serif;
     position:relative;
     font-family:var(--vintage-text);
     background:
-      radial-gradient(115% 72% at 50% -8%,rgba(255,255,255,.22),transparent 62%),
-      radial-gradient(80% 56% at 18% 72%,rgba(31,78,98,.08),transparent 74%),
+      radial-gradient(105% 66% at 22% -5%,rgba(246,235,202,.16),transparent 62%),
+      radial-gradient(82% 58% at 92% 66%,rgba(var(--vintage-wash-rgb),.1),transparent 72%),
+      radial-gradient(55% 38% at 8% 78%,rgba(235,216,173,.055),transparent 74%),
+      linear-gradient(108deg,rgba(255,255,255,.035),transparent 31%,rgba(30,67,64,.045) 68%,transparent),
       linear-gradient(180deg,var(--felt),var(--felt-deep));
   }
   body[data-card-style="crehore"]::before{
     content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
     background:
-      repeating-linear-gradient(7deg,rgba(255,255,255,.035) 0 1px,transparent 1px 5px),
+      repeating-linear-gradient(7deg,rgba(255,255,255,.04) 0 1px,transparent 1px 5px),
+      repeating-linear-gradient(96deg,rgba(31,59,53,.022) 0 1px,transparent 1px 8px),
       url("assets/cards/crehore-1820/components/paper-stock.webp") center/100% 100% no-repeat;
-    filter:grayscale(1) contrast(1.38);
-    mix-blend-mode:soft-light;opacity:.34;
+    filter:grayscale(1) sepia(.08) contrast(1.48);
+    mix-blend-mode:soft-light;opacity:.43;
   }
   body[data-card-style="crehore"] #app{position:relative;z-index:1}
 
@@ -418,71 +427,76 @@
     display:grid;grid-template-columns:1fr;gap:5px;
     margin:calc(env(safe-area-inset-top,0px) + 6px) 14px 0;
     padding:7px 0 6px;
-    border-top:4px double rgba(20,58,84,.92);
-    border-bottom:4px double rgba(20,58,84,.92);
+    border-top:4px double rgba(var(--vintage-rule-rgb),.92);
+    border-bottom:4px double rgba(var(--vintage-rule-rgb),.92);
   }
   body[data-card-style="crehore"] .brand{
     width:100%;justify-content:center;align-items:center;gap:clamp(9px,3vw,22px);
-    color:#153b59;font-family:var(--vintage-display);
+    color:var(--vintage-ink-strong);font-family:var(--vintage-display);
     font-size:clamp(1.9rem,7vw,3rem);font-weight:400;
     letter-spacing:-.035em;line-height:1;white-space:nowrap;
-    text-shadow:.35px .55px 0 rgba(247,234,199,.38),-.2px -.2px 0 rgba(19,55,78,.18);
+    text-shadow:.35px .55px 0 rgba(247,234,199,.38),-.2px -.2px 0 rgba(var(--vintage-shadow-rgb),.18);
   }
   body[data-card-style="crehore"] .brand .pip{display:none}
   body[data-card-style="crehore"] .brand-rosette{
     display:block;flex:none;width:.82em;height:.82em;overflow:visible;
-    filter:drop-shadow(.35px .55px 0 rgba(19,55,78,.22));
+    filter:drop-shadow(.35px .55px 0 rgba(var(--vintage-shadow-rgb),.22));
   }
+  body[data-card-style="crehore"] .brand-rosette:first-child{transform:rotate(-3deg)}
+  body[data-card-style="crehore"] .brand-rosette:last-child{transform:rotate(5deg) scale(.96)}
   body[data-card-style="crehore"] .chips{
     position:relative;width:100%;justify-content:center;gap:0;
-    border-top:1.5px solid rgba(20,58,84,.72);padding-top:4px;
+    border-top:1.5px solid rgba(var(--vintage-rule-rgb),.72);padding-top:4px;
   }
   body[data-card-style="crehore"] .chips::before,
   body[data-card-style="crehore"] .chips::after{
-    content:"◆";align-self:center;color:#b74432;font-size:.42rem;
+    content:"";align-self:center;width:6px;height:7px;flex:none;
+    background:var(--vintage-accent);
+    clip-path:polygon(48% 0,96% 45%,58% 100%,4% 55%);
+    transform:rotate(-4deg);
     margin:0 clamp(5px,2vw,14px);
   }
+  body[data-card-style="crehore"] .chips::after{transform:rotate(5deg) scale(.9)}
   body[data-card-style="crehore"] .chip{
     min-height:22px;justify-content:center;gap:3px;
     background:transparent;border:0;border-radius:0;
-    color:#173d5b;padding:1px clamp(6px,2.4vw,15px);
+    color:var(--vintage-ink);padding:1px clamp(6px,2.4vw,15px);
     font-family:var(--vintage-text);font-size:.76rem;font-weight:400;
     font-variant-numeric:tabular-nums;letter-spacing:.07em;
   }
   body[data-card-style="crehore"] .chip + .chip{
-    border-left:1.5px solid rgba(23,61,91,.52);
+    border-left:1.5px solid rgba(var(--vintage-ink-rgb),.52);
   }
   body[data-card-style="crehore"] .chip b{font-weight:600}
   body[data-card-style="crehore"] .chip small{
     display:inline;
-    color:#315d75;font-family:var(--vintage-text);font-size:.64rem;
+    color:var(--vintage-ink-mid);font-family:var(--vintage-text);font-size:.64rem;
     letter-spacing:.08em;text-transform:uppercase;
   }
 
   body[data-card-style="crehore"] .ph{
-    border:1px dashed rgba(29,73,99,.5);color:rgba(23,61,91,.42);
+    border:1px dashed rgba(var(--vintage-slot-rgb),.5);color:rgba(var(--vintage-ink-rgb),.42);
     font-family:var(--vintage-display);
   }
   body[data-card-style="crehore"] .ph[data-slot^="f"]{
-    border-style:solid;border-color:rgba(29,73,99,.34);
+    border-style:solid;border-color:rgba(var(--vintage-slot-rgb),.34);
   }
   body[data-card-style="crehore"] .face{
-    box-shadow:0 1px 1.5px rgba(19,49,66,.24),0 2px 3px rgba(19,49,66,.1);
+    box-shadow:0 1px 1.25px rgba(var(--vintage-shadow-rgb),.2),0 2px 2.5px rgba(var(--vintage-shadow-rgb),.07);
   }
+  /* Stock cards overlap exactly, so their individual shadows otherwise stack
+     into one artificially heavy halo around the deck. */
+  body[data-card-style="crehore"] .card.stock-card .face{box-shadow:none}
 
   body[data-card-style="crehore"] #controls{
     position:relative;margin:0 14px;padding:9px 0 calc(env(safe-area-inset-bottom,0px) + 11px);
-    gap:8px;border-top:4px double rgba(20,58,84,.9);
-  }
-  body[data-card-style="crehore"] #controls::before{
-    content:"◆";position:absolute;top:-.55em;left:50%;transform:translateX(-50%);
-    color:#b74432;font-size:.5rem;text-shadow:0 0 4px var(--felt);
+    gap:8px;border-top:4px double rgba(var(--vintage-rule-rgb),.9);
   }
   body[data-card-style="crehore"] #controls button{
     display:inline-flex;align-items:center;justify-content:center;gap:6px;
     min-width:0;min-height:42px;padding:8px clamp(7px,2.5vw,15px);
-    color:#173d5b;background:rgba(116,155,168,.12);
-    border:2px solid rgba(20,58,84,.88);border-radius:4px;
+    color:var(--vintage-ink);background:rgba(var(--vintage-button-rgb),.12);
+    border:2px solid rgba(var(--vintage-rule-rgb),.88);border-radius:4px;
     box-shadow:inset 0 0 0 1px rgba(239,226,193,.2),0 1px 0 rgba(245,232,197,.12);
     font-family:var(--vintage-text);font-size:.82rem;font-weight:600;
     letter-spacing:.08em;text-transform:uppercase;
@@ -498,59 +512,62 @@
   body[data-card-style="crehore"] #controls .classic-icon{display:none}
   body[data-card-style="crehore"] #controls .vintage-icon{
     display:block;flex:none;width:23px;height:23px;overflow:visible;
-    fill:none;stroke:currentColor;stroke-width:1.35;
-    stroke-linecap:square;stroke-linejoin:round;
+    fill:none;stroke:currentColor;stroke-width:1.45;
+    stroke-linecap:round;stroke-linejoin:round;
   }
   body[data-card-style="crehore"] #controls .vintage-icon .solid{
     fill:currentColor;stroke:none;
+  }
+  body[data-card-style="crehore"] #controls .vintage-icon .cut{
+    fill:none;stroke:var(--felt);stroke-width:1;opacity:.82;
   }
   body[data-card-style="crehore"] #btnNew.confirm{
     color:#75352b;background:rgba(240,220,176,.22);border-color:#8e4034;
   }
   body[data-card-style="crehore"] #toast{
-    color:#173d5b;background:rgba(242,231,204,.96);
-    border:3px double rgba(23,61,91,.72);border-radius:5px;
+    color:var(--vintage-ink);background:rgba(242,231,204,.96);
+    border:3px double rgba(var(--vintage-ink-rgb),.72);border-radius:5px;
     font-family:var(--vintage-text);letter-spacing:.02em;
   }
   body[data-card-style="crehore"] #overlay{
-    background:rgba(31,66,82,.42);
+    background:rgba(var(--vintage-wash-rgb),.42);
   }
   body[data-card-style="crehore"] .panel{
-    color:#173d5b;background:linear-gradient(165deg,#f7efd9,#e8dbbd);
-    border:3px double rgba(23,61,91,.68);border-radius:7px;
+    color:var(--vintage-ink);background:linear-gradient(165deg,#f7efd9,#e8dbbd);
+    border:3px double rgba(var(--vintage-ink-rgb),.68);border-radius:7px;
   }
   body[data-card-style="crehore"] .panel h2,
   body[data-card-style="crehore"] #sheet h3{
-    font-family:var(--vintage-display);font-weight:400;color:#173d5b;
+    font-family:var(--vintage-display);font-weight:400;color:var(--vintage-ink);
   }
   body[data-card-style="crehore"] .panel button{
-    color:#f3e7c9;background:#234f68;border:1px solid rgba(23,61,91,.8);
+    color:#f3e7c9;background:var(--vintage-deep);border:1px solid rgba(var(--vintage-ink-rgb),.8);
     border-radius:4px;font-family:var(--vintage-text);letter-spacing:.04em;
   }
-  body[data-card-style="crehore"] .panel button.ghost{color:#315d75;background:transparent}
+  body[data-card-style="crehore"] .panel button.ghost{color:var(--vintage-ink-mid);background:transparent}
   body[data-card-style="crehore"] #sheet{
-    color:#173d5b;
+    color:var(--vintage-ink);
     background:
       repeating-linear-gradient(0deg,rgba(255,255,255,.025) 0 1px,transparent 1px 3px),
-      linear-gradient(180deg,#8aadb7,#789da9);
-    border-top:3px double rgba(23,61,91,.78);border-radius:8px 8px 0 0;
+      linear-gradient(180deg,var(--vintage-sheet-top),var(--vintage-sheet-bottom));
+    border-top:3px double rgba(var(--vintage-ink-rgb),.78);border-radius:8px 8px 0 0;
     font-family:var(--vintage-text);
   }
-  body[data-card-style="crehore"] #sheetBack{background:rgba(24,51,67,.38)}
-  body[data-card-style="crehore"] .row{border-bottom-color:rgba(23,61,91,.2)}
+  body[data-card-style="crehore"] #sheetBack{background:rgba(var(--vintage-shadow-rgb),.38)}
+  body[data-card-style="crehore"] .row{border-bottom-color:rgba(var(--vintage-ink-rgb),.2)}
   body[data-card-style="crehore"] .row .sub2,
-  body[data-card-style="crehore"] .statline{color:#315d75}
-  body[data-card-style="crehore"] .statline b{color:#173d5b}
+  body[data-card-style="crehore"] .statline{color:var(--vintage-ink-mid)}
+  body[data-card-style="crehore"] .statline b{color:var(--vintage-ink)}
   body[data-card-style="crehore"] .seg{
-    background:rgba(238,225,194,.18);border:1px solid rgba(23,61,91,.28);
+    background:rgba(238,225,194,.18);border:1px solid rgba(var(--vintage-ink-rgb),.28);
     border-radius:5px;
   }
   body[data-card-style="crehore"] .seg button,
   body[data-card-style="crehore"] #btnRestart{
-    color:#173d5b;font-family:var(--vintage-text);border-radius:3px;
+    color:var(--vintage-ink);font-family:var(--vintage-text);border-radius:3px;
   }
   body[data-card-style="crehore"] .seg button.on{
-    color:#f3e7c9;background:#234f68;
+    color:#f3e7c9;background:var(--vintage-deep);
   }
 
   @media (max-width:599px){
@@ -591,7 +608,7 @@
     body[data-card-style="crehore"] #controls{
       position:fixed;left:auto;right:calc(env(safe-area-inset-right, 0px) + 6px);
       top:calc(env(safe-area-inset-top, 0px) + 42px);bottom:env(safe-area-inset-bottom, 0px);
-      width:72px;margin:0;border-top:0;border-left:4px double rgba(20,58,84,.9);
+      width:72px;margin:0;border-top:0;border-left:4px double rgba(var(--vintage-rule-rgb),.9);
       padding:4px 0 4px 7px;
     }
     body[data-card-style="crehore"] #controls::before{display:none}
@@ -608,30 +625,36 @@
   <header id="hud">
     <div class="brand">
       <svg class="brand-rosette" viewBox="0 0 32 32" aria-hidden="true">
-        <path d="M16 1.5c2.3 4 2.2 8.5 0 12.3-2.2-3.8-2.3-8.3 0-12.3Z" fill="#c7462f" stroke="#1b4966" stroke-width=".7"/>
-        <path d="M16 1.5c2.3 4 2.2 8.5 0 12.3-2.2-3.8-2.3-8.3 0-12.3Z" transform="rotate(45 16 16)" fill="#e0a22b" stroke="#1b4966" stroke-width=".7"/>
-        <path d="M16 1.5c2.3 4 2.2 8.5 0 12.3-2.2-3.8-2.3-8.3 0-12.3Z" transform="rotate(90 16 16)" fill="#cf5230" stroke="#1b4966" stroke-width=".7"/>
-        <path d="M16 1.5c2.3 4 2.2 8.5 0 12.3-2.2-3.8-2.3-8.3 0-12.3Z" transform="rotate(135 16 16)" fill="#e5ad32" stroke="#1b4966" stroke-width=".7"/>
-        <path d="M16 1.5c2.3 4 2.2 8.5 0 12.3-2.2-3.8-2.3-8.3 0-12.3Z" transform="rotate(180 16 16)" fill="#bd3e2d" stroke="#1b4966" stroke-width=".7"/>
-        <path d="M16 1.5c2.3 4 2.2 8.5 0 12.3-2.2-3.8-2.3-8.3 0-12.3Z" transform="rotate(225 16 16)" fill="#d99526" stroke="#1b4966" stroke-width=".7"/>
-        <path d="M16 1.5c2.3 4 2.2 8.5 0 12.3-2.2-3.8-2.3-8.3 0-12.3Z" transform="rotate(270 16 16)" fill="#d24c30" stroke="#1b4966" stroke-width=".7"/>
-        <path d="M16 1.5c2.3 4 2.2 8.5 0 12.3-2.2-3.8-2.3-8.3 0-12.3Z" transform="rotate(315 16 16)" fill="#e3a52c" stroke="#1b4966" stroke-width=".7"/>
-        <circle cx="16" cy="16" r="4.1" fill="#d9a02a" stroke="#1b4966" stroke-width="1"/>
-        <circle cx="16" cy="16" r="1.5" fill="#bd3e2d" stroke="#1b4966" stroke-width=".65"/>
+        <g stroke="currentColor" stroke-width=".8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M15.5 13.7C13.8 10.5 14.1 5.2 16.3 1.8c2 3.8 1.5 8.6-.8 11.9Z" fill="#bd4b35"/>
+          <path d="M18.2 14.1c.8-3.6 4.1-7.2 7.5-8.1-.5 4.2-3.6 7.6-7.5 8.1Z" fill="#d99b32"/>
+          <path d="M19 16.5c3-2 8-2.4 11-.4-3.2 2.6-7.8 2.7-11 .4Z" fill="#c25439"/>
+          <path d="M18.1 18.9c3.5.7 7.1 4 7.8 7.3-4.1-.4-7.2-3.4-7.8-7.3Z" fill="#d5a13b"/>
+          <path d="M15.6 19.2c2 3 1.9 8.2-.3 11-2.1-3.4-1.8-7.9.3-11Z" fill="#b84333"/>
+          <path d="M13.2 18.5c-.8 3.5-4.3 7.2-7.6 7.8.6-4.1 3.5-7.2 7.6-7.8Z" fill="#d39a31"/>
+          <path d="M12.7 15.7c-3.2 1.8-8.2 1.5-10.8-.8 3.5-2 8-1.5 10.8.8Z" fill="#bd4d37"/>
+          <path d="M13.6 13.6c-3.6-.9-6.7-4.2-7.3-7.7 3.9.7 7 3.7 7.3 7.7Z" fill="#d6a23a"/>
+          <path d="M12.1 16.4c.4-2.5 2-4.2 4.3-4.1 2.5.1 4 1.9 3.7 4.4-.2 2.1-1.9 3.7-4.2 3.5-2.5-.1-4.1-1.6-3.8-3.8Z" fill="#d89b31" stroke-width="1"/>
+          <path d="M14.5 16.2c.1-1 .7-1.7 1.7-1.7 1.1.1 1.6.8 1.5 1.9-.1 1-.8 1.5-1.8 1.4-1-.1-1.5-.6-1.4-1.6Z" fill="#a94034"/>
+          <path d="m16 3.8-.2 6m7.5-1.5-3.8 4.4m7.8 3.5-5.8.1m1.7 7.2-4-3.8m-3.8 7.8.2-5.8m-7.5 1.7 4.1-4M4.5 15.1l5.9.5M8.6 8.4l3.8 4.1" opacity=".36"/>
+        </g>
       </svg>
       <span class="pip" aria-hidden="true">♠</span>
       <span class="brand-title">Better Solitaire</span>
       <svg class="brand-rosette" viewBox="0 0 32 32" aria-hidden="true">
-        <path d="M16 1.5c2.3 4 2.2 8.5 0 12.3-2.2-3.8-2.3-8.3 0-12.3Z" fill="#c7462f" stroke="#1b4966" stroke-width=".7"/>
-        <path d="M16 1.5c2.3 4 2.2 8.5 0 12.3-2.2-3.8-2.3-8.3 0-12.3Z" transform="rotate(45 16 16)" fill="#e0a22b" stroke="#1b4966" stroke-width=".7"/>
-        <path d="M16 1.5c2.3 4 2.2 8.5 0 12.3-2.2-3.8-2.3-8.3 0-12.3Z" transform="rotate(90 16 16)" fill="#cf5230" stroke="#1b4966" stroke-width=".7"/>
-        <path d="M16 1.5c2.3 4 2.2 8.5 0 12.3-2.2-3.8-2.3-8.3 0-12.3Z" transform="rotate(135 16 16)" fill="#e5ad32" stroke="#1b4966" stroke-width=".7"/>
-        <path d="M16 1.5c2.3 4 2.2 8.5 0 12.3-2.2-3.8-2.3-8.3 0-12.3Z" transform="rotate(180 16 16)" fill="#bd3e2d" stroke="#1b4966" stroke-width=".7"/>
-        <path d="M16 1.5c2.3 4 2.2 8.5 0 12.3-2.2-3.8-2.3-8.3 0-12.3Z" transform="rotate(225 16 16)" fill="#d99526" stroke="#1b4966" stroke-width=".7"/>
-        <path d="M16 1.5c2.3 4 2.2 8.5 0 12.3-2.2-3.8-2.3-8.3 0-12.3Z" transform="rotate(270 16 16)" fill="#d24c30" stroke="#1b4966" stroke-width=".7"/>
-        <path d="M16 1.5c2.3 4 2.2 8.5 0 12.3-2.2-3.8-2.3-8.3 0-12.3Z" transform="rotate(315 16 16)" fill="#e3a52c" stroke="#1b4966" stroke-width=".7"/>
-        <circle cx="16" cy="16" r="4.1" fill="#d9a02a" stroke="#1b4966" stroke-width="1"/>
-        <circle cx="16" cy="16" r="1.5" fill="#bd3e2d" stroke="#1b4966" stroke-width=".65"/>
+        <g stroke="currentColor" stroke-width=".8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M15.5 13.7C13.8 10.5 14.1 5.2 16.3 1.8c2 3.8 1.5 8.6-.8 11.9Z" fill="#bd4b35"/>
+          <path d="M18.2 14.1c.8-3.6 4.1-7.2 7.5-8.1-.5 4.2-3.6 7.6-7.5 8.1Z" fill="#d99b32"/>
+          <path d="M19 16.5c3-2 8-2.4 11-.4-3.2 2.6-7.8 2.7-11 .4Z" fill="#c25439"/>
+          <path d="M18.1 18.9c3.5.7 7.1 4 7.8 7.3-4.1-.4-7.2-3.4-7.8-7.3Z" fill="#d5a13b"/>
+          <path d="M15.6 19.2c2 3 1.9 8.2-.3 11-2.1-3.4-1.8-7.9.3-11Z" fill="#b84333"/>
+          <path d="M13.2 18.5c-.8 3.5-4.3 7.2-7.6 7.8.6-4.1 3.5-7.2 7.6-7.8Z" fill="#d39a31"/>
+          <path d="M12.7 15.7c-3.2 1.8-8.2 1.5-10.8-.8 3.5-2 8-1.5 10.8.8Z" fill="#bd4d37"/>
+          <path d="M13.6 13.6c-3.6-.9-6.7-4.2-7.3-7.7 3.9.7 7 3.7 7.3 7.7Z" fill="#d6a23a"/>
+          <path d="M12.1 16.4c.4-2.5 2-4.2 4.3-4.1 2.5.1 4 1.9 3.7 4.4-.2 2.1-1.9 3.7-4.2 3.5-2.5-.1-4.1-1.6-3.8-3.8Z" fill="#d89b31" stroke-width="1"/>
+          <path d="M14.5 16.2c.1-1 .7-1.7 1.7-1.7 1.1.1 1.6.8 1.5 1.9-.1 1-.8 1.5-1.8 1.4-1-.1-1.5-.6-1.4-1.6Z" fill="#a94034"/>
+          <path d="m16 3.8-.2 6m7.5-1.5-3.8 4.4m7.8 3.5-5.8.1m1.7 7.2-4-3.8m-3.8 7.8.2-5.8m-7.5 1.7 4.1-4M4.5 15.1l5.9.5M8.6 8.4l3.8 4.1" opacity=".36"/>
+        </g>
       </svg>
     </div>
     <div class="chips">
@@ -646,35 +669,32 @@
     <button id="btnNew">
       <span class="classic-icon" aria-hidden="true">♻︎</span>
       <svg class="vintage-icon" viewBox="0 0 32 32" aria-hidden="true">
-        <path d="m16 1.5 2.5 10.2 7.4-7.4-5.6 9.2L30.5 16l-10.2 2.5 5.6 9.2-7.4-7.4L16 30.5l-2.5-10.2-7.4 7.4 5.6-9.2L1.5 16l10.2-2.5-5.6-9.2 7.4 7.4L16 1.5Z"/>
-        <circle cx="16" cy="16" r="3.1"/>
-        <path d="M16 5.5V12m0 8v6.5M5.5 16H12m8 0h6.5M8.6 8.6l4.6 4.6m5.6 5.6 4.6 4.6m0-14.8-4.6 4.6m-5.6 5.6-4.6 4.6"/>
+        <path d="m15.7 2.1 2.5 9.5 7.2-5.7-4.8 7.7 9.1 2.1-9.2 2.7 5.2 7.7-7.4-5.7-2.5 9.3-2.4-9-7.2 5.7 5-8-9-2.2 9.2-2.6-5-7.6 7.2 5.8Z"/>
+        <path d="M12.8 15.9c.1-2 1.4-3.2 3.3-3.1 2 .1 3.1 1.3 3 3.4-.1 1.8-1.3 2.9-3.2 2.8-1.8-.1-3.2-1.3-3.1-3.1ZM15.5 4.8l.2 5.2m8.1-1.4-3.8 3.7m6.8 3.7-5 .2m2 7.3-3.6-3.7m-4.5 7.1.2-5.1m-7.4 1.9 3.7-3.9M5.1 16.4l5.2-.3m-1.8-7.5 3.7 3.9"/>
       </svg>
       <span class="control-label" id="btnNewLabel">New</span>
     </button>
     <button id="btnHint">
       <span class="classic-icon" aria-hidden="true">💡</span>
       <svg class="vintage-icon" viewBox="0 0 32 32" aria-hidden="true">
-        <path d="M10.3 21.2C7.7 19.4 6 16.3 6 12.9 6 7.1 10.4 2.5 16 2.5S26 7.1 26 12.9c0 3.4-1.7 6.5-4.3 8.3-1.2.9-1.8 2-1.8 3.3h-7.8c0-1.3-.6-2.4-1.8-3.3Z"/>
-        <path d="M12.2 24.5h7.6M12.8 27.2h6.4M14.1 29.7h3.8M12.3 15.1c1-1.5 2.1-2.2 3.7-2.2s2.7.7 3.7 2.2M14.2 14.1l1.8 10.4 1.8-10.4"/>
-        <path d="M16 .2v-2.1M6.3 3.7 4.8 2.2m20.9 1.5 1.5-1.5M2.2 12.9H0m32 0h-2.2M6.2 22.2l-1.7 1.7m21.3-1.7 1.7 1.7"/>
+        <path d="M10.8 21.5c-2.7-1.8-4.3-4.8-4.1-8.4.2-5.9 4-10 9.4-10.1 5.6-.1 9.5 4.3 9.4 10.1-.1 3.5-1.8 6.4-4.5 8.3-1.1.8-1.6 1.8-1.7 3l-7.1.2c0-1.2-.4-2.2-1.4-3.1Z"/>
+        <path d="m12.3 24.7 7.2-.2m-6.8 2.8 6.1-.3m-4.9 2.6 4-.2m-5.3-14.3c.9-1.3 2.1-2 3.6-2 1.4 0 2.5.6 3.5 1.8m-5.4-.8 1.8 10.4 1.7-10.2"/>
+        <path d="m16.2.3.1-2.1M6.9 4.2 5.3 2.5m20.1 1.4 1.7-1.6M2.8 13.2.5 13m30.8.2-2.1.1M6.6 21.9l-1.7 1.8m20.6-1.5 1.6 1.5"/>
       </svg>
       <span class="control-label">Hint</span>
     </button>
     <button id="btnUndo" disabled>
       <span class="classic-icon" aria-hidden="true">↩︎</span>
       <svg class="vintage-icon" viewBox="0 0 32 32" aria-hidden="true">
-        <path class="solid" d="M14.2 7V1.8L3 11.4 14.2 21v-5.3c7.8 0 12.6 2.5 15.3 9.8C29.2 13.8 23.7 7.4 14.2 7Z"/>
-        <path d="M7.5 11.4 12 7.6m-4.5 3.8 4.5 3.9" stroke="#83aab5" stroke-width=".8"/>
+        <path class="solid" d="M14.7 7.3 14.4 2 3.1 11.8 14 21.5l.2-5.4c7.4-.1 12.4 2.7 15.1 9.5-.1-11.2-5.3-18-14.6-18.3Z"/>
+        <path class="cut" d="m7.2 11.8 4.8-4m-4.5 4.4 4.3 3.8m5.8-5.6c3.6.6 6 2 7.8 4.2m-5.3-2.8c2.9 1.1 5 3 6.5 5.4"/>
       </svg>
       <span class="control-label">Undo</span>
     </button>
     <button id="btnMenu" aria-label="Settings">
       <span class="classic-icon" aria-hidden="true">⋯</span>
       <svg class="vintage-icon" viewBox="0 0 32 32" aria-hidden="true">
-        <circle class="solid" cx="7" cy="16" r="1.8"/>
-        <circle class="solid" cx="16" cy="16" r="1.8"/>
-        <circle class="solid" cx="25" cy="16" r="1.8"/>
+        <path class="solid" d="M5.2 16.2c0-1.3.7-2.1 1.9-2.1 1.4 0 2.1.7 2 2.1-.1 1.2-.7 1.9-2 1.8-1.3 0-1.9-.6-1.9-1.8Zm8.8-.3c.1-1.3.8-2 2-1.9 1.4.1 2 .8 1.9 2.1-.1 1.3-.8 1.9-2.1 1.8-1.2-.1-1.9-.8-1.8-2Zm9.1.4c0-1.3.7-2 1.9-2 1.3 0 2 .7 2 1.9 0 1.3-.7 2-2 2-1.2 0-1.9-.7-1.9-1.9Z"/>
       </svg>
     </button>
   </div>
@@ -701,7 +721,7 @@
 
 <div id="sheetBack"></div>
 <div id="sheet">
-  <h3>Table settings</h3>
+  <h3>Table Settings</h3>
   <div class="row">
     <div>Draw<span class="sub2">Cards drawn from the stock at a time</span></div>
     <div class="seg">
@@ -747,7 +767,8 @@
   </div>
   <div class="row" style="border:none;justify-content:center">
     <div class="sub2" style="text-align:center">Better Solitaire — no ads, ever. ♠︎ ♥︎ ♦︎ ♣︎<br>
-    Win daily to grow your streak. Every 10 wins earns a streak freeze (maximum 3).<br>
+    Win daily to grow your streak.<br>
+    Every 10 wins earns a streak freeze (maximum 3).<br>
     Your first undo each game is free; after that, undos count as a move.</div>
   </div>
 </div>
@@ -836,7 +857,7 @@ function saveJSON(k,v){ try{ localStorage.setItem(k, JSON.stringify(v)) }catch(e
 function applyCardStyleTheme(cardStyle){
   document.body.dataset.cardStyle = cardStyle;
   const themeColor = document.querySelector?.('meta[name="theme-color"]');
-  if(themeColor) themeColor.content = cardStyle === "crehore" ? "#83aab5" : "#0f2e25";
+  if(themeColor) themeColor.content = cardStyle === "crehore" ? "#7f9e94" : "#0f2e25";
   const statusBar = globalThis.window?.Capacitor?.Plugins?.StatusBar;
   // Capacitor names these values after the background: LIGHT means dark
   // status content for a light table, DARK means light content for Classic.
@@ -954,8 +975,13 @@ function layout(){
     if(ph.dataset.slot==="stock")
       ph.classList.toggle("can-recycle", P.stock.length===0 && P.waste.length>0);
   }
-  // stock
-  P.stock.forEach((card,i)=> place(card, xs(6), topY, i+1));
+  // Stock cards occupy the exact same position. Track them separately so the
+  // table theme can avoid multiplying one shadow by every card in the pile.
+  for(const card of cards) els.get(card.id)?.classList.remove("stock-card");
+  P.stock.forEach((card,i)=>{
+    els.get(card.id)?.classList.add("stock-card");
+    place(card, xs(6), topY, i+1);
+  });
   // waste — top card sits beside the stock, older cards peek out to the left
   const fanN = settings.draw3 ? 3 : 1;
   const n = P.waste.length;
