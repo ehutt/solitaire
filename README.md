@@ -23,7 +23,7 @@ for a native iOS build.
 - **Undo with a gentle cost** — your first undo each game is free; after that,
   each undo counts as a move (the move count never goes down)
 - **Hints** (`h`), space bar to draw, ⌘Z to undo
-- **Auto-finish** — a brass ✨ Finish button appears when the endgame is forced
+- **Auto-finish** — automatically clears the forced endgame when enabled
 - **Win celebration** — the classic trailing card cascade (an homage to the
   Windows original), painted on canvas, followed by a stats card
 - **Deal animation, 3D card flips, restart-same-deal**, and full persistence —

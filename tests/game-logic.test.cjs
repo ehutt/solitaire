@@ -80,7 +80,7 @@ test("card style switches immediately and persists without replacing the deal", 
   const persisted = [];
   const messages = [];
   const statusStyles = [];
-  const themeColor = { content: "#7fa4b0" };
+  const themeColor = { content: "#83aab5" };
   global.settings = { draw3: false, cardStyle: "crehore" };
   global.document = {
     body: { dataset: {} },
@@ -110,4 +110,20 @@ test("card style switches immediately and persists without replacing the deal", 
   assert.deepEqual(statusStyles, ["DARK"]);
   assert.deepEqual(persisted, [["settings", { draw3: false, cardStyle: "original" }]]);
   assert.deepEqual(messages, ["Classic cards"]);
+});
+
+test("persistent controls stay limited to new, hint, undo, and settings", () => {
+  const controls = html.match(/<div id="controls">([^]*?)<\/div>\s*<\/div>/)?.[1];
+  assert.ok(controls, "found the persistent controls");
+  const ids = [...controls.matchAll(/<button id="([^"]+)"/g)].map((match) => match[1]);
+  assert.deepEqual(ids, ["btnNew", "btnHint", "btnUndo", "btnMenu"]);
+  assert.doesNotMatch(html, /id="btnFinish"/);
+});
+
+test("streak and freeze counts live in settings instead of the header", () => {
+  const header = html.match(/<header id="hud">([^]*?)<\/header>/)?.[1];
+  assert.ok(header, "found the header");
+  assert.doesNotMatch(header, /🔥|❄️|chipStreak|chipFreeze/);
+  assert.match(html, /current streak <b>\$\{displayStreak\(\)\}<\/b>/);
+  assert.match(html, /streak freezes <b>\$\{stats\.freezes\}<\/b>/);
 });

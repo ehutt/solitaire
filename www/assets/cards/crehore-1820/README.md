@@ -28,4 +28,4 @@ python3 assets/build-crehore-deck.py
 ```
 
 The script uses the original scan pixels for every illustrated element. Only
-the rank glyphs are new; they are typeset in Big Caslon and baked into the WebP files.
+the rank glyphs are new; they are typeset in Baskerville and baked into the WebP files.

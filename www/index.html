@@ -202,12 +202,6 @@
   button:active{transform:scale(.96)}
   button:disabled{opacity:.35;cursor:default}
   button:focus-visible{outline:2px solid var(--brass);outline-offset:2px}
-  #btnFinish{
-    display:none;
-    background:linear-gradient(160deg,#c99a3c,#a87b25);
-    color:#241a05;border-color:rgba(255,255,255,.25);
-  }
-  #btnFinish.show{display:inline-block;animation:chipGlow 1.2s ease}
   #btnNew.confirm{
     background:rgba(217,166,72,.28);border-color:rgba(217,166,72,.72);
     color:#fff2c8;
@@ -326,7 +320,7 @@
 
   @media (prefers-reduced-motion: reduce){
     .card,.card .in,#sheet{transition:none !important}
-    .chip.pulse-glow,#btnFinish.show,.panel.milestone{animation:none !important}
+    .chip.pulse-glow,.panel.milestone{animation:none !important}
     /* keep the hint glow — it's a highlight, not motion — so hints still read */
   }
   @media (min-width:600px){
@@ -335,7 +329,6 @@
   @media (max-width:599px){
     .chip small{display:none}
     .brand{font-size:1.25rem}
-    #chipStreak,#chipFreeze{padding:3px 7px;font-size:.74rem}
     body[data-card-style="original"] .ix.br{display:none}
   }
   /* iPad: use the available canvas and make every persistent control readable
@@ -398,49 +391,51 @@
   .control-label{white-space:nowrap}
 
   body[data-card-style="crehore"]{
-    --felt:#7fa4b0; --felt-deep:#739aa6;
-    --line:#214c69; --line-soft:rgba(28,72,99,.42);
+    --felt:#83aab5; --felt-deep:#759da9;
+    --line:#1b4966; --line-soft:rgba(24,66,91,.5);
     --brass:#cf952f; --brass-soft:#ad7420;
     --text:#173d5b; --muted:#3b647a;
-    --vintage-display:"Big Caslon","Baskerville","Iowan Old Style",Georgia,serif;
+    --vintage-display:"Baskerville","Iowan Old Style","Big Caslon",Georgia,serif;
     --vintage-text:"Baskerville","Iowan Old Style","Palatino Nova",Palatino,Georgia,serif;
+    position:relative;
     font-family:var(--vintage-text);
     background:
-      radial-gradient(115% 72% at 50% -8%,rgba(255,255,255,.17),transparent 62%),
-      repeating-linear-gradient(0deg,rgba(255,255,255,.022) 0 1px,rgba(19,57,77,.018) 1px 3px),
-      repeating-linear-gradient(90deg,transparent 0 2px,rgba(20,60,82,.025) 2px 3px),
+      radial-gradient(115% 72% at 50% -8%,rgba(255,255,255,.22),transparent 62%),
+      radial-gradient(80% 56% at 18% 72%,rgba(31,78,98,.08),transparent 74%),
       linear-gradient(180deg,var(--felt),var(--felt-deep));
   }
+  body[data-card-style="crehore"]::before{
+    content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
+    background:
+      repeating-linear-gradient(7deg,rgba(255,255,255,.035) 0 1px,transparent 1px 5px),
+      url("assets/cards/crehore-1820/components/paper-stock.webp") center/100% 100% no-repeat;
+    filter:grayscale(1) contrast(1.38);
+    mix-blend-mode:soft-light;opacity:.34;
+  }
+  body[data-card-style="crehore"] #app{position:relative;z-index:1}
 
   body[data-card-style="crehore"] #hud{
     display:grid;grid-template-columns:1fr;gap:5px;
     margin:calc(env(safe-area-inset-top,0px) + 6px) 14px 0;
     padding:7px 0 6px;
-    border-top:3px double rgba(23,61,91,.8);
-    border-bottom:3px double rgba(23,61,91,.8);
+    border-top:4px double rgba(20,58,84,.92);
+    border-bottom:4px double rgba(20,58,84,.92);
   }
   body[data-card-style="crehore"] .brand{
     width:100%;justify-content:center;align-items:center;gap:clamp(9px,3vw,22px);
     color:#153b59;font-family:var(--vintage-display);
     font-size:clamp(1.9rem,7vw,3rem);font-weight:400;
-    letter-spacing:-.025em;line-height:1;white-space:nowrap;
+    letter-spacing:-.035em;line-height:1;white-space:nowrap;
+    text-shadow:.35px .55px 0 rgba(247,234,199,.38),-.2px -.2px 0 rgba(19,55,78,.18);
   }
   body[data-card-style="crehore"] .brand .pip{display:none}
   body[data-card-style="crehore"] .brand-rosette{
-    position:relative;display:inline-flex;align-items:center;justify-content:center;
-    width:1em;height:1em;color:#bd432d;font-size:.55em;line-height:1;
-  }
-  body[data-card-style="crehore"] .brand-rosette::before{
-    content:"✺";font-family:Georgia,serif;font-size:1.35em;
-    filter:drop-shadow(0 0 0 #153b59);
-  }
-  body[data-card-style="crehore"] .brand-rosette::after{
-    content:"";position:absolute;width:.24em;height:.24em;border-radius:50%;
-    background:#d7a12d;border:1px solid rgba(23,61,91,.78);
+    display:block;flex:none;width:.82em;height:.82em;overflow:visible;
+    filter:drop-shadow(.35px .55px 0 rgba(19,55,78,.22));
   }
   body[data-card-style="crehore"] .chips{
     position:relative;width:100%;justify-content:center;gap:0;
-    border-top:1px solid rgba(23,61,91,.56);padding-top:4px;
+    border-top:1.5px solid rgba(20,58,84,.72);padding-top:4px;
   }
   body[data-card-style="crehore"] .chips::before,
   body[data-card-style="crehore"] .chips::after{
@@ -455,10 +450,11 @@
     font-variant-numeric:tabular-nums;letter-spacing:.07em;
   }
   body[data-card-style="crehore"] .chip + .chip{
-    border-left:1px solid rgba(23,61,91,.42);
+    border-left:1.5px solid rgba(23,61,91,.52);
   }
   body[data-card-style="crehore"] .chip b{font-weight:600}
   body[data-card-style="crehore"] .chip small{
+    display:inline;
     color:#315d75;font-family:var(--vintage-text);font-size:.64rem;
     letter-spacing:.08em;text-transform:uppercase;
   }
@@ -471,12 +467,12 @@
     border-style:solid;border-color:rgba(29,73,99,.34);
   }
   body[data-card-style="crehore"] .face{
-    box-shadow:0 1px 2px rgba(19,49,66,.28),0 3px 8px rgba(19,49,66,.2);
+    box-shadow:0 1px 1.5px rgba(19,49,66,.24),0 2px 3px rgba(19,49,66,.1);
   }
 
   body[data-card-style="crehore"] #controls{
     position:relative;margin:0 14px;padding:9px 0 calc(env(safe-area-inset-bottom,0px) + 11px);
-    gap:7px;border-top:3px double rgba(23,61,91,.76);
+    gap:8px;border-top:4px double rgba(20,58,84,.9);
   }
   body[data-card-style="crehore"] #controls::before{
     content:"◆";position:absolute;top:-.55em;left:50%;transform:translateX(-50%);
@@ -486,8 +482,8 @@
     display:inline-flex;align-items:center;justify-content:center;gap:6px;
     min-width:0;min-height:42px;padding:8px clamp(7px,2.5vw,15px);
     color:#173d5b;background:rgba(116,155,168,.12);
-    border:1px solid rgba(23,61,91,.82);border-radius:4px;
-    box-shadow:inset 0 0 0 1px rgba(239,226,193,.14);
+    border:2px solid rgba(20,58,84,.88);border-radius:4px;
+    box-shadow:inset 0 0 0 1px rgba(239,226,193,.2),0 1px 0 rgba(245,232,197,.12);
     font-family:var(--vintage-text);font-size:.82rem;font-weight:600;
     letter-spacing:.08em;text-transform:uppercase;
   }
@@ -501,17 +497,16 @@
   }
   body[data-card-style="crehore"] #controls .classic-icon{display:none}
   body[data-card-style="crehore"] #controls .vintage-icon{
-    display:block;flex:none;width:21px;height:21px;overflow:visible;
-    fill:none;stroke:currentColor;stroke-width:1.45;
-    stroke-linecap:round;stroke-linejoin:round;
+    display:block;flex:none;width:23px;height:23px;overflow:visible;
+    fill:none;stroke:currentColor;stroke-width:1.35;
+    stroke-linecap:square;stroke-linejoin:round;
+  }
+  body[data-card-style="crehore"] #controls .vintage-icon .solid{
+    fill:currentColor;stroke:none;
   }
   body[data-card-style="crehore"] #btnNew.confirm{
     color:#75352b;background:rgba(240,220,176,.22);border-color:#8e4034;
   }
-  body[data-card-style="crehore"] #btnFinish{
-    color:#173d5b;background:rgba(207,149,47,.14);border-color:#8a6728;
-  }
-
   body[data-card-style="crehore"] #toast{
     color:#173d5b;background:rgba(242,231,204,.96);
     border:3px double rgba(23,61,91,.72);border-radius:5px;
@@ -560,8 +555,6 @@
 
   @media (max-width:599px){
     body[data-card-style="crehore"] .brand{font-size:clamp(1.82rem,8vw,2.35rem)}
-    body[data-card-style="crehore"] #chipStreak,
-    body[data-card-style="crehore"] #chipFreeze{padding:1px 5px;font-size:.7rem}
     body[data-card-style="crehore"] #controls button{
       gap:4px;padding-inline:6px;font-size:.72rem;letter-spacing:.055em;
     }
@@ -583,12 +576,12 @@
       display:flex;gap:10px;margin:calc(env(safe-area-inset-top,0px) + 4px)
         max(8px,env(safe-area-inset-right,0px)) 0
         max(8px,env(safe-area-inset-left,0px));
-      padding:4px 0;border-width:1px;
+      padding:4px 0;border-width:2px;
     }
     body[data-card-style="crehore"] .brand{
       width:auto;flex:1;justify-content:flex-start;gap:8px;font-size:1.45rem;
     }
-    body[data-card-style="crehore"] .brand-rosette{font-size:.45em}
+    body[data-card-style="crehore"] .brand-rosette{width:.55em;height:.55em}
     body[data-card-style="crehore"] .chips{
       width:auto;border:0;padding:0;
     }
@@ -598,7 +591,7 @@
     body[data-card-style="crehore"] #controls{
       position:fixed;left:auto;right:calc(env(safe-area-inset-right, 0px) + 6px);
       top:calc(env(safe-area-inset-top, 0px) + 42px);bottom:env(safe-area-inset-bottom, 0px);
-      margin:0;border-top:0;border-left:3px double rgba(23,61,91,.76);
+      width:72px;margin:0;border-top:0;border-left:4px double rgba(20,58,84,.9);
       padding:4px 0 4px 7px;
     }
     body[data-card-style="crehore"] #controls::before{display:none}
@@ -614,16 +607,36 @@
 <div id="app">
   <header id="hud">
     <div class="brand">
-      <span class="brand-rosette" aria-hidden="true"></span>
+      <svg class="brand-rosette" viewBox="0 0 32 32" aria-hidden="true">
+        <path d="M16 1.5c2.3 4 2.2 8.5 0 12.3-2.2-3.8-2.3-8.3 0-12.3Z" fill="#c7462f" stroke="#1b4966" stroke-width=".7"/>
+        <path d="M16 1.5c2.3 4 2.2 8.5 0 12.3-2.2-3.8-2.3-8.3 0-12.3Z" transform="rotate(45 16 16)" fill="#e0a22b" stroke="#1b4966" stroke-width=".7"/>
+        <path d="M16 1.5c2.3 4 2.2 8.5 0 12.3-2.2-3.8-2.3-8.3 0-12.3Z" transform="rotate(90 16 16)" fill="#cf5230" stroke="#1b4966" stroke-width=".7"/>
+        <path d="M16 1.5c2.3 4 2.2 8.5 0 12.3-2.2-3.8-2.3-8.3 0-12.3Z" transform="rotate(135 16 16)" fill="#e5ad32" stroke="#1b4966" stroke-width=".7"/>
+        <path d="M16 1.5c2.3 4 2.2 8.5 0 12.3-2.2-3.8-2.3-8.3 0-12.3Z" transform="rotate(180 16 16)" fill="#bd3e2d" stroke="#1b4966" stroke-width=".7"/>
+        <path d="M16 1.5c2.3 4 2.2 8.5 0 12.3-2.2-3.8-2.3-8.3 0-12.3Z" transform="rotate(225 16 16)" fill="#d99526" stroke="#1b4966" stroke-width=".7"/>
+        <path d="M16 1.5c2.3 4 2.2 8.5 0 12.3-2.2-3.8-2.3-8.3 0-12.3Z" transform="rotate(270 16 16)" fill="#d24c30" stroke="#1b4966" stroke-width=".7"/>
+        <path d="M16 1.5c2.3 4 2.2 8.5 0 12.3-2.2-3.8-2.3-8.3 0-12.3Z" transform="rotate(315 16 16)" fill="#e3a52c" stroke="#1b4966" stroke-width=".7"/>
+        <circle cx="16" cy="16" r="4.1" fill="#d9a02a" stroke="#1b4966" stroke-width="1"/>
+        <circle cx="16" cy="16" r="1.5" fill="#bd3e2d" stroke="#1b4966" stroke-width=".65"/>
+      </svg>
       <span class="pip" aria-hidden="true">♠</span>
       <span class="brand-title">Better Solitaire</span>
-      <span class="brand-rosette" aria-hidden="true"></span>
+      <svg class="brand-rosette" viewBox="0 0 32 32" aria-hidden="true">
+        <path d="M16 1.5c2.3 4 2.2 8.5 0 12.3-2.2-3.8-2.3-8.3 0-12.3Z" fill="#c7462f" stroke="#1b4966" stroke-width=".7"/>
+        <path d="M16 1.5c2.3 4 2.2 8.5 0 12.3-2.2-3.8-2.3-8.3 0-12.3Z" transform="rotate(45 16 16)" fill="#e0a22b" stroke="#1b4966" stroke-width=".7"/>
+        <path d="M16 1.5c2.3 4 2.2 8.5 0 12.3-2.2-3.8-2.3-8.3 0-12.3Z" transform="rotate(90 16 16)" fill="#cf5230" stroke="#1b4966" stroke-width=".7"/>
+        <path d="M16 1.5c2.3 4 2.2 8.5 0 12.3-2.2-3.8-2.3-8.3 0-12.3Z" transform="rotate(135 16 16)" fill="#e5ad32" stroke="#1b4966" stroke-width=".7"/>
+        <path d="M16 1.5c2.3 4 2.2 8.5 0 12.3-2.2-3.8-2.3-8.3 0-12.3Z" transform="rotate(180 16 16)" fill="#bd3e2d" stroke="#1b4966" stroke-width=".7"/>
+        <path d="M16 1.5c2.3 4 2.2 8.5 0 12.3-2.2-3.8-2.3-8.3 0-12.3Z" transform="rotate(225 16 16)" fill="#d99526" stroke="#1b4966" stroke-width=".7"/>
+        <path d="M16 1.5c2.3 4 2.2 8.5 0 12.3-2.2-3.8-2.3-8.3 0-12.3Z" transform="rotate(270 16 16)" fill="#d24c30" stroke="#1b4966" stroke-width=".7"/>
+        <path d="M16 1.5c2.3 4 2.2 8.5 0 12.3-2.2-3.8-2.3-8.3 0-12.3Z" transform="rotate(315 16 16)" fill="#e3a52c" stroke="#1b4966" stroke-width=".7"/>
+        <circle cx="16" cy="16" r="4.1" fill="#d9a02a" stroke="#1b4966" stroke-width="1"/>
+        <circle cx="16" cy="16" r="1.5" fill="#bd3e2d" stroke="#1b4966" stroke-width=".65"/>
+      </svg>
     </div>
     <div class="chips">
-      <span class="chip" id="chipStreak" title="Daily win streak">🔥<b id="vStreak">0</b></span>
-      <span class="chip" id="chipFreeze" title="Streak freezes — protect your streak on a missed day">❄️<b id="vFreeze">0</b></span>
-      <span class="chip" title="Time"><b id="vTime">0:00</b></span>
-      <span class="chip" title="Moves"><b id="vMoves">0</b><small>moves</small></span>
+      <span class="chip" title="Time"><small>Time</small><b id="vTime">0:00</b></span>
+      <span class="chip" title="Moves"><small>Moves</small><b id="vMoves">0</b></span>
     </div>
   </header>
 
@@ -632,41 +645,36 @@
   <div id="controls">
     <button id="btnNew">
       <span class="classic-icon" aria-hidden="true">♻︎</span>
-      <svg class="vintage-icon" viewBox="0 0 24 24" aria-hidden="true">
-        <path d="M12 2.5 13.7 10 21.5 12l-7.8 2L12 21.5 10.3 14 2.5 12l7.8-2L12 2.5Z"/>
-        <path d="m5.6 5.6 4.2 4.2m4.4 4.4 4.2 4.2m0-12.8-4.2 4.2m-4.4 4.4-4.2 4.2"/>
+      <svg class="vintage-icon" viewBox="0 0 32 32" aria-hidden="true">
+        <path d="m16 1.5 2.5 10.2 7.4-7.4-5.6 9.2L30.5 16l-10.2 2.5 5.6 9.2-7.4-7.4L16 30.5l-2.5-10.2-7.4 7.4 5.6-9.2L1.5 16l10.2-2.5-5.6-9.2 7.4 7.4L16 1.5Z"/>
+        <circle cx="16" cy="16" r="3.1"/>
+        <path d="M16 5.5V12m0 8v6.5M5.5 16H12m8 0h6.5M8.6 8.6l4.6 4.6m5.6 5.6 4.6 4.6m0-14.8-4.6 4.6m-5.6 5.6-4.6 4.6"/>
       </svg>
       <span class="control-label" id="btnNewLabel">New</span>
     </button>
     <button id="btnHint">
       <span class="classic-icon" aria-hidden="true">💡</span>
-      <svg class="vintage-icon" viewBox="0 0 24 24" aria-hidden="true">
-        <path d="M8.8 16.2c-1.5-1-2.4-2.8-2.4-4.7a5.6 5.6 0 1 1 11.2 0c0 2-.9 3.7-2.4 4.7-.7.5-.9 1.1-.9 1.8H9.7c0-.7-.2-1.3-.9-1.8Z"/>
-        <path d="M9.8 20h4.4M12 2V.8M4.8 4.5 3.9 3.6m15.3.9.9-.9M3.1 11.5H1.8m20.4 0h-1.3"/>
+      <svg class="vintage-icon" viewBox="0 0 32 32" aria-hidden="true">
+        <path d="M10.3 21.2C7.7 19.4 6 16.3 6 12.9 6 7.1 10.4 2.5 16 2.5S26 7.1 26 12.9c0 3.4-1.7 6.5-4.3 8.3-1.2.9-1.8 2-1.8 3.3h-7.8c0-1.3-.6-2.4-1.8-3.3Z"/>
+        <path d="M12.2 24.5h7.6M12.8 27.2h6.4M14.1 29.7h3.8M12.3 15.1c1-1.5 2.1-2.2 3.7-2.2s2.7.7 3.7 2.2M14.2 14.1l1.8 10.4 1.8-10.4"/>
+        <path d="M16 .2v-2.1M6.3 3.7 4.8 2.2m20.9 1.5 1.5-1.5M2.2 12.9H0m32 0h-2.2M6.2 22.2l-1.7 1.7m21.3-1.7 1.7 1.7"/>
       </svg>
       <span class="control-label">Hint</span>
     </button>
-    <button id="btnFinish">
-      <span class="classic-icon" aria-hidden="true">✨</span>
-      <svg class="vintage-icon" viewBox="0 0 24 24" aria-hidden="true">
-        <path d="m12 3 1.6 6.2L20 11l-6.4 1.8L12 19l-1.6-6.2L4 11l6.4-1.8L12 3Z"/>
-      </svg>
-      <span class="control-label">Finish</span>
-    </button>
     <button id="btnUndo" disabled>
       <span class="classic-icon" aria-hidden="true">↩︎</span>
-      <svg class="vintage-icon" viewBox="0 0 24 24" aria-hidden="true">
-        <path d="m9 6-5 5 5 5"/>
-        <path d="M5 11h8a7 7 0 0 1 7 7"/>
+      <svg class="vintage-icon" viewBox="0 0 32 32" aria-hidden="true">
+        <path class="solid" d="M14.2 7V1.8L3 11.4 14.2 21v-5.3c7.8 0 12.6 2.5 15.3 9.8C29.2 13.8 23.7 7.4 14.2 7Z"/>
+        <path d="M7.5 11.4 12 7.6m-4.5 3.8 4.5 3.9" stroke="#83aab5" stroke-width=".8"/>
       </svg>
       <span class="control-label">Undo</span>
     </button>
-    <button id="btnMenu" aria-label="Menu">
+    <button id="btnMenu" aria-label="Settings">
       <span class="classic-icon" aria-hidden="true">⋯</span>
-      <svg class="vintage-icon" viewBox="0 0 24 24" aria-hidden="true">
-        <circle cx="5" cy="12" r="1.1" fill="currentColor" stroke="none"/>
-        <circle cx="12" cy="12" r="1.1" fill="currentColor" stroke="none"/>
-        <circle cx="19" cy="12" r="1.1" fill="currentColor" stroke="none"/>
+      <svg class="vintage-icon" viewBox="0 0 32 32" aria-hidden="true">
+        <circle class="solid" cx="7" cy="16" r="1.8"/>
+        <circle class="solid" cx="16" cy="16" r="1.8"/>
+        <circle class="solid" cx="25" cy="16" r="1.8"/>
       </svg>
     </button>
   </div>
@@ -682,7 +690,7 @@
     <div class="statgrid">
       <div class="stat"><b id="wTime">0:00</b><span>time</span></div>
       <div class="stat"><b id="wMoves">0</b><span>moves</span></div>
-      <div class="stat"><b class="flame" id="wStreak">🔥 1</b><span>streak</span></div>
+      <div class="stat"><b class="flame" id="wStreak">1</b><span>streak</span></div>
     </div>
     <div id="wBadges"></div>
     <div class="note" id="wNote"></div>
@@ -739,7 +747,7 @@
   </div>
   <div class="row" style="border:none;justify-content:center">
     <div class="sub2" style="text-align:center">Better Solitaire — no ads, ever. ♠︎ ♥︎ ♦︎ ♣︎<br>
-    Win daily to grow your streak. Every 10 wins earns a streak freeze ❄️ (max 3).<br>
+    Win daily to grow your streak. Every 10 wins earns a streak freeze (maximum 3).<br>
     Your first undo each game is free; after that, undos count as a move.</div>
   </div>
 </div>
@@ -828,7 +836,7 @@ function saveJSON(k,v){ try{ localStorage.setItem(k, JSON.stringify(v)) }catch(e
 function applyCardStyleTheme(cardStyle){
   document.body.dataset.cardStyle = cardStyle;
   const themeColor = document.querySelector?.('meta[name="theme-color"]');
-  if(themeColor) themeColor.content = cardStyle === "crehore" ? "#7fa4b0" : "#0f2e25";
+  if(themeColor) themeColor.content = cardStyle === "crehore" ? "#83aab5" : "#0f2e25";
   const statusBar = globalThis.window?.Capacitor?.Plugins?.StatusBar;
   // Capacitor names these values after the background: LIGHT means dark
   // status content for a light table, DARK means light content for Classic.
@@ -1338,7 +1346,7 @@ function showStuck(){
   $("winSub").textContent = "No plays remain — this deal is stuck.";
   $("wTime").textContent = fmtTime(elapsed);
   $("wMoves").textContent = moves;
-  $("wStreak").textContent = "🔥 " + displayStreak();
+  $("wStreak").textContent = displayStreak();
   $("wBadges").innerHTML = "";
   $("wNote").textContent = "Undo a few moves to try a different path, or deal again.";
   $("btnAgain").textContent = "Deal again";
@@ -1353,7 +1361,7 @@ function showDrawOneOffer(){
   $("winSub").textContent = "Draw three has no reachable plays left.";
   $("wTime").textContent = fmtTime(elapsed);
   $("wMoves").textContent = moves;
-  $("wStreak").textContent = "🔥 " + displayStreak();
+  $("wStreak").textContent = displayStreak();
   $("wBadges").innerHTML = '<span class="badge">Draw three</span>';
   $("wNote").textContent = "A playable card is buried in the stock. Switch to draw one to keep this deal going.";
   $("btnAgain").textContent = "Switch to draw one";
@@ -1446,13 +1454,9 @@ function scheduleMidnightRefresh(){
 function updateHUD(){
   $("vMoves").textContent = moves;
   $("vTime").textContent = fmtTime(elapsed);
-  $("vStreak").textContent = displayStreak();
-  $("vFreeze").textContent = stats.freezes;
 }
 function updateButtons(){
   $("btnUndo").disabled = !undoStack.length || autoRunning || won;
-  // Manual Finish button only matters when auto-complete is off; otherwise it fires itself.
-  $("btnFinish").classList.toggle("show", finishable() && !autoRunning && settings.autoComplete === false);
 }
 
 /* ================= persistence ================= */
@@ -1516,8 +1520,6 @@ function checkWin(){
   lastWinMilestone = r.milestone;
   updateHUD();
   updateButtons();
-  $("chipStreak").classList.add("pulse-glow");
-  setTimeout(()=>$("chipStreak").classList.remove("pulse-glow"), 1300);
   if(!reduced) cascade(!!r.milestone);
   setTimeout(()=>showWin(r), reduced?100:2200);
 }
@@ -1525,25 +1527,25 @@ function showWin(r){
   overlayMode = "win";
   $("winPanel").classList.toggle("daily-win", r.firstWinToday && !r.milestone);
   $("winPanel").classList.toggle("milestone", !!r.milestone);
-  if(r.milestone) $("winTitle").textContent = `✨ ${r.milestone} wins! ✨`;
-  else if(r.firstWinToday) $("winTitle").textContent = "🔥 First win of the day!";
+  if(r.milestone) $("winTitle").textContent = `${r.milestone} wins!`;
+  else if(r.firstWinToday) $("winTitle").textContent = "First win of the day!";
   else $("winTitle").textContent = "You won!";
   $("btnAgain").textContent = "Deal again";
   $("btnAdmire").textContent = "Admire the cascade";
   $("wTime").textContent = fmtTime(elapsed);
   $("wMoves").textContent = moves;
-  $("wStreak").textContent = "🔥 " + stats.streak;
+  $("wStreak").textContent = stats.streak;
   const badges = [];
-  if(r.bestT && stats.wins>1) badges.push("🏆 Best time");
-  if(r.bestM && stats.wins>1) badges.push("🏆 Fewest moves");
-  if(r.earned) badges.push("❄️ Freeze earned");
-  if(r.milestone) badges.push(`🎉 ${r.milestone}-win milestone`);
+  if(r.bestT && stats.wins>1) badges.push("Best time");
+  if(r.bestM && stats.wins>1) badges.push("Fewest moves");
+  if(r.earned) badges.push("Streak freeze earned");
+  if(r.milestone) badges.push(`${r.milestone}-win milestone`);
   $("wBadges").innerHTML = badges.map(b=>`<span class="badge">${b}</span>`).join("");
   let note = "";
-  if(r.usedFreeze) note = `❄️ ${r.usedFreeze} freeze${r.usedFreeze>1?"s":""} quietly covered your missed day${r.usedFreeze>1?"s":""}.`;
+  if(r.usedFreeze) note = `${r.usedFreeze} streak freeze${r.usedFreeze>1?"s":""} quietly covered your missed day${r.usedFreeze>1?"s":""}.`;
   else if(stats.streak>1) note = `Day ${stats.streak} of your streak — keep the wins coming.`;
   else note = "A streak begins with a single win.";
-  if(!r.earned && stats.freezes<3) note += ` (${10-stats.winsToward} more win${10-stats.winsToward>1?"s":""} to a freeze ❄️)`;
+  if(!r.earned && stats.freezes<3) note += ` (${10-stats.winsToward} more win${10-stats.winsToward>1?"s":""} to a streak freeze)`;
   $("wNote").textContent = note;
   const subs = ["Solitaire, but better.","The cards fell your way.","Order from chaos, one card at a time.","Beautifully played.","The table is yours."];
   if(r.milestone) $("winSub").textContent = "That deserves an extra celebration.";
@@ -1641,7 +1643,6 @@ function endCascade(){
 /* ================= controls ================= */
 $("btnUndo").onclick = undo;
 $("btnHint").onclick = hint;
-$("btnFinish").onclick = autoFinish;
 let newConfirm = null;
 const setNewButtonLabel = label => { $("btnNewLabel").textContent = label };
 $("btnNew").onclick = ()=>{
@@ -1724,6 +1725,8 @@ function refreshSheet(){
   $("segCardsCrehore").classList.toggle("on", settings.cardStyle === "crehore");
   const wr = stats.plays ? Math.round(100*stats.wins/stats.plays) : 0;
   $("statline").innerHTML =
+    `<span>current streak <b>${displayStreak()}</b></span>`+
+    `<span>streak freezes <b>${stats.freezes}</b></span>`+
     `<span>wins <b>${stats.wins}</b></span>`+
     `<span>played <b>${stats.plays}</b></span>`+
     `<span>win rate <b>${wr}%</b></span>`+

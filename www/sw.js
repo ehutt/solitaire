@@ -1,7 +1,7 @@
 /* Better Solitaire — service worker
    Offline-first shell caching. Bump CACHE when assets change so clients
    pick up the new version (old caches are purged on activate). */
-const CACHE = "solitaire-v15";
+const CACHE = "solitaire-v16";
 const CARDS = Array.from({ length: 52 }, (_, id) => {
   const suit = Math.floor(id / 13);
   const rank = (id % 13) + 1;
