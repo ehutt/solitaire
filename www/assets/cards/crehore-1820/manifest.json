@@ -1,6 +1,6 @@
 {
   "name": "Thomas Crehore c. 1820",
-  "version": 5,
+  "version": 8,
   "cardSize": {
     "width": 360,
     "height": 522,
@@ -8,6 +8,7 @@
   },
   "rankFont": {
     "family": "Baskerville",
+    "style": "Bold",
     "source": "macOS system font; glyphs are baked into card images"
   },
   "suitOrder": [
@@ -481,5 +482,19 @@
     "I20 16.jpg",
     "I20 Back.jpg",
     "I32 Back.jpg"
+  ],
+  "manualCourtOverrides": [
+    "clubs-j.png",
+    "clubs-k.png",
+    "clubs-q.png",
+    "diamonds-j.png",
+    "diamonds-k.png",
+    "diamonds-q.png",
+    "hearts-j.png",
+    "hearts-k.png",
+    "hearts-q.png",
+    "spades-j.png",
+    "spades-k.png",
+    "spades-q.png"
   ]
 }

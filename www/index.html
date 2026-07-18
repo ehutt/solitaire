@@ -92,9 +92,10 @@
   .ph.can-recycle{border-color:var(--line)}
   .ph.can-recycle .recy{opacity:.9;color:var(--muted)}
   .ph.hint{animation:hintPulse .85s ease 2}
-  .ph.stock-hint{
+  body[data-card-style] .ph.stock-hint{
     z-index:800;pointer-events:none;
-    animation:hintPulse .85s ease 2;
+    border:2px solid rgba(226,177,68,.9);
+    animation:stockSlotPulse .85s ease 2;
   }
 
   /* ---------- CARDS ---------- */
@@ -155,23 +156,45 @@
   /* The original app deck: large side-by-side indices and one centered motif. */
   body[data-card-style="original"] .ix{
     position:absolute;display:flex;align-items:baseline;gap:.1em;
-    line-height:1;font-size:3.1em;font-weight:700;letter-spacing:-.03em;
+    line-height:1;font-size:3.5em;font-weight:700;letter-spacing:-.04em;
   }
-  body[data-card-style="original"] .ix b{font-size:1em;font-weight:600}
-  body[data-card-style="original"] .ix.tl{top:.06em;left:.08em}
+  body[data-card-style="original"] .ix.ten{font-size:3.18em}
+  body[data-card-style="original"] .ix i{font-style:normal}
+  body[data-card-style="original"] .ix b{font-size:1.08em;font-weight:600}
+  body[data-card-style="original"] .ix.tl{top:.035em;left:.055em}
   body[data-card-style="original"] .ix.br{bottom:.06em;right:.08em;transform:rotate(180deg)}
   body[data-card-style="original"] .mid{
     position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
     pointer-events:none;font-size:5em;opacity:.95;
   }
   body[data-card-style="original"] .mid.ace{font-size:5.8em;opacity:1}
-  body[data-card-style="original"] .mid.court.k{font-size:6em}
-  body[data-card-style="original"] .mid.court.q{font-size:5.3em}
-  body[data-card-style="original"] .mid.court.j{font-size:4.8em}
+  body[data-card-style="original"] .mid.court{transform:translateY(.28em)}
+  body[data-card-style="original"] .mid.court.k{font-size:6.5em}
+  body[data-card-style="original"] .mid.court.q{font-size:5.8em}
+  body[data-card-style="original"] .mid.court.j{font-size:5.3em}
   .card.hint{animation:hintPulse .85s ease 2}
+  .card.stock-hint{animation:hintPulse .85s ease 2}
+  .card.stock-hint::after{
+    content:"";position:absolute;inset:-2px;z-index:4;pointer-events:none;
+    border:2px solid rgba(226,177,68,.9);border-radius:calc(var(--cw)*0.1);
+    animation:stockRingPulse .85s ease 2;
+  }
+  .card.move-source-hint::after{
+    content:"";position:absolute;inset:-1px;z-index:4;pointer-events:none;
+    border:2px solid rgba(217,166,72,.78);border-radius:calc(var(--cw)*0.095);
+    box-shadow:0 0 7px 2px rgba(217,166,72,.36);
+  }
   @keyframes hintPulse{
     0%,100%{filter:none}
     50%{filter:drop-shadow(0 0 14px rgba(217,166,72,1)) drop-shadow(0 0 6px rgba(217,166,72,.9)) brightness(1.14)}
+  }
+  @keyframes stockRingPulse{
+    0%,100%{opacity:.62;box-shadow:0 0 4px 1px rgba(244,200,93,.32)}
+    50%{opacity:.95;box-shadow:0 0 7px 2px rgba(244,200,93,.7),0 0 13px 4px rgba(217,166,72,.32)}
+  }
+  @keyframes stockSlotPulse{
+    0%,100%{filter:none;box-shadow:0 0 4px 1px rgba(244,200,93,.32)}
+    50%{filter:brightness(1.08);box-shadow:0 0 7px 2px rgba(244,200,93,.7),0 0 13px 4px rgba(217,166,72,.32)}
   }
   /* hint ghost — a translucent copy that glides to the recommended spot */
   .card.ghost{
@@ -241,48 +264,49 @@
     background:linear-gradient(165deg,#fbf7ec,#efe6d1);
     color:var(--ink);
     border-radius:18px;
-    width:min(340px, calc(100vw - 48px));
-    padding:26px 24px 20px;
+    width:min(390px, calc(100vw - 40px));
+    max-height:calc(100dvh - 24px);overflow-y:auto;
+    padding:30px 28px 24px;
     box-shadow:0 20px 60px rgba(0,0,0,.5);
     text-align:center;
     animation:panelIn .45s cubic-bezier(.2,1.1,.3,1.1);
   }
   @keyframes panelIn{from{transform:translateY(24px) scale(.94);opacity:0}to{transform:none;opacity:1}}
   .panel h2{
-    font-family:var(--serif);font-size:1.8rem;font-weight:600;
+    font-family:var(--serif);font-size:2rem;font-weight:600;
     letter-spacing:.01em;margin-bottom:2px;
   }
-  .panel.daily-win h2{font-size:2.05rem;font-weight:700;color:#8c641a}
+  .panel.daily-win h2{font-size:2.25rem;font-weight:700;color:#8c641a}
   .panel.milestone{
     border:2px solid rgba(217,166,72,.72);
     animation:panelIn .45s cubic-bezier(.2,1.1,.3,1.1), milestoneGlow 1.5s ease-in-out 2;
   }
-  .panel.milestone h2{font-size:2.15rem;font-weight:700;color:#8c641a}
+  .panel.milestone h2{font-size:2.3rem;font-weight:700;color:#8c641a}
   @keyframes milestoneGlow{
     0%,100%{box-shadow:0 20px 60px rgba(0,0,0,.5),0 0 0 rgba(217,166,72,0)}
     50%{box-shadow:0 20px 60px rgba(0,0,0,.5),0 0 34px rgba(217,166,72,.72)}
   }
-  .panel .sub{color:#7a6f56;font-size:.82rem;margin-bottom:16px}
+  .panel .sub{color:#7a6f56;font-size:.95rem;margin-bottom:18px}
   .statgrid{
     display:flex;justify-content:center;gap:18px;margin-bottom:14px;
   }
   .stat{min-width:70px}
   .stat b{
-    display:block;font-family:var(--serif);font-size:1.5rem;
+    display:block;font-family:var(--serif);font-size:1.7rem;
     font-variant-numeric:tabular-nums;line-height:1.1;
   }
-  .stat span{font-size:.68rem;text-transform:uppercase;letter-spacing:.08em;color:#8a7d60}
+  .stat span{font-size:.76rem;text-transform:uppercase;letter-spacing:.08em;color:#8a7d60}
   .stat .flame{color:var(--brass-soft)}
   .badge{
     display:inline-block;background:rgba(217,166,72,.18);
     border:1px solid rgba(185,138,47,.4);color:#7c5d16;
-    border-radius:999px;padding:3px 12px;font-size:.75rem;font-weight:600;
+    border-radius:999px;padding:4px 13px;font-size:.84rem;font-weight:600;
     margin:2px;
   }
-  .panel .note{font-size:.8rem;color:#6d6248;margin:6px 0 14px;min-height:1em}
+  .panel .note{font-size:.9rem;color:#6d6248;margin:8px 0 16px;min-height:1em}
   .panel button{
     background:var(--felt);color:var(--paper);border:none;
-    width:100%;padding:12px;font-size:.95rem;margin-top:4px;
+    width:100%;padding:13px;font-size:1.02rem;margin-top:4px;
   }
   .panel button.ghost{background:transparent;color:#6d6248;font-weight:500;padding:8px}
 
@@ -362,23 +386,33 @@
     .seg button{font-size:1rem;padding:9px 20px}
     .statline{font-size:.98rem;gap:22px;padding-top:12px}
   }
-  @media (orientation:landscape) and (max-height:500px){
-    #app{max-width:none;padding-right:92px}
+  @media (orientation:landscape){
+    #app{
+      --control-rail:clamp(88px,11vw,116px);
+      max-width:none;
+      padding-left:env(safe-area-inset-left,0px);
+      padding-right:calc(env(safe-area-inset-right,0px) + var(--control-rail));
+    }
     #hud{
       padding:calc(env(safe-area-inset-top, 0px) + 5px)
-              max(10px, env(safe-area-inset-right, 0px)) 4px
-              max(10px, env(safe-area-inset-left, 0px));
+              10px 4px 10px;
     }
     .brand{font-size:1.25rem}
     .chip{padding:3px 7px;font-size:.72rem}
     #controls{
-      position:fixed;z-index:300;left:auto;right:calc(env(safe-area-inset-right, 0px) + 6px);
-      top:calc(env(safe-area-inset-top, 0px) + 42px);bottom:env(safe-area-inset-bottom, 0px);
-      width:62px;padding:4px 0;flex-direction:column;justify-content:center;gap:5px;
+      position:fixed;z-index:300;left:auto;right:env(safe-area-inset-right,0px);
+      top:calc(env(safe-area-inset-top, 0px) + 38px);bottom:env(safe-area-inset-bottom, 0px);
+      width:var(--control-rail);padding:6px 8px;flex-direction:column;justify-content:center;gap:8px;
     }
-    #controls button{padding:8px 3px;font-size:.72rem;border-radius:9px}
+    #controls button{width:100%;min-height:48px;padding:10px 5px;font-size:.78rem;border-radius:11px}
+    #btnNew.confirm .classic-icon{display:none}
     body[data-card-style="original"] .ix.br{display:none}
     #toast{bottom:calc(env(safe-area-inset-bottom,0px) + 12px)}
+    .panel{padding:18px 26px 16px}
+    .panel .sub{margin-bottom:10px}
+    .statgrid{margin-bottom:8px}
+    .panel .note{margin:5px 0 9px}
+    .panel button{padding:10px}
   }
 
   /* ============================================================
@@ -391,12 +425,12 @@
   .control-label{white-space:nowrap}
 
   body[data-card-style="crehore"]{
-    --felt:#7f9e94; --felt-deep:#6e8a82;
-    --line:#21495b; --line-soft:rgba(33,73,91,.48);
+    --felt:#8faaa1; --felt-deep:#809b92;
+    --line:#153d50; --line-soft:rgba(21,61,80,.52);
     --brass:#cf952f; --brass-soft:#ad7420;
-    --text:#163e54; --muted:#365c69;
-    --vintage-ink:#163e54; --vintage-ink-strong:#12374b; --vintage-ink-mid:#365c69;
-    --vintage-ink-rgb:22,62,84; --vintage-rule-rgb:18,55,75;
+    --text:#0f354a; --muted:#2b5360;
+    --vintage-ink:#0f354a; --vintage-ink-strong:#0a2d41; --vintage-ink-mid:#294f5d;
+    --vintage-ink-rgb:15,53,74; --vintage-rule-rgb:10,43,60;
     --vintage-slot-rgb:37,78,94; --vintage-shadow-rgb:27,48,51;
     --vintage-wash-rgb:31,72,70; --vintage-button-rgb:108,141,132;
     --vintage-accent:#a94736;
@@ -415,11 +449,9 @@
   body[data-card-style="crehore"]::before{
     content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
     background:
-      repeating-linear-gradient(7deg,rgba(255,255,255,.04) 0 1px,transparent 1px 5px),
-      repeating-linear-gradient(96deg,rgba(31,59,53,.022) 0 1px,transparent 1px 8px),
-      url("assets/cards/crehore-1820/components/paper-stock.webp") center/100% 100% no-repeat;
-    filter:grayscale(1) sepia(.08) contrast(1.48);
-    mix-blend-mode:soft-light;opacity:.43;
+      repeating-linear-gradient(7deg,rgba(255,255,255,.025) 0 1px,transparent 1px 6px),
+      repeating-linear-gradient(96deg,rgba(31,59,53,.016) 0 1px,transparent 1px 10px);
+    mix-blend-mode:soft-light;opacity:.34;
   }
   body[data-card-style="crehore"] #app{position:relative;z-index:1}
 
@@ -450,13 +482,13 @@
   }
   body[data-card-style="crehore"] .chips::before,
   body[data-card-style="crehore"] .chips::after{
-    content:"";align-self:center;width:6px;height:7px;flex:none;
+    content:"";align-self:center;width:7px;height:7px;flex:none;
     background:var(--vintage-accent);
-    clip-path:polygon(48% 0,96% 45%,58% 100%,4% 55%);
-    transform:rotate(-4deg);
+    clip-path:polygon(50% 0,100% 50%,50% 100%,0 50%);
+    transform:none;
     margin:0 clamp(5px,2vw,14px);
   }
-  body[data-card-style="crehore"] .chips::after{transform:rotate(5deg) scale(.9)}
+  body[data-card-style="crehore"] .chips::after{transform:none}
   body[data-card-style="crehore"] .chip{
     min-height:22px;justify-content:center;gap:3px;
     background:transparent;border:0;border-radius:0;
@@ -588,11 +620,10 @@
     }
     body[data-card-style="crehore"] #controls .vintage-icon{width:26px;height:26px}
   }
-  @media (orientation:landscape) and (max-height:500px){
+  @media (orientation:landscape){
     body[data-card-style="crehore"] #hud{
       display:flex;gap:10px;margin:calc(env(safe-area-inset-top,0px) + 4px)
-        max(8px,env(safe-area-inset-right,0px)) 0
-        max(8px,env(safe-area-inset-left,0px));
+        8px 0 8px;
       padding:4px 0;border-width:2px;
     }
     body[data-card-style="crehore"] .brand{
@@ -606,18 +637,22 @@
     body[data-card-style="crehore"] .chips::after{display:none}
     body[data-card-style="crehore"] .chip{min-height:0;padding:1px 6px;font-size:.68rem}
     body[data-card-style="crehore"] #controls{
-      position:fixed;left:auto;right:calc(env(safe-area-inset-right, 0px) + 6px);
-      top:calc(env(safe-area-inset-top, 0px) + 42px);bottom:env(safe-area-inset-bottom, 0px);
-      width:72px;margin:0;border-top:0;border-left:4px double rgba(var(--vintage-rule-rgb),.9);
-      padding:4px 0 4px 7px;
+      position:fixed;left:auto;right:env(safe-area-inset-right,0px);
+      top:calc(env(safe-area-inset-top, 0px) + 38px);bottom:env(safe-area-inset-bottom, 0px);
+      width:var(--control-rail);margin:0;border-top:0;border-left:4px double rgba(var(--vintage-rule-rgb),.9);
+      padding:6px 8px 6px 10px;gap:8px;
     }
     body[data-card-style="crehore"] #controls::before{display:none}
     body[data-card-style="crehore"] #controls button,
     body[data-card-style="crehore"] #controls button:not(#btnMenu),
     body[data-card-style="crehore"] #btnMenu{
-      flex:0 0 auto;width:100%;min-height:0;padding:6px 2px;font-size:.64rem;
+      flex:0 0 auto;width:100%;min-height:48px;padding:8px 3px;font-size:.7rem;
     }
-    body[data-card-style="crehore"] #controls .vintage-icon{width:17px;height:17px}
+    body[data-card-style="crehore"] #controls .vintage-icon{width:21px;height:21px}
+    body[data-card-style="crehore"] #btnNew.confirm{
+      padding-inline:2px;font-size:.66rem;letter-spacing:.045em;
+    }
+    body[data-card-style="crehore"] #btnNew.confirm .vintage-icon{display:none}
   }
 </style>
 
@@ -714,7 +749,7 @@
     </div>
     <div id="wBadges"></div>
     <div class="note" id="wNote"></div>
-    <button id="btnAgain">Deal again</button>
+    <button id="btnAgain">New Game</button>
     <button class="ghost" id="btnAdmire">Admire the cascade</button>
   </div>
 </div>
@@ -730,7 +765,7 @@
     </div>
   </div>
   <div class="row">
-    <div>Auto-complete<span class="sub2">Finish the game for you once the win is certain</span></div>
+    <div>Auto-move<span class="sub2">Send exposed cards to the foundation automatically</span></div>
     <div class="seg">
       <button id="segAutoOn">On</button>
       <button id="segAutoOff">Off</button>
@@ -801,7 +836,7 @@ let undoStack = [];
 let initialDeal = null;    // shuffle order for "restart"
 let moves = 0, elapsed = 0, started = false, won = false, autoRunning = false;
 let undos = 0; // first undo each game is free; the rest count as a move
-let timerId = null, midnightTimer = null;
+let timerId = null, midnightTimer = null, autoPlayTimer = null;
 
 /* Sound — a short CC0 recording. Fresh deals always attempt playback; browser
    autoplay policy may silence only the automatic deal at initial page load. */
@@ -872,6 +907,10 @@ function makeShuffle(){
 }
 function newGame(order){
   const shuffled = !order;
+  // Start the recorded shuffle on the initiating tap, before rebuilding and
+  // laying out the deal. This keeps every fresh-game entry point responsive.
+  if(shuffled) playShuffleSound();
+  cancelAutoPlay();
   order = order || makeShuffle();
   initialDeal = order.slice();
   cards = order.map(id => ({ id, suit: Math.floor(id/13), rank: (id%13)+1, faceUp:false, x:0, y:0 }));
@@ -886,9 +925,9 @@ function newGame(order){
   undoStack = [];
   stopTimer();
   buildDOM();
-  if(shuffled) playShuffleSound();
   dealAnimation();
   updateHUD(); updateButtons(); saveGame();
+  maybeAutoFinish(reduced ? 0 : 950);
 }
 
 /* ================= DOM ================= */
@@ -923,11 +962,12 @@ function buildDOM(){
 const ORIGINAL_MOTIF = { 11:"⚜︎", 12:"♛", 13:"♚" };
 function originalFaceHTML(card){
   const suit = SUITS[card.suit], rank = RANKS[card.rank];
+  const indexClass = card.rank===10 ? " ten" : "";
   let center;
   if(card.rank === 1) center = `<div class="mid ace">${suit}</div>`;
   else if(card.rank >= 11) center = `<div class="mid court ${["j","q","k"][card.rank-11]}">${ORIGINAL_MOTIF[card.rank]}</div>`;
   else center = `<div class="mid">${suit}</div>`;
-  return `<div class="ix tl"><i>${rank}</i><b>${suit}</b></div><div class="ix br"><i>${rank}</i><b>${suit}</b></div>${center}`;
+  return `<div class="ix tl${indexClass}"><i>${rank}</i><b>${suit}</b></div><div class="ix br${indexClass}"><i>${rank}</i><b>${suit}</b></div>${center}`;
 }
 
 /* ================= layout ================= */
@@ -935,23 +975,67 @@ function computeGeometry(){
   const bw = board.clientWidth, bh = board.clientHeight;
   const gap = Math.max(2, Math.min(8, bw*0.006));
   const pad = gap;
-  const topY = 8;
+  const landscape = bw > bh;
+  const topY = landscape ? 4 : 8;
   // Width-limited card size (7 columns across). iPad gets the full available
   // table instead of inheriting the desktop-sized cap.
   const roomyTablet = bw>=700 && bh>=600;
-  let cw = Math.min((bw - pad*2 - gap*6)/7, roomyTablet ? 142 : 124);
-  // Height-limited: the top row plus a short tableau fan must fit vertically, or
-  // short/landscape viewports clip the bottom cards. Cap card width to suit.
-  // Landscape needs room for the top row, a full card, and several readable
-  // tableau fan steps. A two-row cap makes cards balloon and clips long piles.
-  const heightRows = bw > bh ? 3.8 : 2.35;
-  const chByHeight = (bh - topY - 10) / heightRows;
+  // Landscape reserves one column at each side for waste/foundations and the
+  // centered stock, leaving the middle seven columns entirely to tableau.
+  const columnCount = landscape ? 9 : 7;
+  let cw = Math.min(
+    (bw - pad*2 - gap*(columnCount-1))/columnCount,
+    roomyTablet ? 142 : 124
+  );
+  // A complete K-through-2 face-up run must fit without hiding its indices.
+  // The 24% minimum clears the lower edge of the enlarged vintage index band.
+  // Normal vintage stacks reveal exactly to the 142px artwork boundary, so a
+  // layered card covers the court illustration without covering rank or suit.
+  const minFaceUpReveal = .24;
+  const preferredFaceUpReveal = settings.cardStyle === "crehore" ? 142/522 : .32;
+  const heightRows = landscape ? 1 + 11*minFaceUpReveal : 2.35;
+  const chByHeight = (bh - topY - (landscape ? 18 : 10)) / heightRows;
   if(chByHeight > 0) cw = Math.min(cw, chByHeight / 1.45);
+  // Four landscape foundations use a vertical rail. Size cards just enough
+  // to leave a genuine gap between all four instead of overlapping them.
+  const foundationGap = landscape ? Math.max(3, gap*.75) : 0;
+  if(landscape){
+    const foundationCardHeight = (bh-topY*2-foundationGap*3)/4;
+    if(foundationCardHeight > 0) cw = Math.min(cw, foundationCardHeight/1.45);
+  }
   const ch = cw*1.45;
-  const left = (bw - (7*cw + 6*gap))/2;
-  const xs = i => left + i*(cw+gap);
-  const tabY = topY + ch + gap*1.8;
-  G = { bw, bh, gap, cw, ch, xs, topY, tabY };
+  const left = (bw - (columnCount*cw + (columnCount-1)*gap))/2;
+  const xs = i => left + (i + (landscape ? 1 : 0))*(cw+gap);
+  const tabY = landscape ? topY : topY + ch + gap*1.8;
+  let slotPos;
+  if(landscape){
+    // Nudge both side rails outward to visually separate them from the seven
+    // active tableau columns while keeping them inside the board bounds.
+    const sideLaneNudge = Math.min(cw*.16, Math.max(0,left-pad));
+    const sideLeft = left-sideLaneNudge;
+    const sideRight = left + 8*(cw+gap) + sideLaneNudge;
+    const stockY = Math.max(topY, (bh-ch)/2);
+    // Drawn cards open directly above the right-side stock. Reserve the full
+    // 24% draw-three fan so the exposed card never hides behind the stock.
+    const wasteY = Math.max(topY, stockY-ch*1.24-gap);
+    const foundationStart = topY;
+    const foundationStep = ch+foundationGap;
+    slotPos = {
+      stock:[sideRight,stockY], waste:[sideRight,wasteY],
+      f0:[sideLeft,foundationStart], f1:[sideLeft,foundationStart+foundationStep],
+      f2:[sideLeft,foundationStart+foundationStep*2], f3:[sideLeft,foundationStart+foundationStep*3]
+    };
+  } else {
+    slotPos = {
+      stock:[xs(6),topY], waste:[xs(5),topY],
+      f0:[xs(0),topY], f1:[xs(1),topY], f2:[xs(2),topY], f3:[xs(3),topY]
+    };
+  }
+  for(let c=0;c<7;c++) slotPos["t"+c] = [xs(c),tabY];
+  G = {
+    bw, bh, gap, cw, ch, xs, topY, tabY, landscape, slotPos,
+    minFaceUpReveal, preferredFaceUpReveal, foundationGap
+  };
   board.style.setProperty("--cw", cw+"px");
   board.style.setProperty("--ch", ch+"px");
 }
@@ -964,11 +1048,11 @@ function place(card, x, y, z){
 }
 function layout(){
   computeGeometry();
-  const {xs, topY, tabY, ch, gap, bw, bh, cw} = G;
+  const {
+    xs, topY, tabY, ch, gap, bw, bh, cw, landscape, slotPos,
+    minFaceUpReveal, preferredFaceUpReveal
+  } = G;
   // placeholders
-  // foundations on the left, stock in the right corner, waste right beside it
-  const slotPos = { stock:[xs(6),topY], waste:[xs(5),topY], f0:[xs(0),topY], f1:[xs(1),topY], f2:[xs(2),topY], f3:[xs(3),topY] };
-  for(let c=0;c<7;c++) slotPos["t"+c] = [xs(c), tabY];
   for(const ph of board.querySelectorAll(".ph")){
     const [x,y] = slotPos[ph.dataset.slot];
     ph.style.transform = `translate3d(${x}px,${y}px,0)`;
@@ -978,46 +1062,68 @@ function layout(){
   // Stock cards occupy the exact same position. Track them separately so the
   // table theme can avoid multiplying one shadow by every card in the pile.
   for(const card of cards) els.get(card.id)?.classList.remove("stock-card");
+  const [stockX,stockY] = slotPos.stock;
   P.stock.forEach((card,i)=>{
     els.get(card.id)?.classList.add("stock-card");
-    place(card, xs(6), topY, i+1);
+    place(card, stockX, stockY, i+1);
   });
-  // waste — top card sits beside the stock, older cards peek out to the left
+  // Waste sits beside the stock in portrait and opens above it in the
+  // landscape right rail. Older draw-three cards keep a readable fan.
   const fanN = settings.draw3 ? 3 : 1;
   const n = P.waste.length;
   const fanOff = cw*0.3;
+  const [wasteX,wasteY] = slotPos.waste;
   P.waste.forEach((card,i)=>{
     const fromTop = n-1-i;                       // 0 = top card
-    const x = xs(5) - Math.min(fromTop, fanN-1)*fanOff;
-    place(card, x, topY, 60+i);
+    if(landscape){
+      const firstVisible = Math.max(0,n-fanN);
+      const visibleOrder = Math.max(0,i-firstVisible);
+      place(card,wasteX,wasteY+visibleOrder*ch*.12,60+i);
+    } else {
+      place(card,wasteX-Math.min(fromTop,fanN-1)*fanOff,wasteY,60+i);
+    }
   });
   // foundations
-  P.f.forEach((pile,fi)=> pile.forEach((card,i)=> place(card, xs(fi), topY, 120+i)));
+  P.f.forEach((pile,fi)=>{
+    const [x,y] = slotPos["f"+fi];
+    pile.forEach((card,i)=> place(card,x,y,120+fi*20+i));
+  });
   // tableau (compress fans to fit)
-  const landscape = bw > bh;
   const availH = bh - tabY - (landscape ? 18 : 10);
   for(let c=0;c<7;c++){
     const pile = P.t[c];
     let offDown = ch*(landscape ? 0.12 : 0.15);
-    let offUp = ch*(landscape ? 0.29 : 0.34);
-    let total = 0;
-    pile.forEach((card,i)=>{ if(i<pile.length-1) total += card.faceUp?offUp:offDown });
+    let offUp = ch*preferredFaceUpReveal;
+    let upGaps = 0, downGaps = 0;
+    pile.forEach((card,i)=>{
+      if(i>=pile.length-1) return;
+      if(card.faceUp) upGaps++; else downGaps++;
+    });
+    const total = upGaps*offUp + downGaps*offDown;
     const maxTotal = Math.max(availH - ch, ch*0.4);
-    const scale = total>maxTotal ? maxTotal/total : 1;
+    if(total>maxTotal){
+      const scale = maxTotal/total;
+      // Never cover the bottom of a face-up rank/suit index. If a mixed pile
+      // is exceptionally long, face-down spacing absorbs the compression.
+      offUp = Math.max(offUp*scale, ch*minFaceUpReveal);
+      const remaining = Math.max(0, maxTotal-upGaps*offUp);
+      offDown = downGaps ? Math.min(offDown, remaining/downGaps) : offDown;
+    }
     let y = tabY;
     pile.forEach((card,i)=>{
       place(card, xs(c), y, 10+i);
-      y += (card.faceUp?offUp:offDown)*scale;
+      y += card.faceUp?offUp:offDown;
     });
   }
 }
 function dealAnimation(){
   computeGeometry();
   // start everything at the stock slot
+  const [stockX,stockY] = G.slotPos.stock;
   for(const card of cards){
     const el = els.get(card.id);
     el.style.transition = "none";
-    place(card, G.xs(6), G.topY, 1);
+    place(card, stockX, stockY, 1);
   }
   // force reflow, then animate out with a stagger
   void board.offsetHeight;
@@ -1043,6 +1149,18 @@ function locate(card){
 const topOf = arr => arr[arr.length-1];
 function canFound(card){
   return P.f[card.suit].length === card.rank-1;
+}
+// Auto-play must never take a card the player may still need in the tableau.
+// Aces and twos are always safe. Higher cards move only after both
+// opposite-color foundations already contain the rank directly below them.
+function canSafelyAutoFound(card){
+  if(!canFound(card)) return false;
+  if(card.rank<=2) return true;
+  for(let suit=0;suit<4;suit++){
+    if(isRed(suit)===isRed(card.suit)) continue;
+    if(P.f[suit].length < card.rank-1) return false;
+  }
+  return true;
 }
 function canTab(card, col){
   const pile = P.t[col];
@@ -1075,6 +1193,7 @@ function pushUndo(){
 }
 function undo(){
   if(!undoStack.length || autoRunning || won) return;
+  cancelAutoPlay();
   const keepMoves = moves;               // undo never lowers the move count
   restore(undoStack.pop());
   moves = keepMoves + (undos>0 ? 1 : 0); // first undo is free, then +1 move each
@@ -1197,17 +1316,18 @@ window.addEventListener("pointerup", e=>{
   // drop test — use the dragged card's center
   const dx = e.clientX-d.sx, dy = e.clientY-d.sy;
   const cx = d.orig[0].x+dx + G.cw/2, cy = d.orig[0].y+dy + G.ch/2;
-  // foundations
-  if(d.stack.length===1 && cy < G.tabY - G.gap/2){
-    for(let f=0; f<4; f++){
-      const x = G.xs(f);
-      if(cx>x-G.gap/2 && cx<x+G.cw+G.gap/2 && canFound(d.card)){
-        if(f===d.card.suit){ moveStack(d.stack,"f",f); return }
-      }
+  // Foundation hit testing follows the actual slot position in either
+  // orientation. The correct suit remains the only legal destination.
+  if(d.stack.length===1 && canFound(d.card)){
+    const f = d.card.suit;
+    const [x,y] = G.slotPos["f"+f];
+    const exactSlot = cx>x-G.gap/2 && cx<x+G.cw+G.gap/2 &&
+      cy>y-G.gap/2 && cy<y+G.ch+G.gap/2;
+    const portraitLooseAim = !G.landscape && cy<G.tabY-G.gap/2 &&
+      cx>x-G.cw*.75 && cx<x+G.cw*1.75;
+    if(exactSlot || portraitLooseAim){
+      moveStack(d.stack,"f",f); return;
     }
-    // allow dropping on the correct suit slot even if aimed loosely
-    const f = d.card.suit, x=G.xs(f);
-    if(canFound(d.card) && cx>x-G.cw*0.75 && cx<x+G.cw*1.75){ moveStack(d.stack,"f",f); return }
   }
   // tableau
   if(cy > G.tabY - G.ch*0.6){
@@ -1271,9 +1391,12 @@ function pulseEl(el, className="hint"){
   el.addEventListener("animationcancel", done);
 }
 function pulseStock(){
-  // The placeholder is normally behind the cards. stock-hint temporarily
-  // layers its transparent brass ring over the entire draw pile.
-  pulseEl(board.querySelector('.ph[data-slot="stock"]'), "stock-hint");
+  // Pulse the actual visible stock card with the same treatment used by every
+  // other hinted card, plus the pile-specific border. An empty recycle slot
+  // uses that same solid ring on its placeholder.
+  const topStock = topOf(P.stock);
+  if(topStock){ pulseEl(els.get(topStock.id),"stock-hint"); return; }
+  pulseEl(board.querySelector('.ph[data-slot="stock"]'),"stock-hint");
 }
 function cardIsPlayable(c){
   if(canFound(c)) return true;
@@ -1307,7 +1430,7 @@ function reachableDrawThreeCards(){
 // The pile's landing position for a ghost preview.
 function slotXY(dst){
   const kind = dst[0], idx = +dst.slice(1);
-  if(kind==="f") return [G.xs(idx), G.topY];
+  if(kind==="f") return G.slotPos[dst];
   const pile = P.t[idx];
   if(!pile.length) return [G.xs(idx), G.tabY];
   const t = topOf(pile);
@@ -1317,24 +1440,29 @@ let ghostTimers = [];
 function ghostMove(h){
   ghostTimers.forEach(clearTimeout); ghostTimers = [];
   board.querySelectorAll(".ghost").forEach(g=>g.remove());
+  board.querySelectorAll(".move-source-hint").forEach(el=>el.classList.remove("move-source-hint"));
   const [dx,dy] = slotXY(h.dst);
   const off = G.ch*0.34;
   const ghosts = h.src.map((c,i)=>{
     const src = els.get(c.id);
     const g = src.cloneNode(true);
-    g.classList.remove("hint","dragging");
+    g.classList.remove("hint","stock-hint","move-source-hint","dragging");
     g.classList.add("ghost");
     g.style.transform = src.style.transform;
     g.style.zIndex = 900+i;
     board.appendChild(g);
     return g;
   });
-  h.src.forEach(c=> pulseEl(els.get(c.id)));
+  const sourceEl = els.get(h.src[0].id);
+  if(sourceEl) sourceEl.classList.add("move-source-hint");
   requestAnimationFrame(()=>requestAnimationFrame(()=>{
     ghosts.forEach((g,i)=>{ g.style.transform = `translate3d(${dx}px,${dy + i*off}px,0)` });
   }));
   ghostTimers.push(setTimeout(()=> ghosts.forEach(g=>g.classList.add("fade")), 1450));
-  ghostTimers.push(setTimeout(()=> ghosts.forEach(g=>g.remove()), 2100));
+  ghostTimers.push(setTimeout(()=>{
+    ghosts.forEach(g=>g.remove());
+    sourceEl?.classList.remove("move-source-hint");
+  }, 2100));
 }
 let toastTimer = null;
 let overlayMode = "win";
@@ -1374,8 +1502,8 @@ function showStuck(){
   $("wMoves").textContent = moves;
   $("wStreak").textContent = displayStreak();
   $("wBadges").innerHTML = "";
-  $("wNote").textContent = "Undo a few moves to try a different path, or deal again.";
-  $("btnAgain").textContent = "Deal again";
+  $("wNote").textContent = "Undo a few moves to try a different path, or start a new game.";
+  $("btnAgain").textContent = "New Game";
   $("btnAdmire").textContent = "Go back & undo";
   $("overlay").classList.add("show");
 }
@@ -1395,21 +1523,75 @@ function showDrawOneOffer(){
   $("overlay").classList.add("show");
 }
 
-/* ================= auto-finish ================= */
+/* ================= automatic foundation play ================= */
 function finishable(){
   return !won && P.t.every(p=>p.every(c=>c.faceUp)) &&
     !P.f.every(p=>p.length===13);
 }
-// Auto-trigger the finish once the outcome is certain, if the player left it on.
-function maybeAutoFinish(){
-  if(settings.autoComplete !== false && finishable() && !autoRunning && !won){
-    setTimeout(autoFinish, reduced ? 0 : 280);
-  }
+function cancelAutoPlay(){
+  if(autoPlayTimer){ clearTimeout(autoPlayTimer); autoPlayTimer=null; }
 }
-function autoFinish(){
-  if(!finishable() || autoRunning) return;
+function safeAutoMoveCandidate(){
+  for(let c=0;c<7;c++){
+    const card = topOf(P.t[c]);
+    if(card && card.faceUp && canSafelyAutoFound(card)){
+      return {card,pile:P.t[c],tableau:true};
+    }
+  }
+  const waste = topOf(P.waste);
+  if(waste && canSafelyAutoFound(waste)) return {card:waste,pile:P.waste,tableau:false};
+  return null;
+}
+// Queue after the player's animation has started so the exposed card visibly
+// glides to its foundation. Repeated calls reset the pause, making a quick
+// series of user moves feel uninterrupted rather than fighting the automation.
+function maybeAutoFinish(delay=reduced ? 120 : 300){
+  cancelAutoPlay();
+  // Never play the opening deal for the player. Automation becomes eligible
+  // only after their first completed draw, tap, or drag move.
+  if(settings.autoComplete === false || autoRunning || won || !started || moves<1) return;
+  if(!safeAutoMoveCandidate() && !finishable()) return;
+  autoPlayTimer = setTimeout(()=>{
+    autoPlayTimer = null;
+    if(finishable()) autoFinish();
+    else autoMoveSafeCards();
+  },delay);
+}
+function autoMoveSafeCards(){
+  if(settings.autoComplete === false || autoRunning || won || !started || moves<1) return;
   autoRunning = true; updateButtons();
   const step = ()=>{
+    if(settings.autoComplete === false || won){
+      autoRunning=false; saveGame(); updateButtons(); return;
+    }
+    if(finishable()){
+      autoRunning=false;
+      autoFinish();
+      return;
+    }
+    const candidate = safeAutoMoveCandidate();
+    if(!candidate){
+      autoRunning=false; saveGame(); checkWin(); updateButtons();
+      return;
+    }
+    candidate.pile.pop();
+    P.f[candidate.card.suit].push(candidate.card);
+    if(candidate.tableau && candidate.pile.length && !topOf(candidate.pile).faceUp){
+      topOf(candidate.pile).faceUp = true;
+    }
+    moves++;
+    layout(); updateHUD();
+    autoPlayTimer = setTimeout(step,reduced?110:275);
+  };
+  step();
+}
+function autoFinish(){
+  if(settings.autoComplete === false || !finishable() || autoRunning || !started || moves<1) return;
+  autoRunning = true; updateButtons();
+  const step = ()=>{
+    if(settings.autoComplete === false){
+      autoRunning=false; saveGame(); updateButtons(); return;
+    }
     let moved = false;
     for(let c=0;c<7;c++){
       const t = topOf(P.t[c]);
@@ -1435,7 +1617,7 @@ function autoFinish(){
         break;
       }
     }
-    if(moved && !P.f.every(p=>p.length===13)) setTimeout(step, reduced?0:120);
+    if(moved && !P.f.every(p=>p.length===13)) autoPlayTimer=setTimeout(step,reduced?90:180);
     else { autoRunning=false; saveGame(); checkWin(); updateButtons(); }
   };
   step();
@@ -1595,7 +1777,8 @@ function cascade(special=false){
   const queue = [];
   for(let r=12;r>=0;r--) for(let f=0;f<4;f++){
     const card = P.f[f][r];
-    if(card) queue.push({ card, x: rect.left+G.xs(f), y: rect.top+G.topY });
+    const [x,y] = G.slotPos["f"+f];
+    if(card) queue.push({ card, x:rect.left+x, y:rect.top+y });
   }
   const sprites = [];
   const sparkles = special ? Array.from({length:110},(_,i)=>({
@@ -1714,7 +1897,10 @@ sheetBack.onclick = ()=>{ sheet.classList.remove("open"); sheetBack.classList.re
 $("segD1").onclick = ()=>{ settings.draw3=false; saveJSON(KEY_SET,settings); refreshSheet(); layout() };
 $("segD3").onclick = ()=>{ settings.draw3=true; saveJSON(KEY_SET,settings); refreshSheet(); layout() };
 $("segAutoOn").onclick = ()=>{ settings.autoComplete=true; saveJSON(KEY_SET,settings); refreshSheet(); updateButtons(); maybeAutoFinish() };
-$("segAutoOff").onclick = ()=>{ settings.autoComplete=false; saveJSON(KEY_SET,settings); refreshSheet(); updateButtons() };
+$("segAutoOff").onclick = ()=>{
+  settings.autoComplete=false; cancelAutoPlay(); autoRunning=false;
+  saveJSON(KEY_SET,settings); refreshSheet(); updateButtons(); saveGame();
+};
 $("segSoundOn").onclick = ()=>setSound(true);
 $("segSoundOff").onclick = ()=>setSound(false);
 $("segHapticsOn").onclick = ()=>{ settings.haptics=true; saveJSON(KEY_SET,settings); refreshSheet(); haptic("LIGHT") };
@@ -1766,7 +1952,25 @@ window.addEventListener("keydown", e=>{
   else if(e.key==="h") hint();
   else if(e.key===" "){ e.preventDefault(); draw() }
 });
-window.addEventListener("resize", ()=>{ if(P) layout() });
+let resizeLayoutFrame = null, orientationLayoutTimer = null;
+function relayoutBoard(){
+  if(!P) return;
+  if(resizeLayoutFrame) cancelAnimationFrame(resizeLayoutFrame);
+  resizeLayoutFrame = requestAnimationFrame(()=>{
+    resizeLayoutFrame=null;
+    if(P) layout();
+  });
+}
+window.addEventListener("resize",relayoutBoard);
+// On iOS the landscape media query can update a beat before 100dvh settles.
+// Observing the board catches that second size change; the delayed fallback
+// also covers older WebViews without ResizeObserver.
+if(typeof ResizeObserver === "function") new ResizeObserver(relayoutBoard).observe(board);
+window.addEventListener("orientationchange",()=>{
+  relayoutBoard();
+  if(orientationLayoutTimer) clearTimeout(orientationLayoutTimer);
+  orientationLayoutTimer=setTimeout(relayoutBoard,450);
+});
 
 /* ================= boot ================= */
 if(!tryResume()) newGame();

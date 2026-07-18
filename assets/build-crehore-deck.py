@@ -9,6 +9,7 @@ manifest, and visual QA sheets under www/assets/cards/crehore-1820/.
 Usage:
     python3 assets/build-crehore-deck.py
     python3 assets/build-crehore-deck.py --source-dir /path/to/scans
+    python3 assets/build-crehore-deck.py --export-court-overrides
 """
 
 from __future__ import annotations
@@ -25,7 +26,9 @@ from PIL import Image, ImageDraw, ImageFilter, ImageFont, ImageOps
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_SOURCE = Path.home() / "Desktop" / "Thomas Crehore ~1820"
 DEFAULT_OUTPUT = ROOT / "www" / "assets" / "cards" / "crehore-1820"
+DEFAULT_COURT_OVERRIDES = ROOT / "assets" / "crehore-court-overrides"
 DEFAULT_FONT = Path("/System/Library/Fonts/Supplemental/Baskerville.ttc")
+RANK_FONT_INDEX = 1  # Baskerville Bold inside the system TTC.
 
 WIDTH = 360
 HEIGHT = 522
@@ -88,14 +91,20 @@ COURT_PIP_CORNERS = {
 
 RED_INK = (210, 49, 34)
 BLACK_INK = (22, 31, 34)
-RANK_VISIBLE_HEIGHT = 76
-CORNER_SUIT_HEIGHT = 70
+RANK_VISIBLE_HEIGHT = 108
+CORNER_SUIT_HEIGHT = 102
 
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--source-dir", type=Path, default=DEFAULT_SOURCE)
     parser.add_argument("--output-dir", type=Path, default=DEFAULT_OUTPUT)
+    parser.add_argument("--court-overrides-dir", type=Path, default=DEFAULT_COURT_OVERRIDES)
+    parser.add_argument(
+        "--export-court-overrides",
+        action="store_true",
+        help="write editable PNG court art for any override that does not already exist",
+    )
     parser.add_argument("--font", type=Path, default=DEFAULT_FONT)
     return parser.parse_args()
 
@@ -279,15 +288,15 @@ def rank_font(
     # Size by visible ink rather than nominal points. Baskerville's lining
     # numerals then render every rank at the same perceived height, including
     # the 2 and 10 that were much shorter in Big Caslon's old-style figures.
-    max_width = 118 if rank == "10" else 90
-    size = 150
+    max_width = 160 if rank == "10" else 124
+    size = 200
     while size > 20:
-        font = ImageFont.truetype(str(font_path), size=size)
+        font = ImageFont.truetype(str(font_path), size=size, index=RANK_FONT_INDEX)
         left, top, right, bottom = font.getbbox(rank)
         if right - left <= max_width and bottom - top <= RANK_VISIBLE_HEIGHT:
             return font
         size -= 1
-    return ImageFont.truetype(str(font_path), size=20)
+    return ImageFont.truetype(str(font_path), size=20, index=RANK_FONT_INDEX)
 
 
 def add_rank_index(
@@ -302,25 +311,25 @@ def add_rank_index(
     ink = RED_INK if SUITS[suit]["red"] else BLACK_INK
     draw = ImageDraw.Draw(card)
 
-    # Big Caslon's glyph box has a generous ascender area. Anchor at the top
-    # so all ranks share the same visible baseline within the fan-safe corner.
-    index_y = 10
+    # Anchor the bold Baskerville ink below the rounded top edge while keeping
+    # its full height inside the fan-safe band shared by stacked cards.
+    index_y = 14
     # Align the visible ink to the edge. This compensates for glyphs such as
     # Baskerville's J, whose swash extends left of the font's logical origin.
-    unaligned_box = draw.textbbox((16, index_y), text, font=font, anchor="lt")
-    index_x = 16 + (16 - unaligned_box[0])
+    unaligned_box = draw.textbbox((10, index_y), text, font=font, anchor="lt")
+    index_x = 10 + (10 - unaligned_box[0])
     rank_box = draw.textbbox((index_x, index_y), text, font=font, anchor="lt")
     draw.text((index_x, index_y), text, font=font, fill=ink + (255,), anchor="lt")
 
     # Suits use one fixed size across all 52 cards, stay slightly shorter than
     # the normalized rank, and share its exact visible vertical center.
     small_pip = fit_height(pip, CORNER_SUIT_HEIGHT)
-    max_width = 82
+    max_width = 116
     if small_pip.width > max_width:
         scale = max_width / small_pip.width
         small_pip = small_pip.resize((max_width, round(small_pip.height * scale)), Image.Resampling.LANCZOS)
     rank_center_y = (rank_box[1] + rank_box[3]) / 2
-    pip_x = WIDTH - 16 - small_pip.width
+    pip_x = WIDTH - 10 - small_pip.width
     pip_y = round(rank_center_y - small_pip.height / 2)
     card.alpha_composite(small_pip, (pip_x, pip_y))
 
@@ -335,10 +344,10 @@ def compose_number_card(
     card = paper.copy()
     # The rank is already explicit in the oversized corner index. A single,
     # generous suit mark keeps every number card calm and instantly legible.
-    center_pip = fit_height(pip, 190 if rank == 1 else 164)
-    if center_pip.width > 218:
+    center_pip = fit_height(pip, 222 if rank == 1 else 194)
+    if center_pip.width > 246:
         center_pip = center_pip.resize(
-            (218, round(center_pip.height * 218 / center_pip.width)),
+            (246, round(center_pip.height * 246 / center_pip.width)),
             Image.Resampling.LANCZOS,
         )
     paste_center(card, center_pip, WIDTH / 2, HEIGHT / 2 + 24)
@@ -459,7 +468,7 @@ def compose_court_card(
     # Scale every court by width so the historical print fills the card from
     # side to side. There is no perimeter fade; overflow is cropped only from
     # the lower figure to preserve every face and crown.
-    art_top = 86
+    art_top = 142
     art = art.convert("RGBA")
     scale = WIDTH / art.width
     art = art.resize((WIDTH, round(art.height * scale)), Image.Resampling.LANCZOS)
@@ -535,6 +544,7 @@ def main() -> None:
     args = parse_args()
     source_dir = args.source_dir.expanduser().resolve()
     output_dir = args.output_dir.expanduser().resolve()
+    court_overrides_dir = args.court_overrides_dir.expanduser().resolve()
     font_path = args.font.expanduser().resolve()
     require_inputs(source_dir, font_path)
 
@@ -544,6 +554,8 @@ def main() -> None:
     backs_dir = output_dir / "components" / "backs"
     for directory in (cards_dir, suits_dir, courts_dir, backs_dir):
         directory.mkdir(parents=True, exist_ok=True)
+    if args.export_court_overrides:
+        court_overrides_dir.mkdir(parents=True, exist_ok=True)
 
     # The first draft used large PNGs. Prune only those known generated files
     # so the native bundle carries the compact WebP deck once.
@@ -571,9 +583,24 @@ def main() -> None:
     court_art: dict[tuple[int, int], Image.Image] = {}
     court_paper = make_paper(plain_scan, 0)
     for (suit, rank), (filename, box) in COURTS.items():
-        art = prepare_court_art(scans[filename].crop(box), court_paper, rank, suit)
+        art_name = f"{SUITS[suit]['name']}-{RANKS[rank].lower()}"
+        generated_art = prepare_court_art(scans[filename].crop(box), court_paper, rank, suit)
+        override_path = court_overrides_dir / f"{art_name}.png"
+        # Export only missing files. Once an artist edits an override, neither
+        # a normal rebuild nor another export command will overwrite it.
+        if args.export_court_overrides and not override_path.exists():
+            generated_art.save(override_path, format="PNG", optimize=True)
+        if override_path.is_file():
+            art = Image.open(override_path).convert("RGBA")
+            if art.size != generated_art.size:
+                raise ValueError(
+                    f"Court override {override_path} is {art.size}; preserve its original "
+                    f"canvas size of {generated_art.size} and erase artifacts without cropping"
+                )
+        else:
+            art = generated_art
         court_art[(suit, rank)] = art
-        save_webp(art, courts_dir / f"{SUITS[suit]['name']}-{RANKS[rank].lower()}.webp")
+        save_webp(art, courts_dir / f"{art_name}.webp")
 
     card_entries = []
     for suit in range(4):
@@ -612,10 +639,15 @@ def main() -> None:
 
     manifest = {
         "name": "Thomas Crehore c. 1820",
-        "version": 5,
+        "version": 8,
         "cardSize": {"width": WIDTH, "height": HEIGHT, "aspectRatio": WIDTH / HEIGHT},
         "rankFont": {
-            "family": ImageFont.truetype(str(font_path), size=32).getname()[0],
+            "family": ImageFont.truetype(
+                str(font_path), size=32, index=RANK_FONT_INDEX
+            ).getname()[0],
+            "style": ImageFont.truetype(
+                str(font_path), size=32, index=RANK_FONT_INDEX
+            ).getname()[1],
             "source": "macOS system font; glyphs are baked into card images",
         },
         "suitOrder": [suit["name"] for suit in SUITS],
@@ -632,6 +664,7 @@ def main() -> None:
         },
         "cards": card_entries,
         "sourceFiles": sorted({"I20 Back.jpg", "I32 Back.jpg", *(name for name, _ in COURTS.values())}),
+        "manualCourtOverrides": sorted(path.name for path in court_overrides_dir.glob("*.png")),
     }
     (output_dir / "manifest.json").write_text(json.dumps(manifest, indent=2) + "\n")
     build_contact(cards_dir, output_dir / "contact-sheet.webp")
