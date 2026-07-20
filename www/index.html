@@ -391,37 +391,6 @@
       padding:12px 13px;font-size:.9rem;
     }
   }
-  /* iPad: use the available canvas and make every persistent control readable
-     from a relaxed playing distance. The min-height guard keeps this out of
-     the compact iPhone landscape rail. */
-  @media (min-width:700px) and (min-height:600px){
-    #app{max-width:1100px}
-    #hud{padding:calc(env(safe-area-inset-top, 0px) + 16px) 24px 12px}
-    .brand{font-size:2rem}
-    .chips{gap:10px}
-    .chip{font-size:1rem;padding:7px 13px}
-    .chip small{font-size:.82rem}
-    #controls{gap:12px;padding:16px 22px calc(env(safe-area-inset-bottom, 0px) + 20px)}
-    #controls button{min-height:56px;padding:15px 24px;border-radius:15px;font-size:1.08rem}
-    #toast{bottom:calc(env(safe-area-inset-bottom,0px) + 104px);font-size:1.08rem;padding:12px 22px}
-    .panel{width:min(440px,calc(100vw - 72px));padding:34px 32px 26px;border-radius:22px}
-    .panel h2{font-size:2.3rem}
-    .panel.daily-win h2,.panel.milestone h2{font-size:2.55rem}
-    .panel .sub{font-size:1rem;margin-bottom:22px}
-    .statgrid{gap:28px;margin-bottom:20px}
-    .stat{min-width:90px}
-    .stat b{font-size:1.9rem}
-    .stat span{font-size:.82rem}
-    .badge{font-size:.92rem;padding:5px 14px}
-    .panel .note{font-size:1rem;margin:10px 0 18px}
-    .panel button{padding:16px;font-size:1.08rem}
-    #sheet{padding:26px 30px calc(env(safe-area-inset-bottom,0px) + 28px)}
-    #sheet h3{font-size:1.55rem;margin-bottom:16px}
-    .row{padding:14px 0;font-size:1.08rem}
-    .row .sub2{font-size:.88rem;margin-top:4px}
-    .seg button{font-size:1rem;padding:9px 20px}
-    .statline{font-size:.98rem;gap:22px;padding-top:12px}
-  }
   @media (orientation:landscape){
     #app{
       --control-rail:clamp(88px,11vw,116px);
@@ -655,17 +624,6 @@
     }
     body[data-card-style="crehore"] #controls .vintage-icon{width:18px;height:18px}
   }
-  @media (min-width:700px) and (min-height:600px){
-    body[data-card-style="crehore"] #hud{
-      margin-top:calc(env(safe-area-inset-top,0px) + 10px);padding-block:10px 8px;
-    }
-    body[data-card-style="crehore"] .brand{font-size:3.4rem}
-    body[data-card-style="crehore"] #controls{padding-top:14px;gap:12px}
-    body[data-card-style="crehore"] #controls button{
-      min-height:58px;font-size:1rem;padding-inline:20px;border-radius:5px;
-    }
-    body[data-card-style="crehore"] #controls .vintage-icon{width:26px;height:26px}
-  }
   @media (orientation:landscape){
     body[data-card-style="crehore"] #hud{
       display:flex;gap:10px;margin:calc(env(safe-area-inset-top,0px) + 4px)
@@ -704,6 +662,7 @@
   /* Final tablet overrides intentionally follow the orientation rules. iPad
      landscape used to inherit the compact phone rail and HUD type here. */
   @media (min-width:700px) and (min-height:600px){
+    #app{max-width:1100px}
     #hud{padding:calc(env(safe-area-inset-top, 0px) + 20px) 28px 16px}
     .brand{font-size:2.45rem}
     .chips{gap:12px}
@@ -713,7 +672,7 @@
     #controls{gap:15px;padding:18px 26px calc(env(safe-area-inset-bottom, 0px) + 24px)}
     #controls button{min-height:64px;padding:18px 28px;font-size:1.28rem}
     #toast{bottom:calc(env(safe-area-inset-bottom,0px) + 118px);font-size:1.3rem;padding:14px 26px}
-    .panel{width:min(520px,calc(100vw - 80px));padding:42px 38px 32px}
+    .panel{width:min(520px,calc(100vw - 80px));padding:42px 38px 32px;border-radius:22px}
     .panel h2{font-size:2.75rem}
     .panel.daily-win h2,.panel.milestone h2{font-size:3rem}
     .panel .sub{font-size:1.25rem;margin-bottom:26px}
@@ -819,10 +778,10 @@
     <div class="chips">
       <span class="chip" title="Time"><small>Time</small><b id="vTime">0:00</b></span>
       <span class="chip" title="Moves"><small>Moves</small><b id="vMoves">0</b></span>
-      <span class="chip" id="chipStreak" title="Current streak" aria-label="Current streak">
+      <span class="chip" id="chipStreak" title="Current streak" aria-label="Current streak: 0">
         <span class="classic-stat-icon" aria-hidden="true">🔥</span><small class="vintage-stat-label">Streak</small><b id="vStreak">0</b>
       </span>
-      <span class="chip" id="chipFreeze" title="Streak freezes" aria-label="Streak freezes">
+      <span class="chip" id="chipFreeze" title="Streak freezes" aria-label="Streak freezes: 0">
         <span class="classic-stat-icon" aria-hidden="true">❄️</span><small class="vintage-stat-label">Freezes</small><b id="vFreezes">0</b>
       </span>
     </div>
@@ -966,7 +925,7 @@ let undoStack = [];
 let initialDeal = null;    // shuffle order for "restart"
 let moves = 0, elapsed = 0, started = false, won = false, autoRunning = false;
 let undos = 0; // first undo each game is free; the rest count as a move
-let timerId = null, midnightTimer = null, autoPlayTimer = null;
+let timerId = null, midnightTimer = null, autoPlayTimer = null, winDialogTimer = null;
 
 /* Sound — a short CC0 recording. Fresh deals always attempt playback; browser
    autoplay policy may silence only the automatic deal at initial page load. */
@@ -1040,6 +999,7 @@ function newGame(order){
   // laying out the deal. This keeps every fresh-game entry point responsive.
   if(shuffled) playShuffleSound();
   cancelAutoPlay();
+  cancelWinDialog();
   order = order || makeShuffle();
   initialDeal = order.slice();
   cards = order.map(id => ({ id, suit: Math.floor(id/13), rank: (id%13)+1, faceUp:false, x:0, y:0 }));
@@ -1064,8 +1024,8 @@ function buildDOM(){
   board.innerHTML = "";
   els.clear();
   // placeholders
-  const slots = [["stock",0],["waste",1],["f0",3],["f1",4],["f2",5],["f3",6]];
-  for(const [name] of slots){
+  const slots = ["stock","waste","f0","f1","f2","f3"];
+  for(const name of slots){
     const d = document.createElement("div");
     d.className = "ph"; d.dataset.slot = name;
     if(name==="stock") d.innerHTML = '<span class="recy">↻</span>';
@@ -1797,10 +1757,14 @@ function scheduleMidnightRefresh(){
   }, Math.max(1000,next-now));
 }
 function updateHUD(){
+  const streak = displayStreak();
+  const freezes = stats.freezes;
   $("vMoves").textContent = moves;
   $("vTime").textContent = fmtTime(elapsed);
-  $("vStreak").textContent = displayStreak();
-  $("vFreezes").textContent = stats.freezes;
+  $("vStreak").textContent = streak;
+  $("vFreezes").textContent = freezes;
+  $("chipStreak").setAttribute("aria-label", `Current streak: ${streak}`);
+  $("chipFreeze").setAttribute("aria-label", `Streak freezes: ${freezes}`);
 }
 function updateButtons(){
   $("btnUndo").disabled = !undoStack.length || autoRunning || won;
@@ -1832,14 +1796,14 @@ function tryResume(){
 function recordWin(){
   const today = localDayNum();
   const firstWinToday = stats.lastWin !== today;
-  let usedFreeze = 0, extended = false;
-  if(stats.lastWin==null){ stats.streak = 1; extended = true }
+  let usedFreeze = 0;
+  if(stats.lastWin==null) stats.streak = 1;
   else {
     const gap = today - stats.lastWin;
-    if(gap===1){ stats.streak++; extended = true }
+    if(gap===1) stats.streak++;
     else if(gap>1){
-      if(gap-1 <= stats.freezes){ usedFreeze = gap-1; stats.freezes -= usedFreeze; stats.streak++; extended = true }
-      else { stats.streak = 1; extended = true }
+      if(gap-1 <= stats.freezes){ usedFreeze = gap-1; stats.freezes -= usedFreeze; stats.streak++ }
+      else stats.streak = 1;
     }
   }
   stats.lastWin = today;
@@ -1854,9 +1818,12 @@ function recordWin(){
   if(bestM) stats.bestMoves = moves;
   const milestone = stats.wins%5===0 ? stats.wins : 0;
   saveJSON(KEY_STATS, stats);
-  return { usedFreeze, earned, bestT, bestM, extended, firstWinToday, milestone };
+  return { usedFreeze, earned, bestT, bestM, firstWinToday, milestone };
 }
 let lastWinMilestone = 0;
+function cancelWinDialog(){
+  if(winDialogTimer){ clearTimeout(winDialogTimer); winDialogTimer=null; }
+}
 function checkWin(){
   if(won || !P.f.every(p=>p.length===13)) return;
   won = true;
@@ -1868,7 +1835,11 @@ function checkWin(){
   updateHUD();
   updateButtons();
   if(!reduced) cascade(!!r.milestone);
-  setTimeout(()=>showWin(r), reduced?100:2600);
+  cancelWinDialog();
+  winDialogTimer = setTimeout(()=>{
+    winDialogTimer = null;
+    if(won) showWin(r);
+  }, reduced?100:2600);
 }
 function showWin(r){
   overlayMode = "win";

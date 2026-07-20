@@ -240,6 +240,41 @@ test("repeated auto-complete scheduling cannot orphan an active run", () => {
   assert.equal(context.autoRunning, true);
 });
 
+test("a delayed win dialog cannot reopen over a new game", () => {
+  let scheduled;
+  let dialogs = 0;
+  const context = {
+    won: false,
+    P: { f: Array.from({ length: 4 }, () => Array(13)) },
+    stopTimer() {},
+    hapticWin() {},
+    localStorage: { removeItem() {} },
+    KEY_GAME: "game",
+    recordWin: () => ({ milestone: 0 }),
+    lastWinMilestone: 0,
+    updateHUD() {},
+    updateButtons() {},
+    reduced: false,
+    cascade() {},
+    winDialogTimer: null,
+    cancelWinDialog() {},
+    setTimeout(callback, delay) {
+      assert.equal(delay, 2600);
+      scheduled = callback;
+      return 73;
+    },
+    showWin() { dialogs++; },
+  };
+  const checkWin = loadFunction("checkWin", context);
+
+  checkWin();
+  context.won = false; // newGame has replaced the completed deal
+  scheduled();
+
+  assert.equal(dialogs, 0);
+  assert.match(functionSource("newGame"), /cancelWinDialog\(\)/);
+});
+
 test("vintage ranks use the bold font face below the rounded top edge", () => {
   assert.match(deckBuilder, /RANK_FONT_INDEX = 1\s+# Baskerville Bold/);
   assert.match(deckBuilder, /index_y = 14/);
@@ -254,6 +289,7 @@ test("fresh games always play the shuffle sound, but restarts stay silent", () =
     makeShuffle: () => { events.push("shuffle"); return fixedDeal.slice(); },
     playShuffleSound: () => { sounds++; events.push("sound"); },
     cancelAutoPlay() {},
+    cancelWinDialog() {},
     stopTimer() {},
     buildDOM() {},
     dealAnimation() {},

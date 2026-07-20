@@ -161,8 +161,10 @@ test("streak and freeze counts use style-appropriate labels in the header", () =
   assert.match(html, /body\[data-card-style="original"\] \.vintage-stat-label\{display:none\}/);
   assert.match(html, /body\[data-card-style="crehore"\] \.classic-stat-icon\{display:none\}/);
   assert.match(html, /body\[data-card-style="crehore"\] \.vintage-stat-label\{display:inline\}/);
-  assert.match(html, /\$\("vStreak"\)\.textContent = displayStreak\(\)/);
-  assert.match(html, /\$\("vFreezes"\)\.textContent = stats\.freezes/);
+  assert.match(html, /\$\("vStreak"\)\.textContent = streak/);
+  assert.match(html, /\$\("vFreezes"\)\.textContent = freezes/);
+  assert.match(html, /Current streak: \$\{streak\}/);
+  assert.match(html, /Streak freezes: \$\{freezes\}/);
   assert.match(html, /current streak <b>\$\{displayStreak\(\)\}<\/b>/);
   assert.match(html, /streak freezes <b>\$\{stats\.freezes\}<\/b>/);
 });
@@ -178,7 +180,7 @@ test("iPad rules keep interface text large after landscape overrides", () => {
 });
 
 test("win dialog leaves a little more time to watch the cascade", () => {
-  assert.match(html, /setTimeout\(\(\)=>showWin\(r\), reduced\?100:2600\)/);
+  assert.match(html, /winDialogTimer = setTimeout\([^]*?reduced\?100:2600\)/);
 });
 
 test("vintage settings copy and stock treatment preserve the intended hierarchy", () => {
