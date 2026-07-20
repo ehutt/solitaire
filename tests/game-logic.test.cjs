@@ -153,12 +153,32 @@ test("out-of-moves dialog offers a new game", () => {
   assert.match(html, /or start a new game\./);
 });
 
-test("streak and freeze counts live in settings instead of the header", () => {
+test("streak and freeze counts use style-appropriate labels in the header", () => {
   const header = html.match(/<header id="hud">([^]*?)<\/header>/)?.[1];
   assert.ok(header, "found the header");
-  assert.doesNotMatch(header, /🔥|❄️|chipStreak|chipFreeze/);
+  assert.match(header, /id="chipStreak"[^]*?🔥[^]*?Streak[^]*?id="vStreak"/);
+  assert.match(header, /id="chipFreeze"[^]*?❄️[^]*?Freezes[^]*?id="vFreezes"/);
+  assert.match(html, /body\[data-card-style="original"\] \.vintage-stat-label\{display:none\}/);
+  assert.match(html, /body\[data-card-style="crehore"\] \.classic-stat-icon\{display:none\}/);
+  assert.match(html, /body\[data-card-style="crehore"\] \.vintage-stat-label\{display:inline\}/);
+  assert.match(html, /\$\("vStreak"\)\.textContent = displayStreak\(\)/);
+  assert.match(html, /\$\("vFreezes"\)\.textContent = stats\.freezes/);
   assert.match(html, /current streak <b>\$\{displayStreak\(\)\}<\/b>/);
   assert.match(html, /streak freezes <b>\$\{stats\.freezes\}<\/b>/);
+});
+
+test("iPad rules keep interface text large after landscape overrides", () => {
+  const tabletRules = html.match(/\/\* Final tablet overrides[^]*?<\/style>/)?.[0];
+  assert.ok(tabletRules, "found final tablet overrides");
+  assert.match(tabletRules, /\.chip\{font-size:1\.3rem/);
+  assert.match(tabletRules, /\.row\{padding:17px 0;font-size:1\.3rem/);
+  assert.match(tabletRules, /body\[data-card-style="crehore"\] \.chip\{[^}]*font-size:1\.18rem/);
+  assert.match(tabletRules, /orientation:landscape/);
+  assert.match(tabletRules, /--control-rail:clamp\(132px,13vw,156px\)/);
+});
+
+test("win dialog leaves a little more time to watch the cascade", () => {
+  assert.match(html, /setTimeout\(\(\)=>showWin\(r\), reduced\?100:2600\)/);
 });
 
 test("vintage settings copy and stock treatment preserve the intended hierarchy", () => {
@@ -211,7 +231,10 @@ test("classic court symbols are optically centered without entering the index ba
 });
 
 test("classic portrait header and controls are enlarged with balanced icons", () => {
-  assert.match(html, /body\[data-card-style="original"\] #hud\{\s*padding:calc\(env\(safe-area-inset-top, 0px\) \+ 15px\) 16px 13px/);
+  const portraitHud = html.match(/body\[data-card-style="original"\] #hud\{([^}]*)\}/)?.[1];
+  assert.ok(portraitHud, "classic portrait HUD rule exists");
+  assert.match(portraitHud, /display:grid;grid-template-columns:1fr/);
+  assert.match(portraitHud, /padding:calc\(env\(safe-area-inset-top, 0px\) \+ 15px\) 16px 13px/);
   assert.match(html, /body\[data-card-style="original"\] \.brand\{\s*justify-content:flex-start;font-size:clamp\(1\.65rem,6\.6vw,1\.9rem\)/);
   assert.match(html, /body\[data-card-style="original"\] #controls \.classic-icon\{[^}]*width:1\.6rem;height:1\.6rem;font-size:1\.5rem/);
   assert.match(html, /body\[data-card-style="original"\] #btnUndo \.classic-icon\{\s*font-size:1\.95rem/);
