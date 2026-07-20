@@ -151,7 +151,7 @@ test("auto-move waits for the first player move and uses a brisk endgame pace", 
   assert.equal(scheduled.length, 1);
   assert.equal(scheduled[0].delay, 300);
   assert.match(functionSource("autoMoveSafeCards"), /setTimeout\(step,reduced\?110:275\)/);
-  assert.match(functionSource("autoFinish"), /setTimeout\(step,reduced\?90:180\)/);
+  assert.match(functionSource("autoFinish"), /setTimeout\(step,reduced\?70:140\)/);
 });
 
 test("vintage ranks use the bold font face below the rounded top edge", () => {

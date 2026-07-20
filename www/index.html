@@ -153,25 +153,40 @@
     color:var(--brass);opacity:.75;font-size:calc(var(--cw)*0.3);
     font-family:var(--serif);
   }
-  /* The original app deck: large side-by-side indices and one centered motif. */
+  /* Classic cards share Vintage's compact fan-safe index band: rank on the
+     left, suit on the right, with the large center motif left untouched. */
   body[data-card-style="original"] .ix{
-    position:absolute;display:flex;align-items:baseline;gap:.1em;
-    line-height:1;font-size:3.5em;font-weight:700;letter-spacing:-.04em;
+    position:absolute;left:calc(var(--cw)*.03);right:calc(var(--cw)*.03);
+    display:flex;align-items:center;justify-content:space-between;
+    line-height:.9;font-size:2.75em;font-weight:700;letter-spacing:-.035em;
   }
-  body[data-card-style="original"] .ix.ten{font-size:3.18em}
+  body[data-card-style="original"] .ix.ten{font-size:2.75em}
   body[data-card-style="original"] .ix i{font-style:normal}
-  body[data-card-style="original"] .ix b{font-size:1.08em;font-weight:600}
-  body[data-card-style="original"] .ix.tl{top:.035em;left:.055em}
-  body[data-card-style="original"] .ix.br{bottom:.06em;right:.08em;transform:rotate(180deg)}
+  body[data-card-style="original"] .ix b{
+    flex:none;font-size:.96em;font-weight:600;text-align:right;
+  }
+  body[data-card-style="original"] .ix.tl{top:calc(var(--cw)*.035)}
+  body[data-card-style="original"] .ix.br{bottom:calc(var(--cw)*.04);transform:rotate(180deg)}
   body[data-card-style="original"] .mid{
     position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
     pointer-events:none;font-size:5em;opacity:.95;
   }
   body[data-card-style="original"] .mid.ace{font-size:5.8em;opacity:1}
-  body[data-card-style="original"] .mid.court{transform:translateY(.28em)}
+  body[data-card-style="original"] .mid.court{line-height:1;transform:translateY(-.04em)}
   body[data-card-style="original"] .mid.court.k{font-size:6.5em}
   body[data-card-style="original"] .mid.court.q{font-size:5.8em}
   body[data-card-style="original"] .mid.court.j{font-size:5.3em}
+  body[data-card-style="original"] #controls button{
+    display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:50px;
+  }
+  body[data-card-style="original"] #controls .classic-icon{
+    display:inline-flex;align-items:center;justify-content:center;
+    flex:none;width:1.6rem;height:1.6rem;font-size:1.5rem;line-height:1;
+  }
+  body[data-card-style="original"] #btnUndo .classic-icon{
+    font-size:1.95rem;transform:translateY(-.03em);
+  }
+  body[data-card-style="original"] #btnMenu .classic-icon{font-size:1.7rem}
   .card.hint{animation:hintPulse .85s ease 2}
   .card.stock-hint{animation:hintPulse .85s ease 2}
   .card.stock-hint::after{
@@ -355,6 +370,20 @@
     .brand{font-size:1.25rem}
     body[data-card-style="original"] .ix.br{display:none}
   }
+  @media (orientation:portrait){
+    body[data-card-style="original"] #hud{
+      padding:calc(env(safe-area-inset-top, 0px) + 15px) 16px 13px;
+    }
+    body[data-card-style="original"] .brand{
+      justify-content:flex-start;font-size:clamp(1.65rem,6.6vw,1.9rem);
+    }
+    body[data-card-style="original"] #controls{
+      gap:9px;padding:12px 12px calc(env(safe-area-inset-bottom, 0px) + 15px);
+    }
+    body[data-card-style="original"] #controls button{
+      padding:12px 13px;font-size:.9rem;
+    }
+  }
   /* iPad: use the available canvas and make every persistent control readable
      from a relaxed playing distance. The min-height guard keeps this out of
      the compact iPhone landscape rail. */
@@ -416,42 +445,46 @@
   }
 
   /* ============================================================
-     Vintage table — muted verdigris, inspired by early-American painted
-     furniture, letterpress, and the Crehore deck. Everything is scoped to the
-     Vintage card style so Classic keeps its original green card room.
+     Vintage table — deep burgundy wool felt, inspired by antique card tables,
+     letterpress, and the Crehore deck. Everything is scoped to the Vintage
+     card style so Classic keeps its original green card room.
      ============================================================ */
   .brand-rosette,.vintage-icon{display:none}
   .classic-icon{display:inline-block}
   .control-label{white-space:nowrap}
 
   body[data-card-style="crehore"]{
-    --felt:#8faaa1; --felt-deep:#809b92;
-    --line:#153d50; --line-soft:rgba(21,61,80,.52);
-    --brass:#cf952f; --brass-soft:#ad7420;
-    --text:#0f354a; --muted:#2b5360;
-    --vintage-ink:#0f354a; --vintage-ink-strong:#0a2d41; --vintage-ink-mid:#294f5d;
-    --vintage-ink-rgb:15,53,74; --vintage-rule-rgb:10,43,60;
-    --vintage-slot-rgb:37,78,94; --vintage-shadow-rgb:27,48,51;
-    --vintage-wash-rgb:31,72,70; --vintage-button-rgb:108,141,132;
-    --vintage-accent:#a94736;
-    --vintage-deep:#244f64; --vintage-sheet-top:#8ca39a; --vintage-sheet-bottom:#748e86;
+    --felt:#6d111a; --felt-deep:#47070e;
+    --line:#dfbc76; --line-soft:rgba(223,188,118,.5);
+    --brass:#dbad56; --brass-soft:#b98435;
+    --text:#f0d9a3; --muted:#c3a46e;
+    --vintage-ink:#efd9a4; --vintage-ink-strong:#f6e3b2; --vintage-ink-mid:#ceb077;
+    --vintage-ink-rgb:239,217,164; --vintage-rule-rgb:222,184,112;
+    --vintage-slot-rgb:215,174,99; --vintage-shadow-rgb:38,4,8;
+    --vintage-wash-rgb:42,3,8; --vintage-button-rgb:237,202,133;
+    --vintage-paper-ink:#4c1718; --vintage-paper-ink-mid:#76534a;
+    --vintage-paper-ink-rgb:76,23,24;
+    --vintage-accent:#d49d44;
+    --vintage-deep:#510a13; --vintage-sheet-top:#74141f; --vintage-sheet-bottom:#500a12;
     --vintage-display:"Baskerville","Iowan Old Style","Big Caslon",Georgia,serif;
     --vintage-text:"Baskerville","Iowan Old Style","Palatino Nova",Palatino,Georgia,serif;
     position:relative;
     font-family:var(--vintage-text);
     background:
-      radial-gradient(105% 66% at 22% -5%,rgba(246,235,202,.16),transparent 62%),
-      radial-gradient(82% 58% at 92% 66%,rgba(var(--vintage-wash-rgb),.1),transparent 72%),
-      radial-gradient(55% 38% at 8% 78%,rgba(235,216,173,.055),transparent 74%),
-      linear-gradient(108deg,rgba(255,255,255,.035),transparent 31%,rgba(30,67,64,.045) 68%,transparent),
+      radial-gradient(110% 72% at 24% -8%,rgba(255,225,183,.09),transparent 62%),
+      radial-gradient(82% 62% at 92% 72%,rgba(var(--vintage-wash-rgb),.24),transparent 74%),
+      radial-gradient(58% 42% at 8% 80%,rgba(214,131,101,.045),transparent 76%),
+      linear-gradient(108deg,rgba(255,235,204,.025),transparent 31%,rgba(35,0,6,.08) 70%,transparent),
       linear-gradient(180deg,var(--felt),var(--felt-deep));
   }
   body[data-card-style="crehore"]::before{
     content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
     background:
-      repeating-linear-gradient(7deg,rgba(255,255,255,.025) 0 1px,transparent 1px 6px),
-      repeating-linear-gradient(96deg,rgba(31,59,53,.016) 0 1px,transparent 1px 10px);
-    mix-blend-mode:soft-light;opacity:.34;
+      radial-gradient(circle,rgba(255,231,194,.075) 0 .45px,transparent .75px) 0 0/3px 3px,
+      radial-gradient(circle,rgba(24,0,4,.11) 0 .5px,transparent .85px) 1px 1px/4px 4px,
+      repeating-linear-gradient(12deg,rgba(255,225,188,.028) 0 .65px,transparent .65px 3.2px),
+      repeating-linear-gradient(102deg,rgba(25,0,4,.04) 0 .65px,transparent .65px 4px);
+    mix-blend-mode:soft-light;opacity:.72;
   }
   body[data-card-style="crehore"] #app{position:relative;z-index:1}
 
@@ -554,29 +587,31 @@
     fill:none;stroke:var(--felt);stroke-width:1;opacity:.82;
   }
   body[data-card-style="crehore"] #btnNew.confirm{
-    color:#75352b;background:rgba(240,220,176,.22);border-color:#8e4034;
+    color:#f5dfaa;background:rgba(235,190,98,.2);border-color:#d5a34d;
   }
   body[data-card-style="crehore"] #toast{
-    color:var(--vintage-ink);background:rgba(242,231,204,.96);
-    border:3px double rgba(var(--vintage-ink-rgb),.72);border-radius:5px;
+    color:var(--vintage-paper-ink);background:rgba(242,231,204,.96);
+    border:3px double rgba(var(--vintage-paper-ink-rgb),.72);border-radius:5px;
     font-family:var(--vintage-text);letter-spacing:.02em;
   }
   body[data-card-style="crehore"] #overlay{
     background:rgba(var(--vintage-wash-rgb),.42);
   }
   body[data-card-style="crehore"] .panel{
-    color:var(--vintage-ink);background:linear-gradient(165deg,#f7efd9,#e8dbbd);
-    border:3px double rgba(var(--vintage-ink-rgb),.68);border-radius:7px;
+    color:var(--vintage-paper-ink);background:linear-gradient(165deg,#f7efd9,#e8dbbd);
+    border:3px double rgba(var(--vintage-paper-ink-rgb),.68);border-radius:7px;
   }
   body[data-card-style="crehore"] .panel h2,
   body[data-card-style="crehore"] #sheet h3{
-    font-family:var(--vintage-display);font-weight:400;color:var(--vintage-ink);
+    font-family:var(--vintage-display);font-weight:400;
   }
+  body[data-card-style="crehore"] .panel h2{color:var(--vintage-paper-ink)}
+  body[data-card-style="crehore"] #sheet h3{color:var(--vintage-ink)}
   body[data-card-style="crehore"] .panel button{
-    color:#f3e7c9;background:var(--vintage-deep);border:1px solid rgba(var(--vintage-ink-rgb),.8);
+    color:#f3e7c9;background:var(--vintage-deep);border:1px solid rgba(var(--vintage-paper-ink-rgb),.8);
     border-radius:4px;font-family:var(--vintage-text);letter-spacing:.04em;
   }
-  body[data-card-style="crehore"] .panel button.ghost{color:var(--vintage-ink-mid);background:transparent}
+  body[data-card-style="crehore"] .panel button.ghost{color:var(--vintage-paper-ink-mid);background:transparent}
   body[data-card-style="crehore"] #sheet{
     color:var(--vintage-ink);
     background:
@@ -892,11 +927,10 @@ function saveJSON(k,v){ try{ localStorage.setItem(k, JSON.stringify(v)) }catch(e
 function applyCardStyleTheme(cardStyle){
   document.body.dataset.cardStyle = cardStyle;
   const themeColor = document.querySelector?.('meta[name="theme-color"]');
-  if(themeColor) themeColor.content = cardStyle === "crehore" ? "#7f9e94" : "#0f2e25";
+  if(themeColor) themeColor.content = cardStyle === "crehore" ? "#570b13" : "#0f2e25";
   const statusBar = globalThis.window?.Capacitor?.Plugins?.StatusBar;
-  // Capacitor names these values after the background: LIGHT means dark
-  // status content for a light table, DARK means light content for Classic.
-  try{ statusBar?.setStyle({ style: cardStyle === "crehore" ? "LIGHT" : "DARK" }) }catch(e){}
+  // Both tables are dark, so use light status-bar content over either surface.
+  try{ statusBar?.setStyle({ style: "DARK" }) }catch(e){}
 }
 
 /* ================= deck / deal ================= */
@@ -989,10 +1023,10 @@ function computeGeometry(){
   );
   // A complete K-through-2 face-up run must fit without hiding its indices.
   // The 24% minimum clears the lower edge of the enlarged vintage index band.
-  // Normal vintage stacks reveal exactly to the 142px artwork boundary, so a
-  // layered card covers the court illustration without covering rank or suit.
+  // Normal stacks reveal exactly to Vintage's 142px artwork boundary. Classic
+  // uses the same band, keeping both decks equally readable when layered.
   const minFaceUpReveal = .24;
-  const preferredFaceUpReveal = settings.cardStyle === "crehore" ? 142/522 : .32;
+  const preferredFaceUpReveal = 142/522;
   const heightRows = landscape ? 1 + 11*minFaceUpReveal : 2.35;
   const chByHeight = (bh - topY - (landscape ? 18 : 10)) / heightRows;
   if(chByHeight > 0) cw = Math.min(cw, chByHeight / 1.45);
@@ -1617,7 +1651,7 @@ function autoFinish(){
         break;
       }
     }
-    if(moved && !P.f.every(p=>p.length===13)) autoPlayTimer=setTimeout(step,reduced?90:180);
+    if(moved && !P.f.every(p=>p.length===13)) autoPlayTimer=setTimeout(step,reduced?70:140);
     else { autoRunning=false; saveGame(); checkWin(); updateButtons(); }
   };
   step();

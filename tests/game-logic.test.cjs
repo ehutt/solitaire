@@ -183,10 +183,36 @@ test("vintage table texture has fine grain without enlarged scan smudges", () =>
   assert.doesNotMatch(texture, /contrast\(/);
 });
 
-test("vintage table uses a light ground with high-contrast ink and rules", () => {
+test("vintage table uses dark burgundy felt with high-contrast parchment rules", () => {
   const theme = html.match(/body\[data-card-style="crehore"\]\{([^}]*)\}/)?.[1];
   assert.ok(theme, "vintage theme exists");
-  assert.match(theme, /--felt:#8faaa1; --felt-deep:#809b92/);
-  assert.match(theme, /--vintage-ink:#0f354a; --vintage-ink-strong:#0a2d41/);
-  assert.match(theme, /--vintage-rule-rgb:10,43,60/);
+  assert.match(theme, /--felt:#6d111a; --felt-deep:#47070e/);
+  assert.match(theme, /--vintage-ink:#efd9a4; --vintage-ink-strong:#f6e3b2/);
+  assert.match(theme, /--vintage-rule-rgb:222,184,112/);
+});
+
+test("classic cards use the shared fan-safe index band with a right-aligned suit", () => {
+  const indexRule = html.match(/body\[data-card-style="original"\] \.ix\{([^}]*)\}/)?.[1];
+  assert.ok(indexRule, "classic index rule exists");
+  assert.match(indexRule, /justify-content:space-between/);
+  assert.match(indexRule, /font-size:2\.75em/);
+  assert.match(html, /\.ix b\{\s*flex:none;font-size:\.96em;font-weight:600;text-align:right/);
+  assert.match(html, /const preferredFaceUpReveal = 142\/522/);
+});
+
+test("classic court symbols are optically centered without entering the index band", () => {
+  const centerRule = html.match(/body\[data-card-style="original"\] \.mid\{([^}]*)\}/)?.[1];
+  const courtRule = html.match(/body\[data-card-style="original"\] \.mid\.court\{([^}]*)\}/)?.[1];
+  assert.ok(centerRule, "classic center-symbol rule exists");
+  assert.match(centerRule, /inset:0/);
+  assert.match(centerRule, /align-items:center;justify-content:center/);
+  assert.ok(courtRule, "classic court-symbol rule exists");
+  assert.match(courtRule, /line-height:1;transform:translateY\(-\.04em\)/);
+});
+
+test("classic portrait header and controls are enlarged with balanced icons", () => {
+  assert.match(html, /body\[data-card-style="original"\] #hud\{\s*padding:calc\(env\(safe-area-inset-top, 0px\) \+ 15px\) 16px 13px/);
+  assert.match(html, /body\[data-card-style="original"\] \.brand\{\s*justify-content:flex-start;font-size:clamp\(1\.65rem,6\.6vw,1\.9rem\)/);
+  assert.match(html, /body\[data-card-style="original"\] #controls \.classic-icon\{[^}]*width:1\.6rem;height:1\.6rem;font-size:1\.5rem/);
+  assert.match(html, /body\[data-card-style="original"\] #btnUndo \.classic-icon\{\s*font-size:1\.95rem/);
 });
