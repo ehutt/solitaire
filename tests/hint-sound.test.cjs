@@ -125,6 +125,12 @@ test("landscape geometry reserves side lanes and fits a full face-up run", () =>
   assert.ok(context.G.minFaceUpReveal >= (14+108)/522, "face-up reveal clears the vintage index band");
   assert.ok(Math.abs(context.G.preferredFaceUpReveal-142/522) < .0001, "normal reveal ends at the court-art boundary");
   assert.ok(context.G.ch*(1+11*context.G.minFaceUpReveal) <= 360-context.G.topY-18+.01, "K-through-2 indices fit vertically");
+
+  context.settings.cardStyle = "original";
+  computeGeometry();
+  assert.equal(context.G.minFaceUpReveal, .30, "compressed Classic fans still reveal the entire index");
+  assert.equal(context.G.preferredFaceUpReveal, .32, "normal Classic fans leave extra room around court ranks");
+  assert.ok(context.G.ch*(1+11*context.G.minFaceUpReveal) <= 360-context.G.topY-18+.01, "Classic K-through-2 indices fit vertically");
   assert.match(functionSource("layout"), /offUp = ch\*preferredFaceUpReveal/);
   assert.match(properties["--cw"], /px$/);
   assert.match(html, /#controls button\{width:100%;min-height:48px/);

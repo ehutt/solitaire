@@ -213,16 +213,18 @@ test("vintage table uses dark burgundy felt with high-contrast parchment rules",
   assert.match(theme, /--vintage-rule-rgb:222,184,112/);
 });
 
-test("classic cards use the shared fan-safe index band with a right-aligned suit", () => {
+test("classic cards use one simple fan-safe index with a right-aligned suit", () => {
   const indexRule = html.match(/body\[data-card-style="original"\] \.ix\{([^}]*)\}/)?.[1];
   assert.ok(indexRule, "classic index rule exists");
   assert.match(indexRule, /justify-content:space-between/);
   assert.match(indexRule, /font-size:2\.75em/);
   assert.match(html, /\.ix b\{\s*flex:none;font-size:\.96em;font-weight:600;text-align:right/);
-  assert.match(html, /const preferredFaceUpReveal = 142\/522/);
+  assert.doesNotMatch(html, /\.ix\.br|class="ix br/);
+  assert.match(html, /const minFaceUpReveal = settings\.cardStyle === "original" \? \.30 : \.24/);
+  assert.match(html, /const preferredFaceUpReveal = settings\.cardStyle === "original" \? \.32 : 142\/522/);
 });
 
-test("classic court symbols are optically centered without entering the index band", () => {
+test("classic court ranks align with number ranks and clear the tableau fan", () => {
   const centerRule = html.match(/body\[data-card-style="original"\] \.mid\{([^}]*)\}/)?.[1];
   const courtRule = html.match(/body\[data-card-style="original"\] \.mid\.court\{([^}]*)\}/)?.[1];
   assert.ok(centerRule, "classic center-symbol rule exists");
@@ -230,6 +232,10 @@ test("classic court symbols are optically centered without entering the index ba
   assert.match(centerRule, /align-items:center;justify-content:center/);
   assert.ok(courtRule, "classic court-symbol rule exists");
   assert.match(courtRule, /line-height:1;transform:translateY\(-\.04em\)/);
+  assert.match(html, /\.ix\.court i\{font-size:1em\}/);
+  assert.match(html, /\.ix\.j i\{transform:translateX\(calc\(var\(--cw\)\*\.018\)\)\}/);
+  assert.match(html, /const court = card\.rank>=11 \? \["j","q","k"\]\[card\.rank-11\] : ""/);
+  assert.match(html, /` court \$\{court\}`/);
 });
 
 test("classic portrait header and controls are enlarged with balanced icons", () => {
@@ -238,6 +244,8 @@ test("classic portrait header and controls are enlarged with balanced icons", ()
   assert.match(portraitHud, /display:grid;grid-template-columns:1fr/);
   assert.match(portraitHud, /padding:calc\(env\(safe-area-inset-top, 0px\) \+ 15px\) 16px 13px/);
   assert.match(html, /body\[data-card-style="original"\] \.brand\{\s*justify-content:flex-start;font-size:clamp\(1\.65rem,6\.6vw,1\.9rem\)/);
+  assert.match(html, /body\[data-card-style="original"\] \.chips\{\s*width:100%;justify-content:center;gap:6px/);
+  assert.match(html, /body\[data-card-style="original"\] \.chip:nth-child\(3\)\{margin-left:6px\}/);
   assert.match(html, /body\[data-card-style="original"\] #controls \.classic-icon\{[^}]*width:1\.6rem;height:1\.6rem;font-size:1\.5rem/);
   assert.match(html, /body\[data-card-style="original"\] #btnUndo \.classic-icon\{\s*font-size:1\.95rem/);
 });
