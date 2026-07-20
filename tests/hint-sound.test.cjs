@@ -25,6 +25,24 @@ function loadFunction(name, context) {
   return vm.runInNewContext(`(${functionSource(name)})`, context);
 }
 
+function listenerSource(target, eventName) {
+  const marker = `${target}.addEventListener("${eventName}", e=>`;
+  const start = script.indexOf(marker);
+  assert.notEqual(start, -1, `${target} ${eventName} listener should exist`);
+  const open = script.indexOf("{", start);
+  let depth = 0;
+  for (let i = open; i < script.length; i++) {
+    if (script[i] === "{") depth++;
+    if (script[i] === "}") depth--;
+    if (depth === 0) return `function listener(e)${script.slice(open, i + 1)}`;
+  }
+  throw new Error(`Could not find the end of ${target} ${eventName} listener`);
+}
+
+function loadListener(target, eventName, context) {
+  return vm.runInNewContext(`(${listenerSource(target, eventName)})`, context);
+}
+
 test("stock hints pulse the actual top card with the default hint treatment", () => {
   const topCard = { id: 17 };
   const cardElement = {};
@@ -152,6 +170,74 @@ test("auto-move waits for the first player move and uses a brisk endgame pace", 
   assert.equal(scheduled[0].delay, 300);
   assert.match(functionSource("autoMoveSafeCards"), /setTimeout\(step,reduced\?110:275\)/);
   assert.match(functionSource("autoFinish"), /setTimeout\(step,reduced\?70:140\)/);
+});
+
+test("auto-complete sends a dragged ace to its foundation instead of a tableau two", () => {
+  const ace = { id: 0, suit: 0, rank: 1, faceUp: true };
+  const two = { id: 14, suit: 1, rank: 2, faceUp: true };
+  const moves = [];
+  const context = {
+    drag: {
+      card: ace,
+      stack: [ace],
+      loc: { k: "t", t: 0 },
+      sx: 0,
+      sy: 0,
+      moved: true,
+      orig: [{ x: 110, y: 200 }],
+    },
+    settings: { autoComplete: true },
+    P: { t: [[ace], [two], [], [], [], [], []] },
+    G: {
+      cw: 100,
+      ch: 145,
+      gap: 10,
+      tabY: 200,
+      landscape: true,
+      xs: (column) => column * 110,
+      slotPos: { f0: [0, 0] },
+    },
+    els: {
+      get: () => ({ classList: { remove() {} } }),
+    },
+    canFound: (card) => card === ace,
+    canSafelyAutoFound: (card) => card === ace,
+    canTab: (card, column) => card === ace && column === 1,
+    moveStack: (stack, kind, index) => moves.push({ stack, kind, index }),
+    layout() {},
+  };
+  const pointerUp = loadListener("window", "pointerup", context);
+
+  pointerUp({ clientX: 0, clientY: 0 });
+
+  assert.deepEqual(moves.map(({ kind, index }) => [kind, index]), [["f", 0]]);
+});
+
+test("repeated auto-complete scheduling cannot orphan an active run", () => {
+  let cancelled = false;
+  const context = {
+    reduced: false,
+    settings: { autoComplete: true },
+    autoRunning: true,
+    won: false,
+    started: true,
+    moves: 3,
+    autoPlayTimer: 42,
+    cancelAutoPlay() {
+      cancelled = true;
+      context.autoPlayTimer = null;
+    },
+    safeAutoMoveCandidate: () => ({ card: {} }),
+    finishable: () => false,
+    setTimeout: () => 99,
+  };
+  const maybeAutoFinish = loadFunction("maybeAutoFinish", context);
+
+  maybeAutoFinish();
+
+  assert.equal(cancelled, false, "the active run keeps ownership of its timer");
+  assert.equal(context.autoPlayTimer, 42);
+  assert.equal(context.autoRunning, true);
 });
 
 test("vintage ranks use the bold font face below the rounded top edge", () => {

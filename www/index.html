@@ -1447,6 +1447,11 @@ window.addEventListener("pointerup", e=>{
   const cx = d.orig[0].x+dx + G.cw/2, cy = d.orig[0].y+dy + G.ch/2;
   // Foundation hit testing follows the actual slot position in either
   // orientation. The correct suit remains the only legal destination.
+  // When auto-complete is enabled, a safe foundation card keeps that policy
+  // even if touch movement turned the intended tap into a tableau drag.
+  if(settings.autoComplete !== false && d.stack.length===1 && canSafelyAutoFound(d.card)){
+    moveStack(d.stack,"f",d.card.suit); return;
+  }
   if(d.stack.length===1 && canFound(d.card)){
     const f = d.card.suit;
     const [x,y] = G.slotPos["f"+f];
@@ -1675,10 +1680,13 @@ function safeAutoMoveCandidate(){
 // glides to its foundation. Repeated calls reset the pause, making a quick
 // series of user moves feel uninterrupted rather than fighting the automation.
 function maybeAutoFinish(delay=reduced ? 120 : 300){
+  // An active run owns its scheduled step. Cancelling that timer and then
+  // returning would strand autoRunning=true and block all board input.
+  if(autoRunning) return;
   cancelAutoPlay();
   // Never play the opening deal for the player. Automation becomes eligible
   // only after their first completed draw, tap, or drag move.
-  if(settings.autoComplete === false || autoRunning || won || !started || moves<1) return;
+  if(settings.autoComplete === false || won || !started || moves<1) return;
   if(!safeAutoMoveCandidate() && !finishable()) return;
   autoPlayTimer = setTimeout(()=>{
     autoPlayTimer = null;
