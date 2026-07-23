@@ -375,14 +375,14 @@
   }
   @media (orientation:portrait){
     body[data-card-style="original"] #hud{
-      display:grid;grid-template-columns:1fr;gap:8px;
+      display:flex;flex-wrap:wrap;gap:8px;align-items:center;
       padding:calc(env(safe-area-inset-top, 0px) + 15px) 16px 13px;
     }
     body[data-card-style="original"] .brand{
-      justify-content:flex-start;font-size:clamp(1.65rem,6.6vw,1.9rem);
+      justify-content:flex-start;font-size:clamp(1.4rem,5.6vw,1.9rem);
     }
     body[data-card-style="original"] .chips{
-      width:100%;justify-content:center;gap:6px;
+      flex:1;justify-content:flex-end;gap:6px;flex-wrap:wrap;
     }
     body[data-card-style="original"] .chip:nth-child(3){margin-left:6px}
     body[data-card-style="original"] #controls{
