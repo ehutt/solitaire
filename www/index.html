@@ -1841,7 +1841,7 @@ function checkWin(){
   winDialogTimer = setTimeout(()=>{
     winDialogTimer = null;
     if(won) showWin(r);
-  }, reduced?100:4200);
+  }, reduced?100:3000);
 }
 function showWin(r){
   overlayMode = "win";
