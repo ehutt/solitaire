@@ -421,6 +421,20 @@
   .seg{display:flex;flex:none;background:rgba(0,0,0,.3);border-radius:10px;padding:3px;gap:2px}
   .seg button{min-height:36px;padding:7px 15px;border:none;border-radius:8px;background:transparent;font-size:.96rem}
   .seg button.on{background:var(--brass);color:#241a05}
+  .deal-mix{width:min(220px,46vw)}
+  .deal-mix-labels{
+    display:flex;justify-content:space-between;align-items:center;
+    margin-bottom:2px;font-size:.8rem;color:var(--muted)
+  }
+  .deal-mix input{
+    display:block;width:100%;height:32px;margin:0;accent-color:var(--brass);
+    cursor:pointer
+  }
+  .deal-mix input:focus-visible{outline:2px solid var(--brass-soft);outline-offset:2px}
+  .deal-mix-stops{
+    display:flex;justify-content:space-between;padding:0 7px;margin-top:-5px;
+    color:var(--muted);font-size:.68rem;line-height:1
+  }
   .statline{display:flex;gap:16px;flex-wrap:wrap;font-size:.96rem;color:var(--muted);padding:9px 0 2px}
   .statline b{color:var(--text);font-variant-numeric:tabular-nums}
   .record-preview{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
@@ -523,6 +537,10 @@
     body[data-card-style="original"] .chip:nth-child(3){margin-left:0}
   }
   @media (orientation:landscape){
+    #sheet{
+      padding-left:calc(env(safe-area-inset-left,0px) + 20px);
+      padding-right:calc(env(safe-area-inset-right,0px) + 20px);
+    }
     #app{
       --control-rail:clamp(88px,11vw,116px);
       max-width:none;
@@ -803,6 +821,9 @@
     color:var(--vintage-ink-mid);border-bottom-color:rgba(var(--vintage-ink-rgb),.18);
   }
   body[data-card-style="crehore"] .stats-detail-row b{color:var(--vintage-ink-strong)}
+  body[data-card-style="crehore"] .deal-mix input{accent-color:var(--vintage-ink)}
+  body[data-card-style="crehore"] .deal-mix-labels,
+  body[data-card-style="crehore"] .deal-mix-stops{color:var(--vintage-ink-mid)}
 
   @media (max-width:599px){
     body[data-card-style="crehore"] .brand{font-size:clamp(1.82rem,8vw,2.35rem)}
@@ -1049,6 +1070,17 @@
 <div id="sheet">
   <h3>Game Settings</h3>
   <div class="row">
+    <div>Deal mix<span class="sub2" id="dealMixSummary">Every deal has a verified solution</span></div>
+    <div class="deal-mix">
+      <div class="deal-mix-labels"><span>Random</span><span>Winnable</span></div>
+      <input id="dealMix" type="range" min="0" max="100" step="25" value="100"
+        aria-label="Winnable deal frequency" aria-valuetext="Winnable">
+      <div class="deal-mix-stops" aria-hidden="true">
+        <span>•</span><span>•</span><span>•</span><span>•</span><span>•</span>
+      </div>
+    </div>
+  </div>
+  <div class="row">
     <div>Draw<span class="sub2">Cards drawn from the stock at a time</span></div>
     <div class="seg">
       <button id="segD1">One</button>
@@ -1114,6 +1146,8 @@
   </div>
 </section>
 
+<script src="deal-engine.js"></script>
+<script src="winnable-deals.js"></script>
 <script>
 "use strict";
 /* ================= constants & state ================= */
@@ -1181,6 +1215,18 @@ function hapticWin(){
   try{ Haptics.notification({ type: "SUCCESS" }); }catch(e){}
 }
 let settings = loadJSON(KEY_SET) || { draw3: false };
+const DEAL_MIX_STEPS = [0,25,50,75,100];
+if(!Number.isFinite(settings.winnablePercent)){
+  settings.winnablePercent = settings.dealMode === "random" ? 0 : 100;
+}
+settings.winnablePercent = DEAL_MIX_STEPS.reduce(
+  (nearest,step)=>Math.abs(step-settings.winnablePercent)<Math.abs(nearest-settings.winnablePercent)?step:nearest,
+  0
+);
+if("dealMode" in settings){
+  delete settings.dealMode;
+  saveJSON(KEY_SET,settings);
+}
 if(settings.autoComplete === undefined) settings.autoComplete = true; // auto-finish by default
 if(settings.sound === undefined) settings.sound = true;
 if(settings.haptics === undefined) settings.haptics = true;
@@ -1220,10 +1266,21 @@ function applyCardStyleTheme(cardStyle){
 }
 
 /* ================= deck / deal ================= */
-function makeShuffle(){
+let lastWinnableSeed = null;
+function makeRandomShuffle(){
   const ids = [...Array(52).keys()];
   for(let i=51;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [ids[i],ids[j]]=[ids[j],ids[i]] }
   return ids;
+}
+function makeWinnableShuffle(){
+  const deal = DealEngine.selectWinnableDeal(WINNABLE_DEAL_CORPUS,Math.random,lastWinnableSeed);
+  lastWinnableSeed = deal.seed;
+  return deal.order;
+}
+function makeShuffle(){
+  return DealEngine.shouldUseWinnableDeal(settings.winnablePercent,Math.random)
+    ? makeWinnableShuffle()
+    : makeRandomShuffle();
 }
 function newGame(order){
   if(started && !won && typeof recordLoss==="function") recordLoss();
@@ -2282,6 +2339,29 @@ $("btnMenu").onclick = ()=>{ refreshSheet(); sheet.classList.add("open"); sheetB
 sheetBack.onclick = ()=>{ sheet.classList.remove("open"); sheetBack.classList.remove("show") };
 $("segD1").onclick = ()=>{ settings.draw3=false; saveJSON(KEY_SET,settings); refreshSheet(); layout() };
 $("segD3").onclick = ()=>{ settings.draw3=true; saveJSON(KEY_SET,settings); refreshSheet(); layout() };
+function dealMixText(percent){
+  if(percent===0) return { label:"Random", summary:"Every deal is shuffled randomly" };
+  if(percent===100) return { label:"Winnable", summary:"Every deal has a verified solution" };
+  return {
+    label:`${percent}% winnable`,
+    summary:`${percent}% verified, ${100-percent}% random`
+  };
+}
+function updateDealMix(){
+  const copy = dealMixText(settings.winnablePercent);
+  $("dealMix").value = settings.winnablePercent;
+  $("dealMix").setAttribute("aria-valuetext",copy.label);
+  $("dealMixSummary").textContent = copy.summary;
+}
+$("dealMix").oninput = event=>{
+  settings.winnablePercent = Number(event.target.value);
+  updateDealMix();
+};
+$("dealMix").onchange = ()=>{
+  saveJSON(KEY_SET,settings);
+  updateDealMix();
+  toast(`${dealMixText(settings.winnablePercent).label} mix — applies to your next deal`);
+};
 $("segAutoOn").onclick = ()=>{ settings.autoComplete=true; saveJSON(KEY_SET,settings); refreshSheet(); updateButtons(); maybeAutoFinish() };
 $("segAutoOff").onclick = ()=>{
   settings.autoComplete=false; cancelAutoPlay(); autoRunning=false;
@@ -2370,6 +2450,7 @@ $("btnStatsClose").onclick = closeStats;
 $("statsTab1").onclick = ()=>{ statsVariant="draw1"; renderStats() };
 $("statsTab3").onclick = ()=>{ statsVariant="draw3"; renderStats() };
 function refreshSheet(){
+  updateDealMix();
   $("segD1").classList.toggle("on", !settings.draw3);
   $("segD3").classList.toggle("on", settings.draw3);
   $("segAutoOn").classList.toggle("on", settings.autoComplete !== false);
