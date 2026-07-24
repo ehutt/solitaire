@@ -227,17 +227,24 @@
   body[data-card-style="original"] .mid.court.k{font-size:6.2em}
   body[data-card-style="original"] .mid.court.q{font-size:6.2em}
   body[data-card-style="original"] .mid.court.j{font-size:6.2em}
+  /* Club-rail buttons: emoji icons retired; Cinzel small caps on a dark pill
+     with the same brass hairline as the stat chips. */
   body[data-card-style="original"] #controls button{
     display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:50px;
+    background:rgba(0,0,0,.28);
+    border:1px solid rgba(217,166,72,.38);
+    color:#f0e8d2;
+    font-family:"Cinzel",var(--serif);font-weight:500;
+    letter-spacing:.1em;text-transform:uppercase;
   }
-  body[data-card-style="original"] #controls .classic-icon{
+  body[data-card-style="original"] #controls button:disabled{color:rgba(240,232,210,.9)}
+  body[data-card-style="original"] #btnNew .classic-icon,
+  body[data-card-style="original"] #btnHint .classic-icon,
+  body[data-card-style="original"] #btnUndo .classic-icon{display:none}
+  body[data-card-style="original"] #btnMenu .classic-icon{
     display:inline-flex;align-items:center;justify-content:center;
-    flex:none;width:1.6rem;height:1.6rem;font-size:1.5rem;line-height:1;
+    flex:none;font-size:1.7rem;line-height:1;color:#d9a648;
   }
-  body[data-card-style="original"] #btnUndo .classic-icon{
-    font-size:1.95rem;transform:translateY(-.03em);
-  }
-  body[data-card-style="original"] #btnMenu .classic-icon{font-size:1.7rem}
   .card.hint{animation:hintPulse .85s ease 2}
   .card.stock-hint{animation:hintPulse .85s ease 2}
   .card.stock-hint::after{
@@ -576,12 +583,15 @@
   body[data-card-style="crehore"] .classic-stat-icon{display:none}
   body[data-card-style="crehore"] .vintage-stat-label{display:inline}
 
+  /* Quiet slots: a solid hairline and faint inked suit, like felt worn where
+     cards sit — no dashed "web" outlines. */
   body[data-card-style="crehore"] .ph{
-    border:1px dashed rgba(var(--vintage-slot-rgb),.5);color:rgba(var(--vintage-ink-rgb),.42);
+    border:1px solid rgba(var(--vintage-slot-rgb),.42);color:rgba(var(--vintage-ink-rgb),.36);
+    background:rgba(20,0,4,.08);
     font-family:var(--vintage-display);
   }
   body[data-card-style="crehore"] .ph[data-slot^="f"]{
-    border-style:solid;border-color:rgba(var(--vintage-slot-rgb),.34);
+    border-color:rgba(var(--vintage-slot-rgb),.3);
   }
   body[data-card-style="crehore"] .face{
     box-shadow:0 1px 1.25px rgba(var(--vintage-shadow-rgb),.2),0 2px 2.5px rgba(var(--vintage-shadow-rgb),.07);
@@ -762,6 +772,15 @@
       min-height:64px;font-size:1.22rem;padding-inline:24px;
     }
     body[data-card-style="crehore"] #controls .vintage-icon{width:30px;height:30px}
+    /* iPad has felt to spare — frame the table like a card table's rail. */
+    body[data-card-style="crehore"] #app::after{
+      content:"";position:fixed;inset:11px;z-index:5;pointer-events:none;
+      border:1.5px solid rgba(222,184,112,.38);border-radius:3px;
+    }
+    body[data-card-style="original"] #app::after{
+      content:"";position:fixed;inset:0;z-index:5;pointer-events:none;
+      border:12px solid rgba(4,18,13,.32);
+    }
   }
   @media (min-width:700px) and (min-height:600px) and (orientation:landscape){
     #app{--control-rail:clamp(132px,13vw,156px)}
