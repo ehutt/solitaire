@@ -86,6 +86,26 @@
   /* Freezes moved to the menu sheet's record line — three stats read better. */
   #chipFreeze{display:none}
   .classic-stat-icon{font-size:1.05em;line-height:1}
+  /* J2-b "club rail": darker pills, brass hairline, Cinzel figures,
+     the streak flame drawn in brass line-work instead of emoji. */
+  svg.brass-flame{
+    width:1em;height:1em;flex:none;align-self:center;
+    fill:none;stroke:var(--brass);stroke-width:1.7;
+    stroke-linecap:round;stroke-linejoin:round;
+  }
+  body[data-card-style="original"] .chip{
+    align-items:baseline;gap:6px;
+    background:rgba(0,0,0,.28);
+    border:1px solid rgba(217,166,72,.38);
+    color:#f0e8d2;
+    font-family:"Cinzel",var(--serif);
+    font-size:.92rem;font-weight:500;padding:4px 13px;
+  }
+  body[data-card-style="original"] .chip small{
+    display:inline;color:#c9b477;font-size:.62rem;
+    letter-spacing:.12em;text-transform:uppercase;
+    font-family:"Cinzel",var(--serif);
+  }
   .vintage-stat-label{display:none}
   body[data-card-style="original"] .vintage-stat-label{display:none}
   .chip.pulse-glow{animation:chipGlow 1.2s ease}
@@ -391,6 +411,9 @@
   }
   @media (max-width:599px){
     .chip small{display:none}
+    /* Classic's club-rail pills keep their engraved labels even on phones */
+    body[data-card-style="original"] .chip small{display:inline;font-size:.6rem;letter-spacing:.1em}
+    body[data-card-style="original"] .chip{font-size:.86rem;padding:3px 11px;gap:5px}
     .brand{font-size:1.25rem}
   }
   @media (orientation:portrait){
@@ -411,6 +434,12 @@
     body[data-card-style="original"] #controls button{
       padding:12px 13px;font-size:.9rem;
     }
+  }
+  @media (orientation:portrait) and (max-width:599px){
+    /* Labelled club-rail pills outgrow the space beside the title — give them
+       their own centered row, as in the approved mock. */
+    body[data-card-style="original"] .chips{flex:0 0 100%;justify-content:center;gap:6px}
+    body[data-card-style="original"] .chip:nth-child(3){margin-left:0}
   }
   @media (orientation:landscape){
     #app{
@@ -800,7 +829,9 @@
       <span class="chip" title="Time"><small>Time</small><b id="vTime">0:00</b></span>
       <span class="chip" title="Moves"><small>Moves</small><b id="vMoves">0</b></span>
       <span class="chip" id="chipStreak" title="Current streak" aria-label="Current streak: 0">
-        <span class="classic-stat-icon" aria-hidden="true">🔥</span><small class="vintage-stat-label">Streak</small><b id="vStreak">0</b>
+        <svg class="classic-stat-icon brass-flame" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M12 3c1.8 2.5 1 4.4-.2 6C10.6 10.7 10 12 10.4 14c-1.7-.8-2.6-2-2.7-3.8C6 12 5.2 14 5.6 16.2c.6 3.1 3.1 5 6.4 5s6-2.1 6.4-5.4c.3-2.6-.9-5-2.7-6.6.1 1.3-.2 2.3-1 3-.2-3.4-1.1-6.4-2.7-9.2Z"/>
+        </svg><small class="vintage-stat-label">Streak</small><b id="vStreak">0</b>
       </span>
       <span class="chip" id="chipFreeze" title="Streak freezes" aria-label="Streak freezes: 0">
         <span class="classic-stat-icon" aria-hidden="true">❄️</span><small class="vintage-stat-label">Freezes</small><b id="vFreezes">0</b>
