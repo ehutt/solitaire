@@ -11,6 +11,24 @@
 <link rel="apple-touch-icon" href="icons/apple-touch-icon-180.png">
 <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
 <style>
+  /* Bundled display faces (SIL OFL — see assets/fonts/LICENSES.txt).
+     IM Fell English carries the Vintage table; Limelight & Cinzel the Classic. */
+  @font-face{
+    font-family:"IM Fell English";
+    src:url("assets/fonts/imfell-english.woff2") format("woff2");
+    font-display:swap;
+  }
+  @font-face{
+    font-family:"Limelight";
+    src:url("assets/fonts/limelight.woff2") format("woff2");
+    font-display:swap;
+  }
+  @font-face{
+    font-family:"Cinzel";
+    src:url("assets/fonts/cinzel.woff2") format("woff2");
+    font-weight:500;
+    font-display:swap;
+  }
   /* ============================================================
      Better Solitaire — an ad-free game of classic solitaire
      Palette: midnight card room
@@ -444,8 +462,8 @@
     --vintage-paper-ink-rgb:76,23,24;
     --vintage-accent:#d49d44;
     --vintage-deep:#510a13; --vintage-sheet-top:#74141f; --vintage-sheet-bottom:#500a12;
-    --vintage-display:"Baskerville","Iowan Old Style","Big Caslon",Georgia,serif;
-    --vintage-text:"Baskerville","Iowan Old Style","Palatino Nova",Palatino,Georgia,serif;
+    --vintage-display:"IM Fell English","Baskerville","Iowan Old Style",Georgia,serif;
+    --vintage-text:"IM Fell English","Baskerville","Iowan Old Style",Palatino,Georgia,serif;
     position:relative;
     font-family:var(--vintage-text);
     background:
@@ -477,7 +495,7 @@
     width:100%;justify-content:center;align-items:center;gap:clamp(9px,3vw,22px);
     color:var(--vintage-ink-strong);font-family:var(--vintage-display);
     font-size:clamp(1.9rem,7vw,3rem);font-weight:400;
-    letter-spacing:-.035em;line-height:1;white-space:nowrap;
+    letter-spacing:-.01em;line-height:1;white-space:nowrap;
     text-shadow:.35px .55px 0 rgba(247,234,199,.38),-.2px -.2px 0 rgba(var(--vintage-shadow-rgb),.18);
   }
   body[data-card-style="crehore"] .brand .pip{display:none}

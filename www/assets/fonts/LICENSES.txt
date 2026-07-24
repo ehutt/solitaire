@@ -1,0 +1,11 @@
+Bundled fonts — all licensed under the SIL Open Font License 1.1 (free for
+commercial use, embedding, and app distribution):
+
+- IM Fell English — Igino Marini / the Fell Types revival
+  https://fonts.google.com/specimen/IM+Fell+English
+- Limelight — Ryan Martinson (Yellow Design Studio)
+  https://fonts.google.com/specimen/Limelight
+- Cinzel — Natanael Gama
+  https://fonts.google.com/specimen/Cinzel
+
+Full license text: https://openfontlicense.org
