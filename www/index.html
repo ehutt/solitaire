@@ -450,7 +450,7 @@
   .control-label{white-space:nowrap}
 
   body[data-card-style="crehore"]{
-    --felt:#6d111a; --felt-deep:#47070e;
+    --felt:#75141e; --felt-deep:#4d0810;
     --line:#dfbc76; --line-soft:rgba(223,188,118,.5);
     --brass:#dbad56; --brass-soft:#b98435;
     --text:#f0d9a3; --muted:#c3a46e;
@@ -465,22 +465,17 @@
     --vintage-display:"IM Fell English","Baskerville","Iowan Old Style",Georgia,serif;
     --vintage-text:"IM Fell English","Baskerville","Iowan Old Style",Palatino,Georgia,serif;
     position:relative;
+    /* F5 felt: bright burgundy wool — soft lamplight from the upper left,
+       fine SVG-turbulence grain, and a gentle edge falloff (no heavy vignette). */
     font-family:var(--vintage-text);
     background:
-      radial-gradient(110% 72% at 24% -8%,rgba(255,225,183,.09),transparent 62%),
-      radial-gradient(82% 62% at 92% 72%,rgba(var(--vintage-wash-rgb),.24),transparent 74%),
-      radial-gradient(58% 42% at 8% 80%,rgba(214,131,101,.045),transparent 76%),
-      linear-gradient(108deg,rgba(255,235,204,.025),transparent 31%,rgba(35,0,6,.08) 70%,transparent),
+      url("data:image/svg+xml,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20width%3D'180'%20height%3D'180'%3E%3Cfilter%20id%3D'n'%3E%3CfeTurbulence%20type%3D'fractalNoise'%20baseFrequency%3D'0.9'%20numOctaves%3D'2'%20stitchTiles%3D'stitch'%2F%3E%3CfeColorMatrix%20type%3D'matrix'%20values%3D'0%200%200%200%201%200%200%200%200%200.88%200%200%200%200%200.72%200%200%200%200.05%200'%2F%3E%3C%2Ffilter%3E%3Crect%20width%3D'180'%20height%3D'180'%20filter%3D'url(%23n)'%2F%3E%3C%2Fsvg%3E") 0 0/180px 180px,
+      radial-gradient(130% 100% at 35% -12%,rgba(255,225,183,.16),transparent 62%),
       linear-gradient(180deg,var(--felt),var(--felt-deep));
   }
   body[data-card-style="crehore"]::before{
     content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
-    background:
-      radial-gradient(circle,rgba(255,231,194,.075) 0 .45px,transparent .75px) 0 0/3px 3px,
-      radial-gradient(circle,rgba(24,0,4,.11) 0 .5px,transparent .85px) 1px 1px/4px 4px,
-      repeating-linear-gradient(12deg,rgba(255,225,188,.028) 0 .65px,transparent .65px 3.2px),
-      repeating-linear-gradient(102deg,rgba(25,0,4,.04) 0 .65px,transparent .65px 4px);
-    mix-blend-mode:soft-light;opacity:.72;
+    box-shadow:inset 0 0 60px 6px rgba(30,2,6,.3);
   }
   body[data-card-style="crehore"] #app{position:relative;z-index:1}
 
