@@ -217,15 +217,17 @@
     flex:none;font-size:.94em;font-weight:700;text-align:right;
   }
   body[data-card-style="original"] .ix.tl{top:calc(var(--cw)*.035)}
+  /* Larger centre pips; royals sit optically centred in the space below the
+     index band rather than dead-centre on the card. */
   body[data-card-style="original"] .mid{
     position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
-    pointer-events:none;font-size:5em;opacity:.95;
+    pointer-events:none;font-size:5.7em;opacity:.95;
   }
-  body[data-card-style="original"] .mid.ace{font-size:5.8em;opacity:1}
-  body[data-card-style="original"] .mid.court{line-height:1;transform:translateY(-.04em)}
-  body[data-card-style="original"] .mid.court.k{font-size:6.5em}
-  body[data-card-style="original"] .mid.court.q{font-size:5.8em}
-  body[data-card-style="original"] .mid.court.j{font-size:5.3em}
+  body[data-card-style="original"] .mid.ace{font-size:6.5em;opacity:1}
+  body[data-card-style="original"] .mid.court{line-height:1;transform:translateY(.05em)}
+  body[data-card-style="original"] .mid.court.k{font-size:6.2em}
+  body[data-card-style="original"] .mid.court.q{font-size:6.2em}
+  body[data-card-style="original"] .mid.court.j{font-size:6.2em}
   body[data-card-style="original"] #controls button{
     display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:50px;
   }
@@ -1109,7 +1111,8 @@ function buildDOM(){
     els.set(card.id, el);
   }
 }
-const ORIGINAL_MOTIF = { 11:"⚜︎", 12:"♛", 13:"♚" };
+// The full chess court: king, queen, and the knight standing in for the jack.
+const ORIGINAL_MOTIF = { 11:"♞", 12:"♛", 13:"♚" };
 function originalFaceHTML(card){
   const suit = SUITS[card.suit], rank = RANKS[card.rank];
   const court = card.rank>=11 ? ["j","q","k"][card.rank-11] : "";
