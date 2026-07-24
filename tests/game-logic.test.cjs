@@ -93,6 +93,60 @@ test("recordWin updates a daily streak immediately and marks each fifth win", ()
   assert.equal(secondResult.milestone, 0);
 });
 
+test("variant records capture winning ranges, averages, clean wins, and streaks", () => {
+  global.emptyVariantRecord = loadFunction("emptyVariantRecord");
+  global.normalizeVariantRecord = loadFunction("normalizeVariantRecord");
+  global.stats = { records: { draw1: emptyVariantRecord(), draw3: emptyVariantRecord() } };
+  global.gameVariant = "draw3";
+  global.settings = { draw3: true };
+  global.moves = 92;
+  global.elapsed = 185;
+  global.undos = 0;
+  global.hintUsed = false;
+  const recordVariantWin = loadFunction("recordVariantWin");
+
+  recordVariantWin();
+  moves = 118;
+  elapsed = 245;
+  undos = 2;
+  hintUsed = true;
+  recordVariantWin();
+
+  assert.deepEqual(stats.records.draw1, emptyVariantRecord());
+  assert.deepEqual(stats.records.draw3, {
+    games: 0,
+    wins: 2,
+    winningMovesTotal: 210,
+    winningTimeTotal: 430,
+    shortestMoves: 92,
+    longestMoves: 118,
+    shortestTime: 185,
+    longestTime: 245,
+    winsWithoutUndo: 1,
+    winsWithoutHints: 1,
+    currentWinStreak: 2,
+    longestWinStreak: 2,
+  });
+});
+
+test("a loss resets only the active variant's winning streak", () => {
+  global.KEY_STATS = "stats";
+  global.saveJSON = () => {};
+  global.gameVariant = "draw1";
+  global.stats = {
+    records: {
+      draw1: { currentWinStreak: 4 },
+      draw3: { currentWinStreak: 7 },
+    },
+  };
+  const recordLoss = loadFunction("recordLoss");
+
+  recordLoss();
+
+  assert.equal(stats.records.draw1.currentWinStreak, 0);
+  assert.equal(stats.records.draw3.currentWinStreak, 7);
+});
+
 test("card style switches immediately and persists without replacing the deal", () => {
   const persisted = [];
   const messages = [];

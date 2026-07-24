@@ -419,6 +419,53 @@
   .seg button.on{background:var(--brass);color:#241a05}
   .statline{display:flex;gap:16px;flex-wrap:wrap;font-size:.9rem;color:var(--muted);padding:8px 0 2px}
   .statline b{color:var(--text);font-variant-numeric:tabular-nums}
+  .record-preview{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
+  .record-card{
+    background:rgba(0,0,0,.18);border:1px solid rgba(255,255,255,.09);
+    border-radius:12px;padding:10px 12px;
+  }
+  .record-card strong{display:block;font-family:var(--serif);font-size:1rem;margin-bottom:5px}
+  .record-card span{display:block;color:var(--muted);font-size:.78rem;line-height:1.45}
+  .record-card b{color:var(--text);font-variant-numeric:tabular-nums}
+  .record-preview>.statline{grid-column:1/-1}
+  .record-link{
+    width:100%;margin-top:10px;padding:10px 12px;
+    border:1px solid rgba(217,166,72,.48);background:rgba(217,166,72,.12);
+    color:var(--text);
+  }
+  #statsPage{
+    position:fixed;inset:0;z-index:680;display:none;overflow-y:auto;
+    color:var(--text);background:linear-gradient(180deg,#123b2e,#081f18);
+    padding:calc(env(safe-area-inset-top,0px) + 18px) 20px
+      calc(env(safe-area-inset-bottom,0px) + 28px);
+  }
+  #statsPage.open{display:block;animation:fadeIn .2s ease}
+  .stats-page-inner{width:min(620px,100%);margin:0 auto}
+  .stats-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}
+  .stats-header h2{font-family:var(--serif);font-size:1.55rem;font-weight:600}
+  .stats-header button{background:rgba(255,255,255,.1);padding:8px 13px}
+  .stats-tabs{margin-bottom:16px}
+  .stats-tabs button{flex:1}
+  .stats-hero{
+    display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:18px;
+  }
+  .stats-hero div,.stats-group{
+    background:rgba(0,0,0,.2);border:1px solid rgba(255,255,255,.09);border-radius:14px;
+  }
+  .stats-hero div{text-align:center;padding:13px 5px}
+  .stats-hero b{display:block;font-family:var(--serif);font-size:1.55rem;font-variant-numeric:tabular-nums}
+  .stats-hero span{color:var(--muted);font-size:.72rem;text-transform:uppercase;letter-spacing:.07em}
+  .stats-group{padding:4px 15px;margin-bottom:12px}
+  .stats-group h3{
+    color:var(--brass-soft);font-family:var(--serif);font-size:1rem;font-weight:600;
+    padding:12px 0 6px;
+  }
+  .stats-detail-row{
+    display:flex;justify-content:space-between;gap:16px;padding:10px 0;
+    border-bottom:1px solid rgba(255,255,255,.07);color:var(--muted);
+  }
+  .stats-detail-row:last-child{border-bottom:0}
+  .stats-detail-row b{color:var(--text);font-variant-numeric:tabular-nums;text-align:right}
 
   @media (prefers-reduced-motion: reduce){
     .card,.card .in,#sheet{transition:none !important}
@@ -689,6 +736,59 @@
   body[data-card-style="crehore"] .seg button.on{
     color:#f3e7c9;background:var(--vintage-deep);
   }
+  body[data-card-style="crehore"] #statsPage{
+    color:var(--vintage-ink);
+    background:
+      repeating-linear-gradient(0deg,rgba(255,255,255,.022) 0 1px,transparent 1px 3px),
+      radial-gradient(120% 80% at 35% -10%,rgba(255,225,183,.1),transparent 60%),
+      linear-gradient(180deg,var(--vintage-sheet-top),var(--vintage-sheet-bottom));
+    font-family:var(--vintage-text);
+  }
+  body[data-card-style="crehore"] .stats-page-inner{
+    border-top:4px double rgba(var(--vintage-rule-rgb),.9);
+    border-bottom:4px double rgba(var(--vintage-rule-rgb),.72);
+    padding:14px 0 18px;
+  }
+  body[data-card-style="crehore"] .stats-header{
+    border-bottom:1px solid rgba(var(--vintage-rule-rgb),.58);
+    padding:0 2px 13px;margin-bottom:14px;
+  }
+  body[data-card-style="crehore"] .stats-header h2{
+    color:var(--vintage-ink-strong);font-family:var(--vintage-display);font-weight:400;
+    text-shadow:.35px .55px 0 rgba(247,234,199,.25);
+  }
+  body[data-card-style="crehore"] .stats-header button{
+    color:var(--vintage-ink);background:rgba(var(--vintage-button-rgb),.12);
+    border:2px solid rgba(var(--vintage-rule-rgb),.76);border-radius:4px;
+    font-family:var(--vintage-text);font-weight:600;
+  }
+  body[data-card-style="crehore"] .stats-tabs{
+    background:rgba(238,225,194,.14);
+    border:1px solid rgba(var(--vintage-ink-rgb),.32);border-radius:5px;
+  }
+  body[data-card-style="crehore"] .stats-tabs button{
+    color:var(--vintage-ink);font-family:var(--vintage-text);border-radius:3px;
+  }
+  body[data-card-style="crehore"] .stats-tabs button.on{
+    color:#f3e7c9;background:var(--vintage-deep);
+  }
+  body[data-card-style="crehore"] .stats-hero div,
+  body[data-card-style="crehore"] .stats-group{
+    background:rgba(var(--vintage-shadow-rgb),.18);
+    border:1px solid rgba(var(--vintage-rule-rgb),.34);border-radius:5px;
+    box-shadow:inset 0 0 0 1px rgba(246,227,178,.04);
+  }
+  body[data-card-style="crehore"] .stats-hero b{color:var(--vintage-ink-strong);font-family:var(--vintage-display)}
+  body[data-card-style="crehore"] .stats-hero span{
+    color:var(--vintage-ink-mid);font-family:var(--vintage-text);
+  }
+  body[data-card-style="crehore"] .stats-group h3{
+    color:var(--vintage-accent);font-family:var(--vintage-display);font-weight:400;
+  }
+  body[data-card-style="crehore"] .stats-detail-row{
+    color:var(--vintage-ink-mid);border-bottom-color:rgba(var(--vintage-ink-rgb),.18);
+  }
+  body[data-card-style="crehore"] .stats-detail-row b{color:var(--vintage-ink-strong)}
 
   @media (max-width:599px){
     body[data-card-style="crehore"] .brand{font-size:clamp(1.82rem,8vw,2.35rem)}
@@ -975,7 +1075,8 @@
   </div>
   <div class="row" style="display:block">
     <div>Your record</div>
-    <div class="statline" id="statline"></div>
+    <div class="record-preview" id="recordPreview"></div>
+    <button class="record-link" id="btnStats">View detailed stats</button>
   </div>
   <div class="row" style="border:none;justify-content:center">
     <div class="sub2" style="text-align:center">Better Solitaire — no ads, ever. ♠︎ ♥︎ ♦︎ ♣︎<br>
@@ -984,6 +1085,20 @@
     Your first undo each game is free; after that, undos count as a move.</div>
   </div>
 </div>
+
+<section id="statsPage" aria-hidden="true">
+  <div class="stats-page-inner">
+    <div class="stats-header">
+      <h2>Player Stats</h2>
+      <button id="btnStatsClose" aria-label="Close player stats">Done</button>
+    </div>
+    <div class="seg stats-tabs" role="tablist" aria-label="Draw variant">
+      <button id="statsTab1" role="tab">Draw One</button>
+      <button id="statsTab3" role="tab">Draw Three</button>
+    </div>
+    <div id="statsDetail"></div>
+  </div>
+</section>
 
 <script>
 "use strict";
@@ -1013,6 +1128,7 @@ let undoStack = [];
 let initialDeal = null;    // shuffle order for "restart"
 let moves = 0, elapsed = 0, started = false, won = false, autoRunning = false;
 let undos = 0; // first undo each game is free; the rest count as a move
+let hintUsed = false, gameVariant = null;
 let timerId = null, midnightTimer = null, autoPlayTimer = null, winDialogTimer = null;
 
 /* Sound — a short CC0 recording. Fresh deals always attempt playback; browser
@@ -1060,6 +1176,20 @@ let stats = loadJSON(KEY_STATS) || {
   plays:0, wins:0, streak:0, longest:0, lastWin:null,
   freezes:1, winsToward:0, bestTime:null, bestMoves:null
 };
+function emptyVariantRecord(){
+  return {
+    games:0, wins:0, winningMovesTotal:0, winningTimeTotal:0,
+    shortestMoves:null, longestMoves:null, shortestTime:null, longestTime:null,
+    winsWithoutUndo:0, winsWithoutHints:0, currentWinStreak:0, longestWinStreak:0
+  };
+}
+function normalizeVariantRecord(record){
+  return Object.assign(emptyVariantRecord(), record || {});
+}
+if(!stats.records) stats.records = {};
+stats.records.draw1 = normalizeVariantRecord(stats.records.draw1);
+stats.records.draw3 = normalizeVariantRecord(stats.records.draw3);
+saveJSON(KEY_STATS, stats);
 
 const board = document.getElementById("board");
 const $ = id => document.getElementById(id);
@@ -1082,6 +1212,7 @@ function makeShuffle(){
   return ids;
 }
 function newGame(order){
+  if(started && !won && typeof recordLoss==="function") recordLoss();
   const shuffled = !order;
   // Start the recorded shuffle on the initiating tap, before rebuilding and
   // laying out the deal. This keeps every fresh-game entry point responsive.
@@ -1099,6 +1230,7 @@ function newGame(order){
   }
   while(k<52) P.stock.push(cards[k++]);
   moves=0; elapsed=0; started=false; won=false; autoRunning=false; undos=0;
+  hintUsed=false; gameVariant=null;
   undoStack = [];
   stopTimer();
   buildDOM();
@@ -1381,7 +1513,10 @@ function undo(){
 function beginPlay(){
   if(!started){
     started = true;
+    gameVariant = settings.draw3 ? "draw3" : "draw1";
     stats.plays++; saveJSON(KEY_STATS, stats);
+    stats.records[gameVariant].games++;
+    saveJSON(KEY_STATS, stats);
     startTimer();
   }
 }
@@ -1658,6 +1793,8 @@ function toast(msg){
 }
 function hint(){
   if(autoRunning || won) return;
+  hintUsed = true;
+  saveGame();
   const h = findHint();
   if(h && h.src.length){ ghostMove(h); return }         // best move → ghost preview
   const helps = stockPlayable();
@@ -1862,7 +1999,7 @@ function updateButtons(){
 /* ================= persistence ================= */
 function saveGame(){
   if(won){ localStorage.removeItem(KEY_GAME); return }
-  saveJSON(KEY_GAME, { s: serialize(), elapsed, started, undos, deal: initialDeal });
+  saveJSON(KEY_GAME, { s: serialize(), elapsed, started, undos, hintUsed, gameVariant, deal: initialDeal });
 }
 function tryResume(){
   const g = loadJSON(KEY_GAME);
@@ -1873,7 +2010,17 @@ function tryResume(){
     P = { stock:[], waste:[], f:[[],[],[],[]], t:[[],[],[],[],[],[],[]] };
     buildDOM();
     restore(g.s);
-    elapsed = g.elapsed||0; started = !!g.started; undos = g.undos||0; won=false;
+    elapsed = g.elapsed||0; started = !!g.started; undos = g.undos||0;
+    hintUsed = !!g.hintUsed;
+    gameVariant = g.gameVariant || (started ? (settings.draw3 ? "draw3" : "draw1") : null);
+    won=false;
+    // Games saved before per-variant records existed were already counted in
+    // the legacy total, but not in either new draw-mode bucket.
+    if(started && !g.gameVariant){
+      stats.records[gameVariant].games++;
+      saveJSON(KEY_STATS,stats);
+      saveGame();
+    }
     layout(); updateHUD(); updateButtons();
     if(started) startTimer();
     maybeAutoFinish();
@@ -1882,6 +2029,31 @@ function tryResume(){
 }
 
 /* ================= streak / win ================= */
+function recordLoss(){
+  if(!gameVariant) return;
+  stats.records[gameVariant].currentWinStreak = 0;
+  saveJSON(KEY_STATS, stats);
+}
+function recordVariantWin(){
+  if(!stats.records) stats.records = {};
+  stats.records.draw1 = normalizeVariantRecord(stats.records.draw1);
+  stats.records.draw3 = normalizeVariantRecord(stats.records.draw3);
+  const activeVariant = typeof gameVariant!=="undefined" ? gameVariant : null;
+  const drawThree = typeof settings!=="undefined" && settings.draw3;
+  const key = activeVariant || (drawThree ? "draw3" : "draw1");
+  const record = stats.records[key];
+  record.wins++;
+  record.winningMovesTotal += moves;
+  record.winningTimeTotal += elapsed;
+  record.shortestMoves = record.shortestMoves==null ? moves : Math.min(record.shortestMoves,moves);
+  record.longestMoves = record.longestMoves==null ? moves : Math.max(record.longestMoves,moves);
+  record.shortestTime = record.shortestTime==null ? elapsed : Math.min(record.shortestTime,elapsed);
+  record.longestTime = record.longestTime==null ? elapsed : Math.max(record.longestTime,elapsed);
+  if(undos===0) record.winsWithoutUndo++;
+  if(!hintUsed) record.winsWithoutHints++;
+  record.currentWinStreak++;
+  record.longestWinStreak = Math.max(record.longestWinStreak,record.currentWinStreak);
+}
 function recordWin(){
   const today = localDayNum();
   const firstWinToday = stats.lastWin !== today;
@@ -1898,6 +2070,7 @@ function recordWin(){
   stats.lastWin = today;
   stats.longest = Math.max(stats.longest, stats.streak);
   stats.wins++;
+  if(typeof recordVariantWin==="function") recordVariantWin();
   let earned = false;
   if(stats.winsToward < 10) stats.winsToward++;
   if(stats.winsToward>=10 && stats.freezes<3){ stats.freezes++; stats.winsToward=0; earned=true }
@@ -2123,6 +2296,65 @@ $("btnRestart").onclick = ()=>{
   endCascade(); $("overlay").classList.remove("show");
   newGame(initialDeal);
 };
+let statsVariant = "draw1";
+function winRate(record){
+  return record.games ? Math.round(100*record.wins/record.games) : 0;
+}
+function average(total,count){
+  return count ? Math.round(total/count) : null;
+}
+function statValue(value,formatter){
+  return value==null ? "—" : formatter ? formatter(value) : value;
+}
+function renderStats(){
+  const record = stats.records[statsVariant];
+  $("statsTab1").classList.toggle("on",statsVariant==="draw1");
+  $("statsTab3").classList.toggle("on",statsVariant==="draw3");
+  $("statsTab1").setAttribute("aria-selected",statsVariant==="draw1");
+  $("statsTab3").setAttribute("aria-selected",statsVariant==="draw3");
+  const averageMoves = average(record.winningMovesTotal,record.wins);
+  const averageTime = average(record.winningTimeTotal,record.wins);
+  $("statsDetail").innerHTML =
+    `<div class="stats-hero">`+
+      `<div><b>${record.wins}</b><span>Games won</span></div>`+
+      `<div><b>${record.games}</b><span>Total games</span></div>`+
+      `<div><b>${winRate(record)}%</b><span>Win rate</span></div>`+
+    `</div>`+
+    `<div class="stats-group"><h3>Winning moves</h3>`+
+      `<div class="stats-detail-row"><span>Shortest</span><b>${statValue(record.shortestMoves)}</b></div>`+
+      `<div class="stats-detail-row"><span>Longest</span><b>${statValue(record.longestMoves)}</b></div>`+
+      `<div class="stats-detail-row"><span>Average</span><b>${statValue(averageMoves)}</b></div>`+
+    `</div>`+
+    `<div class="stats-group"><h3>Winning time</h3>`+
+      `<div class="stats-detail-row"><span>Shortest</span><b>${statValue(record.shortestTime,fmtTime)}</b></div>`+
+      `<div class="stats-detail-row"><span>Longest</span><b>${statValue(record.longestTime,fmtTime)}</b></div>`+
+      `<div class="stats-detail-row"><span>Average</span><b>${statValue(averageTime,fmtTime)}</b></div>`+
+    `</div>`+
+    `<div class="stats-group"><h3>Clean wins</h3>`+
+      `<div class="stats-detail-row"><span>Without undo</span><b>${record.winsWithoutUndo}</b></div>`+
+      `<div class="stats-detail-row"><span>Without hints</span><b>${record.winsWithoutHints}</b></div>`+
+    `</div>`+
+    `<div class="stats-group"><h3>Winning streaks</h3>`+
+      `<div class="stats-detail-row"><span>Current</span><b>${record.currentWinStreak}</b></div>`+
+      `<div class="stats-detail-row"><span>Longest</span><b>${record.longestWinStreak}</b></div>`+
+    `</div>`;
+}
+function openStats(){
+  statsVariant = settings.draw3 ? "draw3" : "draw1";
+  sheet.classList.remove("open");
+  sheetBack.classList.remove("show");
+  renderStats();
+  $("statsPage").classList.add("open");
+  $("statsPage").setAttribute("aria-hidden","false");
+}
+function closeStats(){
+  $("statsPage").classList.remove("open");
+  $("statsPage").setAttribute("aria-hidden","true");
+}
+$("btnStats").onclick = openStats;
+$("btnStatsClose").onclick = closeStats;
+$("statsTab1").onclick = ()=>{ statsVariant="draw1"; renderStats() };
+$("statsTab3").onclick = ()=>{ statsVariant="draw3"; renderStats() };
 function refreshSheet(){
   $("segD1").classList.toggle("on", !settings.draw3);
   $("segD3").classList.toggle("on", settings.draw3);
@@ -2134,19 +2366,20 @@ function refreshSheet(){
   $("segHapticsOff").classList.toggle("on", settings.haptics === false);
   $("segCardsOriginal").classList.toggle("on", settings.cardStyle === "original");
   $("segCardsCrehore").classList.toggle("on", settings.cardStyle === "crehore");
-  const wr = stats.plays ? Math.round(100*stats.wins/stats.plays) : 0;
-  $("statline").innerHTML =
-    `<span>current streak <b>${displayStreak()}</b></span>`+
-    `<span>streak freezes <b>${stats.freezes}</b></span>`+
-    `<span>wins <b>${stats.wins}</b></span>`+
-    `<span>played <b>${stats.plays}</b></span>`+
-    `<span>win rate <b>${wr}%</b></span>`+
-    `<span>longest streak <b>${stats.longest}</b></span>`+
-    (stats.bestTime!=null?`<span>best time <b>${fmtTime(stats.bestTime)}</b></span>`:"")+
-    (stats.bestMoves!=null?`<span>fewest moves <b>${stats.bestMoves}</b></span>`:"");
+  const draw1 = stats.records.draw1, draw3 = stats.records.draw3;
+  $("recordPreview").innerHTML =
+    `<div class="record-card"><strong>Draw One</strong>`+
+      `<span><b>${draw1.wins}</b> wins · <b>${draw1.games}</b> played</span>`+
+      `<span><b>${winRate(draw1)}%</b> win rate</span></div>`+
+    `<div class="record-card"><strong>Draw Three</strong>`+
+      `<span><b>${draw3.wins}</b> wins · <b>${draw3.games}</b> played</span>`+
+      `<span><b>${winRate(draw3)}%</b> win rate</span></div>`+
+    `<div class="statline"><span>current streak <b>${displayStreak()}</b></span>`+
+      `<span>streak freezes <b>${stats.freezes}</b></span></div>`;
 }
 /* keyboard niceties */
 window.addEventListener("keydown", e=>{
+  if(e.key==="Escape" && $("statsPage").classList.contains("open")){ closeStats(); return }
   if(e.key==="z" && (e.metaKey||e.ctrlKey)){ e.preventDefault(); undo() }
   else if(e.key==="h") hint();
   else if(e.key===" "){ e.preventDefault(); draw() }
