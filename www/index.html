@@ -83,6 +83,8 @@
   }
   .chip b{font-weight:600}
   .chip small{color:var(--muted);font-size:.68rem;margin-left:1px}
+  /* Freezes moved to the menu sheet's record line — three stats read better. */
+  #chipFreeze{display:none}
   .classic-stat-icon{font-size:1.05em;line-height:1}
   .vintage-stat-label{display:none}
   body[data-card-style="original"] .vintage-stat-label{display:none}
@@ -480,9 +482,9 @@
   body[data-card-style="crehore"] #app{position:relative;z-index:1}
 
   body[data-card-style="crehore"] #hud{
-    display:grid;grid-template-columns:1fr;gap:5px;
+    display:grid;grid-template-columns:1fr;gap:4px;
     margin:calc(env(safe-area-inset-top,0px) + 6px) 14px 0;
-    padding:7px 0 6px;
+    padding:7px 0 4px;
     border-top:4px double rgba(var(--vintage-rule-rgb),.92);
     border-bottom:4px double rgba(var(--vintage-rule-rgb),.92);
   }
@@ -502,7 +504,8 @@
   body[data-card-style="crehore"] .brand-rosette:last-child{transform:rotate(5deg) scale(.96)}
   body[data-card-style="crehore"] .chips{
     position:relative;width:100%;justify-content:center;gap:0;
-    border-top:1.5px solid rgba(var(--vintage-rule-rgb),.72);padding-top:4px;
+    border-top:1.5px solid rgba(var(--vintage-rule-rgb),.72);padding-top:2px;
+    align-items:baseline;
   }
   body[data-card-style="crehore"] .chips::before,
   body[data-card-style="crehore"] .chips::after{
@@ -513,21 +516,23 @@
     margin:0 clamp(5px,2vw,14px);
   }
   body[data-card-style="crehore"] .chips::after{transform:none}
+  /* H6 stat line: figures larger than their labels, one quiet row that stays
+     visually subordinate to the title above it. */
   body[data-card-style="crehore"] .chip{
-    min-height:22px;justify-content:center;gap:3px;
+    min-height:0;justify-content:center;gap:5px;align-items:baseline;
     background:transparent;border:0;border-radius:0;
-    color:var(--vintage-ink);padding:1px clamp(6px,2.4vw,15px);
-    font-family:var(--vintage-text);font-size:.76rem;font-weight:400;
-    font-variant-numeric:tabular-nums;letter-spacing:.07em;
+    color:var(--vintage-ink-strong);padding:0 clamp(8px,3vw,17px);
+    font-family:var(--vintage-text);font-size:1.05rem;font-weight:400;
+    font-variant-numeric:tabular-nums;letter-spacing:.02em;
   }
   body[data-card-style="crehore"] .chip + .chip{
     border-left:1.5px solid rgba(var(--vintage-ink-rgb),.52);
   }
-  body[data-card-style="crehore"] .chip b{font-weight:600}
+  body[data-card-style="crehore"] .chip b{font-weight:400}
   body[data-card-style="crehore"] .chip small{
     display:inline;
-    color:var(--vintage-ink-mid);font-family:var(--vintage-text);font-size:.64rem;
-    letter-spacing:.08em;text-transform:uppercase;
+    color:var(--vintage-ink-mid);font-family:var(--vintage-text);font-size:.68rem;
+    letter-spacing:.1em;text-transform:uppercase;
   }
   body[data-card-style="crehore"] .classic-stat-icon{display:none}
   body[data-card-style="crehore"] .vintage-stat-label{display:inline}
@@ -652,7 +657,8 @@
     }
     body[data-card-style="crehore"] .chips::before,
     body[data-card-style="crehore"] .chips::after{display:none}
-    body[data-card-style="crehore"] .chip{min-height:0;padding:1px 6px;font-size:.68rem}
+    body[data-card-style="crehore"] .chip{min-height:0;padding:0 8px;font-size:.92rem}
+    body[data-card-style="crehore"] .chip small{font-size:.6rem}
     body[data-card-style="crehore"] #controls{
       position:fixed;left:auto;right:env(safe-area-inset-right,0px);
       top:calc(env(safe-area-inset-top, 0px) + 38px);bottom:env(safe-area-inset-bottom, 0px);
@@ -709,9 +715,9 @@
     }
     body[data-card-style="crehore"] .brand{font-size:3.65rem}
     body[data-card-style="crehore"] .chip{
-      min-height:36px;padding:4px 18px;font-size:1.5rem;
+      min-height:0;padding:0 22px;font-size:1.75rem;
     }
-    body[data-card-style="crehore"] .chip small{font-size:1.15rem}
+    body[data-card-style="crehore"] .chip small{font-size:1rem}
     body[data-card-style="crehore"] #controls{padding-top:16px;gap:14px}
     body[data-card-style="crehore"] #controls button{
       min-height:64px;font-size:1.22rem;padding-inline:24px;
@@ -739,9 +745,9 @@
     body[data-card-style="crehore"] .brand{font-size:2.3rem;gap:10px}
     body[data-card-style="crehore"] .brand-rosette{width:.65em;height:.65em}
     body[data-card-style="crehore"] .chip{
-      min-height:32px;padding:3px 10px;font-size:1.3rem;
+      min-height:0;padding:0 12px;font-size:1.45rem;
     }
-    body[data-card-style="crehore"] .chip small{font-size:1.05rem}
+    body[data-card-style="crehore"] .chip small{font-size:.9rem}
     body[data-card-style="crehore"] #controls{
       top:calc(env(safe-area-inset-top, 0px) + 54px);padding:10px 12px;gap:12px;
     }
