@@ -72,6 +72,12 @@
     display:flex;align-items:baseline;gap:.4rem;
   }
   .brand .pip{color:var(--brass);font-size:1.05em}
+  /* Classic marquee: Limelight for the title, over the deco-era casino sign */
+  body[data-card-style="original"] .brand{
+    font-family:"Limelight",var(--serif);
+    letter-spacing:.01em;font-weight:400;
+  }
+  body[data-card-style="original"] .brand .pip{font-family:var(--serif)}
   .chips{display:flex;gap:6px;align-items:center}
   .chip{
     display:inline-flex;align-items:center;gap:4px;
@@ -334,6 +340,9 @@
   .panel h2{
     font-family:var(--serif);font-size:2rem;font-weight:600;
     letter-spacing:.01em;margin-bottom:2px;
+  }
+  body[data-card-style="original"] .panel h2{
+    font-family:"Limelight",var(--serif);font-weight:400;
   }
   .panel.daily-win h2{font-size:2.25rem;font-weight:700;color:#8c641a}
   .panel.milestone{
