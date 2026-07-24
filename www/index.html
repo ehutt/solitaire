@@ -180,7 +180,9 @@
     background:linear-gradient(160deg,var(--paper) 65%,var(--paper-shade));
     border:1px solid rgba(70,60,40,.25);
     color:var(--ink);
-    font-family:var(--serif);
+    /* Limelight ranks match the marquee title; suits and the chess courts
+       fall back to the serif (Limelight has no pip/chess glyphs). */
+    font-family:"Limelight",var(--serif);
   }
   body[data-card-style="original"] .card.red .front{color:var(--red)}
   body[data-card-style="original"] .back{
@@ -206,7 +208,7 @@
   body[data-card-style="original"] .ix{
     position:absolute;left:calc(var(--cw)*.03);right:calc(var(--cw)*.03);
     display:flex;align-items:center;justify-content:space-between;
-    line-height:.9;font-size:2.7em;font-weight:800;letter-spacing:-.03em;
+    line-height:.9;font-size:2.7em;font-weight:400;letter-spacing:0;
   }
   body[data-card-style="original"] .ix.ten{font-size:2.4em}
   body[data-card-style="original"] .ix i{display:inline-block;font-style:normal;font-size:1em;font-weight:800}
@@ -453,8 +455,12 @@
     }
   }
   @media (orientation:portrait) and (max-width:599px){
-    /* Labelled club-rail pills outgrow the space beside the title — give them
-       their own centered row, as in the approved mock. */
+    /* Marquee header: centered title between twin spades, with the labelled
+       club-rail pills on their own centered row beneath. */
+    body[data-card-style="original"] #hud{justify-content:center}
+    body[data-card-style="original"] .brand{
+      width:100%;justify-content:center;font-size:clamp(1.5rem,6vw,1.9rem);
+    }
     body[data-card-style="original"] .chips{flex:0 0 100%;justify-content:center;gap:6px}
     body[data-card-style="original"] .chip:nth-child(3){margin-left:0}
   }
@@ -838,6 +844,7 @@
       </svg>
       <span class="pip" aria-hidden="true">♠</span>
       <span class="brand-title">Better Solitaire</span>
+      <span class="pip pip-right" aria-hidden="true">♠</span>
       <svg class="brand-rosette" viewBox="0 0 32 32" aria-hidden="true">
         <g stroke="currentColor" stroke-width=".8" stroke-linecap="round" stroke-linejoin="round">
           <path d="M15.5 13.7C13.8 10.5 14.1 5.2 16.3 1.8c2 3.8 1.5 8.6-.8 11.9Z" fill="#bd4b35"/>
