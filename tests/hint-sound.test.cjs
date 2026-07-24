@@ -265,7 +265,7 @@ test("a delayed win dialog cannot reopen over a new game", () => {
     winDialogTimer: null,
     cancelWinDialog() {},
     setTimeout(callback, delay) {
-      assert.equal(delay, 2600);
+      assert.equal(delay, 3000);
       scheduled = callback;
       return 73;
     },

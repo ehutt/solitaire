@@ -156,8 +156,12 @@ test("out-of-moves dialog offers a new game", () => {
 test("streak and freeze counts use style-appropriate labels in the header", () => {
   const header = html.match(/<header id="hud">([^]*?)<\/header>/)?.[1];
   assert.ok(header, "found the header");
-  assert.match(header, /id="chipStreak"[^]*?🔥[^]*?Streak[^]*?id="vStreak"/);
-  assert.match(header, /id="chipFreeze"[^]*?❄️[^]*?Freezes[^]*?id="vFreezes"/);
+  // Streak burns as a brass line-glyph (no emoji); the freezes chip stays in
+  // the DOM for its aria state but is hidden — freezes live in the menu record.
+  assert.match(header, /id="chipStreak"[^]*?brass-flame[^]*?Streak[^]*?id="vStreak"/);
+  assert.doesNotMatch(header, /🔥|❄️/);
+  assert.match(header, /id="chipFreeze"[^]*?Freezes[^]*?id="vFreezes"/);
+  assert.match(html, /#chipFreeze\{display:none\}/);
   assert.match(html, /body\[data-card-style="original"\] \.vintage-stat-label\{display:none\}/);
   assert.match(html, /body\[data-card-style="crehore"\] \.classic-stat-icon\{display:none\}/);
   assert.match(html, /body\[data-card-style="crehore"\] \.vintage-stat-label\{display:inline\}/);
@@ -172,15 +176,15 @@ test("streak and freeze counts use style-appropriate labels in the header", () =
 test("iPad rules keep interface text large after landscape overrides", () => {
   const tabletRules = html.match(/\/\* Final tablet overrides[^]*?<\/style>/)?.[0];
   assert.ok(tabletRules, "found final tablet overrides");
-  assert.match(tabletRules, /\.chip\{font-size:1\.3rem/);
+  assert.match(tabletRules, /\.chip\{font-size:1\.5rem/);
   assert.match(tabletRules, /\.row\{padding:17px 0;font-size:1\.3rem/);
-  assert.match(tabletRules, /body\[data-card-style="crehore"\] \.chip\{[^}]*font-size:1\.18rem/);
+  assert.match(tabletRules, /body\[data-card-style="crehore"\] \.chip\{[^}]*font-size:1\.45rem/);
   assert.match(tabletRules, /orientation:landscape/);
   assert.match(tabletRules, /--control-rail:clamp\(132px,13vw,156px\)/);
 });
 
 test("win dialog leaves a little more time to watch the cascade", () => {
-  assert.match(html, /winDialogTimer = setTimeout\([^]*?reduced\?100:2600\)/);
+  assert.match(html, /winDialogTimer = setTimeout\([^]*?reduced\?100:3000\)/);
 });
 
 test("vintage settings copy and stock treatment preserve the intended hierarchy", () => {
@@ -197,18 +201,21 @@ test("vintage header diamonds are straight and symmetrical", () => {
   assert.match(html, /\.chips::after\{transform:none\}/);
 });
 
-test("vintage table texture has fine grain without enlarged scan smudges", () => {
-  const texture = html.match(/body\[data-card-style="crehore"\]::before\{([^}]*)\}/)?.[1];
-  assert.ok(texture, "vintage table texture exists");
-  assert.match(texture, /repeating-linear-gradient/);
-  assert.doesNotMatch(texture, /paper-stock|url\(/);
-  assert.doesNotMatch(texture, /contrast\(/);
+test("vintage table has wool grain and a soft edge falloff, no heavy vignette", () => {
+  const theme = html.match(/body\[data-card-style="crehore"\]\{([^]*?)\n  \}/)?.[1];
+  assert.ok(theme, "vintage theme exists");
+  assert.match(theme, /feTurbulence/);            // SVG wool grain
+  assert.match(theme, /radial-gradient\(130% 100% at 35% -12%/); // lamplight
+  const falloff = html.match(/body\[data-card-style="crehore"\]::before\{([^}]*)\}/)?.[1];
+  assert.ok(falloff, "edge falloff exists");
+  assert.match(falloff, /box-shadow:inset 0 0 60px/);
+  assert.doesNotMatch(falloff, /url\(/);
 });
 
-test("vintage table uses dark burgundy felt with high-contrast parchment rules", () => {
-  const theme = html.match(/body\[data-card-style="crehore"\]\{([^}]*)\}/)?.[1];
+test("vintage table uses bright burgundy felt with high-contrast parchment rules", () => {
+  const theme = html.match(/body\[data-card-style="crehore"\]\{([^]*?)\n  \}/)?.[1];
   assert.ok(theme, "vintage theme exists");
-  assert.match(theme, /--felt:#6d111a; --felt-deep:#47070e/);
+  assert.match(theme, /--felt:#75141e; --felt-deep:#4d0810/);
   assert.match(theme, /--vintage-ink:#efd9a4; --vintage-ink-strong:#f6e3b2/);
   assert.match(theme, /--vintage-rule-rgb:222,184,112/);
 });
@@ -217,8 +224,8 @@ test("classic cards use one simple fan-safe index with a right-aligned suit", ()
   const indexRule = html.match(/body\[data-card-style="original"\] \.ix\{([^}]*)\}/)?.[1];
   assert.ok(indexRule, "classic index rule exists");
   assert.match(indexRule, /justify-content:space-between/);
-  assert.match(indexRule, /font-size:2\.75em/);
-  assert.match(html, /\.ix b\{\s*flex:none;font-size:\.96em;font-weight:600;text-align:right/);
+  assert.match(indexRule, /font-size:2\.7em/);
+  assert.match(html, /\.ix b\{\s*flex:none;font-size:\.94em;font-weight:700;text-align:right/);
   assert.doesNotMatch(html, /\.ix\.br|class="ix br/);
   assert.match(html, /const minFaceUpReveal = settings\.cardStyle === "original" \? \.30 : \.24/);
   assert.match(html, /const preferredFaceUpReveal = settings\.cardStyle === "original" \? \.32 : 142\/522/);
@@ -231,7 +238,7 @@ test("classic court ranks align with number ranks and clear the tableau fan", ()
   assert.match(centerRule, /inset:0/);
   assert.match(centerRule, /align-items:center;justify-content:center/);
   assert.ok(courtRule, "classic court-symbol rule exists");
-  assert.match(courtRule, /line-height:1;transform:translateY\(-\.04em\)/);
+  assert.match(courtRule, /line-height:1;transform:translateY\(\.05em\)/);
   assert.match(html, /\.ix\.court i\{font-size:1em\}/);
   assert.match(html, /\.ix\.j i\{transform:translateX\(calc\(var\(--cw\)\*\.018\)\)\}/);
   assert.match(html, /const court = card\.rank>=11 \? \["j","q","k"\]\[card\.rank-11\] : ""/);
@@ -241,11 +248,12 @@ test("classic court ranks align with number ranks and clear the tableau fan", ()
 test("classic portrait header and controls are enlarged with balanced icons", () => {
   const portraitHud = html.match(/body\[data-card-style="original"\] #hud\{([^}]*)\}/)?.[1];
   assert.ok(portraitHud, "classic portrait HUD rule exists");
-  assert.match(portraitHud, /display:grid;grid-template-columns:1fr/);
+  assert.match(portraitHud, /display:flex;flex-wrap:wrap/);
   assert.match(portraitHud, /padding:calc\(env\(safe-area-inset-top, 0px\) \+ 15px\) 16px 13px/);
-  assert.match(html, /body\[data-card-style="original"\] \.brand\{\s*justify-content:flex-start;font-size:clamp\(1\.65rem,6\.6vw,1\.9rem\)/);
-  assert.match(html, /body\[data-card-style="original"\] \.chips\{\s*width:100%;justify-content:center;gap:6px/);
-  assert.match(html, /body\[data-card-style="original"\] \.chip:nth-child\(3\)\{margin-left:6px\}/);
-  assert.match(html, /body\[data-card-style="original"\] #controls \.classic-icon\{[^}]*width:1\.6rem;height:1\.6rem;font-size:1\.5rem/);
-  assert.match(html, /body\[data-card-style="original"\] #btnUndo \.classic-icon\{\s*font-size:1\.95rem/);
+  assert.match(html, /body\[data-card-style="original"\] \.brand\{\s*justify-content:flex-start;font-size:clamp\(1\.4rem,5\.6vw,1\.9rem\)/);
+  // Labelled club-rail pills take their own centered row on portrait phones
+  assert.match(html, /body\[data-card-style="original"\] \.chips\{flex:0 0 100%;justify-content:center;gap:6px\}/);
+  // Emoji control icons are retired; only the menu ellipsis glyph remains
+  assert.match(html, /#btnNew \.classic-icon,\s*[^{]*#btnHint \.classic-icon,\s*[^{]*#btnUndo \.classic-icon\{display:none\}/);
+  assert.match(html, /body\[data-card-style="original"\] #btnMenu \.classic-icon\{[^}]*font-size:1\.7rem/);
 });
