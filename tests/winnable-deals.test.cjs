@@ -49,6 +49,28 @@ test("settings expose a stepped Random to Winnable deal mix", () => {
   assert.doesNotMatch(html, /id="segDeal(?:Winnable|Random)"/);
 });
 
+test("table settings keep their labels and preferred order", () => {
+  const cardStyle = html.indexOf("<div>Card style");
+  const draw = html.indexOf("<div>Draw<span");
+  const autoMove = html.indexOf("<div>Auto-move");
+  const sound = html.indexOf("<div>Sound<span");
+  const haptics = html.indexOf("<div>Haptics");
+  const dealMix = html.indexOf("<div>Deal mix");
+  const restart = html.indexOf("<div>Restart this deal");
+  const record = html.indexOf("<div>Your record");
+
+  assert.deepEqual(
+    [cardStyle, draw, autoMove, sound, haptics, dealMix, restart, record],
+    [cardStyle, draw, autoMove, sound, haptics, dealMix, restart, record]
+      .toSorted((left, right) => left - right),
+  );
+  assert.match(
+    html,
+    /Card style<span class="sub2">Change the theme without restarting your deal<\/span>/,
+  );
+  assert.doesNotMatch(html, /Change the deck without restarting your deal/);
+});
+
 test("deal mix probability includes exact Random and Winnable endpoints", () => {
   const choose = browserContext.DealEngine.shouldUseWinnableDeal;
   assert.equal(choose(0, () => 0), false);

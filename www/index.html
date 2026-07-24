@@ -1070,14 +1070,10 @@
 <div id="sheet">
   <h3>Game Settings</h3>
   <div class="row">
-    <div>Deal mix<span class="sub2" id="dealMixSummary">Every deal has a verified solution</span></div>
-    <div class="deal-mix">
-      <div class="deal-mix-labels"><span>Random</span><span>Winnable</span></div>
-      <input id="dealMix" type="range" min="0" max="100" step="25" value="100"
-        aria-label="Winnable deal frequency" aria-valuetext="Winnable">
-      <div class="deal-mix-stops" aria-hidden="true">
-        <span>•</span><span>•</span><span>•</span><span>•</span><span>•</span>
-      </div>
+    <div>Card style<span class="sub2">Change the theme without restarting your deal</span></div>
+    <div class="seg">
+      <button id="segCardsOriginal">Classic</button>
+      <button id="segCardsCrehore">Vintage</button>
     </div>
   </div>
   <div class="row">
@@ -1109,10 +1105,14 @@
     </div>
   </div>
   <div class="row">
-    <div>Card style<span class="sub2">Change the deck without restarting your deal</span></div>
-    <div class="seg">
-      <button id="segCardsOriginal">Classic</button>
-      <button id="segCardsCrehore">Vintage</button>
+    <div>Deal mix<span class="sub2" id="dealMixSummary">Every deal has a verified solution</span></div>
+    <div class="deal-mix">
+      <div class="deal-mix-labels"><span>Random</span><span>Winnable</span></div>
+      <input id="dealMix" type="range" min="0" max="100" step="25" value="100"
+        aria-label="Winnable deal frequency" aria-valuetext="Winnable">
+      <div class="deal-mix-stops" aria-hidden="true">
+        <span>•</span><span>•</span><span>•</span><span>•</span><span>•</span>
+      </div>
     </div>
   </div>
   <div class="row">
