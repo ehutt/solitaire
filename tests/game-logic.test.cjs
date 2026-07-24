@@ -304,7 +304,7 @@ test("classic portrait header and controls are enlarged with balanced icons", ()
   assert.ok(portraitHud, "classic portrait HUD rule exists");
   assert.match(portraitHud, /display:flex;flex-wrap:wrap/);
   assert.match(portraitHud, /padding:calc\(env\(safe-area-inset-top, 0px\) \+ 15px\) 16px 13px/);
-  assert.match(html, /body\[data-card-style="original"\] \.brand\{\s*justify-content:flex-start;font-size:clamp\(1\.4rem,5\.6vw,1\.9rem\)/);
+  assert.match(html, /body\[data-card-style="original"\] \.brand\{\s*justify-content:flex-start;font-size:clamp\(1\.68rem,6\.72vw,2\.28rem\)/);
   // Labelled club-rail pills take their own centered row on portrait phones
   assert.match(html, /body\[data-card-style="original"\] \.chips\{flex:0 0 100%;justify-content:center;gap:6px\}/);
   // Emoji control icons are retired; only the menu ellipsis glyph remains

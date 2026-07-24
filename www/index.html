@@ -75,7 +75,7 @@
   /* Classic marquee: Limelight for the title, over the deco-era casino sign */
   body[data-card-style="original"] .brand{
     font-family:"Limelight",var(--serif);
-    letter-spacing:.01em;font-weight:400;
+    font-size:1.68rem;letter-spacing:.01em;font-weight:400;
   }
   body[data-card-style="original"] .brand .pip{font-family:var(--serif)}
   .chips{display:flex;gap:6px;align-items:center}
@@ -488,7 +488,7 @@
       padding:calc(env(safe-area-inset-top, 0px) + 15px) 16px 13px;
     }
     body[data-card-style="original"] .brand{
-      justify-content:flex-start;font-size:clamp(1.4rem,5.6vw,1.9rem);
+      justify-content:flex-start;font-size:clamp(1.68rem,6.72vw,2.28rem);
     }
     body[data-card-style="original"] .chips{
       flex:1;justify-content:flex-end;gap:6px;flex-wrap:wrap;
@@ -506,7 +506,7 @@
        club-rail pills on their own centered row beneath. */
     body[data-card-style="original"] #hud{justify-content:center}
     body[data-card-style="original"] .brand{
-      width:100%;justify-content:center;font-size:clamp(1.5rem,6vw,1.9rem);
+      width:100%;justify-content:center;font-size:clamp(1.8rem,7.2vw,2.28rem);
     }
     body[data-card-style="original"] .chips{flex:0 0 100%;justify-content:center;gap:6px}
     body[data-card-style="original"] .chip:nth-child(3){margin-left:0}
@@ -523,6 +523,7 @@
               10px 4px 10px;
     }
     body[data-card-style="original"] #hud{display:flex;gap:10px}
+    body[data-card-style="original"] .brand{font-size:1.5rem}
     body[data-card-style="original"] .chips{width:auto;justify-content:flex-end}
     .brand{font-size:1.25rem}
     .chip{padding:3px 7px;font-size:.72rem}
