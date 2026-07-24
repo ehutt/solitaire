@@ -433,6 +433,13 @@
     border:1px solid rgba(217,166,72,.48);background:rgba(217,166,72,.12);
     color:var(--text);
   }
+  /* Cinzel echoes the Classic marquee's casino-era geometry while keeping
+     settings labels and explanatory copy quieter and easier to scan. */
+  body[data-card-style="original"] #sheet{
+    font-family:"Cinzel",var(--serif);
+    font-weight:500;
+  }
+  body[data-card-style="original"] #sheet button{font-family:inherit;font-weight:500}
   #statsPage{
     position:fixed;inset:0;z-index:680;display:none;overflow-y:auto;
     color:var(--text);background:linear-gradient(180deg,#123b2e,#081f18);
