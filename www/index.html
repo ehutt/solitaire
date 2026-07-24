@@ -451,13 +451,24 @@
     border:1px solid rgba(217,166,72,.48);background:rgba(217,166,72,.12);
     color:var(--text);
   }
-  /* Cinzel echoes the Classic marquee's casino-era geometry while keeping
-     settings labels and explanatory copy quieter and easier to scan. */
+  /* Classic settings use a restrained card-room serif: related to the
+     marquee's period character, but mixed-case and quiet enough for body UI. */
   body[data-card-style="original"] #sheet{
-    font-family:"Cinzel",var(--serif);
-    font-weight:500;
+    font-family:var(--serif);
+    font-weight:400;
   }
-  body[data-card-style="original"] #sheet button{font-family:inherit;font-weight:500}
+  body[data-card-style="original"] #sheet .row{font-size:1rem}
+  body[data-card-style="original"] #sheet .row .sub2{font-size:.8rem}
+  body[data-card-style="original"] #sheet .seg button{
+    min-height:34px;padding:6px 14px;font-family:inherit;font-size:.9rem;font-weight:600;
+  }
+  body[data-card-style="original"] #sheet #btnRestart,
+  body[data-card-style="original"] #sheet .record-link{
+    font-family:inherit;font-size:.9rem;font-weight:600;
+  }
+  body[data-card-style="original"] #sheet .deal-mix-labels{font-size:.74rem}
+  body[data-card-style="original"] #sheet .record-card strong{font-size:1rem}
+  body[data-card-style="original"] #sheet .record-card span{font-size:.8rem}
   #statsPage{
     position:fixed;inset:0;z-index:680;display:none;overflow-y:auto;
     color:var(--text);background:linear-gradient(180deg,#123b2e,#081f18);
