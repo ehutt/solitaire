@@ -242,7 +242,7 @@ test("win dialog leaves a little more time to watch the cascade", () => {
 });
 
 test("vintage settings copy and stock treatment preserve the intended hierarchy", () => {
-  assert.match(html, /<h3>Table Settings<\/h3>/);
+  assert.match(html, /<h3>Game Settings<\/h3>/);
   assert.match(html, /Win daily to grow your streak\.<br>\s*Every 10 wins earns/);
   assert.match(html, /\.card\.stock-card \.face\{box-shadow:none\}/);
   assert.match(html, /classList\.add\("stock-card"\)/);
