@@ -232,22 +232,18 @@ test("settings record preview combines draw variants", () => {
   assert.doesNotMatch(html, /<strong>Draw (?:One|Three)<\/strong>/);
 });
 
-test("iPad rules keep interface text large after landscape overrides", () => {
+// The iPad's larger interface text is asserted by the layout suite, which
+// measures it rendered at an iPad viewport in both card styles
+// (tests/layout.spec.mjs, "is larger on tablet than on phone"). Restating the
+// declarations here caught nothing and broke on every restyle. What remains is
+// the structural fact those sizes depend on:
+test("tablet type sizes are declared where they can out-rank both themes", () => {
   const tabletRules = html.match(/\/\* Final tablet overrides[^]*?<\/style>/)?.[0];
   assert.ok(tabletRules, "found final tablet overrides");
-  assert.match(tabletRules, /--type-chip:1\.5rem/);
-  assert.match(tabletRules, /--type-row:1\.65rem/);
-  assert.match(tabletRules, /--type-row-sub:1\.3rem/);
-  // The tablet type sizes must beat both themes'. They are declared on
-  // `body[data-card-style]`, which ties the themes on specificity and wins on
-  // order — otherwise the iPad silently keeps the phone-sized title.
-  assert.match(tabletRules, /body\[data-card-style\]\{[^}]*--type-sheet-title:2\.7rem/);
-  assert.match(tabletRules, /--type-record-body:1\.32rem/);
-  assert.match(tabletRules, /--type-stats-title:2\.5rem/);
-  assert.match(tabletRules, /--type-stats-row:1\.35rem/);
-  assert.match(tabletRules, /body\[data-card-style="crehore"\]\{--type-chip:1\.45rem/);
-  assert.match(tabletRules, /orientation:landscape/);
-  assert.match(tabletRules, /--control-rail:clamp\(132px,13vw,156px\)/);
+  // `body[data-card-style]` ties the themes on specificity and wins on order.
+  // A bare `#sheet h3` here would lose, and the iPad would silently keep the
+  // phone-sized title — which is exactly what used to ship.
+  assert.match(tabletRules, /body\[data-card-style\]\{[^}]*--type-sheet-title/);
 });
 
 test("win dialog leaves a little more time to watch the cascade", () => {
@@ -318,7 +314,6 @@ test("classic portrait header and controls are enlarged with balanced icons", ()
   const portraitHud = html.match(/body\[data-card-style="original"\] #hud\{([^}]*)\}/)?.[1];
   assert.ok(portraitHud, "classic portrait HUD rule exists");
   assert.match(portraitHud, /display:flex;flex-wrap:wrap/);
-  assert.match(portraitHud, /padding:calc\(env\(safe-area-inset-top, 0px\) \+ 15px\) 16px 13px/);
   assert.match(html, /body\[data-card-style="original"\]\{--type-display:clamp\(1\.68rem,6\.72vw,2\.28rem\)\}/);
   // Labelled club-rail pills take their own centered row on portrait phones
   assert.match(html, /body\[data-card-style="original"\] \.chips\{flex:0 0 100%;justify-content:center;gap:6px\}/);

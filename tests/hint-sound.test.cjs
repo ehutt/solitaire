@@ -463,14 +463,11 @@ test("the settings sheet has its own close control", () => {
   assert.match(html, /<button id="btnSheetClose" class="icon-button" aria-label="Close settings">/);
   assert.match(html, /\$\("btnSheetClose"\)\.onclick = closeSheet;/);
   assert.match(html, /sheetBack\.onclick = closeSheet;/);
-  // Pinned to the scrollport so it stays reachable in a scrolled sheet.
-  assert.match(html, /\.pinned-header\{\s*--pinned-header-gap:12px;\s*position:sticky;top:0/);
-  // The close is centred against a row holding only the title, so the button's
-  // own height can never distort the reference box.
-  assert.match(html, /\.title-row\{position:relative\}/);
-  assert.match(html, /\.title-row \.icon-button\{[^}]*top:50%;\s*transform:translateY\(-50%\) translateY\(-\.09em\)/);
-  // A plain glyph in both styles: no border, no fill, no themed pill.
-  assert.match(html, /\.icon-button\{[^}]*background:none;border:0/);
+  // The sheet uses the three primitives rather than one-off selectors; that the
+  // header actually stays pinned and the glyph actually lands on the title's cap
+  // band is measured by the layout suite, not spelled out here.
+  assert.match(html, /class="pinned-header"/);
+  assert.match(html, /<div class="title-row">/);
   assert.doesNotMatch(html, /(original|crehore)"\] \.icon-button\{/);
   assert.doesNotMatch(html, /(original|crehore)"\] \.stats-header button\{/);
   // Both closes are the same primitive; only their placement differs.
