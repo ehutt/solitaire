@@ -291,8 +291,10 @@ test("classic cards use one simple fan-safe index with a right-aligned suit", ()
   const indexRule = html.match(/body\[data-card-style="original"\] \.ix\{([^}]*)\}/)?.[1];
   assert.ok(indexRule, "classic index rule exists");
   assert.match(indexRule, /justify-content:space-between/);
-  assert.match(indexRule, /font-size:2\.7em/);
-  assert.match(html, /\.ix b\{\s*flex:none;font-size:\.94em;font-weight:700;text-align:right/);
+  // Face composition is sized in card-relative ems outside the theme block.
+  assert.match(html, /\.ix\{font-size:2\.7em\}/);
+  assert.match(html, /\.ix b\{font-size:\.94em\}/);
+  assert.match(html, /\.ix b\{\s*flex:none;font-weight:700;text-align:right/);
   assert.doesNotMatch(html, /\.ix\.br|class="ix br/);
   assert.match(html, /const minFaceUpReveal = settings\.cardStyle === "original" \? \.30 : \.24/);
   assert.match(html, /const preferredFaceUpReveal = settings\.cardStyle === "original" \? \.32 : 142\/522/);
