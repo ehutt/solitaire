@@ -112,6 +112,15 @@
     --chrome-ink-muted:var(--muted);   /* captions and secondary rows */
     --control-ink:var(--text);  /* the control rail's label colour */
     --rule:rgba(255,255,255,.07);        /* hairlines between rows */
+    /* Surfaces. A theme swaps the whole paint — gradient, grain and all — by
+       restating these, so no component ever names a colour. */
+    --surface-sheet:linear-gradient(180deg,#123b2e,#0c2a20);
+    --surface-sheet-top:#123b2e;   /* the sticky header's full-bleed backdrop */
+    --surface-stats:linear-gradient(180deg,#123b2e,#081f18);
+    --surface-scrim:rgba(0,0,0,.4);      /* behind the sheet */
+    --surface-overlay:rgba(4,16,12,.55); /* behind the win dialog */
+    --surface-panel:linear-gradient(165deg,#fbf7ec,#efe6d1);
+    --paper-ink:var(--ink);              /* ink on those paper surfaces */
     font-family:var(--ui);
     background:
       radial-gradient(120% 90% at 50% 0%, var(--felt) 0%, var(--felt-deep) 100%);
@@ -415,14 +424,14 @@
   #overlay{
     position:fixed;inset:0;z-index:600;
     display:none;align-items:center;justify-content:center;
-    background:rgba(4,16,12,.55);
+    background:var(--surface-overlay);
     backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px);
   }
   #overlay.show{display:flex;animation:fadeIn .4s ease}
   @keyframes fadeIn{from{opacity:0}to{opacity:1}}
   .panel{
-    background:linear-gradient(165deg,#fbf7ec,#efe6d1);
-    color:var(--ink);
+    background:var(--surface-panel);
+    color:var(--paper-ink);
     border-radius:18px;
     width:min(390px, calc(100vw - 40px));
     max-height:calc(100dvh - 24px);overflow-y:auto;
@@ -477,7 +486,7 @@
   /* ---------- MENU SHEET ---------- */
   #sheet{
     position:fixed;left:0;right:0;bottom:0;z-index:650;
-    background:linear-gradient(180deg,#123b2e,#0c2a20);
+    color:var(--chrome-ink);background:var(--surface-sheet);
     border-radius:20px 20px 0 0;
     border-top:1px solid rgba(255,255,255,.12);
     padding:20px 22px calc(env(safe-area-inset-bottom,0px) + 22px);
@@ -503,7 +512,7 @@
   }
   .sheet-header::before{
     content:"";position:absolute;inset:-60px -100px 0;z-index:-1;
-    background:#123b2e;
+    background:var(--surface-sheet-top);
   }
   /* Plain glyph exits — no pill, no border, no fill — in either card style.
      The box stays a full tap target even though nothing is drawn around it. */
@@ -533,7 +542,7 @@
   .stats-header button{margin-bottom:.16em}
   #sheet.open{transform:none}
   #sheetBack{
-    position:fixed;inset:0;z-index:640;background:rgba(0,0,0,.4);
+    position:fixed;inset:0;z-index:640;background:var(--surface-scrim);
     display:none;
   }
   #sheetBack.show{display:block}
@@ -603,7 +612,7 @@
   }
   #statsPage{
     position:fixed;inset:0;z-index:680;display:none;overflow-y:auto;
-    color:var(--text);background:linear-gradient(180deg,#123b2e,#081f18);
+    color:var(--chrome-ink);background:var(--surface-stats);
     padding:calc(env(safe-area-inset-top,0px) + 18px) 20px
       calc(env(safe-area-inset-bottom,0px) + 28px);
   }
@@ -749,6 +758,18 @@
     --control-ink:var(--vintage-ink);
     --rule:rgba(var(--vintage-ink-rgb),.2);
     --slider-accent:var(--vintage-ink);
+    --surface-sheet:
+      repeating-linear-gradient(0deg,rgba(255,255,255,.025) 0 1px,transparent 1px 3px),
+      linear-gradient(180deg,var(--vintage-sheet-top),var(--vintage-sheet-bottom));
+    --surface-sheet-top:var(--vintage-sheet-top);
+    --surface-stats:
+      repeating-linear-gradient(0deg,rgba(255,255,255,.022) 0 1px,transparent 1px 3px),
+      radial-gradient(120% 80% at 35% -10%,rgba(255,225,183,.1),transparent 60%),
+      linear-gradient(180deg,var(--vintage-sheet-top),var(--vintage-sheet-bottom));
+    --surface-scrim:rgba(var(--vintage-shadow-rgb),.38);
+    --surface-overlay:rgba(var(--vintage-wash-rgb),.42);
+    --surface-panel:linear-gradient(165deg,#f7efd9,#e8dbbd);
+    --paper-ink:var(--vintage-paper-ink);
     position:relative;
     /* F5 felt: bright burgundy wool — soft lamplight from the upper left,
        fine SVG-turbulence grain, and a gentle edge falloff (no heavy vignette). */
@@ -876,18 +897,13 @@
     border:3px double rgba(var(--vintage-paper-ink-rgb),.72);border-radius:5px;
     font-family:var(--vintage-text);letter-spacing:.02em;
   }
-  body[data-card-style="crehore"] #overlay{
-    background:rgba(var(--vintage-wash-rgb),.42);
-  }
   body[data-card-style="crehore"] .panel{
-    color:var(--vintage-paper-ink);background:linear-gradient(165deg,#f7efd9,#e8dbbd);
     border:3px double rgba(var(--vintage-paper-ink-rgb),.68);border-radius:7px;
   }
   body[data-card-style="crehore"] .panel h2,
   body[data-card-style="crehore"] #sheet h3{
     font-family:var(--vintage-display);font-weight:400;
   }
-  body[data-card-style="crehore"] .panel h2{color:var(--vintage-paper-ink)}
   body[data-card-style="crehore"] #sheet h3{
     color:var(--vintage-ink);line-height:1.15;
   }
@@ -897,15 +913,9 @@
   }
   body[data-card-style="crehore"] .panel button.ghost{color:var(--vintage-paper-ink-mid);background:transparent}
   body[data-card-style="crehore"] #sheet{
-    color:var(--vintage-ink);
-    background:
-      repeating-linear-gradient(0deg,rgba(255,255,255,.025) 0 1px,transparent 1px 3px),
-      linear-gradient(180deg,var(--vintage-sheet-top),var(--vintage-sheet-bottom));
     border-top:3px double rgba(var(--vintage-ink-rgb),.78);border-radius:8px 8px 0 0;
     font-family:var(--vintage-text);
   }
-  body[data-card-style="crehore"] .sheet-header::before{background:var(--vintage-sheet-top)}
-  body[data-card-style="crehore"] #sheetBack{background:rgba(var(--vintage-shadow-rgb),.38)}
   /* The record card's divider follows the row rule, not the softer card edge. */
   body[data-card-style="crehore"] .record-card-combined span+span{
     border-left-color:var(--rule);
@@ -922,14 +932,7 @@
   body[data-card-style="crehore"] .seg button.on{
     color:#f3e7c9;background:var(--vintage-deep);
   }
-  body[data-card-style="crehore"] #statsPage{
-    color:var(--vintage-ink);
-    background:
-      repeating-linear-gradient(0deg,rgba(255,255,255,.022) 0 1px,transparent 1px 3px),
-      radial-gradient(120% 80% at 35% -10%,rgba(255,225,183,.1),transparent 60%),
-      linear-gradient(180deg,var(--vintage-sheet-top),var(--vintage-sheet-bottom));
-    font-family:var(--vintage-text);
-  }
+  body[data-card-style="crehore"] #statsPage{font-family:var(--vintage-text)}
   body[data-card-style="crehore"] .stats-page-inner{
     border-top:4px double rgba(var(--vintage-rule-rgb),.9);
     border-bottom:4px double rgba(var(--vintage-rule-rgb),.72);
