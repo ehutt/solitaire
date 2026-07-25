@@ -1410,6 +1410,11 @@ let G = null;              // geometry
 let undoStack = [];
 let initialDeal = null;    // shuffle order for "restart"
 let moves = 0, elapsed = 0, started = false, won = false, autoRunning = false;
+// autoRunning covers both kinds of automation and gates board input. Only the
+// end-game cascade also *looks* unavailable: a safe auto-move is a couple of
+// cards long, and dimming the controls and undimming them again reads as a
+// flicker. The handlers ignore input during either kind regardless.
+let autoCascading = false;
 let undos = 0; // first undo each game is free; the rest count as a move
 let hintUsed = false, gameVariant = null;
 let timerId = null, midnightTimer = null, autoPlayTimer = null, winDialogTimer = null;
@@ -1543,7 +1548,7 @@ function newGame(order){
     P.t[c][P.t[c].length-1].faceUp = true;
   }
   while(k<52) P.stock.push(cards[k++]);
-  moves=0; elapsed=0; started=false; won=false; autoRunning=false; undos=0;
+  moves=0; elapsed=0; started=false; won=false; autoRunning=false; autoCascading=false; undos=0;
   hintUsed=false; gameVariant=null;
   undoStack = [];
   stopTimer();
@@ -2264,10 +2269,10 @@ function autoMoveSafeCards(){
 }
 function autoFinish(){
   if(settings.autoComplete === false || !finishable() || autoRunning || !started || moves<1) return;
-  autoRunning = true; updateButtons();
+  autoRunning = true; autoCascading = true; updateButtons();
   const step = ()=>{
     if(settings.autoComplete === false){
-      autoRunning=false; saveGame(); updateButtons(); return;
+      autoRunning=false; autoCascading=false; saveGame(); updateButtons(); return;
     }
     let moved = false;
     for(let c=0;c<7;c++){
@@ -2287,7 +2292,7 @@ function autoFinish(){
       }
     }
     if(moved && !P.f.every(p=>p.length===13)) autoPlayTimer=setTimeout(step,reduced?70:140);
-    else { autoRunning=false; saveGame(); checkWin(); updateButtons(); }
+    else { autoRunning=false; autoCascading=false; saveGame(); checkWin(); updateButtons(); }
   };
   step();
 }
@@ -2338,8 +2343,8 @@ function updateHUD(){
   $("chipStreak").setAttribute("aria-label", `Current streak: ${streak}`);
 }
 function updateButtons(){
-  $("btnUndo").disabled = !undoStack.length || autoRunning || won;
-  $("btnHint").disabled = autoRunning || won;
+  $("btnUndo").disabled = !undoStack.length || autoCascading || won;
+  $("btnHint").disabled = autoCascading || won;
 }
 
 /* ================= persistence ================= */
@@ -2665,7 +2670,7 @@ $("dealMix").onchange = ()=>{
 };
 $("segAutoOn").onclick = ()=>{ settings.autoComplete=true; saveJSON(KEY_SET,settings); refreshSheet(); updateButtons(); maybeAutoFinish() };
 $("segAutoOff").onclick = ()=>{
-  settings.autoComplete=false; cancelAutoPlay(); autoRunning=false;
+  settings.autoComplete=false; cancelAutoPlay(); autoRunning=false; autoCascading=false;
   saveJSON(KEY_SET,settings); refreshSheet(); updateButtons(); saveGame();
 };
 $("segSoundOn").onclick = ()=>setSound(true);
