@@ -2,7 +2,7 @@ import { defineConfig } from "@playwright/test";
 
 export default defineConfig({
   testDir: "tests",
-  testMatch: /layout\.spec\.mjs/,
+  testMatch: /(layout|computed-styles)\.spec\.mjs/,
   fullyParallel: true,
   reporter: [["list"]],
   use: {

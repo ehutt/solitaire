@@ -13,7 +13,8 @@
     "sync": "cap sync",
     "ios": "cap sync ios && cap open ios",
     "assets": "capacitor-assets generate",
-    "test:layout": "playwright test --config playwright.config.mjs"
+    "test:layout": "playwright test --config playwright.config.mjs",
+    "snapshot:baseline": "node scripts/snapshot-baseline.mjs"
   },
   "dependencies": {
     "@capacitor/core": "^8.4.1",
