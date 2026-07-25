@@ -69,7 +69,6 @@ test("recordWin updates a daily streak immediately and marks each fifth win", ()
   global.elapsed = 45;
   global.moves = 80;
   global.stats = {
-    plays: 5,
     wins: 4,
     streak: 4,
     longest: 4,

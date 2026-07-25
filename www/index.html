@@ -1234,7 +1234,7 @@ if(settings.haptics === undefined) settings.haptics = true;
 if(settings.cardStyle !== "original" && settings.cardStyle !== "crehore") settings.cardStyle = "crehore";
 applyCardStyleTheme(settings.cardStyle);
 let stats = loadJSON(KEY_STATS) || {
-  plays:0, wins:0, streak:0, longest:0, lastWin:null,
+  wins:0, streak:0, longest:0, lastWin:null,
   freezes:1, winsToward:0, bestTime:null, bestMoves:null
 };
 function emptyVariantRecord(){
@@ -1585,7 +1585,6 @@ function beginPlay(){
   if(!started){
     started = true;
     gameVariant = settings.draw3 ? "draw3" : "draw1";
-    stats.plays++;
     stats.records[gameVariant].games++;
     saveJSON(KEY_STATS, stats);
     startTimer();
