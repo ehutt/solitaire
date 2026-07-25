@@ -1098,7 +1098,7 @@
       <button id="segSoundOff">Muted</button>
     </div>
   </div>
-  <div class="row">
+  <div class="row" id="rowHaptics">
     <div>Haptics<span class="sub2">Vibration feedback for moves and wins</span></div>
     <div class="seg">
       <button id="segHapticsOn">On</button>
@@ -1214,6 +1214,14 @@ function haptic(style){
 function hapticWin(){
   if(!Haptics || settings.haptics === false) return;
   try{ Haptics.notification({ type: "SUCCESS" }); }catch(e){}
+}
+// iPads have no Taptic Engine, so impact/notification calls are silent no-ops
+// there (as on the web, where the plugin is absent). Modern iPadOS reports
+// itself as "MacIntel", so multi-touch support is the distinguishing signal.
+function hapticsAvailable(){
+  const iPad = navigator.platform === "iPad" ||
+    (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+  return !!Haptics && !iPad;
 }
 let settings = loadJSON(KEY_SET) || { draw3: false };
 const DEAL_MIX_STEPS = [0,25,50,75,100];
@@ -2498,6 +2506,7 @@ window.addEventListener("orientationchange",()=>{
 });
 
 /* ================= boot ================= */
+if(!hapticsAvailable()) $("rowHaptics").style.display = "none";
 if(!tryResume()) newGame();
 updateHUD();
 scheduleMidnightRefresh();
