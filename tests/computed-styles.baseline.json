@@ -8722,7 +8722,7 @@
     "gap": "6px",
     "minHeight": "64px",
     "minWidth": "auto",
-    "width": "223px",
+    "width": "222.672px",
     "height": "64px",
     "position": "static",
     "boxShadow": "none",
@@ -8731,7 +8731,7 @@
     "_rect": [
      26,
      1101,
-     223,
+     222.5,
      64
     ]
    },
@@ -8770,16 +8770,16 @@
     "gap": "6px",
     "minHeight": "64px",
     "minWidth": "auto",
-    "width": "223px",
+    "width": "222.688px",
     "height": "64px",
     "position": "static",
     "boxShadow": "none",
     "textShadow": "none",
     "transform": "none",
     "_rect": [
-     263,
+     262.5,
      1101,
-     223,
+     222.5,
      64
     ]
    },
@@ -8818,26 +8818,26 @@
     "gap": "6px",
     "minHeight": "64px",
     "minWidth": "auto",
-    "width": "223px",
+    "width": "222.672px",
     "height": "64px",
     "position": "static",
     "boxShadow": "none",
     "textShadow": "none",
     "transform": "none",
     "_rect": [
-     500,
+     499.5,
      1101,
-     223,
+     222.5,
      64
     ]
    },
    "#btnMenu": {
     "fontFamily": "Cinzel, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
-    "fontSize": "14.4px",
+    "fontSize": "24px",
     "fontWeight": "500",
     "fontStyle": "normal",
     "lineHeight": "normal",
-    "letterSpacing": "1.44px",
+    "letterSpacing": "2.4px",
     "textTransform": "uppercase",
     "fontVariantNumeric": "normal",
     "textAlign": "center",
@@ -8866,16 +8866,16 @@
     "gap": "6px",
     "minHeight": "50px",
     "minWidth": "auto",
-    "width": "57px",
+    "width": "57.9688px",
     "height": "64px",
     "position": "static",
     "boxShadow": "none",
     "textShadow": "none",
     "transform": "none",
     "_rect": [
-     737,
+     736,
      1101,
-     57,
+     58,
      64
     ]
    },
