@@ -2040,7 +2040,9 @@ document.addEventListener("visibilitychange", ()=>{
   else {
     updateHUD();
     scheduleMidnightRefresh();
-    if(started && !won) startTimer();
+    // A shown dialog (win or stuck) owns the paused timer — don't restart
+    // behind it when the app returns to the foreground.
+    if(started && !won && !$("overlay").classList.contains("show")) startTimer();
   }
 });
 function fmtTime(s){ return Math.floor(s/60)+":"+String(s%60).padStart(2,"0") }
@@ -2074,6 +2076,7 @@ function updateHUD(){
 }
 function updateButtons(){
   $("btnUndo").disabled = !undoStack.length || autoRunning || won;
+  $("btnHint").disabled = autoRunning || won;
 }
 
 /* ================= persistence ================= */
@@ -2449,18 +2452,23 @@ $("btnStats").onclick = openStats;
 $("btnStatsClose").onclick = closeStats;
 $("statsTab1").onclick = ()=>{ statsVariant="draw1"; renderStats() };
 $("statsTab3").onclick = ()=>{ statsVariant="draw3"; renderStats() };
+function setSeg(id,on){
+  const b = $(id);
+  b.classList.toggle("on", on);
+  b.setAttribute("aria-pressed", on);
+}
 function refreshSheet(){
   updateDealMix();
-  $("segD1").classList.toggle("on", !settings.draw3);
-  $("segD3").classList.toggle("on", settings.draw3);
-  $("segAutoOn").classList.toggle("on", settings.autoComplete !== false);
-  $("segAutoOff").classList.toggle("on", settings.autoComplete === false);
-  $("segSoundOn").classList.toggle("on", settings.sound !== false);
-  $("segSoundOff").classList.toggle("on", settings.sound === false);
-  $("segHapticsOn").classList.toggle("on", settings.haptics !== false);
-  $("segHapticsOff").classList.toggle("on", settings.haptics === false);
-  $("segCardsOriginal").classList.toggle("on", settings.cardStyle === "original");
-  $("segCardsCrehore").classList.toggle("on", settings.cardStyle === "crehore");
+  setSeg("segD1", !settings.draw3);
+  setSeg("segD3", settings.draw3);
+  setSeg("segAutoOn", settings.autoComplete !== false);
+  setSeg("segAutoOff", settings.autoComplete === false);
+  setSeg("segSoundOn", settings.sound !== false);
+  setSeg("segSoundOff", settings.sound === false);
+  setSeg("segHapticsOn", settings.haptics !== false);
+  setSeg("segHapticsOff", settings.haptics === false);
+  setSeg("segCardsOriginal", settings.cardStyle === "original");
+  setSeg("segCardsCrehore", settings.cardStyle === "crehore");
   const draw1 = stats.records.draw1, draw3 = stats.records.draw3;
   const combined = {
     wins: draw1.wins + draw3.wins,
@@ -2476,7 +2484,14 @@ function refreshSheet(){
 }
 /* keyboard niceties */
 window.addEventListener("keydown", e=>{
-  if(e.key==="Escape" && $("statsPage").classList.contains("open")){ closeStats(); return }
+  if(e.key==="Escape"){
+    if($("statsPage").classList.contains("open")) closeStats();
+    else if(sheet.classList.contains("open")){ sheet.classList.remove("open"); sheetBack.classList.remove("show") }
+    return;
+  }
+  // Dialogs (win, stuck, draw-one offer) own the keyboard, matching the
+  // pointer handler — game keys must not move cards behind a shown overlay.
+  if($("overlay").classList.contains("show")) return;
   if(e.key==="z" && (e.metaKey||e.ctrlKey)){ e.preventDefault(); undo() }
   else if(e.key==="h") hint();
   else if(e.key===" "){ e.preventDefault(); draw() }
