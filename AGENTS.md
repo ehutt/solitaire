@@ -7,3 +7,4 @@
 - Verify UI changes in both portrait and landscape on an iPhone simulator. Landscape must account for safe-area/notch insets, the side control rail, and unusually long tableau piles.
 - Simulator screenshots taken while landscape may be stored with portrait pixel orientation; rotate the image for inspection rather than mistaking that for an app-layout bug.
 - A successful JavaScript parse does not catch runtime layout errors. After changes, launch the app and confirm a full deal renders, New starts another deal, and controls remain responsive.
+- Styling gotcha: both card styles restyle components through `body[data-card-style="…"] …`, which outranks the plain `#id`-scoped rules used in the responsive blocks. A size set in a media query can lose silently to a theme rule. See `docs/css-architecture-refactor.md` for the planned fix (semantic tokens; components never appear inside a theme block or media query).
