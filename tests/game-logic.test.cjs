@@ -227,6 +227,13 @@ test("streak and freeze counts use style-appropriate labels in the header", () =
   assert.match(html, /streak freezes <b>\$\{stats\.freezes\}<\/b>/);
 });
 
+test("settings record preview combines draw variants", () => {
+  assert.match(html, /wins: draw1\.wins \+ draw3\.wins/);
+  assert.match(html, /games: draw1\.games \+ draw3\.games/);
+  assert.match(html, /<b>\$\{winRate\(combined\)\}%<\/b> win rate/);
+  assert.doesNotMatch(html, /<strong>Draw (?:One|Three)<\/strong>/);
+});
+
 test("iPad rules keep interface text large after landscape overrides", () => {
   const tabletRules = html.match(/\/\* Final tablet overrides[^]*?<\/style>/)?.[0];
   assert.ok(tabletRules, "found final tablet overrides");

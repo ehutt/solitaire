@@ -445,6 +445,11 @@
   .record-card strong{display:block;font-family:var(--serif);font-size:1.08rem;margin-bottom:6px}
   .record-card span{display:block;color:var(--muted);font-size:.84rem;line-height:1.5}
   .record-card b{color:var(--text);font-variant-numeric:tabular-nums}
+  .record-card-combined{
+    grid-column:1/-1;display:grid;grid-template-columns:repeat(3,1fr);gap:8px;
+    text-align:center;
+  }
+  .record-card-combined span+span{border-left:1px solid rgba(255,255,255,.09)}
   .record-preview>.statline{grid-column:1/-1}
   .record-link{
     width:100%;min-height:42px;margin-top:10px;padding:11px 13px;font-size:.96rem;
@@ -762,6 +767,9 @@
   body[data-card-style="crehore"] .row .sub2,
   body[data-card-style="crehore"] .statline{color:var(--vintage-ink-mid)}
   body[data-card-style="crehore"] .statline b{color:var(--vintage-ink)}
+  body[data-card-style="crehore"] .record-card-combined span+span{
+    border-left-color:rgba(var(--vintage-ink-rgb),.2);
+  }
   body[data-card-style="crehore"] .seg{
     background:rgba(238,225,194,.18);border:1px solid rgba(var(--vintage-ink-rgb),.28);
     border-radius:10px;padding:2px;gap:1px;
@@ -2468,13 +2476,15 @@ function refreshSheet(){
   $("segCardsOriginal").classList.toggle("on", settings.cardStyle === "original");
   $("segCardsCrehore").classList.toggle("on", settings.cardStyle === "crehore");
   const draw1 = stats.records.draw1, draw3 = stats.records.draw3;
+  const combined = {
+    wins: draw1.wins + draw3.wins,
+    games: draw1.games + draw3.games
+  };
   $("recordPreview").innerHTML =
-    `<div class="record-card"><strong>Draw One</strong>`+
-      `<span><b>${draw1.wins}</b> wins · <b>${draw1.games}</b> played</span>`+
-      `<span><b>${winRate(draw1)}%</b> win rate</span></div>`+
-    `<div class="record-card"><strong>Draw Three</strong>`+
-      `<span><b>${draw3.wins}</b> wins · <b>${draw3.games}</b> played</span>`+
-      `<span><b>${winRate(draw3)}%</b> win rate</span></div>`+
+    `<div class="record-card record-card-combined">`+
+      `<span><b>${combined.wins}</b> wins</span>`+
+      `<span><b>${combined.games}</b> played</span>`+
+      `<span><b>${winRate(combined)}%</b> win rate</span></div>`+
     `<div class="statline"><span>current streak <b>${displayStreak()}</b></span>`+
       `<span>streak freezes <b>${stats.freezes}</b></span></div>`;
 }
