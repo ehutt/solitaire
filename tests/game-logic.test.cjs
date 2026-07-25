@@ -236,16 +236,13 @@ test("iPad rules keep interface text large after landscape overrides", () => {
   const tabletRules = html.match(/\/\* Final tablet overrides[^]*?<\/style>/)?.[0];
   assert.ok(tabletRules, "found final tablet overrides");
   assert.match(tabletRules, /--type-chip:1\.5rem/);
-  assert.match(tabletRules, /\.row\{padding:21px 0;font-size:1\.65rem/);
-  assert.match(tabletRules, /\.row \.sub2\{font-size:1\.3rem/);
-  // Both card styles restyle the sheet title with an attribute selector, which
-  // outranks a bare `#sheet h3` — the tablet size must be scoped the same way
-  // or the iPad silently keeps the phone-sized title.
-  assert.match(
-    tabletRules,
-    /body\[data-card-style="original"\] #sheet h3,\s*body\[data-card-style="crehore"\] #sheet h3\{font-size:2\.7rem/,
-  );
-  assert.match(tabletRules, /\.record-card span\{font-size:1\.32rem/);
+  assert.match(tabletRules, /--type-row:1\.65rem/);
+  assert.match(tabletRules, /--type-row-sub:1\.3rem/);
+  // The tablet type sizes must beat both themes'. They are declared on
+  // `body[data-card-style]`, which ties the themes on specificity and wins on
+  // order — otherwise the iPad silently keeps the phone-sized title.
+  assert.match(tabletRules, /body\[data-card-style\]\{[^}]*--type-sheet-title:2\.7rem/);
+  assert.match(tabletRules, /--type-record-body:1\.32rem/);
   assert.match(tabletRules, /\.stats-header h2\{font-size:2\.5rem\}/);
   assert.match(tabletRules, /\.stats-detail-row\{font-size:1\.35rem/);
   assert.match(tabletRules, /body\[data-card-style="crehore"\]\{--type-chip:1\.45rem/);

@@ -72,6 +72,17 @@
        later breakpoints. They are read with a fallback at the use site instead,
        and only set where the menu button or the confirm state must differ. */
     --type-menu-glyph:1em;      /* Classic's ⋯ glyph inside the menu button */
+    --type-close:1.2rem;        /* the ✕ actions on the sheet and stats page */
+    --type-sheet-title:1.1rem;  /* "Game Settings" */
+    --type-row:1.08rem;         /* settings row labels */
+    --type-row-sub:.86rem;      /* their explanatory second line */
+    --type-seg:.96rem;          /* segmented-control options */
+    --type-mix-label:.8rem;     /* deal-mix end labels */
+    --type-mix-stop:.68rem;     /* deal-mix tick marks */
+    --type-statline:.96rem;     /* inline record summaries */
+    --type-record-title:1.08rem;/* record card headings */
+    --type-record-body:.84rem;  /* record card figures */
+    --type-record-link:.96rem;  /* "View detailed stats" */
   }
   *{box-sizing:border-box;margin:0;padding:0}
   html,body{height:100%}
@@ -103,6 +114,7 @@
      the components themselves never learn which theme is on. */
   body[data-card-style="original"]{
     --type-menu-glyph:1.7rem;
+    --type-sheet-title:1.5rem;
     --type-display:1.68rem;
     --type-chip:.92rem;
     --type-chip-label:.62rem;
@@ -467,7 +479,7 @@
     width:var(--close-size);height:var(--close-size);padding:0;
     background:none;border:0;border-radius:0;
     color:var(--text);opacity:.72;
-    font-size:1.2rem;line-height:1;
+    font-size:var(--type-close);line-height:1;
   }
   /* Drawn, not typed. A text "✕" is centred by its line box, but the glyph
      sits well below that box's middle, which read as ~10px low against a
@@ -493,24 +505,26 @@
   }
   #sheetBack.show{display:block}
   #sheet h3{
-    font-family:var(--serif);font-weight:600;font-size:1.1rem;
+    font-family:var(--serif);font-weight:600;font-size:var(--type-sheet-title);
     margin-bottom:12px;text-align:center;
   }
+  /* Restart reads the shared button size unless the sheet says otherwise. */
+  #sheet #btnRestart{font-size:var(--type-restart,var(--type-button))}
   .row{
     display:flex;align-items:center;justify-content:space-between;
     gap:16px;padding:12px 0;border-bottom:1px solid rgba(255,255,255,.07);
-    font-size:1.08rem;
+    font-size:var(--type-row);
   }
   .row>div:first-child{flex:1;min-width:0}
   .row:last-of-type{border-bottom:none}
-  .row .sub2{display:block;color:var(--muted);font-size:.86rem;line-height:1.3;margin-top:3px}
+  .row .sub2{display:block;color:var(--muted);font-size:var(--type-row-sub);line-height:1.3;margin-top:3px}
   .seg{display:flex;flex:none;background:rgba(0,0,0,.3);border-radius:10px;padding:3px;gap:2px}
-  .seg button{min-height:36px;padding:7px 15px;border:none;border-radius:8px;background:transparent;font-size:.96rem}
+  .seg button{min-height:36px;padding:7px 15px;border:none;border-radius:8px;background:transparent;font-size:var(--type-seg)}
   .seg button.on{background:var(--brass);color:#241a05}
   .deal-mix{width:min(220px,46vw)}
   .deal-mix-labels{
     display:flex;justify-content:space-between;align-items:center;
-    margin-bottom:2px;font-size:.8rem;color:var(--muted)
+    margin-bottom:2px;font-size:var(--type-mix-label);color:var(--muted)
   }
   .deal-mix input{
     display:block;width:100%;height:32px;margin:0;accent-color:var(--brass);
@@ -519,17 +533,17 @@
   .deal-mix input:focus-visible{outline:2px solid var(--brass-soft);outline-offset:2px}
   .deal-mix-stops{
     display:flex;justify-content:space-between;padding:0 7px;margin-top:-5px;
-    color:var(--muted);font-size:.68rem;line-height:1
+    color:var(--muted);font-size:var(--type-mix-stop);line-height:1
   }
-  .statline{display:flex;gap:16px;flex-wrap:wrap;font-size:.96rem;color:var(--muted);padding:9px 0 2px}
+  .statline{display:flex;gap:16px;flex-wrap:wrap;font-size:var(--type-statline);color:var(--muted);padding:9px 0 2px}
   .statline b{color:var(--text);font-variant-numeric:tabular-nums}
   .record-preview{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
   .record-card{
     background:rgba(0,0,0,.18);border:1px solid rgba(255,255,255,.09);
     border-radius:12px;padding:12px 13px;
   }
-  .record-card strong{display:block;font-family:var(--serif);font-size:1.08rem;margin-bottom:6px}
-  .record-card span{display:block;color:var(--muted);font-size:.84rem;line-height:1.5}
+  .record-card strong{display:block;font-family:var(--serif);font-size:var(--type-record-title);margin-bottom:6px}
+  .record-card span{display:block;color:var(--muted);font-size:var(--type-record-body);line-height:1.5}
   .record-card b{color:var(--text);font-variant-numeric:tabular-nums}
   .record-card-combined{
     grid-column:1/-1;display:grid;grid-template-columns:repeat(3,1fr);gap:8px;
@@ -538,7 +552,7 @@
   .record-card-combined span+span{border-left:1px solid rgba(255,255,255,.09)}
   .record-preview>.statline{grid-column:1/-1}
   .record-link{
-    width:100%;min-height:42px;margin-top:10px;padding:11px 13px;font-size:.96rem;
+    width:100%;min-height:42px;margin-top:10px;padding:11px 13px;font-size:var(--type-record-link);
     border:1px solid rgba(217,166,72,.48);background:rgba(217,166,72,.12);
     color:var(--text);
   }
@@ -548,7 +562,7 @@
     font-family:var(--serif);
     font-weight:400;
   }
-  body[data-card-style="original"] #sheet h3{font-size:1.5rem;line-height:1.15}
+  body[data-card-style="original"] #sheet h3{line-height:1.15}
   body[data-card-style="original"] #sheet .seg button{font-family:inherit;font-weight:600}
   body[data-card-style="original"] #sheet #btnRestart,
   body[data-card-style="original"] #sheet .record-link{
@@ -694,6 +708,7 @@
     --type-chip:1.05rem;
     --type-chip-label:.68rem;
     --type-control:.82rem;
+    --type-sheet-title:1.62rem;
     position:relative;
     /* F5 felt: bright burgundy wool — soft lamplight from the upper left,
        fine SVG-turbulence grain, and a gentle edge falloff (no heavy vignette). */
@@ -834,7 +849,7 @@
   }
   body[data-card-style="crehore"] .panel h2{color:var(--vintage-paper-ink)}
   body[data-card-style="crehore"] #sheet h3{
-    color:var(--vintage-ink);font-size:1.62rem;line-height:1.15;
+    color:var(--vintage-ink);line-height:1.15;
   }
   body[data-card-style="crehore"] .panel button{
     color:#f3e7c9;background:var(--vintage-deep);border:1px solid rgba(var(--vintage-paper-ink-rgb),.8);
@@ -997,30 +1012,42 @@
     .panel .note{font-size:1.2rem;margin:12px 0 22px}
     .panel button{padding:18px;font-size:1.28rem}
     #sheet{padding:36px 40px calc(env(safe-area-inset-bottom,0px) + 38px)}
-    /* Both card styles restyle the sheet title with an attribute selector, so
-       a bare `#sheet h3` here loses to them. Scope the tablet size the same
-       way or the iPad keeps rendering the phone-sized marquee. */
-    #sheet h3,
-    body[data-card-style="original"] #sheet h3,
-    body[data-card-style="crehore"] #sheet h3{font-size:2.7rem;margin-bottom:22px}
+    /* Tablet sizes must beat the themes', so they are set on an equally
+       specific selector that matches whatever theme is on, and win on order. */
+    body[data-card-style]{
+      --type-sheet-title:2.7rem;
+      --type-close:2rem;
+      --type-row:1.65rem;
+      --type-row-sub:1.3rem;
+      --type-seg:1.42rem;
+      --type-statline:1.4rem;
+      --type-restart:1.42rem;
+      --type-mix-label:1.05rem;
+      --type-mix-stop:.9rem;
+      --type-record-title:1.5rem;
+      --type-record-body:1.32rem;
+      --type-record-link:1.42rem;
+    }
+    /* Matches the specificity of `#sheet .sheet-title-row h3{margin-bottom:0}`
+       so the tablet gap keeps winning, as it did when this was bundled into the
+       theme-scoped title rule. (Whether the doubled gap is *wanted* is a design
+       question, not a refactor one — it renders exactly as before.) */
+    #sheet .sheet-title-row h3{margin-bottom:22px}
     :root{--close-size:60px}
     .sheet-header{--sheet-header-gap:22px}
-    .sheet-close,.stats-header button{font-size:2rem}
-    .row{padding:21px 0;font-size:1.65rem}
-    .row .sub2{font-size:1.3rem;margin-top:7px}
-    .seg button{font-size:1.42rem;padding:13px 27px}
-    .statline{font-size:1.4rem;gap:30px;padding-top:18px}
-    #sheet #btnRestart{font-size:1.42rem;padding:14px 28px}
+    .row{padding:21px 0}
+    .row .sub2{margin-top:7px}
+    .seg button{padding:13px 27px}
+    .statline{gap:30px;padding-top:18px}
+    #sheet #btnRestart{padding:14px 28px}
     .deal-mix{width:min(300px,42vw)}
-    .deal-mix-labels{font-size:1.05rem}
-    .deal-mix-stops{font-size:.9rem}
     .deal-mix input{height:40px}
     /* "Your record" preview */
     .record-preview{gap:12px;margin-top:14px}
     .record-card{padding:16px 18px;border-radius:14px}
-    .record-card strong{font-size:1.5rem;margin-bottom:8px}
-    .record-card span{font-size:1.32rem;line-height:1.5}
-    .record-link{min-height:60px;margin-top:14px;padding:14px 18px;font-size:1.42rem}
+    .record-card strong{margin-bottom:8px}
+    .record-card span{line-height:1.5}
+    .record-link{min-height:60px;margin-top:14px;padding:14px 18px}
     /* Detailed stats page */
     #statsPage{padding:calc(env(safe-area-inset-top,0px) + 26px) 28px
       calc(env(safe-area-inset-bottom,0px) + 34px)}
