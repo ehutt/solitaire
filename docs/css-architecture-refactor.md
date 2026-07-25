@@ -5,12 +5,14 @@
 visuals must not change — this is a structural refactor, verified by comparison
 against the baseline tag.
 
+**This document is scaffolding. Delete it in the final commit** (see Stage 3).
+
 ---
 
 ## Why
 
-Restyling this app currently costs far more than it should, and the cost is
-structural. Measured against `www/index.html` at the baseline tag:
+Restyling this app costs far more than it should, and the cost is structural.
+Measured against `www/index.html` at the baseline tag:
 
 | | count |
 |---|---|
@@ -20,6 +22,7 @@ structural. Measured against `www/index.html` at the baseline tag:
 | …that only swap colour/border/background | 61 |
 | `font-size` declarations | 116 |
 | Hardcoded px/rem literals | 373 |
+| Hex colour literals | 67 |
 | Rules carrying an `#id` | 107 |
 | Test assertions matching raw HTML/CSS text | 75 of 227 (33%) |
 
@@ -33,8 +36,7 @@ Three root causes:
    intended title size had never rendered. Nothing flagged it.
 2. **Values live at the leaves.** 373 literals and 116 `font-size`s mean "make
    iPad text bigger" is an edit to ~20 declarations across two themes and three
-   media queries. The 35 existing custom properties cover colour only — type,
-   spacing, and control sizes never got the same treatment.
+   media queries. The 35 existing custom properties cover colour only.
 3. **Tests pin implementation, not behaviour.** The 75 literal-text assertions
    break on every restyle while catching nothing. A 21px vertical misalignment
    passed all 49 tests, because nothing in the suite can see layout.
@@ -52,46 +54,106 @@ to out-rank, because there is only ever one declaration.
 
 - **No Sass, Tailwind, PostCSS, or bundler.** The zero-build single-file setup is
   an asset: `npm run sync` is trivial and there is no toolchain to rot. Tokens +
-  `clamp()` + a layout test harness deliver the benefit without giving that up.
-- **Do not restyle anything.** If a phase changes a rendered pixel, that is a bug
-  in the phase, not an improvement. Visual changes are separate commits.
-- Playwright (Phase 0) is a **devDependency only** — it never ships in the app
+  `clamp()` + a layout harness deliver the benefit without giving that up.
+- **Do not restyle anything.** If a step changes a rendered pixel, that is a bug
+  in the step, not an improvement. Deliberate visual changes are separate commits,
+  after the refactor.
+- Playwright (Stage 1) is a **devDependency only** — it never ships in the app
   bundle and does not touch the runtime build.
 
 ---
 
-## Phase 0 — Safety net (do this first)
+# How to work
 
-Nothing else is safe without it, and it is what makes the remaining phases fast
-rather than nerve-wracking.
+**The three stages below are resumption points, not approval gates.** Do not stop
+between them to ask permission. If your context budget allows, run straight
+through; the boundaries exist so that a session which *does* run out leaves the
+repo in a clean, bisectable state rather than a half-converted one.
+
+**Within a stage, grind.** Each stage lists sub-steps. Do them in order, commit
+each one, run the oracle after each, tick the checklist. Do not report back
+between sub-steps.
+
+### The oracle
+
+After Stage 1 exists, `npm run test:layout` is the source of truth for "did I
+change how this looks". Run it after **every** sub-step. It is fast; use it
+freely instead of reasoning about whether a change was safe.
+
+```bash
+npm test              # logic suite (node:test) — must stay green throughout
+npm run test:layout   # visual/layout suite — the refactor's oracle
+npm run sync          # copy www/ -> ios/App/App/public/ (gitignored; no commit noise)
+```
+
+### Context economy
+
+Screenshots are the single most expensive thing you can put in context, and the
+reason Stage 1 comes first is that it converts image inspection into cheap text
+assertions. Accordingly:
+
+- **Do not screenshot to verify a sub-step.** That is the layout suite's job.
+  Reserve simulator screenshots for the end of a stage, and take at most a few.
+- **Do not re-read `www/index.html` in full.** It is ~2,500 lines. Read it once
+  at the start of a stage if you must, then use `grep -n` to jump to sections.
+- **Prefer `Edit` over `Write`** on `index.html` — never rewrite the whole file.
+
+### If you run low on context
+
+Stop at the next committed sub-step. Tick the checklist in this file, commit that
+too, and state plainly where you stopped and what remains. Do not start a sub-step
+you cannot finish and verify.
+
+---
+
+# Stage 1 — Safety net
+
+Self-contained; touches no CSS. Everything after this depends on it.
 
 Add a headless layout suite that loads `www/index.html` directly (no simulator,
-no build) and asserts what only layout knows. Cover the matrix that currently has
-to be checked by hand: **2 card styles × {iPhone, iPad} × {portrait, landscape}**.
+no build) and asserts what only layout knows, across the matrix that currently
+has to be checked by hand: **2 card styles × {iPhone, iPad} × {portrait,
+landscape}**.
 
-Assertions to include, all of which were verified manually in the session that
-produced this plan:
+Set the theme per-run by seeding `localStorage` (`patience.v1.settings`, key
+`cardStyle`: `"original"` | `"crehore"`) before load, or by calling
+`setCardStyle(…)` after load.
 
-- Close-button centre is within 3 CSS px of the settings title's cap band
-  (cap band = ink top → baseline; a line box's middle sits below it because
-  descender space counts even when glyphs barely use it).
-- HUD chip left edges are byte-identical with `0:00 / 0` and with `89:28 / 8888`.
-- No horizontal overflow of `#sheet` or `body` at any viewport.
-- The sticky sheet header stays opaque and pinned with `#sheet` scrolled 420px.
-- Every foundation/tableau slot is on-screen after a deal, in all four viewports.
+Assertions — all verified by hand in the session that produced this plan, so they
+are known to hold at the baseline:
 
-Suggested files: `tests/layout.spec.mjs`, `playwright.config.mjs`, plus an
-`npm run test:layout` script. Keep `npm test` (node:test) as-is for logic.
+- [ ] Close-button centre within 3 CSS px of the settings title's cap band. Cap
+      band = ink top → baseline; a line box's middle sits *below* it, because
+      descender space counts even when glyphs barely use it. Get the ink box from
+      `canvas` `TextMetrics.actualBoundingBoxAscent`, not from `getBoundingClientRect`.
+- [ ] Same for the stats page header.
+- [ ] HUD chip left edges byte-identical with `0:00 / 0` and with `89:28 / 8888`.
+- [ ] No horizontal overflow of `#sheet` or `body` at any viewport.
+- [ ] Sticky sheet header stays opaque and pinned with `#sheet` scrolled 420px.
+- [ ] Every foundation and tableau slot on-screen after a deal, all four viewports.
 
-**Acceptance:** suite passes on the baseline tag, and *fails* if you temporarily
-revert the Phase-1 title fix (`body[data-card-style="original"] #sheet h3` size).
-Prove the net catches the bug it was built for before relying on it.
+Files: `tests/layout.spec.mjs`, `playwright.config.mjs`, `npm run test:layout`
+script. Leave `npm test` (node:test) alone — it covers logic.
 
-## Phase 1 — Typography tokens
+### Acceptance
 
-Introduce a semantic type scale in `:root` and route all 116 `font-size`
-declarations through it. Do this **section by section** (chips → controls →
-sheet → stats page → win panel), committing each, so a regression is bisectable.
+- [ ] Suite green at baseline.
+- [ ] **Prove the net catches its bug:** temporarily delete the
+      `body[data-card-style="original"] #sheet h3` / `crehore` size rule from the
+      tablet block, confirm the iPad title assertion *fails*, then restore it.
+      A net you have not seen fail is not a net.
+- [ ] Committed.
+
+---
+
+# Stage 2 — The token refactor
+
+The bulk of the work. Long but mechanical, and the oracle makes each step cheap
+to verify. Commit each sub-step.
+
+### 2a — Typography tokens
+
+Semantic scale in `:root`; route all 116 `font-size` declarations through it.
 
 ```css
 :root{
@@ -104,111 +166,137 @@ sheet → stats page → win panel), committing each, so a regression is bisecta
 }
 ```
 
-Themes then set only *values* (e.g. vintage's display face and its slightly
-larger optical size), never `font-size` on a component selector. Delete the 46
-theme rules that set `font-size` as they are absorbed.
+Work section by section, committing each: chips/HUD → controls → sheet → stats
+page → win panel → cards. Themes set token *values* only (e.g. vintage's display
+face and its slightly larger optical size); delete the 46 theme rules that set
+`font-size` as they are absorbed.
 
-**Acceptance:** Phase-0 suite green; `grep -c 'body\[data-card-style=[^{]*{[^}]*font-size' ` returns 0.
+- [ ] chips/HUD  - [ ] controls  - [ ] sheet  - [ ] stats  - [ ] panel  - [ ] cards
+- [ ] `grep -c 'body\[data-card-style=[^{]*{[^}]*font-size'` on the CSS returns 0
 
-## Phase 2 — Surface and ink tokens
+### 2b — Surface and ink tokens
 
-Same treatment for the 61 colour-only theme rules. Define semantic surface tokens
-— `--surface-sheet`, `--surface-sheet-top`, `--ink`, `--ink-muted`, `--rule`,
-`--accent` — set once per theme. Components reference only those.
+Same treatment for the 61 colour-only theme rules and the 67 hex literals. Define
+`--surface-sheet`, `--surface-sheet-top`, `--ink`, `--ink-muted`, `--rule`,
+`--accent`; set once per theme; components reference only those.
 
-This kills the hardcoded pairs added during the close-button work, e.g.
-`.sheet-header::before{background:#123b2e}` plus its vintage override becomes a
-single `background:var(--surface-sheet-top)`.
+This kills hardcoded pairs like `.sheet-header::before{background:#123b2e}` plus
+its vintage override → one `background:var(--surface-sheet-top)`.
 
-Keep genuinely *different design* as theme rules — the vintage double rules,
-felt texture, and letterpress treatments are not token substitutions and should
-stay explicit.
+**Keep genuinely different *design* as theme rules.** The vintage double rules,
+felt texture, and letterpress treatments are not token substitutions; leave them
+explicit. The target is ~60 theme rules, not zero.
 
-**Acceptance:** Phase-0 suite green; theme-scoped rule count drops from 164 to
-roughly 60; no hex literal appears outside the token definitions.
+- [ ] Theme-scoped rule count down from 164 to roughly 60
+- [ ] No hex literal outside the token definitions
 
-## Phase 3 — Fluid scale, delete breakpoint duplication
+### 2c — Fluid scale
 
-Convert the type tokens to `clamp(min, preferred, max)` (the `.brand` rule
-already does this). Most of the tablet block's typography then disappears —
-"bigger on iPad" becomes one number instead of twenty.
+Convert the type tokens to `clamp(min, preferred, max)` (`.brand` already does
+this). Most of the tablet block's typography then disappears — "bigger on iPad"
+becomes one number.
 
 Keep discrete tokens where a jump is deliberate: tap targets and control sizes
 should step at the breakpoint, not scale continuously.
 
-**Watch:** `vw` units change on rotation, and this app rotates. Verify all four
-viewports, and re-check the iPad-landscape sheet, which has the least vertical
-room at the current sizes.
+**Watch:** `vw` changes on rotation and this app rotates. iPad landscape has the
+least vertical room at current sizes — check it explicitly.
 
-**Acceptance:** Phase-0 suite green; the tablet media block contains no
-`font-size` declarations; media-query count drops.
+- [ ] Tablet media block contains no `font-size` declarations
+- [ ] Media-query count reduced
 
-## Phase 4 — Layout primitives
+### 2d — Layout primitives
 
-Extract the patterns that recur, so the next page added gets them for free
-instead of rediscovering them:
+Extract the patterns that recur so the next page gets them free:
 
 - `.title-row` — centred title + trailing icon action, aligned to the title's cap
-  band. Must centre against a box the action button cannot stretch; see
-  `.sheet-title-row` for the working version and the reason.
-- `.icon-button` — borderless glyph action with a full tap target; SVG mark, not
-  a text glyph (a text ✕ sits ~10px low inside its own line box at title sizes).
+  band. **Must centre against a box the action button cannot stretch**; see
+  `.sheet-title-row` for the working version and why the naive version fails.
+- `.icon-button` — borderless glyph action with a full tap target. SVG mark, not a
+  text glyph: a text `✕` sits ~10px low inside its own line box at title sizes.
 - `.pinned-header` — sticky header with a full-bleed backdrop that survives
   whatever padding the breakpoint applies.
 
-Then apply them to both the settings sheet and the stats page, which currently
-solve the same problem twice.
+Apply to both the settings sheet and the stats page, which now solve this twice.
 
-**Acceptance:** Phase-0 suite green; sheet and stats headers share one rule set.
+- [ ] Sheet and stats headers share one rule set
 
-## Phase 5 — Rebalance the tests
+### Stage 2 acceptance
 
-- Delete the literal-text assertions that merely restate CSS (`.row{padding:17px
-  0;font-size:1.3rem`). They cost churn and catch nothing.
-- Keep and extend the *invariant* assertions, which are cheap and catch whole
-  categories. Highest value:
-  - no `body[data-card-style=…]` rule sets `font-size`, `padding`, or `margin`
-  - every component `font-size` is a `var(--type-*)`
-  - no hex colour outside the token block
-
-  The first of these would have caught the iPad title bug at its root,
-  permanently.
-- Keep all behavioural/logic tests as they are.
-
-**Acceptance:** literal-text assertions well under 10% of the suite; the
-invariant tests fail when the rule is violated (verify by breaking it on purpose).
-
-## Phase 6 — Optional: split the stylesheet
-
-Only after tokens, which make the split natural. Extract to `www/styles/`
-(`tokens.css`, `base.css`, `components/*.css`, `themes/*.css`) via plain `<link>`
-tags — no build step, preserving the zero-toolchain property. Purely
-navigational; skip it if the earlier phases already made the file tractable.
-
-## Phase 7 — Write the rule down
-
-Add the golden rule and the token list to `AGENTS.md` so it does not erode.
+- [ ] `npm test` and `npm run test:layout` green
+- [ ] `git diff pre-css-refactor -- www/index.html` reviewed: no intended visual change
+- [ ] One simulator pass (iPhone + iPad, both styles, both orientations) — this is
+      the one place screenshots are worth their context cost
 
 ---
 
-## Verifying a phase
+# Stage 3 — Consolidate and land
 
-```bash
-npm test                     # logic suite (node:test)
-npm run test:layout          # Phase-0 suite, once it exists
-npm run sync                 # copy www/ -> ios/App/App/public/
-```
+### 3a — Rebalance the tests
 
-Compare against the baseline whenever a visual doubt arises:
+- Delete literal-text assertions that merely restate CSS (e.g.
+  `.row{padding:17px 0;font-size:1.3rem`). They cost churn and catch nothing.
+- Add *invariant* assertions, which are cheap and catch whole categories:
+  - [ ] no `body[data-card-style=…]` rule sets `font-size`, `padding`, or `margin`
+  - [ ] every component `font-size` is a `var(--type-*)`
+  - [ ] no hex colour outside the token block
+  - [ ] verify each fails when you break it on purpose
+- Keep all behavioural/logic tests unchanged.
+- [ ] Literal-text assertions under 10% of the suite
 
-```bash
-git diff pre-css-refactor -- www/index.html
-git restore --source=pre-css-refactor www/index.html   # full rollback
-```
+### 3b — Optional: split the stylesheet
 
-### Checking on a real simulator
+Only if the file still feels unwieldy. Extract to `www/styles/` (`tokens.css`,
+`base.css`, `components/*.css`, `themes/*.css`) via plain `<link>` tags — no build
+step. Purely navigational; **skip it** if Stage 2 already made the file tractable.
 
-Faster than it looks, and worth it at the end of each phase:
+### 3c — Write the rules down, then delete this plan
+
+The durable knowledge must outlive this document:
+
+- [ ] Add to `AGENTS.md`: the golden rule, the token list, and the note that
+      themes/breakpoints set token values only.
+- [ ] `git rm docs/css-architecture-refactor.md` — this file is scaffolding and
+      should not survive the work it describes.
+- [ ] Update the existing `AGENTS.md` specificity-gotcha bullet, which points at
+      this file: replace it with the rule itself.
+
+### 3d — Land it
+
+- [ ] `npm test` + `npm run test:layout` green
+- [ ] Merge to `main` (see Git below)
+- [ ] Tag `post-css-refactor`, push with `--follow-tags`
+
+---
+
+# Git
+
+- **Branch:** work on `css-tokens`, cut from `main`. Do not commit the refactor
+  directly to `main` — `main` stays on the known-good baseline until Stage 3.
+  ```bash
+  git switch -c css-tokens main
+  ```
+- **Commit every sub-step**, with a message saying what moved and why — not
+  "refactor CSS". Small commits are what make a visual regression bisectable,
+  which is the entire safety story for a change with no runtime errors.
+- **Never force-push, never rebase `main`, never move or delete the
+  `pre-css-refactor` tag.** It is the restore point.
+- `npm run sync` writes to `ios/App/App/public/`, which is gitignored — it will
+  not dirty your status.
+- **Rollback**, at any point:
+  ```bash
+  git diff pre-css-refactor -- www/index.html          # what drifted
+  git restore --source=pre-css-refactor www/index.html # full revert of the stylesheet
+  ```
+- **Landing:** fast-forward or `--no-ff` merge into `main`, whichever the user
+  prefers; ask if unsure. Then push `main` and the `post-css-refactor` tag.
+- Do not open a PR unless asked — this repo's history is linear commits on `main`.
+
+---
+
+# Appendix — simulator verification
+
+Only needed at the end of a stage. `npm run test:layout` covers the rest.
 
 ```bash
 xcodebuild -project ios/App/App.xcodeproj -scheme App -sdk iphonesimulator \
@@ -220,15 +308,14 @@ xcrun simctl io <device-udid> screenshot shot.png
 
 Hard-won details:
 
-- Rotate with `osascript -e 'tell application "Simulator" to activate' -e 'tell
-  application "System Events" to keystroke (ASCII character 28) using command down'`.
+- Rotate: `osascript -e 'tell application "Simulator" to activate' -e 'tell
+  application "System Events" to keystroke (ASCII character 28) using command down'`
 - **Landscape screenshots are stored in portrait pixel orientation.** Rotate the
   image before reading it; do not mistake that for a layout bug.
-- To drive UI without tap injection, copy the `.app`, patch its
-  `public/index.html` with a small probe script that calls `setCardStyle(…)` and
-  clicks `#btnMenu`, and install the copy. Always reinstall the clean build
-  afterwards. Snapshot and restore `localStorage` keys `patience.v1.stats` and
-  `patience.v1.game` if the probe forces a win — do not disturb saved state.
-- Measure alignment rather than eyeballing it: crop the header and compare ink
-  bands with PIL/numpy, or read `getBoundingClientRect()` from a probe and render
-  the numbers into a visible element.
+- To drive UI without tap injection: copy the `.app`, patch its
+  `public/index.html` with a probe script that calls `setCardStyle(…)` and clicks
+  `#btnMenu`, install the copy, then **reinstall the clean build afterwards**.
+- If a probe forces a win, snapshot and restore `localStorage` keys
+  `patience.v1.stats` and `patience.v1.game`. Do not disturb saved state.
+- Measure, don't eyeball: crop the header and compare ink bands with PIL/numpy, or
+  read geometry from a probe and render the numbers into a visible element.
