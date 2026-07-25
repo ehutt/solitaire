@@ -930,15 +930,6 @@
       min-height:64px;font-size:1.22rem;padding-inline:24px;
     }
     body[data-card-style="crehore"] #controls .vintage-icon{width:30px;height:30px}
-    /* iPad has felt to spare — frame the table like a card table's rail. */
-    body[data-card-style="crehore"] #app::after{
-      content:"";position:fixed;inset:11px;z-index:5;pointer-events:none;
-      border:1.5px solid rgba(222,184,112,.38);border-radius:3px;
-    }
-    body[data-card-style="original"] #app::after{
-      content:"";position:fixed;inset:0;z-index:5;pointer-events:none;
-      border:12px solid rgba(4,18,13,.32);
-    }
   }
   @media (min-width:700px) and (min-height:600px) and (orientation:landscape){
     #app{--control-rail:clamp(132px,13vw,156px)}
