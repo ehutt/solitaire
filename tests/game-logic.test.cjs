@@ -212,19 +212,15 @@ test("out-of-moves dialog offers a new game", () => {
 test("streak and freeze counts use style-appropriate labels in the header", () => {
   const header = html.match(/<header id="hud">([^]*?)<\/header>/)?.[1];
   assert.ok(header, "found the header");
-  // Streak burns as a brass line-glyph (no emoji); the freezes chip stays in
-  // the DOM for its aria state but is hidden — freezes live in the menu record.
+  // Streak burns as a brass line-glyph (no emoji); freezes live only in the
+  // menu sheet's record line.
   assert.match(header, /id="chipStreak"[^]*?brass-flame[^]*?Streak[^]*?id="vStreak"/);
   assert.doesNotMatch(header, /🔥|❄️/);
-  assert.match(header, /id="chipFreeze"[^]*?Freezes[^]*?id="vFreezes"/);
-  assert.match(html, /#chipFreeze\{display:none\}/);
-  assert.match(html, /body\[data-card-style="original"\] \.vintage-stat-label\{display:none\}/);
+  assert.doesNotMatch(header, /chipFreeze|vFreezes/);
   assert.match(html, /body\[data-card-style="crehore"\] \.classic-stat-icon\{display:none\}/);
   assert.match(html, /body\[data-card-style="crehore"\] \.vintage-stat-label\{display:inline\}/);
   assert.match(html, /\$\("vStreak"\)\.textContent = streak/);
-  assert.match(html, /\$\("vFreezes"\)\.textContent = freezes/);
   assert.match(html, /Current streak: \$\{streak\}/);
-  assert.match(html, /Streak freezes: \$\{freezes\}/);
   assert.match(html, /current streak <b>\$\{displayStreak\(\)\}<\/b>/);
   assert.match(html, /streak freezes <b>\$\{stats\.freezes\}<\/b>/);
 });

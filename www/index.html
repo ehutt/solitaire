@@ -92,8 +92,6 @@
   }
   .chip b{font-weight:600}
   .chip small{color:var(--muted);font-size:.68rem;margin-left:1px}
-  /* Freezes moved to the menu sheet's record line — three stats read better. */
-  #chipFreeze{display:none}
   .classic-stat-icon{font-size:1.05em;line-height:1}
   /* J2-b "club rail": darker pills, brass hairline, Cinzel figures,
      the streak flame drawn in brass line-work instead of emoji. */
@@ -116,7 +114,6 @@
     font-family:"Cinzel",var(--serif);
   }
   .vintage-stat-label{display:none}
-  body[data-card-style="original"] .vintage-stat-label{display:none}
   .chip.pulse-glow{animation:chipGlow 1.2s ease}
   @keyframes chipGlow{
     0%{box-shadow:0 0 0 0 rgba(217,166,72,.0)}
@@ -1023,9 +1020,6 @@
           <path d="M12 3c1.8 2.5 1 4.4-.2 6C10.6 10.7 10 12 10.4 14c-1.7-.8-2.6-2-2.7-3.8C6 12 5.2 14 5.6 16.2c.6 3.1 3.1 5 6.4 5s6-2.1 6.4-5.4c.3-2.6-.9-5-2.7-6.6.1 1.3-.2 2.3-1 3-.2-3.4-1.1-6.4-2.7-9.2Z"/>
         </svg><small class="vintage-stat-label">Streak</small><b id="vStreak">0</b>
       </span>
-      <span class="chip" id="chipFreeze" title="Streak freezes" aria-label="Streak freezes: 0">
-        <small class="vintage-stat-label">Freezes</small><b id="vFreezes">0</b>
-      </span>
     </div>
   </header>
 
@@ -1326,7 +1320,6 @@ function newGame(order){
   buildDOM();
   dealAnimation();
   updateHUD(); updateButtons(); saveGame();
-  maybeAutoFinish(reduced ? 0 : 950);
 }
 
 /* ================= DOM ================= */
@@ -2074,13 +2067,10 @@ function scheduleMidnightRefresh(){
 }
 function updateHUD(){
   const streak = displayStreak();
-  const freezes = stats.freezes;
   $("vMoves").textContent = moves;
   $("vTime").textContent = fmtTime(elapsed);
   $("vStreak").textContent = streak;
-  $("vFreezes").textContent = freezes;
   $("chipStreak").setAttribute("aria-label", `Current streak: ${streak}`);
-  $("chipFreeze").setAttribute("aria-label", `Streak freezes: ${freezes}`);
 }
 function updateButtons(){
   $("btnUndo").disabled = !undoStack.length || autoRunning || won;
