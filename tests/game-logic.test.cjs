@@ -167,6 +167,7 @@ test("card style switches immediately and persists without replacing the deal", 
     },
   };
   global.saveJSON = (key, value) => persisted.push([key, { ...value }]);
+  global.P = null;
   global.refreshSheet = () => {};
   global.haptic = () => {};
   global.toast = (message) => messages.push(message);

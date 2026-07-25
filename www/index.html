@@ -1302,7 +1302,7 @@ function makeShuffle(){
     : makeRandomShuffle();
 }
 function newGame(order){
-  if(started && !won && typeof recordLoss==="function") recordLoss();
+  if(started && !won) recordLoss();
   const shuffled = !order;
   // Start the recorded shuffle on the initiating tap, before rebuilding and
   // laying out the deal. This keeps every fresh-game entry point responsive.
@@ -1604,7 +1604,7 @@ function beginPlay(){
   if(!started){
     started = true;
     gameVariant = settings.draw3 ? "draw3" : "draw1";
-    stats.plays++; saveJSON(KEY_STATS, stats);
+    stats.plays++;
     stats.records[gameVariant].games++;
     saveJSON(KEY_STATS, stats);
     startTimer();
@@ -2125,13 +2125,7 @@ function recordLoss(){
   saveJSON(KEY_STATS, stats);
 }
 function recordVariantWin(){
-  if(!stats.records) stats.records = {};
-  stats.records.draw1 = normalizeVariantRecord(stats.records.draw1);
-  stats.records.draw3 = normalizeVariantRecord(stats.records.draw3);
-  const activeVariant = typeof gameVariant!=="undefined" ? gameVariant : null;
-  const drawThree = typeof settings!=="undefined" && settings.draw3;
-  const key = activeVariant || (drawThree ? "draw3" : "draw1");
-  const record = stats.records[key];
+  const record = stats.records[gameVariant || (settings.draw3 ? "draw3" : "draw1")];
   record.wins++;
   record.winningMovesTotal += moves;
   record.winningTimeTotal += elapsed;
@@ -2160,7 +2154,7 @@ function recordWin(){
   stats.lastWin = today;
   stats.longest = Math.max(stats.longest, stats.streak);
   stats.wins++;
-  if(typeof recordVariantWin==="function") recordVariantWin();
+  recordVariantWin();
   let earned = false;
   if(stats.winsToward < 10) stats.winsToward++;
   if(stats.winsToward>=10 && stats.freezes<3){ stats.freezes++; stats.winsToward=0; earned=true }
@@ -2395,10 +2389,7 @@ function setCardStyle(cardStyle){
   applyCardStyleTheme(cardStyle);
   saveJSON(KEY_SET,settings);
   refreshSheet();
-  if(
-    typeof P !== "undefined" && P &&
-    typeof requestAnimationFrame === "function" && typeof layout === "function"
-  ) requestAnimationFrame(layout);
+  if(P) requestAnimationFrame(layout);
   haptic("LIGHT");
   toast(cardStyle === "original" ? "Classic cards" : "Vintage cards");
 }
