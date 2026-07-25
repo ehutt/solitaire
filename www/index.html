@@ -49,6 +49,21 @@
     --close-size:38px;
     --serif:"Iowan Old Style","Palatino Nova",Palatino,"Book Antiqua",Georgia,serif;
     --ui:ui-rounded,-apple-system,BlinkMacSystemFont,"SF Pro Rounded",system-ui,sans-serif;
+
+    /* ---- Type scale ------------------------------------------------------
+       Components read these; nothing else sets font-size. Theme blocks and
+       breakpoints change the *values* here, never the component rules — so
+       there is only ever one font-size declaration per component and nothing
+       for a stray selector to out-rank.
+
+       Defaults live on :root. A theme sets its values on `body[data-card-style=…]`
+       and a breakpoint sets them on `body`, which reproduces the specificity
+       order the stylesheet already relied on: theme beats breakpoint beats
+       default. Where a breakpoint must beat the themes (the sheet title), it
+       matches their specificity with `body[data-card-style]` and wins on order. */
+    --type-display:1.4rem;      /* .brand marquee */
+    --type-chip:.8rem;          /* HUD figures */
+    --type-chip-label:.68rem;   /* HUD engraved labels */
   }
   *{box-sizing:border-box;margin:0;padding:0}
   html,body{height:100%}
@@ -72,14 +87,21 @@
   }
   .brand{
     font-family:var(--serif);
-    font-size:1.4rem;letter-spacing:.02em;color:var(--text);
+    font-size:var(--type-display);letter-spacing:.02em;color:var(--text);
     display:flex;align-items:baseline;gap:.4rem;
   }
   .brand .pip{color:var(--brass);font-size:1.05em}
+  /* Classic's type sizes. Everything the theme changes about size lives here;
+     the components themselves never learn which theme is on. */
+  body[data-card-style="original"]{
+    --type-display:1.68rem;
+    --type-chip:.92rem;
+    --type-chip-label:.62rem;
+  }
   /* Classic marquee: Limelight for the title, over the deco-era casino sign */
   body[data-card-style="original"] .brand{
     font-family:"Limelight",var(--serif);
-    font-size:1.68rem;letter-spacing:.01em;font-weight:400;
+    letter-spacing:.01em;font-weight:400;
   }
   body[data-card-style="original"] .brand .pip{font-family:var(--serif)}
   .chips{display:flex;gap:6px;align-items:center}
@@ -88,7 +110,7 @@
     background:rgba(255,255,255,.06);
     border:1px solid rgba(255,255,255,.08);
     border-radius:999px;padding:4px 10px;
-    font-size:.8rem;font-variant-numeric:tabular-nums;
+    font-size:var(--type-chip);font-variant-numeric:tabular-nums;
     color:var(--text);white-space:nowrap;
   }
   /* Figures are reserved their widest plausible value so a ticking clock or a
@@ -101,7 +123,7 @@
   #vTime{min-width:5ch}
   #vMoves{min-width:4ch}
   #vStreak{min-width:3ch}
-  .chip small{color:var(--muted);font-size:.68rem;margin-left:1px}
+  .chip small{color:var(--muted);font-size:var(--type-chip-label);margin-left:1px}
   /* J2-b "club rail": darker pills, brass hairline, Cinzel figures. */
   body[data-card-style="original"] .chip{
     align-items:baseline;gap:6px;
@@ -109,10 +131,10 @@
     border:1px solid rgba(217,166,72,.38);
     color:#f0e8d2;
     font-family:"Cinzel",var(--serif);
-    font-size:.92rem;font-weight:500;padding:4px 13px;
+    font-weight:500;padding:4px 13px;
   }
   body[data-card-style="original"] .chip small{
-    display:inline;color:#c9b477;font-size:.62rem;
+    display:inline;color:#c9b477;
     letter-spacing:.12em;text-transform:uppercase;
     font-family:"Cinzel",var(--serif);
   }
@@ -560,18 +582,18 @@
   @media (max-width:599px){
     .chip small{display:none}
     /* Classic's club-rail pills keep their engraved labels even on phones */
-    body[data-card-style="original"] .chip small{display:inline;font-size:.6rem;letter-spacing:.1em}
-    body[data-card-style="original"] .chip{font-size:.86rem;padding:3px 11px;gap:5px}
-    .brand{font-size:1.25rem}
+    body[data-card-style="original"]{--type-chip:.86rem;--type-chip-label:.6rem}
+    body[data-card-style="original"] .chip small{display:inline;letter-spacing:.1em}
+    body[data-card-style="original"] .chip{padding:3px 11px;gap:5px}
+    body{--type-display:1.25rem}
   }
   @media (orientation:portrait){
     body[data-card-style="original"] #hud{
       display:flex;flex-wrap:wrap;gap:8px;align-items:center;
       padding:calc(env(safe-area-inset-top, 0px) + 15px) 16px 13px;
     }
-    body[data-card-style="original"] .brand{
-      justify-content:flex-start;font-size:clamp(1.68rem,6.72vw,2.28rem);
-    }
+    body[data-card-style="original"]{--type-display:clamp(1.68rem,6.72vw,2.28rem)}
+    body[data-card-style="original"] .brand{justify-content:flex-start}
     body[data-card-style="original"] .chips{
       flex:1;justify-content:flex-end;gap:6px;flex-wrap:wrap;
     }
@@ -587,9 +609,8 @@
     /* Marquee header: centered title between twin spades, with the labelled
        club-rail pills on their own centered row beneath. */
     body[data-card-style="original"] #hud{justify-content:center}
-    body[data-card-style="original"] .brand{
-      width:100%;justify-content:center;font-size:clamp(1.8rem,7.2vw,2.28rem);
-    }
+    body[data-card-style="original"]{--type-display:clamp(1.8rem,7.2vw,2.28rem)}
+    body[data-card-style="original"] .brand{width:100%;justify-content:center}
     body[data-card-style="original"] .chips{flex:0 0 100%;justify-content:center;gap:6px}
     body[data-card-style="original"] .chip:nth-child(3){margin-left:0}
   }
@@ -609,10 +630,10 @@
               10px 4px 10px;
     }
     body[data-card-style="original"] #hud{display:flex;gap:10px}
-    body[data-card-style="original"] .brand{font-size:1.5rem}
+    body[data-card-style="original"]{--type-display:1.5rem}
     body[data-card-style="original"] .chips{width:auto;justify-content:flex-end}
-    .brand{font-size:1.25rem}
-    .chip{padding:3px 7px;font-size:.72rem}
+    body{--type-display:1.25rem;--type-chip:.72rem}
+    .chip{padding:3px 7px}
     #controls{
       position:fixed;z-index:300;left:auto;right:env(safe-area-inset-right,0px);
       top:calc(env(safe-area-inset-top, 0px) + 38px);bottom:env(safe-area-inset-bottom, 0px);
@@ -652,6 +673,10 @@
     --vintage-deep:#510a13; --vintage-sheet-top:#74141f; --vintage-sheet-bottom:#500a12;
     --vintage-display:"IM Fell English","Baskerville","Iowan Old Style",Georgia,serif;
     --vintage-text:"IM Fell English","Baskerville","Iowan Old Style",Palatino,Georgia,serif;
+    /* Vintage's type sizes — the theme's whole contribution to scale. */
+    --type-display:clamp(1.9rem,7vw,3rem);
+    --type-chip:1.05rem;
+    --type-chip-label:.68rem;
     position:relative;
     /* F5 felt: bright burgundy wool — soft lamplight from the upper left,
        fine SVG-turbulence grain, and a gentle edge falloff (no heavy vignette). */
@@ -677,7 +702,7 @@
   body[data-card-style="crehore"] .brand{
     width:100%;justify-content:center;align-items:center;gap:clamp(9px,3vw,22px);
     color:var(--vintage-ink-strong);font-family:var(--vintage-display);
-    font-size:clamp(1.9rem,7vw,3rem);font-weight:400;
+    font-weight:400;
     letter-spacing:-.01em;line-height:1;white-space:nowrap;
     text-shadow:.35px .55px 0 rgba(247,234,199,.38),-.2px -.2px 0 rgba(var(--vintage-shadow-rgb),.18);
   }
@@ -708,7 +733,7 @@
     min-height:0;justify-content:center;gap:5px;align-items:baseline;
     background:transparent;border:0;border-radius:0;
     color:var(--vintage-ink-strong);padding:0 clamp(8px,3vw,17px);
-    font-family:var(--vintage-text);font-size:1.05rem;font-weight:400;
+    font-family:var(--vintage-text);font-weight:400;
     font-variant-numeric:tabular-nums;letter-spacing:.02em;
   }
   body[data-card-style="crehore"] .chip + .chip{
@@ -717,7 +742,7 @@
   body[data-card-style="crehore"] .chip b{font-weight:400}
   body[data-card-style="crehore"] .chip small{
     display:inline;
-    color:var(--vintage-ink-mid);font-family:var(--vintage-text);font-size:.68rem;
+    color:var(--vintage-ink-mid);font-family:var(--vintage-text);
     letter-spacing:.1em;text-transform:uppercase;
   }
 
@@ -881,7 +906,7 @@
   body[data-card-style="crehore"] .deal-mix-stops{color:var(--vintage-ink-mid)}
 
   @media (max-width:599px){
-    body[data-card-style="crehore"] .brand{font-size:clamp(1.82rem,8vw,2.35rem)}
+    body[data-card-style="crehore"]{--type-display:clamp(1.82rem,8vw,2.35rem)}
     body[data-card-style="crehore"] #controls button{
       gap:4px;padding-inline:6px;font-size:.72rem;letter-spacing:.055em;
     }
@@ -893,8 +918,9 @@
         8px 0 8px;
       padding:4px 0;border-width:2px;
     }
+    body[data-card-style="crehore"]{--type-display:1.45rem;--type-chip:.92rem;--type-chip-label:.6rem}
     body[data-card-style="crehore"] .brand{
-      width:auto;flex:1;justify-content:flex-start;gap:8px;font-size:1.45rem;
+      width:auto;flex:1;justify-content:flex-start;gap:8px;
     }
     body[data-card-style="crehore"] .brand-rosette{width:.55em;height:.55em}
     body[data-card-style="crehore"] .chips{
@@ -902,8 +928,7 @@
     }
     body[data-card-style="crehore"] .chips::before,
     body[data-card-style="crehore"] .chips::after{display:none}
-    body[data-card-style="crehore"] .chip{min-height:0;padding:0 8px;font-size:.92rem}
-    body[data-card-style="crehore"] .chip small{font-size:.6rem}
+    body[data-card-style="crehore"] .chip{min-height:0;padding:0 8px}
     body[data-card-style="crehore"] #controls{
       position:fixed;left:auto;right:env(safe-area-inset-right,0px);
       top:calc(env(safe-area-inset-top, 0px) + 38px);bottom:env(safe-area-inset-bottom, 0px);
@@ -931,10 +956,10 @@
   @media (min-width:700px) and (min-height:600px){
     #app{max-width:1100px}
     #hud{padding:calc(env(safe-area-inset-top, 0px) + 20px) 28px 16px}
-    .brand{font-size:2.45rem}
+    body{--type-display:2.45rem;--type-chip:1.7rem;--type-chip-label:1.15rem}
     .chips{gap:12px}
-    .chip{font-size:1.7rem;padding:12px 18px;gap:8px}
-    .chip small{display:inline;font-size:1.15rem}
+    .chip{padding:12px 18px;gap:8px}
+    .chip small{display:inline}
     body[data-card-style="original"] .chips{gap:9px}
     body[data-card-style="original"] .chip:nth-child(3){margin-left:5px}
     #controls{gap:15px;padding:18px 26px calc(env(safe-area-inset-bottom, 0px) + 24px)}
@@ -992,11 +1017,10 @@
     body[data-card-style="crehore"] #hud{
       margin-top:calc(env(safe-area-inset-top,0px) + 12px);padding-block:12px 10px;
     }
-    body[data-card-style="crehore"] .brand{font-size:3.65rem}
+    body[data-card-style="crehore"]{--type-display:3.65rem;--type-chip:1.75rem;--type-chip-label:1rem}
     body[data-card-style="crehore"] .chip{
-      min-height:0;padding:0 22px;font-size:1.75rem;
+      min-height:0;padding:0 22px;
     }
-    body[data-card-style="crehore"] .chip small{font-size:1rem}
     body[data-card-style="crehore"] #controls{padding-top:16px;gap:14px}
     body[data-card-style="crehore"] #controls button{
       min-height:64px;font-size:1.22rem;padding-inline:24px;
@@ -1018,9 +1042,8 @@
   @media (min-width:700px) and (min-height:600px) and (orientation:landscape){
     #app{--control-rail:clamp(132px,13vw,156px)}
     #hud{padding:calc(env(safe-area-inset-top, 0px) + 10px) 20px 9px}
-    .brand{font-size:2.05rem}
-    .chip{font-size:1.5rem;padding:9px 14px}
-    .chip small{font-size:1.1rem}
+    body{--type-display:2.05rem;--type-chip:1.5rem;--type-chip-label:1.1rem}
+    .chip{padding:9px 14px}
     #controls{
       top:calc(env(safe-area-inset-top, 0px) + 54px);padding:10px 12px;gap:12px;
     }
@@ -1034,12 +1057,13 @@
     body[data-card-style="crehore"] #hud{
       gap:16px;margin:calc(env(safe-area-inset-top,0px) + 7px) 14px 0;padding:7px 0;
     }
-    body[data-card-style="crehore"] .brand{font-size:2.3rem;gap:10px}
+    body[data-card-style="crehore"]{--type-display:2.3rem}
+    body[data-card-style="crehore"] .brand{gap:10px}
     body[data-card-style="crehore"] .brand-rosette{width:.65em;height:.65em}
+    body[data-card-style="crehore"]{--type-chip:1.45rem;--type-chip-label:.9rem}
     body[data-card-style="crehore"] .chip{
-      min-height:0;padding:0 12px;font-size:1.45rem;
+      min-height:0;padding:0 12px;
     }
-    body[data-card-style="crehore"] .chip small{font-size:.9rem}
     body[data-card-style="crehore"] #controls{
       top:calc(env(safe-area-inset-top, 0px) + 54px);padding:10px 12px;gap:12px;
     }
