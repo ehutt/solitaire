@@ -121,6 +121,17 @@
     --surface-overlay:rgba(4,16,12,.55); /* behind the win dialog */
     --surface-panel:linear-gradient(165deg,#fbf7ec,#efe6d1);
     --paper-ink:var(--ink);              /* ink on those paper surfaces */
+    --paper-ink-soft:#7a6f56;            /* the dialog's supporting line */
+    --paper-ink-muted:#6d6248;           /* dialog notes */
+    --paper-ink-label:#8a7d60;           /* stat captions */
+    --paper-accent:#8c641a;              /* celebratory dialog titles */
+    --badge-ink:#7c5d16;
+    --seg-on-ink:#241a05;                /* the selected segment */
+    --seg-on-surface:var(--brass);
+    --confirm-ink:#fff2c8;               /* New's "are you sure" state */
+    --confirm-surface:rgba(217,166,72,.28);
+    --confirm-border:rgba(217,166,72,.72);
+    --focus-ring:var(--brass);
     /* Type faces by role. A theme swaps faces by restating these five; the
        roles are separate because the themes do not move them together —
        Classic puts a serif in the sheet but leaves the stats page on the UI
@@ -163,6 +174,9 @@
     --face-display:"Limelight",var(--serif);
     --face-label:"Cinzel",var(--serif);
     --face-sheet:var(--serif);
+    --chip-label-ink:#c9b477;
+    --card-back-stripe:#163f31;
+    --card-back-field:#12352a;
     --type-menu-glyph:1.7rem;
     --type-sheet-title:1.5rem;
     --type-display:1.68rem;
@@ -193,7 +207,7 @@
   #vTime{min-width:5ch}
   #vMoves{min-width:4ch}
   #vStreak{min-width:3ch}
-  .chip small{color:var(--chrome-ink-muted);font-size:var(--type-chip-label);margin-left:1px}
+  .chip small{color:var(--chip-label-ink,var(--chrome-ink-muted));font-size:var(--type-chip-label);margin-left:1px}
   /* J2-b "club rail": darker pills, brass hairline, Cinzel figures. */
   body[data-card-style="original"] .chip{
     align-items:baseline;gap:6px;
@@ -202,8 +216,7 @@
     font-weight:500;padding:4px 13px;
   }
   body[data-card-style="original"] .chip small{
-    display:inline;color:#c9b477;
-    letter-spacing:.12em;text-transform:uppercase;
+    display:inline;letter-spacing:.12em;text-transform:uppercase;
   }
   .chip.pulse-glow{animation:chipGlow 1.2s ease}
   @keyframes chipGlow{
@@ -294,8 +307,8 @@
   body[data-card-style="original"] .bk{
     display:block;width:100%;height:100%;border-radius:calc(var(--cw)*0.05);
     background:
-      repeating-linear-gradient(45deg, #163f31 0 4px, #12352a 4px 8px),
-      #12352a;
+      repeating-linear-gradient(45deg, var(--card-back-stripe) 0 4px, var(--card-back-field) 4px 8px),
+      var(--card-back-field);
     border:1px solid rgba(217,166,72,.35);
     position:relative;
   }
@@ -341,7 +354,7 @@
   body[data-card-style="original"] #btnUndo .classic-icon{display:none}
   body[data-card-style="original"] #btnMenu .classic-icon{
     display:inline-flex;align-items:center;justify-content:center;
-    flex:none;line-height:1;color:#d9a648;
+    flex:none;line-height:1;color:var(--brass);
   }
   .card.hint{animation:hintPulse .85s ease 2}
   .card.stock-hint{animation:hintPulse .85s ease 2}
@@ -395,7 +408,7 @@
   }
   button:active{transform:scale(.96)}
   button:disabled{opacity:.35;cursor:default}
-  button:focus-visible{outline:2px solid var(--brass);outline-offset:2px}
+  button:focus-visible{outline:2px solid var(--focus-ring);outline-offset:2px}
   /* The control rail sizes itself once, here. Themes and breakpoints move the
      tokens; #btnMenu and the confirm state get their own so they can differ
      without a second declaration on the shared rule. */
@@ -404,8 +417,8 @@
   #controls #btnNew.confirm{font-size:var(--type-control-confirm,var(--type-control))}
   #controls #btnMenu .classic-icon{font-size:var(--type-menu-glyph)}
   #btnNew.confirm{
-    background:rgba(217,166,72,.28);border-color:rgba(217,166,72,.72);
-    color:#fff2c8;
+    background:var(--confirm-surface);border-color:var(--confirm-border);
+    color:var(--confirm-ink);
   }
 
   /* ---------- TOAST ---------- */
@@ -456,17 +469,17 @@
     text-wrap:balance;
   }
   body[data-card-style="original"] .panel h2{font-weight:400}
-  .panel.daily-win h2{font-size:var(--type-panel-title-daily);font-weight:700;color:#8c641a}
+  .panel.daily-win h2{font-size:var(--type-panel-title-daily);font-weight:700;color:var(--paper-accent)}
   .panel.milestone{
     border:2px solid rgba(217,166,72,.72);
     animation:panelIn .45s cubic-bezier(.2,1.1,.3,1.1), milestoneGlow 1.5s ease-in-out 2;
   }
-  .panel.milestone h2{font-size:var(--type-panel-title-milestone);font-weight:700;color:#8c641a}
+  .panel.milestone h2{font-size:var(--type-panel-title-milestone);font-weight:700;color:var(--paper-accent)}
   @keyframes milestoneGlow{
     0%,100%{box-shadow:0 20px 60px rgba(0,0,0,.5),0 0 0 rgba(217,166,72,0)}
     50%{box-shadow:0 20px 60px rgba(0,0,0,.5),0 0 34px rgba(217,166,72,.72)}
   }
-  .panel .sub{color:#7a6f56;font-size:var(--type-panel-sub);margin-bottom:18px}
+  .panel .sub{color:var(--paper-ink-soft);font-size:var(--type-panel-sub);margin-bottom:18px}
   .statgrid{
     display:flex;justify-content:center;gap:18px;margin-bottom:14px;
   }
@@ -475,20 +488,24 @@
     display:block;font-family:var(--serif);font-size:var(--type-stat);
     font-variant-numeric:tabular-nums;line-height:1.1;
   }
-  .stat span{font-size:var(--type-stat-label);text-transform:uppercase;letter-spacing:.08em;color:#8a7d60}
+  .stat span{font-size:var(--type-stat-label);text-transform:uppercase;letter-spacing:.08em;color:var(--paper-ink-label)}
   .stat .flame{color:var(--brass-soft)}
   .badge{
     display:inline-block;background:rgba(217,166,72,.18);
-    border:1px solid rgba(185,138,47,.4);color:#7c5d16;
+    border:1px solid rgba(185,138,47,.4);color:var(--badge-ink);
     border-radius:999px;padding:4px 13px;font-size:var(--type-badge);font-weight:600;
     margin:2px;
   }
-  .panel .note{font-size:var(--type-panel-note);color:#6d6248;margin:8px 0 16px;min-height:1em}
+  .panel .note{font-size:var(--type-panel-note);color:var(--paper-ink-muted);margin:8px 0 16px;min-height:1em}
   .panel button{
     background:var(--felt);color:var(--paper);border:none;font-family:var(--face-chrome);
     width:100%;padding:13px;font-size:var(--type-panel-button);margin-top:4px;
   }
-  .panel button.ghost{background:transparent;color:#6d6248;font-weight:500;padding:8px}
+  /* Vintage inks the ghost action differently from the note above it, so the
+     two read from separate tokens rather than one "muted paper ink". */
+  /* Scoped through #overlay so the ghost's own colours out-rank a theme's
+     styling of the panel's primary button, which is a less specific selector. */
+  #overlay .panel button.ghost{background:transparent;color:var(--ghost-ink,var(--paper-ink-muted));font-weight:500;padding:8px}
 
   /* ---------- MENU SHEET ---------- */
   #sheet{
@@ -588,7 +605,7 @@
   .row .sub2{display:block;color:var(--chrome-ink-muted);font-size:var(--type-row-sub);line-height:1.3;margin-top:3px}
   .seg{display:flex;flex:none;background:rgba(0,0,0,.3);border-radius:10px;padding:3px;gap:2px}
   .seg button{min-height:36px;padding:7px 15px;border:none;border-radius:8px;background:transparent;font-size:var(--type-seg)}
-  .seg button.on{background:var(--brass);color:#241a05}
+  .seg button.on{background:var(--seg-on-surface);color:var(--seg-on-ink)}
   .deal-mix{width:min(220px,46vw)}
   .deal-mix-labels{
     display:flex;justify-content:space-between;align-items:center;
@@ -797,6 +814,13 @@
     --face-label:var(--vintage-text);
     --face-sheet:var(--vintage-text);
     --face-chrome:var(--vintage-text);
+    --seg-on-ink:#f3e7c9;
+    --seg-on-surface:var(--vintage-deep);
+    --confirm-ink:#f5dfaa;
+    --confirm-surface:rgba(235,190,98,.2);
+    --confirm-border:#d5a34d;
+    --ghost-ink:var(--vintage-paper-ink-mid);
+    --focus-ring:#f0dfb4;
     position:relative;
     /* F5 felt: bright burgundy wool — soft lamplight from the upper left,
        fine SVG-turbulence grain, and a gentle edge falloff (no heavy vignette). */
@@ -897,9 +921,6 @@
   body[data-card-style="crehore"] #controls button:active{
     background:rgba(239,226,193,.18);
   }
-  body[data-card-style="crehore"] #controls button:focus-visible{
-    outline-color:#f0dfb4;
-  }
   body[data-card-style="crehore"] #controls .classic-icon{display:none}
   body[data-card-style="crehore"] #controls .vintage-icon{
     display:block;flex:none;width:23px;height:23px;overflow:visible;
@@ -911,9 +932,6 @@
   }
   body[data-card-style="crehore"] #controls .vintage-icon .cut{
     fill:none;stroke:var(--felt);stroke-width:1;opacity:.82;
-  }
-  body[data-card-style="crehore"] #btnNew.confirm{
-    color:#f5dfaa;background:rgba(235,190,98,.2);border-color:#d5a34d;
   }
   body[data-card-style="crehore"] #toast{
     color:var(--vintage-paper-ink);background:rgba(242,231,204,.96);
@@ -929,10 +947,9 @@
     color:var(--vintage-ink);line-height:1.15;
   }
   body[data-card-style="crehore"] .panel button{
-    color:#f3e7c9;background:var(--vintage-deep);border:1px solid rgba(var(--vintage-paper-ink-rgb),.8);
+    color:var(--seg-on-ink);background:var(--seg-on-surface);border:1px solid rgba(var(--vintage-paper-ink-rgb),.8);
     border-radius:4px;letter-spacing:.04em;
   }
-  body[data-card-style="crehore"] .panel button.ghost{color:var(--vintage-paper-ink-mid);background:transparent}
   body[data-card-style="crehore"] #sheet{
     border-top:3px double rgba(var(--vintage-ink-rgb),.78);border-radius:8px 8px 0 0;
   }
@@ -944,14 +961,11 @@
     background:rgba(238,225,194,.18);border:1px solid rgba(var(--vintage-ink-rgb),.28);
     border-radius:10px;padding:2px;gap:1px;
   }
-  body[data-card-style="crehore"] .seg button,
-  body[data-card-style="crehore"] #btnRestart{
-    color:var(--vintage-ink);border-radius:3px;
-  }
+  /* Ink only for the segments — the radius is set below, and excluding .on here
+     must not make this rule out-rank it. */
+  body[data-card-style="crehore"] .seg button:not(.on){color:var(--vintage-ink)}
+  body[data-card-style="crehore"] #btnRestart{color:var(--vintage-ink);border-radius:3px}
   body[data-card-style="crehore"] .seg button{border-radius:8px}
-  body[data-card-style="crehore"] .seg button.on{
-    color:#f3e7c9;background:var(--vintage-deep);
-  }
   body[data-card-style="crehore"] .stats-page-inner{
     border-top:4px double rgba(var(--vintage-rule-rgb),.9);
     border-bottom:4px double rgba(var(--vintage-rule-rgb),.72);
@@ -969,12 +983,8 @@
     background:rgba(238,225,194,.14);
     border:1px solid rgba(var(--vintage-ink-rgb),.32);border-radius:5px;
   }
-  body[data-card-style="crehore"] .stats-tabs button{
-    color:var(--vintage-ink);border-radius:3px;
-  }
-  body[data-card-style="crehore"] .stats-tabs button.on{
-    color:#f3e7c9;background:var(--vintage-deep);
-  }
+  body[data-card-style="crehore"] .stats-tabs button{border-radius:3px}
+  body[data-card-style="crehore"] .stats-tabs button:not(.on){color:var(--vintage-ink)}
   body[data-card-style="crehore"] .stats-hero div,
   body[data-card-style="crehore"] .stats-group{
     background:rgba(var(--vintage-shadow-rgb),.18);border-radius:5px;
