@@ -121,6 +121,15 @@
     --surface-overlay:rgba(4,16,12,.55); /* behind the win dialog */
     --surface-panel:linear-gradient(165deg,#fbf7ec,#efe6d1);
     --paper-ink:var(--ink);              /* ink on those paper surfaces */
+    /* Type faces by role. A theme swaps faces by restating these five; the
+       roles are separate because the themes do not move them together —
+       Classic puts a serif in the sheet but leaves the stats page on the UI
+       face, and reserves Limelight for the marquee and the win dialog. */
+    --face-display:var(--serif);   /* marquee and win dialog */
+    --face-title:var(--serif);     /* sheet, stats, and group headings */
+    --face-label:var(--ui);        /* chips and control-rail labels */
+    --face-sheet:var(--ui);        /* everything inside the settings sheet */
+    --face-chrome:var(--ui);       /* stats page, toast, dialog buttons */
     font-family:var(--ui);
     background:
       radial-gradient(120% 90% at 50% 0%, var(--felt) 0%, var(--felt-deep) 100%);
@@ -139,7 +148,7 @@
     flex:none;
   }
   .brand{
-    font-family:var(--serif);
+    font-family:var(--face-display);
     font-size:var(--type-display);letter-spacing:.02em;color:var(--text);
     display:flex;align-items:baseline;gap:.4rem;
   }
@@ -151,6 +160,9 @@
        the control buttons share that brightness, nothing else does. */
     --chip-ink:#f0e8d2;
     --control-ink:#f0e8d2;
+    --face-display:"Limelight",var(--serif);
+    --face-label:"Cinzel",var(--serif);
+    --face-sheet:var(--serif);
     --type-menu-glyph:1.7rem;
     --type-sheet-title:1.5rem;
     --type-display:1.68rem;
@@ -158,14 +170,13 @@
     --type-chip-label:.62rem;
   }
   /* Classic marquee: Limelight for the title, over the deco-era casino sign */
-  body[data-card-style="original"] .brand{
-    font-family:"Limelight",var(--serif);
-    letter-spacing:.01em;font-weight:400;
-  }
+  body[data-card-style="original"] .brand{letter-spacing:.01em;font-weight:400}
+  /* Limelight has no pip glyphs, so Classic's spades drop back to the serif.
+     Vintage hides its pips entirely and needs no such escape. */
   body[data-card-style="original"] .brand .pip{font-family:var(--serif)}
   .chips{display:flex;gap:6px;align-items:center}
   .chip{
-    display:inline-flex;align-items:center;gap:4px;
+    display:inline-flex;align-items:center;gap:4px;font-family:var(--face-label);
     background:rgba(255,255,255,.06);
     border:1px solid rgba(255,255,255,.08);
     border-radius:999px;padding:4px 10px;
@@ -188,13 +199,11 @@
     align-items:baseline;gap:6px;
     background:rgba(0,0,0,.28);
     border:1px solid rgba(217,166,72,.38);
-    font-family:"Cinzel",var(--serif);
     font-weight:500;padding:4px 13px;
   }
   body[data-card-style="original"] .chip small{
     display:inline;color:#c9b477;
     letter-spacing:.12em;text-transform:uppercase;
-    font-family:"Cinzel",var(--serif);
   }
   .chip.pulse-glow{animation:chipGlow 1.2s ease}
   @keyframes chipGlow{
@@ -323,7 +332,7 @@
     display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:50px;
     background:rgba(0,0,0,.28);
     border:1px solid rgba(217,166,72,.38);
-    font-family:"Cinzel",var(--serif);font-weight:500;
+    font-weight:500;
     letter-spacing:.1em;text-transform:uppercase;
   }
   body[data-card-style="original"] #controls button:disabled{color:rgba(240,232,210,.9)}
@@ -390,7 +399,7 @@
   /* The control rail sizes itself once, here. Themes and breakpoints move the
      tokens; #btnMenu and the confirm state get their own so they can differ
      without a second declaration on the shared rule. */
-  #controls button{font-size:var(--type-control);color:var(--control-ink)}
+  #controls button{font-size:var(--type-control);color:var(--control-ink);font-family:var(--face-label)}
   #controls #btnMenu{font-size:var(--type-control-menu,var(--type-control))}
   #controls #btnNew.confirm{font-size:var(--type-control-confirm,var(--type-control))}
   #controls #btnMenu .classic-icon{font-size:var(--type-menu-glyph)}
@@ -406,7 +415,7 @@
     background:rgba(8,28,22,.94);
     border:1px solid rgba(217,166,72,.5);
     color:var(--text);
-    padding:9px 18px;border-radius:999px;
+    padding:9px 18px;border-radius:999px;font-family:var(--face-chrome);
     font-size:var(--type-toast);white-space:nowrap;
     opacity:0;transition:opacity .25s, transform .25s;
     pointer-events:none;z-index:700;
@@ -442,13 +451,11 @@
   }
   @keyframes panelIn{from{transform:translateY(24px) scale(.94);opacity:0}to{transform:none;opacity:1}}
   .panel h2{
-    font-family:var(--serif);font-size:var(--type-panel-title);font-weight:600;
+    font-family:var(--face-display);font-size:var(--type-panel-title);font-weight:600;
     letter-spacing:.01em;margin-bottom:2px;
     text-wrap:balance;
   }
-  body[data-card-style="original"] .panel h2{
-    font-family:"Limelight",var(--serif);font-weight:400;
-  }
+  body[data-card-style="original"] .panel h2{font-weight:400}
   .panel.daily-win h2{font-size:var(--type-panel-title-daily);font-weight:700;color:#8c641a}
   .panel.milestone{
     border:2px solid rgba(217,166,72,.72);
@@ -478,7 +485,7 @@
   }
   .panel .note{font-size:var(--type-panel-note);color:#6d6248;margin:8px 0 16px;min-height:1em}
   .panel button{
-    background:var(--felt);color:var(--paper);border:none;
+    background:var(--felt);color:var(--paper);border:none;font-family:var(--face-chrome);
     width:100%;padding:13px;font-size:var(--type-panel-button);margin-top:4px;
   }
   .panel button.ghost{background:transparent;color:#6d6248;font-weight:500;padding:8px}
@@ -486,7 +493,7 @@
   /* ---------- MENU SHEET ---------- */
   #sheet{
     position:fixed;left:0;right:0;bottom:0;z-index:650;
-    color:var(--chrome-ink);background:var(--surface-sheet);
+    color:var(--chrome-ink);background:var(--surface-sheet);font-family:var(--face-sheet);
     border-radius:20px 20px 0 0;
     border-top:1px solid rgba(255,255,255,.12);
     padding:20px 22px calc(env(safe-area-inset-bottom,0px) + 22px);
@@ -547,11 +554,14 @@
   }
   #sheetBack.show{display:block}
   #sheet h3{
-    font-family:var(--serif);font-weight:600;font-size:var(--type-sheet-title);
+    font-family:var(--face-title);font-weight:600;font-size:var(--type-sheet-title);
     margin-bottom:12px;text-align:center;
   }
   /* Restart reads the shared button size unless the sheet says otherwise. */
   #sheet #btnRestart{font-size:var(--type-restart,var(--type-button))}
+  /* Buttons do not inherit a face, so the sheet's controls ask for it by name.
+     The record link is deliberately absent: Vintage leaves it on the UI face. */
+  #sheet .seg button,#sheet #btnRestart{font-family:var(--face-sheet)}
   .row{
     display:flex;align-items:center;justify-content:space-between;
     gap:16px;padding:12px 0;border-bottom:1px solid var(--rule);
@@ -600,27 +610,23 @@
   }
   /* Classic settings use a restrained card-room serif: related to the
      marquee's period character, but mixed-case and quiet enough for body UI. */
-  body[data-card-style="original"] #sheet{
-    font-family:var(--serif);
-    font-weight:400;
-  }
+  body[data-card-style="original"] #sheet{font-weight:400}
   body[data-card-style="original"] #sheet h3{line-height:1.15}
-  body[data-card-style="original"] #sheet .seg button{font-family:inherit;font-weight:600}
-  body[data-card-style="original"] #sheet #btnRestart,
-  body[data-card-style="original"] #sheet .record-link{
-    font-family:inherit;font-weight:600;
-  }
+  body[data-card-style="original"] #sheet .seg button,
+  body[data-card-style="original"] #sheet #btnRestart{font-weight:600}
+  body[data-card-style="original"] #sheet .record-link{font-family:inherit;font-weight:600}
   #statsPage{
     position:fixed;inset:0;z-index:680;display:none;overflow-y:auto;
-    color:var(--chrome-ink);background:var(--surface-stats);
+    color:var(--chrome-ink);background:var(--surface-stats);font-family:var(--face-chrome);
     padding:calc(env(safe-area-inset-top,0px) + 18px) 20px
       calc(env(safe-area-inset-bottom,0px) + 28px);
   }
   #statsPage.open{display:block;animation:fadeIn .2s ease}
   .stats-page-inner{width:min(620px,100%);margin:0 auto}
   .stats-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}
-  .stats-header h2{font-family:var(--serif);font-size:var(--type-stats-title);font-weight:600;color:var(--chrome-ink-strong)}
+  .stats-header h2{font-family:var(--face-title);font-size:var(--type-stats-title);font-weight:600;color:var(--chrome-ink-strong)}
   .stats-tabs{margin-bottom:16px}
+  .stats-tabs button{font-family:var(--face-chrome)}
   .stats-tabs button{flex:1}
   .stats-hero{
     display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:18px;
@@ -629,11 +635,11 @@
     background:rgba(0,0,0,.2);border:1px solid rgba(255,255,255,.09);border-radius:14px;
   }
   .stats-hero div{text-align:center;padding:13px 5px}
-  .stats-hero b{display:block;font-family:var(--serif);font-size:var(--type-stats-hero);font-variant-numeric:tabular-nums;color:var(--chrome-ink-strong)}
+  .stats-hero b{display:block;font-family:var(--face-title);font-size:var(--type-stats-hero);font-variant-numeric:tabular-nums;color:var(--chrome-ink-strong)}
   .stats-hero span{color:var(--chrome-ink-muted);font-size:var(--type-stats-hero-label);text-transform:uppercase;letter-spacing:.07em}
   .stats-group{padding:4px 15px;margin-bottom:12px}
   .stats-group h3{
-    color:var(--brass-soft);font-family:var(--serif);font-size:var(--type-stats-group);font-weight:600;
+    color:var(--brass-soft);font-family:var(--face-title);font-size:var(--type-stats-group);font-weight:600;
     padding:12px 0 6px;
   }
   .stats-detail-row{
@@ -770,6 +776,11 @@
     --surface-overlay:rgba(var(--vintage-wash-rgb),.42);
     --surface-panel:linear-gradient(165deg,#f7efd9,#e8dbbd);
     --paper-ink:var(--vintage-paper-ink);
+    --face-display:var(--vintage-display);
+    --face-title:var(--vintage-display);
+    --face-label:var(--vintage-text);
+    --face-sheet:var(--vintage-text);
+    --face-chrome:var(--vintage-text);
     position:relative;
     /* F5 felt: bright burgundy wool — soft lamplight from the upper left,
        fine SVG-turbulence grain, and a gentle edge falloff (no heavy vignette). */
@@ -794,8 +805,7 @@
   }
   body[data-card-style="crehore"] .brand{
     width:100%;justify-content:center;align-items:center;gap:clamp(9px,3vw,22px);
-    color:var(--vintage-ink-strong);font-family:var(--vintage-display);
-    font-weight:400;
+    color:var(--vintage-ink-strong);font-weight:400;
     letter-spacing:-.01em;line-height:1;white-space:nowrap;
     text-shadow:.35px .55px 0 rgba(247,234,199,.38),-.2px -.2px 0 rgba(var(--vintage-shadow-rgb),.18);
   }
@@ -826,7 +836,7 @@
     min-height:0;justify-content:center;gap:5px;align-items:baseline;
     background:transparent;border:0;border-radius:0;
     padding:0 clamp(8px,3vw,17px);
-    font-family:var(--vintage-text);font-weight:400;
+    font-weight:400;
     font-variant-numeric:tabular-nums;letter-spacing:.02em;
   }
   body[data-card-style="crehore"] .chip + .chip{
@@ -834,9 +844,7 @@
   }
   body[data-card-style="crehore"] .chip b{font-weight:400}
   body[data-card-style="crehore"] .chip small{
-    display:inline;
-    font-family:var(--vintage-text);
-    letter-spacing:.1em;text-transform:uppercase;
+    display:inline;letter-spacing:.1em;text-transform:uppercase;
   }
 
   /* Quiet slots: a solid hairline and faint inked suit, like felt worn where
@@ -866,8 +874,7 @@
     background:rgba(var(--vintage-button-rgb),.12);
     border:2px solid rgba(var(--vintage-rule-rgb),.88);border-radius:4px;
     box-shadow:inset 0 0 0 1px rgba(239,226,193,.2),0 1px 0 rgba(245,232,197,.12);
-    font-family:var(--vintage-text);font-weight:600;
-    letter-spacing:.08em;text-transform:uppercase;
+    font-weight:600;letter-spacing:.08em;text-transform:uppercase;
   }
   body[data-card-style="crehore"] #controls button:not(#btnMenu){flex:1}
   body[data-card-style="crehore"] #btnMenu{flex:0 0 44px;padding-inline:8px}
@@ -895,26 +902,23 @@
   body[data-card-style="crehore"] #toast{
     color:var(--vintage-paper-ink);background:rgba(242,231,204,.96);
     border:3px double rgba(var(--vintage-paper-ink-rgb),.72);border-radius:5px;
-    font-family:var(--vintage-text);letter-spacing:.02em;
+    letter-spacing:.02em;
   }
   body[data-card-style="crehore"] .panel{
     border:3px double rgba(var(--vintage-paper-ink-rgb),.68);border-radius:7px;
   }
   body[data-card-style="crehore"] .panel h2,
-  body[data-card-style="crehore"] #sheet h3{
-    font-family:var(--vintage-display);font-weight:400;
-  }
+  body[data-card-style="crehore"] #sheet h3{font-weight:400}
   body[data-card-style="crehore"] #sheet h3{
     color:var(--vintage-ink);line-height:1.15;
   }
   body[data-card-style="crehore"] .panel button{
     color:#f3e7c9;background:var(--vintage-deep);border:1px solid rgba(var(--vintage-paper-ink-rgb),.8);
-    border-radius:4px;font-family:var(--vintage-text);letter-spacing:.04em;
+    border-radius:4px;letter-spacing:.04em;
   }
   body[data-card-style="crehore"] .panel button.ghost{color:var(--vintage-paper-ink-mid);background:transparent}
   body[data-card-style="crehore"] #sheet{
     border-top:3px double rgba(var(--vintage-ink-rgb),.78);border-radius:8px 8px 0 0;
-    font-family:var(--vintage-text);
   }
   /* The record card's divider follows the row rule, not the softer card edge. */
   body[data-card-style="crehore"] .record-card-combined span+span{
@@ -926,13 +930,12 @@
   }
   body[data-card-style="crehore"] .seg button,
   body[data-card-style="crehore"] #btnRestart{
-    color:var(--vintage-ink);font-family:var(--vintage-text);border-radius:3px;
+    color:var(--vintage-ink);border-radius:3px;
   }
   body[data-card-style="crehore"] .seg button{border-radius:8px}
   body[data-card-style="crehore"] .seg button.on{
     color:#f3e7c9;background:var(--vintage-deep);
   }
-  body[data-card-style="crehore"] #statsPage{font-family:var(--vintage-text)}
   body[data-card-style="crehore"] .stats-page-inner{
     border-top:4px double rgba(var(--vintage-rule-rgb),.9);
     border-bottom:4px double rgba(var(--vintage-rule-rgb),.72);
@@ -943,7 +946,7 @@
     padding:0 2px 13px;margin-bottom:14px;
   }
   body[data-card-style="crehore"] .stats-header h2{
-    font-family:var(--vintage-display);font-weight:400;
+    font-weight:400;
     text-shadow:.35px .55px 0 rgba(247,234,199,.25);
   }
   body[data-card-style="crehore"] .stats-tabs{
@@ -951,7 +954,7 @@
     border:1px solid rgba(var(--vintage-ink-rgb),.32);border-radius:5px;
   }
   body[data-card-style="crehore"] .stats-tabs button{
-    color:var(--vintage-ink);font-family:var(--vintage-text);border-radius:3px;
+    color:var(--vintage-ink);border-radius:3px;
   }
   body[data-card-style="crehore"] .stats-tabs button.on{
     color:#f3e7c9;background:var(--vintage-deep);
@@ -962,10 +965,9 @@
     border:1px solid rgba(var(--vintage-rule-rgb),.34);
     box-shadow:inset 0 0 0 1px rgba(246,227,178,.04);
   }
-  body[data-card-style="crehore"] .stats-hero b{font-family:var(--vintage-display)}
-  body[data-card-style="crehore"] .stats-hero span{font-family:var(--vintage-text)}
+
   body[data-card-style="crehore"] .stats-group h3{
-    color:var(--vintage-accent);font-family:var(--vintage-display);font-weight:400;
+    color:var(--vintage-accent);font-weight:400;
   }
   /* Vintage's detail rows sit on a slightly quieter rule than its settings rows. */
   body[data-card-style="crehore"] .stats-detail-row{
