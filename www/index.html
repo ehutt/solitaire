@@ -407,6 +407,15 @@
     transition:background .15s, opacity .2s, transform .1s;
   }
   button:active{transform:scale(.96)}
+  /* A theme swap repaints every surface at once, and transitions are for
+     interactions, not for that. Crossfading through the swap leaves the
+     outgoing theme's colour sitting on a control for ~150ms — most visibly the
+     segmented control, whose Vintage highlight (#510a13) lingers dark red in an
+     otherwise Classic sheet. Suppressed for the one frame the swap takes. */
+  body.theme-swap,
+  body.theme-swap *,
+  body.theme-swap *::before,
+  body.theme-swap *::after{transition:none !important}
   button:disabled{opacity:.35;cursor:default}
   button:focus-visible{outline:2px solid var(--focus-ring);outline-offset:2px}
   /* The control rail sizes itself once, here. Themes and breakpoints move the
@@ -2679,6 +2688,12 @@ $("segHapticsOn").onclick = ()=>{ settings.haptics=true; saveJSON(KEY_SET,settin
 $("segHapticsOff").onclick = ()=>{ settings.haptics=false; saveJSON(KEY_SET,settings); refreshSheet() };
 function setCardStyle(cardStyle){
   settings.cardStyle = cardStyle;
+  // Land every themed colour in the same frame: see .theme-swap in the styles.
+  // Two frames, because the first only gets the new values applied — the second
+  // is the one that has painted them.
+  document.body.classList.add("theme-swap");
+  requestAnimationFrame(()=>requestAnimationFrame(
+    ()=>document.body.classList.remove("theme-swap")));
   applyCardStyleTheme(cardStyle);
   saveJSON(KEY_SET,settings);
   refreshSheet();

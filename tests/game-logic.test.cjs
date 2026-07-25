@@ -153,11 +153,19 @@ test("card style switches immediately and persists without replacing the deal", 
   const statusStyles = [];
   const themeColor = { content: "#7f9e94" };
   global.settings = { draw3: false, cardStyle: "crehore" };
+  const swapClasses = [];
   global.document = {
-    body: { dataset: {} },
+    body: {
+      dataset: {},
+      classList: {
+        add: (name) => swapClasses.push(["add", name]),
+        remove: (name) => swapClasses.push(["remove", name]),
+      },
+    },
     querySelector: (selector) =>
       selector === 'meta[name="theme-color"]' ? themeColor : null,
   };
+  global.requestAnimationFrame = (fn) => fn();
   global.KEY_SET = "settings";
   global.window = {
     Capacitor: {
@@ -182,6 +190,8 @@ test("card style switches immediately and persists without replacing the deal", 
   assert.deepEqual(statusStyles, ["DARK"]);
   assert.deepEqual(persisted, [["settings", { draw3: false, cardStyle: "original" }]]);
   assert.deepEqual(messages, ["Classic cards"]);
+  // Themed colours land in one frame rather than crossfading through the swap.
+  assert.deepEqual(swapClasses, [["add", "theme-swap"], ["remove", "theme-swap"]]);
 });
 
 test("persistent controls stay limited to new, hint, undo, and settings", () => {

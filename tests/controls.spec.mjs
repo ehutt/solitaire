@@ -94,3 +94,46 @@ test("the end-game cascade does disable the rail, and releases it after", async 
     () => [document.getElementById("btnHint").disabled, won]);
   expect(hintDisabled).toBe(hasWon);
 });
+
+// A theme swap must land in one step. The failure it guards is subtle and only
+// visible for ~150ms: the outgoing theme's colour crossfading on a control while
+// every other surface has already changed — a Vintage-red segment sitting in an
+// otherwise Classic sheet.
+for (const [from, to, deselected] of [
+  ["crehore", "original", "#segCardsCrehore"],
+  ["original", "crehore", "#segCardsOriginal"]
+]) {
+  test(`switching ${from} to ${to} leaves no colour mid-crossfade`, async ({ page }) => {
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.goto("/index.html");
+    await page.evaluate((style) => {
+      localStorage.setItem("patience.v1.settings", JSON.stringify({ cardStyle: style }));
+    }, from);
+    await page.reload();
+    await page.waitForFunction(() => document.body.dataset.cardStyle);
+    await page.waitForTimeout(900);
+    await page.click("#btnMenu");
+    await page.waitForTimeout(500);
+
+    const target = to === "original" ? "#segCardsOriginal" : "#segCardsCrehore";
+    const samples = await page.evaluate(async ([tapped, dropped]) => {
+      const seen = [];
+      const read = () => [
+        getComputedStyle(document.querySelector(dropped)).backgroundColor,
+        getComputedStyle(document.getElementById("btnNew")).backgroundColor
+      ];
+      document.querySelector(tapped).click();
+      // Sample across the window the old transition covered.
+      for (let i = 0; i < 8; i++) {
+        seen.push(read());
+        await new Promise((r) => setTimeout(r, 25));
+      }
+      return seen;
+    }, [target, deselected]);
+
+    // Every sample identical to the first: the swap was one step, not a fade.
+    for (const sample of samples) expect(sample).toEqual(samples[0]);
+    // …and the highlight really did leave the segment that lost selection.
+    expect(samples[0][0]).toBe("rgba(0, 0, 0, 0)");
+  });
+}
