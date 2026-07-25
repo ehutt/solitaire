@@ -870,10 +870,13 @@
       padding:6px 8px 6px 10px;gap:8px;
     }
     body[data-card-style="crehore"] #controls::before{display:none}
+    /* The narrow rail can't fit icon + engraved label side by side without
+       crowding; stack them so the label keeps the full column width. */
     body[data-card-style="crehore"] #controls button,
     body[data-card-style="crehore"] #controls button:not(#btnMenu),
     body[data-card-style="crehore"] #btnMenu{
-      flex:0 0 auto;width:100%;min-height:48px;padding:8px 3px;font-size:.7rem;
+      flex:0 0 auto;width:100%;min-height:54px;flex-direction:column;gap:3px;
+      padding:7px 2px;font-size:.68rem;letter-spacing:.05em;
     }
     body[data-card-style="crehore"] #controls .vintage-icon{width:21px;height:21px}
     body[data-card-style="crehore"] #btnNew.confirm{
