@@ -243,8 +243,8 @@ test("iPad rules keep interface text large after landscape overrides", () => {
   // order — otherwise the iPad silently keeps the phone-sized title.
   assert.match(tabletRules, /body\[data-card-style\]\{[^}]*--type-sheet-title:2\.7rem/);
   assert.match(tabletRules, /--type-record-body:1\.32rem/);
-  assert.match(tabletRules, /\.stats-header h2\{font-size:2\.5rem\}/);
-  assert.match(tabletRules, /\.stats-detail-row\{font-size:1\.35rem/);
+  assert.match(tabletRules, /--type-stats-title:2\.5rem/);
+  assert.match(tabletRules, /--type-stats-row:1\.35rem/);
   assert.match(tabletRules, /body\[data-card-style="crehore"\]\{--type-chip:1\.45rem/);
   assert.match(tabletRules, /orientation:landscape/);
   assert.match(tabletRules, /--control-rail:clamp\(132px,13vw,156px\)/);
