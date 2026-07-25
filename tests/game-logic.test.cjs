@@ -324,5 +324,5 @@ test("classic portrait header and controls are enlarged with balanced icons", ()
   assert.match(html, /body\[data-card-style="original"\] \.chips\{flex:0 0 100%;justify-content:center;gap:6px\}/);
   // Emoji control icons are retired; only the menu ellipsis glyph remains
   assert.match(html, /#btnNew \.classic-icon,\s*[^{]*#btnHint \.classic-icon,\s*[^{]*#btnUndo \.classic-icon\{display:none\}/);
-  assert.match(html, /body\[data-card-style="original"\]\{\s*--type-menu-glyph:1\.7rem/);
+  assert.match(html, /body\[data-card-style="original"\]\{[^}]*--type-menu-glyph:1\.7rem/);
 });
