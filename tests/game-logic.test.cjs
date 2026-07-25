@@ -211,13 +211,12 @@ test("out-of-moves dialog offers a new game", () => {
 test("streak and freeze counts use style-appropriate labels in the header", () => {
   const header = html.match(/<header id="hud">([^]*?)<\/header>/)?.[1];
   assert.ok(header, "found the header");
-  // Streak burns as a brass line-glyph (no emoji); freezes live only in the
-  // menu sheet's record line.
-  assert.match(header, /id="chipStreak"[^]*?brass-flame[^]*?Streak[^]*?id="vStreak"/);
+  // The streak pill carries a plain engraved label in both styles — no flame
+  // glyph at all; freezes live only in the menu sheet's record line.
+  assert.match(header, /id="chipStreak"[^]*?<small>Streak<\/small><b id="vStreak">/);
   assert.doesNotMatch(header, /🔥|❄️/);
   assert.doesNotMatch(header, /chipFreeze|vFreezes/);
-  assert.match(html, /body\[data-card-style="crehore"\] \.classic-stat-icon\{display:none\}/);
-  assert.match(html, /body\[data-card-style="crehore"\] \.vintage-stat-label\{display:inline\}/);
+  assert.doesNotMatch(html, /brass-flame|classic-stat-icon|vintage-stat-label/);
   assert.match(html, /\$\("vStreak"\)\.textContent = streak/);
   assert.match(html, /Current streak: \$\{streak\}/);
   assert.match(html, /current streak <b>\$\{displayStreak\(\)\}<\/b>/);
@@ -235,7 +234,18 @@ test("iPad rules keep interface text large after landscape overrides", () => {
   const tabletRules = html.match(/\/\* Final tablet overrides[^]*?<\/style>/)?.[0];
   assert.ok(tabletRules, "found final tablet overrides");
   assert.match(tabletRules, /\.chip\{font-size:1\.5rem/);
-  assert.match(tabletRules, /\.row\{padding:17px 0;font-size:1\.3rem/);
+  assert.match(tabletRules, /\.row\{padding:21px 0;font-size:1\.65rem/);
+  assert.match(tabletRules, /\.row \.sub2\{font-size:1\.3rem/);
+  // Both card styles restyle the sheet title with an attribute selector, which
+  // outranks a bare `#sheet h3` — the tablet size must be scoped the same way
+  // or the iPad silently keeps the phone-sized title.
+  assert.match(
+    tabletRules,
+    /body\[data-card-style="original"\] #sheet h3,\s*body\[data-card-style="crehore"\] #sheet h3\{font-size:2\.7rem/,
+  );
+  assert.match(tabletRules, /\.record-card span\{font-size:1\.32rem/);
+  assert.match(tabletRules, /\.stats-header h2\{font-size:2\.5rem\}/);
+  assert.match(tabletRules, /\.stats-detail-row\{font-size:1\.35rem/);
   assert.match(tabletRules, /body\[data-card-style="crehore"\] \.chip\{[^}]*font-size:1\.45rem/);
   assert.match(tabletRules, /orientation:landscape/);
   assert.match(tabletRules, /--control-rail:clamp\(132px,13vw,156px\)/);

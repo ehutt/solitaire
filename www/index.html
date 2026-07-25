@@ -46,6 +46,7 @@
     --red:#bf3b33; --ink:#26282e;
     --brass:#d9a648; --brass-soft:#b98a2f;
     --text:#e9e2cf; --muted:#8fae9f;
+    --close-size:38px;
     --serif:"Iowan Old Style","Palatino Nova",Palatino,"Book Antiqua",Georgia,serif;
     --ui:ui-rounded,-apple-system,BlinkMacSystemFont,"SF Pro Rounded",system-ui,sans-serif;
   }
@@ -90,16 +91,18 @@
     font-size:.8rem;font-variant-numeric:tabular-nums;
     color:var(--text);white-space:nowrap;
   }
-  .chip b{font-weight:600}
-  .chip small{color:var(--muted);font-size:.68rem;margin-left:1px}
-  .classic-stat-icon{font-size:1.05em;line-height:1}
-  /* J2-b "club rail": darker pills, brass hairline, Cinzel figures,
-     the streak flame drawn in brass line-work instead of emoji. */
-  svg.brass-flame{
-    width:1em;height:1em;flex:none;align-self:center;
-    fill:none;stroke:var(--brass);stroke-width:1.7;
-    stroke-linecap:round;stroke-linejoin:round;
+  /* Figures are reserved their widest plausible value so a ticking clock or a
+     rolling move count never shifts the pills (or their neighbours) sideways.
+     tabular-nums makes 1ch an exact digit width. */
+  .chip b{
+    font-weight:600;display:inline-block;text-align:right;
+    font-variant-numeric:tabular-nums;
   }
+  #vTime{min-width:5ch}
+  #vMoves{min-width:4ch}
+  #vStreak{min-width:3ch}
+  .chip small{color:var(--muted);font-size:.68rem;margin-left:1px}
+  /* J2-b "club rail": darker pills, brass hairline, Cinzel figures. */
   body[data-card-style="original"] .chip{
     align-items:baseline;gap:6px;
     background:rgba(0,0,0,.28);
@@ -113,7 +116,6 @@
     letter-spacing:.12em;text-transform:uppercase;
     font-family:"Cinzel",var(--serif);
   }
-  .vintage-stat-label{display:none}
   .chip.pulse-glow{animation:chipGlow 1.2s ease}
   @keyframes chipGlow{
     0%{box-shadow:0 0 0 0 rgba(217,166,72,.0)}
@@ -399,8 +401,53 @@
     transform:translateY(105%);
     transition:transform .32s cubic-bezier(.3,1,.35,1);
     max-width:860px;max-height:calc(100dvh - env(safe-area-inset-top, 0px) - 8px);
-    overflow-y:auto;margin:0 auto;
+    overflow-y:auto;overflow-x:hidden;margin:0 auto;
   }
+  /* The header pins to the top of the sheet's scrollport so the close control
+     stays reachable when the settings list scrolls (phone landscape especially).
+     Its backdrop bleeds past the sheet's padding — whatever that padding is at
+     the current breakpoint — and is clipped back by the sheet's overflow. */
+  .sheet-header{
+    --sheet-header-gap:12px;
+    position:sticky;top:0;z-index:2;padding-bottom:var(--sheet-header-gap);
+  }
+  /* The button is centred against this row, and the row's height is exactly the
+     title's — it holds nothing else. Anchoring to a box that the button itself
+     cannot stretch is what keeps `top:50%` honest at any button or title size. */
+  .sheet-title-row{position:relative}
+  #sheet .sheet-title-row h3{
+    margin-bottom:0;padding:0 calc(var(--close-size) + 10px);
+  }
+  .sheet-header::before{
+    content:"";position:absolute;inset:-60px -100px 0;z-index:-1;
+    background:#123b2e;
+  }
+  /* Plain glyph exits — no pill, no border, no fill — in either card style.
+     The box stays a full tap target even though nothing is drawn around it. */
+  .sheet-close,.stats-header button{
+    display:flex;align-items:center;justify-content:center;
+    width:var(--close-size);height:var(--close-size);padding:0;
+    background:none;border:0;border-radius:0;
+    color:var(--text);opacity:.72;
+    font-size:1.2rem;line-height:1;
+  }
+  /* Drawn, not typed. A text "✕" is centred by its line box, but the glyph
+     sits well below that box's middle, which read as ~10px low against a
+     large title. An SVG's ink is its box, so centring the box centres the mark. */
+  .close-glyph{
+    width:.9em;height:.9em;flex:none;
+    fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;
+  }
+  .stats-header button:active{opacity:1;transform:scale(.9)}
+  /* Centred on the title's box, then lifted .09em onto its cap band — a line
+     box's middle sits below where the eye reads centre, because the descender
+     space counts even when the glyphs barely use it. */
+  .sheet-close{
+    position:absolute;right:0;top:50%;
+    transform:translateY(-50%) translateY(-.09em);
+  }
+  .sheet-close:active{opacity:1;transform:translateY(-50%) translateY(-.09em) scale(.9)}
+  .stats-header button{margin-bottom:.16em}
   #sheet.open{transform:none}
   #sheetBack{
     position:fixed;inset:0;z-index:640;background:rgba(0,0,0,.4);
@@ -479,7 +526,6 @@
   .stats-page-inner{width:min(620px,100%);margin:0 auto}
   .stats-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}
   .stats-header h2{font-family:var(--serif);font-size:1.55rem;font-weight:600}
-  .stats-header button{background:rgba(255,255,255,.1);padding:8px 13px}
   .stats-tabs{margin-bottom:16px}
   .stats-tabs button{flex:1}
   .stats-hero{
@@ -674,8 +720,6 @@
     color:var(--vintage-ink-mid);font-family:var(--vintage-text);font-size:.68rem;
     letter-spacing:.1em;text-transform:uppercase;
   }
-  body[data-card-style="crehore"] .classic-stat-icon{display:none}
-  body[data-card-style="crehore"] .vintage-stat-label{display:inline}
 
   /* Quiet slots: a solid hairline and faint inked suit, like felt worn where
      cards sit — no dashed "web" outlines. */
@@ -763,6 +807,7 @@
     border-top:3px double rgba(var(--vintage-ink-rgb),.78);border-radius:8px 8px 0 0;
     font-family:var(--vintage-text);
   }
+  body[data-card-style="crehore"] .sheet-header::before{background:var(--vintage-sheet-top)}
   body[data-card-style="crehore"] #sheetBack{background:rgba(var(--vintage-shadow-rgb),.38)}
   body[data-card-style="crehore"] .row{border-bottom-color:rgba(var(--vintage-ink-rgb),.2)}
   body[data-card-style="crehore"] .row .sub2,
@@ -803,11 +848,6 @@
   body[data-card-style="crehore"] .stats-header h2{
     color:var(--vintage-ink-strong);font-family:var(--vintage-display);font-weight:400;
     text-shadow:.35px .55px 0 rgba(247,234,199,.25);
-  }
-  body[data-card-style="crehore"] .stats-header button{
-    color:var(--vintage-ink);background:rgba(var(--vintage-button-rgb),.12);
-    border:2px solid rgba(var(--vintage-rule-rgb),.76);border-radius:4px;
-    font-family:var(--vintage-text);font-weight:600;
   }
   body[data-card-style="crehore"] .stats-tabs{
     background:rgba(238,225,194,.14);
@@ -895,7 +935,6 @@
     .chips{gap:12px}
     .chip{font-size:1.7rem;padding:12px 18px;gap:8px}
     .chip small{display:inline;font-size:1.15rem}
-    .classic-stat-icon{font-size:1.12em}
     body[data-card-style="original"] .chips{gap:9px}
     body[data-card-style="original"] .chip:nth-child(3){margin-left:5px}
     #controls{gap:15px;padding:18px 26px calc(env(safe-area-inset-bottom, 0px) + 24px)}
@@ -912,12 +951,44 @@
     .badge{font-size:1.1rem;padding:7px 16px}
     .panel .note{font-size:1.2rem;margin:12px 0 22px}
     .panel button{padding:18px;font-size:1.28rem}
-    #sheet{padding:32px 36px calc(env(safe-area-inset-bottom,0px) + 34px)}
-    #sheet h3{font-size:1.9rem;margin-bottom:20px}
-    .row{padding:17px 0;font-size:1.3rem}
-    .row .sub2{font-size:1.05rem;margin-top:5px}
-    .seg button{font-size:1.18rem;padding:11px 24px}
-    .statline{font-size:1.15rem;gap:26px;padding-top:16px}
+    #sheet{padding:36px 40px calc(env(safe-area-inset-bottom,0px) + 38px)}
+    /* Both card styles restyle the sheet title with an attribute selector, so
+       a bare `#sheet h3` here loses to them. Scope the tablet size the same
+       way or the iPad keeps rendering the phone-sized marquee. */
+    #sheet h3,
+    body[data-card-style="original"] #sheet h3,
+    body[data-card-style="crehore"] #sheet h3{font-size:2.7rem;margin-bottom:22px}
+    :root{--close-size:60px}
+    .sheet-header{--sheet-header-gap:22px}
+    .sheet-close,.stats-header button{font-size:2rem}
+    .row{padding:21px 0;font-size:1.65rem}
+    .row .sub2{font-size:1.3rem;margin-top:7px}
+    .seg button{font-size:1.42rem;padding:13px 27px}
+    .statline{font-size:1.4rem;gap:30px;padding-top:18px}
+    #sheet #btnRestart{font-size:1.42rem;padding:14px 28px}
+    .deal-mix{width:min(300px,42vw)}
+    .deal-mix-labels{font-size:1.05rem}
+    .deal-mix-stops{font-size:.9rem}
+    .deal-mix input{height:40px}
+    /* "Your record" preview */
+    .record-preview{gap:12px;margin-top:14px}
+    .record-card{padding:16px 18px;border-radius:14px}
+    .record-card strong{font-size:1.5rem;margin-bottom:8px}
+    .record-card span{font-size:1.32rem;line-height:1.5}
+    .record-link{min-height:60px;margin-top:14px;padding:14px 18px;font-size:1.42rem}
+    /* Detailed stats page */
+    #statsPage{padding:calc(env(safe-area-inset-top,0px) + 26px) 28px
+      calc(env(safe-area-inset-bottom,0px) + 34px)}
+    .stats-page-inner{width:min(780px,100%)}
+    .stats-header{margin-bottom:24px}
+    .stats-header h2{font-size:2.5rem}
+    .stats-hero{gap:12px;margin-bottom:24px}
+    .stats-hero div{padding:18px 8px}
+    .stats-hero b{font-size:2.4rem}
+    .stats-hero span{font-size:1.02rem}
+    .stats-group{padding:6px 22px;margin-bottom:16px}
+    .stats-group h3{font-size:1.5rem;padding:16px 0 8px}
+    .stats-detail-row{font-size:1.35rem;padding:14px 0}
     body[data-card-style="crehore"] #hud{
       margin-top:calc(env(safe-area-inset-top,0px) + 12px);padding-block:12px 10px;
     }
@@ -1012,9 +1083,7 @@
       <span class="chip" title="Time"><small>Time</small><b id="vTime">0:00</b></span>
       <span class="chip" title="Moves"><small>Moves</small><b id="vMoves">0</b></span>
       <span class="chip" id="chipStreak" title="Current streak" aria-label="Current streak: 0">
-        <svg class="classic-stat-icon brass-flame" viewBox="0 0 24 24" aria-hidden="true">
-          <path d="M12 3c1.8 2.5 1 4.4-.2 6C10.6 10.7 10 12 10.4 14c-1.7-.8-2.6-2-2.7-3.8C6 12 5.2 14 5.6 16.2c.6 3.1 3.1 5 6.4 5s6-2.1 6.4-5.4c.3-2.6-.9-5-2.7-6.6.1 1.3-.2 2.3-1 3-.2-3.4-1.1-6.4-2.7-9.2Z"/>
-        </svg><small class="vintage-stat-label">Streak</small><b id="vStreak">0</b>
+        <small>Streak</small><b id="vStreak">0</b>
       </span>
     </div>
   </header>
@@ -1077,7 +1146,14 @@
 
 <div id="sheetBack"></div>
 <div id="sheet">
-  <h3>Game Settings</h3>
+  <div class="sheet-header">
+    <div class="sheet-title-row">
+      <h3>Game Settings</h3>
+      <button id="btnSheetClose" class="sheet-close" aria-label="Close settings">
+        <svg class="close-glyph" viewBox="0 0 16 16" aria-hidden="true"><path d="M3.4 3.4 12.6 12.6M12.6 3.4 3.4 12.6"/></svg>
+      </button>
+    </div>
+  </div>
   <div class="row">
     <div>Card style<span class="sub2">Change the theme without restarting your deal</span></div>
     <div class="seg">
@@ -1145,7 +1221,9 @@
   <div class="stats-page-inner">
     <div class="stats-header">
       <h2>Player Stats</h2>
-      <button id="btnStatsClose" aria-label="Close player stats">Done</button>
+      <button id="btnStatsClose" aria-label="Close player stats">
+        <svg class="close-glyph" viewBox="0 0 16 16" aria-hidden="true"><path d="M3.4 3.4 12.6 12.6M12.6 3.4 3.4 12.6"/></svg>
+      </button>
     </div>
     <div class="seg stats-tabs" role="tablist" aria-label="Draw variant">
       <button id="statsTab1" role="tab">Draw One</button>
@@ -1776,6 +1854,37 @@ function findHint(){
   if(P.stock.length || P.waste.length) return {src:[], dst:"stock"};
   return null;
 }
+// Every legal card-to-card move on the table, including partial face-up runs
+// and moves that only shuffle cards between columns. findHint deliberately
+// skips these because they make no progress — but "makes no progress" is not
+// "is not a move", and only the latter means the deal is actually dead. Any
+// face-up card is draggable with everything above it, so enumerating face-up
+// indices matches what the player can really do.
+function findAnyMove(){
+  for(let c=0;c<7;c++){
+    const pile = P.t[c];
+    for(let i=0;i<pile.length;i++){
+      const head = pile[i];
+      if(!head.faceUp) continue;
+      for(let d=0;d<7;d++){
+        if(d===c || !canTab(head,d)) continue;
+        // Sliding a whole column into an empty one only relocates it.
+        if(i===0 && P.t[d].length===0) continue;
+        return {src:pile.slice(i), dst:"t"+d};
+      }
+    }
+  }
+  for(let c=0;c<7;c++){
+    const t = topOf(P.t[c]);
+    if(t && t.faceUp && canFound(t)) return {src:[t], dst:"f"+t.suit};
+  }
+  const wTop = topOf(P.waste);
+  if(wTop){
+    if(canFound(wTop)) return {src:[wTop], dst:"f"+wTop.suit};
+    for(let d=0;d<7;d++) if(canTab(wTop,d)) return {src:[wTop], dst:"t"+d};
+  }
+  return null;
+}
 function hasKingForEmptyColumn(excludeCol){
   // In draw-three, only cards that actually reach the top of the waste can
   // use the newly opened column. Buried kings are handled by the draw-one
@@ -1893,9 +2002,16 @@ function hint(){
     toast(P.stock.length ? "Draw from the stock" : "Tap the empty slot to recycle ↻");
     return;
   }
-  // Legal moves that only undo one another are not progress. If there is no
-  // foundation play, reveal, useful empty column, or playable stock card, the
-  // deal is genuinely stuck from the hint engine's perspective.
+  // No foundation play, reveal, useful empty column, or reachable stock card.
+  // Before calling the deal dead, fall back to any legal move at all — a
+  // partial run, a sideways shuffle — since the player may still see a line
+  // through it. Only a table with nothing legal left is genuinely stuck.
+  const fallback = findAnyMove();
+  if(fallback){
+    ghostMove(fallback);
+    toast("Only shuffling moves remain");
+    return;
+  }
   showStuck();
 }
 function showStuck(){
@@ -1959,7 +2075,7 @@ function autoFoundCard(card, pile){
 // Queue after the player's animation has started so the exposed card visibly
 // glides to its foundation. Repeated calls reset the pause, making a quick
 // series of user moves feel uninterrupted rather than fighting the automation.
-function maybeAutoFinish(delay=reduced ? 120 : 300){
+function maybeAutoFinish(delay=reduced ? 138 : 345){
   // An active run owns its scheduled step. Cancelling that timer and then
   // returning would strand autoRunning=true and block all board input.
   if(autoRunning) return;
@@ -1992,7 +2108,9 @@ function autoMoveSafeCards(){
       return;
     }
     autoFoundCard(candidate.card, candidate.pile);
-    autoPlayTimer = setTimeout(step,reduced?110:275);
+    // 15% slower than the card's own glide so each automatic lift reads as a
+    // separate move. The final auto-complete cascade keeps its brisker pace.
+    autoPlayTimer = setTimeout(step,reduced?127:316);
   };
   step();
 }
@@ -2209,8 +2327,20 @@ function showWin(r){
 }
 
 /* ================= win cascade (canvas, classic trails) ================= */
-let fxTimer = null;
+let fxTimer = null, fxClearTimer = null, fxRun = 0;
+// Drop any frame loop and pending canvas clear left behind by an earlier
+// cascade. "Admire the cascade" is usually tapped while the win cascade is
+// still flying: without this both loops run over one canvas, share fxTimer,
+// and whichever finishes first cancels the other mid-flight — leaving the new
+// run's cards frozen where they launched, on the foundations.
+function stopCascadeLoop(){
+  if(fxTimer){ cancelAnimationFrame(fxTimer); fxTimer=null }
+  if(fxClearTimer){ clearTimeout(fxClearTimer); fxClearTimer=null }
+  fxRun++;
+}
 function cascade(special=false){
+  stopCascadeLoop();
+  const run = fxRun;
   const cv = $("fx"), ctx = cv.getContext("2d");
   const dpr = Math.min(devicePixelRatio||1, 2);
   cv.width = innerWidth*dpr; cv.height = innerHeight*dpr;
@@ -2255,6 +2385,7 @@ function cascade(special=false){
     ctx.fillText(SUITS[s.card.suit], s.x+cw/2, s.y+ch*0.62);
   }
   function frame(t){
+    if(run !== fxRun) return;            // superseded by a newer cascade
     const dt = last ? Math.min((t-last)/16.7, 3) : 1;
     last = t;
     spawnAcc += dt*16.7;
@@ -2289,10 +2420,14 @@ function cascade(special=false){
   fxTimer = requestAnimationFrame(frame);
 }
 function endCascade(){
+  stopCascadeLoop();
   const cv = $("fx");
   cv.classList.add("fade");
-  setTimeout(()=>{ cv.getContext("2d").clearRect(0,0,cv.width,cv.height); cv.classList.remove("fade") }, 1300);
-  if(fxTimer){ cancelAnimationFrame(fxTimer); fxTimer=null }
+  fxClearTimer = setTimeout(()=>{
+    fxClearTimer = null;
+    cv.getContext("2d").clearRect(0,0,cv.width,cv.height);
+    cv.classList.remove("fade");
+  }, 1300);
 }
 
 /* ================= controls ================= */
@@ -2330,16 +2465,31 @@ $("btnAdmire").onclick = ()=>{
   $("overlay").classList.remove("show");
   if(won){
     if(!reduced) cascade(!!lastWinMilestone);
-    // bring the modal back after another look
-    setTimeout(()=>{ if(won) $("overlay").classList.add("show") }, 6000);
+    // bring the modal back after another look — tracked so a new deal started
+    // in the meantime cancels it along with the win dialog
+    cancelWinDialog();
+    winDialogTimer = setTimeout(()=>{
+      winDialogTimer = null;
+      if(won) $("overlay").classList.add("show");
+    }, 6000);
   } else if(started){
     startTimer(); // stuck dialog dismissed — back to the table to undo
   }
 };
 /* menu sheet */
 const sheet = $("sheet"), sheetBack = $("sheetBack");
-$("btnMenu").onclick = ()=>{ refreshSheet(); sheet.classList.add("open"); sheetBack.classList.add("show") };
-sheetBack.onclick = ()=>{ sheet.classList.remove("open"); sheetBack.classList.remove("show") };
+function closeSheet(){
+  sheet.classList.remove("open");
+  sheetBack.classList.remove("show");
+}
+$("btnMenu").onclick = ()=>{
+  refreshSheet();
+  sheet.classList.add("open");
+  sheetBack.classList.add("show");
+  sheet.scrollTop = 0;   // always reopen with the header (and its close) in view
+};
+sheetBack.onclick = closeSheet;
+$("btnSheetClose").onclick = closeSheet;
 $("segD1").onclick = ()=>{ settings.draw3=false; saveJSON(KEY_SET,settings); refreshSheet(); layout() };
 $("segD3").onclick = ()=>{ settings.draw3=true; saveJSON(KEY_SET,settings); refreshSheet(); layout() };
 function dealMixText(percent){
@@ -2386,7 +2536,7 @@ function setCardStyle(cardStyle){
 $("segCardsOriginal").onclick = ()=>setCardStyle("original");
 $("segCardsCrehore").onclick = ()=>setCardStyle("crehore");
 $("btnRestart").onclick = ()=>{
-  sheet.classList.remove("open"); sheetBack.classList.remove("show");
+  closeSheet();
   endCascade(); $("overlay").classList.remove("show");
   newGame(initialDeal);
 };
@@ -2435,8 +2585,7 @@ function renderStats(){
 }
 function openStats(){
   statsVariant = settings.draw3 ? "draw3" : "draw1";
-  sheet.classList.remove("open");
-  sheetBack.classList.remove("show");
+  closeSheet();
   renderStats();
   $("statsPage").classList.add("open");
   $("statsPage").setAttribute("aria-hidden","false");
@@ -2483,7 +2632,7 @@ function refreshSheet(){
 window.addEventListener("keydown", e=>{
   if(e.key==="Escape"){
     if($("statsPage").classList.contains("open")) closeStats();
-    else if(sheet.classList.contains("open")){ sheet.classList.remove("open"); sheetBack.classList.remove("show") }
+    else if(sheet.classList.contains("open")) closeSheet();
     return;
   }
   // Dialogs (win, stuck, draw-one offer) own the keyboard, matching the

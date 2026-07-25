@@ -173,8 +173,10 @@ test("auto-move waits for the first player move and uses a brisk endgame pace", 
   context.moves = 1;
   maybeAutoFinish();
   assert.equal(scheduled.length, 1);
-  assert.equal(scheduled[0].delay, 300);
-  assert.match(functionSource("autoMoveSafeCards"), /setTimeout\(step,reduced\?110:275\)/);
+  assert.equal(scheduled[0].delay, 345);
+  // Safe auto-moves run 15% slower than the card's own glide so each lift
+  // reads as a separate move; the endgame cascade keeps its brisker pace.
+  assert.match(functionSource("autoMoveSafeCards"), /setTimeout\(step,reduced\?127:316\)/);
   assert.match(functionSource("autoFinish"), /setTimeout\(step,reduced\?70:140\)/);
 });
 
@@ -381,4 +383,105 @@ test("sound setting persists and mute stops the active recording", () => {
   assert.match(html, /id="segSoundOn"/);
   assert.match(html, /id="segSoundOff"/);
   assert.match(html, /new Audio\("assets\/audio\/card-shuffle\.mp3"\)/);
+});
+
+// A table whose only legal play is a partial face-up run sliding sideways:
+// nothing to reveal, nothing to score, no empty column worth taking.
+function shuffleOnlyTable() {
+  const card = (id, suit, rank) => ({ id, suit, rank, faceUp: true });
+  const nine = card(8, 0, 9), eightH = card(20, 1, 8), sevenS = card(6, 0, 7);
+  const nineC = card(47, 3, 9);
+  return {
+    P: {
+      stock: [], waste: [], f: [[], [], [], []],
+      t: [[nine, eightH, sevenS], [nineC], [], [], [], [], []],
+    },
+    run: [eightH, sevenS],
+  };
+}
+
+function ruleContext(P) {
+  const context = {
+    P,
+    settings: { draw3: false },
+    isRed: (s) => s === 1 || s === 2,
+    topOf: (arr) => arr[arr.length - 1],
+  };
+  vm.createContext(context);
+  for (const name of ["canFound", "canTab", "findAnyMove", "findHint", "hasKingForEmptyColumn"]) {
+    vm.runInContext(functionSource(name), context);
+  }
+  return context;
+}
+
+test("findAnyMove sees partial-run shuffles that findHint deliberately skips", () => {
+  const { P, run } = shuffleOnlyTable();
+  const context = ruleContext(P);
+
+  assert.equal(context.findHint(), null, "no progress-making move exists");
+  const fallback = context.findAnyMove();
+  assert.ok(fallback, "a legal move still exists");
+  assert.deepEqual(fallback.src, run);
+  assert.equal(fallback.dst, "t1");
+});
+
+test("findAnyMove reports a genuinely dead table as having no moves", () => {
+  const card = (id, suit, rank) => ({ id, suit, rank, faceUp: true });
+  const P = {
+    stock: [], waste: [], f: [[], [], [], []],
+    // Two same-colour piles headed by cards nothing can stack onto or under.
+    t: [[card(4, 0, 5)], [card(9, 0, 10)], [], [], [], [], []],
+  };
+  const context = ruleContext(P);
+  // Only relocations into the empty columns remain, which are not moves.
+  assert.equal(context.findAnyMove(), null);
+});
+
+test("hint offers a shuffling move before declaring the deal stuck", () => {
+  const hintSource = functionSource("hint");
+  const fallbackAt = hintSource.indexOf("findAnyMove()");
+  const stuckAt = hintSource.indexOf("showStuck()");
+  assert.notEqual(fallbackAt, -1, "hint falls back to any legal move");
+  assert.ok(fallbackAt < stuckAt, "the fallback is tried before showStuck");
+  assert.match(hintSource, /Only shuffling moves remain/);
+});
+
+test("a new cascade cancels the previous run instead of racing it", () => {
+  const cascadeSource = functionSource("cascade");
+  assert.match(cascadeSource, /^function cascade\(special=false\)\{\s*stopCascadeLoop\(\);/);
+  assert.match(cascadeSource, /const run = fxRun;/);
+  assert.match(cascadeSource, /if\(run !== fxRun\) return;/);
+  assert.match(functionSource("stopCascadeLoop"), /cancelAnimationFrame\(fxTimer\)/);
+  assert.match(functionSource("stopCascadeLoop"), /clearTimeout\(fxClearTimer\)/);
+  assert.match(functionSource("stopCascadeLoop"), /fxRun\+\+/);
+  // endCascade's deferred clear must be cancellable, or it wipes the canvas
+  // partway through the cascade that replaced it.
+  assert.match(functionSource("endCascade"), /fxClearTimer = setTimeout/);
+});
+
+test("the settings sheet has its own close control", () => {
+  assert.match(html, /<button id="btnSheetClose" class="sheet-close" aria-label="Close settings">/);
+  assert.match(html, /\$\("btnSheetClose"\)\.onclick = closeSheet;/);
+  assert.match(html, /sheetBack\.onclick = closeSheet;/);
+  // Pinned to the scrollport so it stays reachable in a scrolled sheet.
+  assert.match(html, /\.sheet-header\{\s*--sheet-header-gap:12px;\s*position:sticky;top:0/);
+  // The close is centred against a row holding only the title, so the button's
+  // own height can never distort the reference box.
+  assert.match(html, /\.sheet-title-row\{position:relative\}/);
+  assert.match(html, /\.sheet-close\{[^}]*top:50%;\s*transform:translateY\(-50%\) translateY\(-\.09em\)/);
+  // A plain glyph in both styles: no border, no fill, no themed pill.
+  assert.match(html, /\.sheet-close,\.stats-header button\{[^}]*background:none;border:0/);
+  assert.doesNotMatch(html, /(original|crehore)"\] \.sheet-close\{/);
+  assert.doesNotMatch(html, /(original|crehore)"\] \.stats-header button\{/);
+  assert.match(html, /<button id="btnStatsClose" aria-label="Close player stats">\s*<svg class="close-glyph"/);
+  // Drawn rather than typed, so the mark's ink centres with its box.
+  assert.match(html, /\.close-glyph\{[^}]*stroke:currentColor/);
+  assert.doesNotMatch(html, /aria-label="Close (settings|player stats)">✕/);
+});
+
+test("header figures reserve a fixed width so the pills never jitter", () => {
+  assert.match(html, /#vTime\{min-width:5ch\}/);
+  assert.match(html, /#vMoves\{min-width:4ch\}/);
+  assert.match(html, /#vStreak\{min-width:3ch\}/);
+  assert.match(html, /\.chip b\{[^}]*font-variant-numeric:tabular-nums/);
 });
