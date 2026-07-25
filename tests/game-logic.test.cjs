@@ -80,6 +80,7 @@ test("recordWin updates a daily streak immediately and marks each fifth win", ()
     bestMoves: 90,
   };
   global.localDayNum = localDayNum;
+  global.recordVariantWin = () => {};
   const recordWin = loadFunction("recordWin");
   const result = recordWin();
   assert.equal(stats.streak, 5);

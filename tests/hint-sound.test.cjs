@@ -294,6 +294,7 @@ test("fresh games always play the shuffle sound, but restarts stay silent", () =
   const context = {
     makeShuffle: () => { events.push("shuffle"); return fixedDeal.slice(); },
     playShuffleSound: () => { sounds++; events.push("sound"); },
+    recordLoss() {},
     cancelAutoPlay() {},
     cancelWinDialog() {},
     stopTimer() {},
