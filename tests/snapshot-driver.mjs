@@ -66,17 +66,28 @@ const SHOW = {
   }
 };
 
-/** Snapshot every group for one (card style, viewport) case. */
-export async function snapshotCase(page, cardStyle, viewport) {
+/**
+ * Snapshot every group for one (card style, viewport) case.
+ *
+ * `aliases` maps a current selector to the one that addressed the same element
+ * in an older checkout, so a renamed class can still be compared like for like.
+ * Results are keyed by the current name either way.
+ */
+export async function snapshotCase(page, cardStyle, viewport, aliases = {}) {
+  const rename = (sel) => aliases[sel] || sel;
   const result = {};
   for (const [group, selectors] of Object.entries(GROUPS)) {
     await loadCase(page, cardStyle, viewport);
     await SHOW[group](page);
-    result[group] = await page.evaluate(collect, {
+    const raw = await page.evaluate(collect, {
       props: PROPS,
-      selectors,
-      pseudos: group === "board" || group === "sheet" ? PSEUDOS : []
+      selectors: selectors.map(rename),
+      pseudos: (group === "board" || group === "sheet" ? PSEUDOS : []).map(([sel, p]) => [rename(sel), p])
     });
+    result[group] = {};
+    for (const sel of selectors) result[group][sel] = raw[rename(sel)];
+    for (const [sel, pseudo] of group === "board" || group === "sheet" ? PSEUDOS : [])
+      result[group][sel + pseudo] = raw[rename(sel) + pseudo];
   }
   return result;
 }
