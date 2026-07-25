@@ -1937,13 +1937,21 @@ function cancelAutoPlay(){
 function safeAutoMoveCandidate(){
   for(let c=0;c<7;c++){
     const card = topOf(P.t[c]);
-    if(card && card.faceUp && canSafelyAutoFound(card)){
-      return {card,pile:P.t[c],tableau:true};
-    }
+    if(card && card.faceUp && canSafelyAutoFound(card)) return {card,pile:P.t[c]};
   }
   const waste = topOf(P.waste);
-  if(waste && canSafelyAutoFound(waste)) return {card:waste,pile:P.waste,tableau:false};
+  if(waste && canSafelyAutoFound(waste)) return {card:waste,pile:P.waste};
   return null;
+}
+// One auto-play step: lift a card to its foundation, flip any tableau card it
+// reveals, count the move, and repaint.
+function autoFoundCard(card, pile){
+  pile.splice(pile.indexOf(card),1);
+  card.faceUp = true;
+  if(P.t.includes(pile) && pile.length && !topOf(pile).faceUp) topOf(pile).faceUp = true;
+  P.f[card.suit].push(card);
+  moves++;
+  layout(); updateHUD();
 }
 // Queue after the player's animation has started so the exposed card visibly
 // glides to its foundation. Repeated calls reset the pause, making a quick
@@ -1980,13 +1988,7 @@ function autoMoveSafeCards(){
       autoRunning=false; saveGame(); checkWin(); updateButtons();
       return;
     }
-    candidate.pile.pop();
-    P.f[candidate.card.suit].push(candidate.card);
-    if(candidate.tableau && candidate.pile.length && !topOf(candidate.pile).faceUp){
-      topOf(candidate.pile).faceUp = true;
-    }
-    moves++;
-    layout(); updateHUD();
+    autoFoundCard(candidate.card, candidate.pile);
     autoPlayTimer = setTimeout(step,reduced?110:275);
   };
   step();
@@ -2001,25 +2003,17 @@ function autoFinish(){
     let moved = false;
     for(let c=0;c<7;c++){
       const t = topOf(P.t[c]);
-      if(t && canFound(t)){
-        P.t[c].pop(); P.f[t.suit].push(t);
-        moves++; moved = true;
-        layout(); updateHUD();
-        break;
-      }
+      if(t && canFound(t)){ autoFoundCard(t, P.t[c]); moved = true; break }
     }
     // Once every tableau card is exposed, unlimited stock recycling makes the
     // remaining stock/waste deterministic. Collect the next needed rank from
     // either pile as the same sequence of draws a player could make.
     if(!moved){
       for(const pile of [P.waste, P.stock]){
-        const i = pile.findIndex(canFound);
-        if(i<0) continue;
-        const card = pile.splice(i,1)[0];
-        card.faceUp = true;
-        P.f[card.suit].push(card);
-        moves++; moved = true;
-        layout(); updateHUD();
+        const card = pile.find(canFound);
+        if(!card) continue;
+        autoFoundCard(card, pile);
+        moved = true;
         break;
       }
     }
