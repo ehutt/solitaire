@@ -931,6 +931,18 @@
     }
     body[data-card-style="crehore"] #controls .vintage-icon{width:30px;height:30px}
   }
+  /* Classic's club-rail pills stretch like the vintage bar on iPad portrait:
+     the base classic button rule outranks the generic tablet sizes, so the
+     larger tap targets need an explicit classic-scoped override. */
+  @media (min-width:700px) and (min-height:600px) and (orientation:portrait){
+    body[data-card-style="original"] #controls{gap:14px;padding-inline:26px}
+    body[data-card-style="original"] #controls button:not(#btnMenu){
+      flex:1;min-height:64px;font-size:1.28rem;
+    }
+    body[data-card-style="original"] #btnMenu{
+      min-height:64px;padding-inline:30px;font-size:1.5rem;
+    }
+  }
   @media (min-width:700px) and (min-height:600px) and (orientation:landscape){
     #app{--control-rail:clamp(132px,13vw,156px)}
     #hud{padding:calc(env(safe-area-inset-top, 0px) + 10px) 20px 9px}
@@ -941,6 +953,7 @@
       top:calc(env(safe-area-inset-top, 0px) + 54px);padding:10px 12px;gap:12px;
     }
     #controls button{min-height:60px;padding:12px 7px;font-size:1.05rem}
+    body[data-card-style="original"] #controls button{min-height:60px;font-size:1.05rem}
     .panel{padding:30px 36px 26px}
     .panel .sub{margin-bottom:16px}
     .statgrid{margin-bottom:14px}
