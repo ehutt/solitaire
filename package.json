@@ -12,7 +12,8 @@
     "deals:verify": "node --test tests/winnable-deals.test.cjs",
     "sync": "cap sync",
     "ios": "cap sync ios && cap open ios",
-    "assets": "capacitor-assets generate"
+    "assets": "capacitor-assets generate",
+    "test:layout": "playwright test --config playwright.config.mjs"
   },
   "dependencies": {
     "@capacitor/core": "^8.4.1",
@@ -23,6 +24,7 @@
   },
   "devDependencies": {
     "@capacitor/assets": "^3.0.5",
-    "@capacitor/cli": "^8.4.1"
+    "@capacitor/cli": "^8.4.1",
+    "@playwright/test": "^1.62.0"
   }
 }

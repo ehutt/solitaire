@@ -122,27 +122,27 @@ Set the theme per-run by seeding `localStorage` (`patience.v1.settings`, key
 Assertions — all verified by hand in the session that produced this plan, so they
 are known to hold at the baseline:
 
-- [ ] Close-button centre within 3 CSS px of the settings title's cap band. Cap
+- [x] Close-button centre within 3 CSS px of the settings title's cap band. Cap
       band = ink top → baseline; a line box's middle sits *below* it, because
       descender space counts even when glyphs barely use it. Get the ink box from
       `canvas` `TextMetrics.actualBoundingBoxAscent`, not from `getBoundingClientRect`.
-- [ ] Same for the stats page header.
-- [ ] HUD chip left edges byte-identical with `0:00 / 0` and with `89:28 / 8888`.
-- [ ] No horizontal overflow of `#sheet` or `body` at any viewport.
-- [ ] Sticky sheet header stays opaque and pinned with `#sheet` scrolled 420px.
-- [ ] Every foundation and tableau slot on-screen after a deal, all four viewports.
+- [x] Same for the stats page header.
+- [x] HUD chip left edges byte-identical with `0:00 / 0` and with `89:28 / 8888`.
+- [x] No horizontal overflow of `#sheet` or `body` at any viewport.
+- [x] Sticky sheet header stays opaque and pinned with `#sheet` scrolled 420px.
+- [x] Every foundation and tableau slot on-screen after a deal, all four viewports.
 
 Files: `tests/layout.spec.mjs`, `playwright.config.mjs`, `npm run test:layout`
 script. Leave `npm test` (node:test) alone — it covers logic.
 
 ### Acceptance
 
-- [ ] Suite green at baseline.
-- [ ] **Prove the net catches its bug:** temporarily delete the
+- [x] Suite green at baseline.
+- [x] **Prove the net catches its bug:** temporarily delete the
       `body[data-card-style="original"] #sheet h3` / `crehore` size rule from the
       tablet block, confirm the iPad title assertion *fails*, then restore it.
       A net you have not seen fail is not a net.
-- [ ] Committed.
+- [x] Committed.
 
 ---
 

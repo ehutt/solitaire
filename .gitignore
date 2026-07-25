@@ -19,3 +19,7 @@ ios/App/CapApp-SPM/.swiftpm/
 # Logs / misc
 *.log
 .env
+
+# Playwright
+test-results/
+playwright-report/
