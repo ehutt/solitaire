@@ -193,7 +193,9 @@ test("persistent controls stay limited to new, hint, undo, and settings", () => 
 });
 
 test("landscape confirmation label fits by yielding its decorative icon", () => {
-  assert.match(html, /body\[data-card-style="crehore"\] #btnNew\.confirm\{\s*padding-inline:2px;font-size:\.66rem;letter-spacing:\.045em/);
+  // Size comes from the type token; the rule itself only handles the squeeze.
+  assert.match(html, /body\[data-card-style="crehore"\]\{[^}]*--type-control-confirm:\.66rem/);
+  assert.match(html, /body\[data-card-style="crehore"\] #btnNew\.confirm\{\s*padding-inline:2px;letter-spacing:\.045em/);
   assert.match(html, /body\[data-card-style="crehore"\] #btnNew\.confirm \.vintage-icon\{display:none\}/);
   assert.match(html, /#btnNew\.confirm \.classic-icon\{display:none\}/);
 });
@@ -233,7 +235,7 @@ test("settings record preview combines draw variants", () => {
 test("iPad rules keep interface text large after landscape overrides", () => {
   const tabletRules = html.match(/\/\* Final tablet overrides[^]*?<\/style>/)?.[0];
   assert.ok(tabletRules, "found final tablet overrides");
-  assert.match(tabletRules, /\.chip\{font-size:1\.5rem/);
+  assert.match(tabletRules, /--type-chip:1\.5rem/);
   assert.match(tabletRules, /\.row\{padding:21px 0;font-size:1\.65rem/);
   assert.match(tabletRules, /\.row \.sub2\{font-size:1\.3rem/);
   // Both card styles restyle the sheet title with an attribute selector, which
@@ -246,7 +248,7 @@ test("iPad rules keep interface text large after landscape overrides", () => {
   assert.match(tabletRules, /\.record-card span\{font-size:1\.32rem/);
   assert.match(tabletRules, /\.stats-header h2\{font-size:2\.5rem\}/);
   assert.match(tabletRules, /\.stats-detail-row\{font-size:1\.35rem/);
-  assert.match(tabletRules, /body\[data-card-style="crehore"\] \.chip\{[^}]*font-size:1\.45rem/);
+  assert.match(tabletRules, /body\[data-card-style="crehore"\]\{--type-chip:1\.45rem/);
   assert.match(tabletRules, /orientation:landscape/);
   assert.match(tabletRules, /--control-rail:clamp\(132px,13vw,156px\)/);
 });
@@ -318,10 +320,10 @@ test("classic portrait header and controls are enlarged with balanced icons", ()
   assert.ok(portraitHud, "classic portrait HUD rule exists");
   assert.match(portraitHud, /display:flex;flex-wrap:wrap/);
   assert.match(portraitHud, /padding:calc\(env\(safe-area-inset-top, 0px\) \+ 15px\) 16px 13px/);
-  assert.match(html, /body\[data-card-style="original"\] \.brand\{\s*justify-content:flex-start;font-size:clamp\(1\.68rem,6\.72vw,2\.28rem\)/);
+  assert.match(html, /body\[data-card-style="original"\]\{--type-display:clamp\(1\.68rem,6\.72vw,2\.28rem\)\}/);
   // Labelled club-rail pills take their own centered row on portrait phones
   assert.match(html, /body\[data-card-style="original"\] \.chips\{flex:0 0 100%;justify-content:center;gap:6px\}/);
   // Emoji control icons are retired; only the menu ellipsis glyph remains
   assert.match(html, /#btnNew \.classic-icon,\s*[^{]*#btnHint \.classic-icon,\s*[^{]*#btnUndo \.classic-icon\{display:none\}/);
-  assert.match(html, /body\[data-card-style="original"\] #btnMenu \.classic-icon\{[^}]*font-size:1\.7rem/);
+  assert.match(html, /body\[data-card-style="original"\]\{\s*--type-menu-glyph:1\.7rem/);
 });
