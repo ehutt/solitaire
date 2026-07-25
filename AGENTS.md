@@ -7,4 +7,43 @@
 - Verify UI changes in both portrait and landscape on an iPhone simulator. Landscape must account for safe-area/notch insets, the side control rail, and unusually long tableau piles.
 - Simulator screenshots taken while landscape may be stored with portrait pixel orientation; rotate the image for inspection rather than mistaking that for an app-layout bug.
 - A successful JavaScript parse does not catch runtime layout errors. After changes, launch the app and confirm a full deal renders, New starts another deal, and controls remain responsive.
-- Styling gotcha: both card styles restyle components through `body[data-card-style="…"] …`, which outranks the plain `#id`-scoped rules used in the responsive blocks. A size set in a media query can lose silently to a theme rule. See `docs/css-architecture-refactor.md` for the planned fix (semantic tokens; components never appear inside a theme block or media query).
+
+## CSS architecture
+
+**A component rule never appears inside a theme block or a media query.**
+Components read `var(--token)`. Themes set token *values*. Breakpoints set token
+*values*. One declaration per property per component — so there is nothing for a
+stray selector to out-rank.
+
+- Tokens are declared in three places only: `:root` (defaults), `body` (defaults
+  that derive from themed palette variables), and `body[data-card-style="…"]`
+  (a theme's values). Breakpoints restate them on `body`; where a breakpoint must
+  beat both themes, it uses `body[data-card-style]`, which ties them on
+  specificity and wins on source order. A component may own a local knob
+  (`--pinned-header-gap`, `--control-rail`) declared on itself.
+- The families: `--type-*` (every font-size), `--face-*` (type faces by role),
+  `--surface-*` and `--paper-*` (backgrounds and the ink on them), `--chrome-*`
+  (ink on the felt-side chrome), `--rule` (hairlines), plus small
+  component-specific ones (`--chip-ink`, `--control-ink`, `--seg-on-*`,
+  `--confirm-*`, `--focus-ring`). Colour literals live only in these
+  declarations.
+- Why: theme selectors like `body[data-card-style="…"] #sheet h3` (1,1,2)
+  silently out-rank a responsive block's `#sheet h3` (1,0,1). That shipped —
+  the iPad rendered phone-sized sheet titles for months and nothing flagged it.
+  Tokens make the whole class of bug unexpressible.
+- Exceptions, each commented where it lives: card-face sizes are ratios of the
+  card's own em box (`.ix`, `.mid`), and theme blocks still own their chrome's
+  padding and margins.
+
+## Verifying a UI change
+
+- `npm test` — logic plus the stylesheet's architecture invariants.
+- `npm run test:layout` — Playwright. Asserts rendered geometry (cap-band
+  alignment, overflow, sticky headers, slot visibility) and compares every
+  computed style and box against `tests/computed-styles.baseline.json`, across
+  2 card styles x {iPhone, iPad} x {portrait, landscape}.
+- A change that alters the rendering must update that baseline in the same
+  commit (`npm run snapshot:baseline`); review the JSON diff as the change.
+- `node scripts/compare-to-baseline.mjs <other-www-dir> [chromium|webkit]`
+  renders two checkouts side by side and lists every difference — the cheapest
+  way to prove a refactor changed nothing. WebKit is the engine iOS ships.
