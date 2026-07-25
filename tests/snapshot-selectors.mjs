@@ -49,7 +49,7 @@ export const GROUPS = {
     "#toast"
   ],
   sheet: [
-    "#sheet", ".sheet-header", ".sheet-title-row", "#sheet h3", ".sheet-close",
+    "#sheet", ".pinned-header", ".title-row", "#sheet h3", ".title-row .icon-button",
     ".close-glyph", ".row", ".row .sub2", ".seg", ".seg button", "#segCardsOriginal",
     ".deal-mix", ".deal-mix-labels", ".deal-mix-stops", ".deal-mix input",
     "#btnRestart", ".record-preview", ".record-card", ".record-card strong",
@@ -69,7 +69,7 @@ export const GROUPS = {
 
 // Pseudo-elements carry real design here (the sheet backdrop, the vintage rules).
 export const PSEUDOS = [
-  [".sheet-header", "::before"],
+  [".pinned-header", "::before"],
   [".chips", "::before"],
   [".chips", "::after"]
 ];

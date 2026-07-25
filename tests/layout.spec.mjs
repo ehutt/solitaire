@@ -172,10 +172,10 @@ for (const cardStyle of STYLES) {
       test("sheet header stays pinned and opaque when scrolled", async ({ page }) => {
         await page.click("#btnMenu");
         await page.waitForTimeout(400);
-        const before = await page.locator(".sheet-header").boundingBox();
+        const before = await page.locator(".pinned-header").boundingBox();
         await page.evaluate(() => { document.getElementById("sheet").scrollTop = 420 });
         await page.waitForTimeout(150);
-        const after = await page.locator(".sheet-header").boundingBox();
+        const after = await page.locator(".pinned-header").boundingBox();
 
         // Header must not have scrolled away with the content.
         expect(Math.abs(after.y - before.y)).toBeLessThanOrEqual(1);
@@ -188,7 +188,7 @@ for (const cardStyle of STYLES) {
         // The backdrop is a full-bleed ::before; it must be painted (non-transparent)
         // so rows do not show through the sticky header.
         const backdrop = await page.evaluate(() => {
-          const cs = getComputedStyle(document.querySelector(".sheet-header"), "::before");
+          const cs = getComputedStyle(document.querySelector(".pinned-header"), "::before");
           return { background: cs.backgroundColor, width: parseFloat(cs.width) };
         });
         expect(backdrop.background).not.toBe("rgba(0, 0, 0, 0)");

@@ -460,20 +460,21 @@ test("a new cascade cancels the previous run instead of racing it", () => {
 });
 
 test("the settings sheet has its own close control", () => {
-  assert.match(html, /<button id="btnSheetClose" class="sheet-close" aria-label="Close settings">/);
+  assert.match(html, /<button id="btnSheetClose" class="icon-button" aria-label="Close settings">/);
   assert.match(html, /\$\("btnSheetClose"\)\.onclick = closeSheet;/);
   assert.match(html, /sheetBack\.onclick = closeSheet;/);
   // Pinned to the scrollport so it stays reachable in a scrolled sheet.
-  assert.match(html, /\.sheet-header\{\s*--sheet-header-gap:12px;\s*position:sticky;top:0/);
+  assert.match(html, /\.pinned-header\{\s*--pinned-header-gap:12px;\s*position:sticky;top:0/);
   // The close is centred against a row holding only the title, so the button's
   // own height can never distort the reference box.
-  assert.match(html, /\.sheet-title-row\{position:relative\}/);
-  assert.match(html, /\.sheet-close\{[^}]*top:50%;\s*transform:translateY\(-50%\) translateY\(-\.09em\)/);
+  assert.match(html, /\.title-row\{position:relative\}/);
+  assert.match(html, /\.title-row \.icon-button\{[^}]*top:50%;\s*transform:translateY\(-50%\) translateY\(-\.09em\)/);
   // A plain glyph in both styles: no border, no fill, no themed pill.
-  assert.match(html, /\.sheet-close,\.stats-header button\{[^}]*background:none;border:0/);
-  assert.doesNotMatch(html, /(original|crehore)"\] \.sheet-close\{/);
+  assert.match(html, /\.icon-button\{[^}]*background:none;border:0/);
+  assert.doesNotMatch(html, /(original|crehore)"\] \.icon-button\{/);
   assert.doesNotMatch(html, /(original|crehore)"\] \.stats-header button\{/);
-  assert.match(html, /<button id="btnStatsClose" aria-label="Close player stats">\s*<svg class="close-glyph"/);
+  // Both closes are the same primitive; only their placement differs.
+  assert.match(html, /<button id="btnStatsClose" class="icon-button" aria-label="Close player stats">\s*<svg class="close-glyph"/);
   // Drawn rather than typed, so the mark's ink centres with its box.
   assert.match(html, /\.close-glyph\{[^}]*stroke:currentColor/);
   assert.doesNotMatch(html, /aria-label="Close (settings|player stats)">✕/);
