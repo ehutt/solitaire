@@ -2803,6 +2803,11 @@ $("statsTab1").onclick = ()=>{ statsVariant="draw1"; renderStats() };
 $("statsTab3").onclick = ()=>{ statsVariant="draw3"; renderStats() };
 function setSeg(id,on){
   const b = $(id);
+  // Coerce: classList.toggle ignores an `undefined` second argument and flips
+  // the class instead of forcing it, so a setting that has never been written
+  // (settings.draw3 on a profile saved before the option existed) would light
+  // both halves of the pair.
+  on = !!on;
   b.classList.toggle("on", on);
   b.setAttribute("aria-pressed", on);
 }

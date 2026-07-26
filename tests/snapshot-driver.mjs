@@ -30,7 +30,13 @@ export async function loadCase(page, cardStyle, viewport) {
   if (!seeded.has(page)) { await page.addInitScript(SEED_SCRIPT); seeded.add(page) }
   await page.goto("/index.html");
   await page.evaluate((style) => {
-    localStorage.setItem("patience.v1.settings", JSON.stringify({ cardStyle: style }));
+    // Write the app's own defaults alongside the card style. Setting only
+    // `cardStyle` left every other option undefined, which is a state no real
+    // profile is ever in — the app seeds `{draw3:false}` on first run — and it
+    // made the baseline record both halves of the Draw pair as selected.
+    localStorage.setItem("patience.v1.settings", JSON.stringify({
+      cardStyle: style, draw3: false, autoComplete: true, sound: true, haptics: true
+    }));
     localStorage.removeItem("patience.v1.stats");
     localStorage.removeItem("patience.v1.game");
   }, cardStyle);
