@@ -1347,6 +1347,7 @@
     <div id="wBadges"></div>
     <div class="note" id="wNote"></div>
     <button id="btnAgain">New Game</button>
+    <button class="ghost" id="btnReplayDeal">Restart this deal</button>
     <button class="ghost" id="btnAdmire">Admire the cascade</button>
   </div>
 </div>
@@ -2053,8 +2054,12 @@ window.addEventListener("pointercancel", ()=>{
 /* ================= hint ================= */
 function findHint(){
   const wTop = topOf(P.waste);
-  if(wTop && canFound(wTop)) return {src:[wTop], dst:"f"+wTop.suit};
-  for(let c=0;c<7;c++){ const t=topOf(P.t[c]); if(t && t.faceUp && canFound(t)) return {src:[t], dst:"f"+t.suit} }
+  // Foundation plays come first, but only the ones that cannot strand a card
+  // the tableau still needs — the same test autoplay applies. Sending a card
+  // up too early is the classic way a winnable deal is lost, so the risky
+  // ones wait below the reveals rather than leading the recommendation.
+  if(wTop && canSafelyAutoFound(wTop)) return {src:[wTop], dst:"f"+wTop.suit};
+  for(let c=0;c<7;c++){ const t=topOf(P.t[c]); if(t && t.faceUp && canSafelyAutoFound(t)) return {src:[t], dst:"f"+t.suit} }
   // useful tableau runs
   for(let c=0;c<7;c++){
     const pile = P.t[c];
@@ -2071,6 +2076,10 @@ function findHint(){
       if(reveals || frees) return {src:pile.slice(fi), dst:"t"+d2};
     }
   }
+  // The foundation plays held back above. Still progress, so they keep the
+  // deal off the out-of-moves dialog; they just are not the first advice.
+  if(wTop && canFound(wTop)) return {src:[wTop], dst:"f"+wTop.suit};
+  for(let c=0;c<7;c++){ const t=topOf(P.t[c]); if(t && t.faceUp && canFound(t)) return {src:[t], dst:"f"+t.suit} }
   if(wTop) for(let c=0;c<7;c++) if(canTab(wTop,c)) return {src:[wTop], dst:"t"+c};
   if(P.stock.length || P.waste.length) return {src:[], dst:"stock"};
   return null;
@@ -2103,6 +2112,100 @@ function findAnyMove(){
   if(wTop){
     if(canFound(wTop)) return {src:[wTop], dst:"f"+wTop.suit};
     for(let d=0;d<7;d++) if(canTab(wTop,d)) return {src:[wTop], dst:"t"+d};
+  }
+  return null;
+}
+/* --- bounded lookahead for positions where every single move is a shuffle ---
+A table whose only immediate moves are sideways relocations is not necessarily
+dead: two or three relocations in a row can expose a face-down card, open a
+usable column, or free a card for a foundation when no single move can. The
+search below explores those lines over the tableau alone (stock draws are
+handled separately, foundation plays are the goal rather than a step) and
+returns the FIRST move of the shortest line that actually reaches progress.
+So a hint is either a move that advances the game or the honest report that
+none exists — never a shuffle offered for its own sake. */
+const PROGRESS_DEPTH = 5;      // plies of shuffling to look through
+const PROGRESS_NODES = 4000;   // hard ceiling so a hint always returns fast
+// Piles as {hidden, up}: face-down cards are opaque, so revealing one is a
+// goal and never something the simulation has to model the value of.
+function snapshotTableau(){
+  return P.t.map(pile=>{
+    const fi = pile.findIndex(c=>c.faceUp);
+    return fi<0 ? {hidden:pile.length, up:[]} : {hidden:fi, up:pile.slice(fi)};
+  });
+}
+function simAccepts(state, col, card){
+  const pile = state[col];
+  if(!pile.up.length) return !pile.hidden && card.rank===13;
+  const top = pile.up[pile.up.length-1];
+  return isRed(top.suit)!==isRed(card.suit) && top.rank===card.rank+1;
+}
+function simKey(state){
+  return state.map(p=>p.hidden+":"+p.up.map(c=>c.id).join(".")).join("|");
+}
+function simMoves(state){
+  const out = [];
+  for(let c=0;c<7;c++){
+    const up = state[c].up;
+    for(let i=0;i<up.length;i++){
+      for(let d=0;d<7;d++){
+        if(d===c || !simAccepts(state,d,up[i])) continue;
+        // Sliding a whole exposed column into an empty one only relocates it.
+        if(i===0 && !state[c].hidden && !state[d].up.length) continue;
+        out.push({from:c, i, to:d});
+      }
+    }
+  }
+  return out;
+}
+function simApply(state, mv){
+  const next = state.map(p=>({hidden:p.hidden, up:p.up.slice()}));
+  next[mv.to].up.push(...next[mv.from].up.splice(mv.i));
+  return next;
+}
+// Progress = uncovering a face-down card, opening a column a king can use, or
+// putting a card within reach of a foundation / of the waste's top card.
+function simProgress(state, mv, wastePlayableAtStart){
+  if(mv.i===0 && state[mv.from].hidden) return true;              // reveals
+  if(mv.i===0 && hasKingForEmptyColumn(mv.from)) return true;     // usable space
+  const next = simApply(state, mv);
+  for(const pile of next){
+    const top = pile.up[pile.up.length-1];
+    if(top && canFound(top)) return true;
+  }
+  const wTop = topOf(P.waste);
+  if(wTop && !wastePlayableAtStart){
+    for(let c=0;c<7;c++) if(simAccepts(next,c,wTop)) return true;
+  }
+  return false;
+}
+function findProgressPath(){
+  const start = snapshotTableau();
+  const wTop = topOf(P.waste);
+  let wastePlayableAtStart = false;
+  if(wTop) for(let c=0;c<7;c++) if(simAccepts(start,c,wTop)) wastePlayableAtStart = true;
+  const seen = new Set([simKey(start)]);
+  let frontier = [{state:start, first:null, depth:0}];
+  let nodes = 0;
+  for(let depth=0; depth<PROGRESS_DEPTH && frontier.length; depth++){
+    const nextFrontier = [];
+    for(const node of frontier){
+      for(const mv of simMoves(node.state)){
+        if(++nodes > PROGRESS_NODES) return null;
+        const first = node.first || mv;
+        if(simProgress(node.state, mv, wastePlayableAtStart)){
+          const pile = P.t[first.from];
+          const idx = start[first.from].hidden + first.i;
+          return {src:pile.slice(idx), dst:"t"+first.to, depth:node.depth+1};
+        }
+        const child = simApply(node.state, mv);
+        const key = simKey(child);
+        if(seen.has(key)) continue;
+        seen.add(key);
+        nextFrontier.push({state:child, first, depth:node.depth+1});
+      }
+    }
+    frontier = nextFrontier;
   }
   return null;
 }
@@ -2223,14 +2326,13 @@ function hint(){
     toast(P.stock.length ? "Draw from the stock" : "Tap the empty slot to recycle ↻");
     return;
   }
-  // No foundation play, reveal, useful empty column, or reachable stock card.
-  // Before calling the deal dead, fall back to any legal move at all — a
-  // partial run, a sideways shuffle — since the player may still see a line
-  // through it. Only a table with nothing legal left is genuinely stuck.
-  const fallback = findAnyMove();
-  if(fallback){
-    ghostMove(fallback);
-    toast("Only shuffling moves remain");
+  // No single move helps and the stock is spent. Search a few plies of
+  // shuffling for a line that does reach something — a reveal, a usable
+  // column, a card freed for a foundation — and hint the first move of it.
+  const path = findProgressPath();
+  if(path){
+    ghostMove(path);
+    if(path.depth>1) toast("Sets up a play a couple of moves out");
     return;
   }
   showStuck();
@@ -2239,14 +2341,20 @@ function showStuck(){
   stopTimer();
   overlayMode = "stuck";
   $("winPanel").classList.remove("daily-win","milestone");
+  // Shuffles may still be legal here; they just lead nowhere. Say which it is
+  // rather than claiming the table is frozen when cards can still be dragged.
+  const onlyShuffles = !!findAnyMove();
   $("winTitle").textContent = "Out of moves";
-  $("winSub").textContent = "No plays remain — this deal is stuck.";
+  $("winSub").textContent = onlyShuffles
+    ? "Only moves that lead nowhere remain."
+    : "No plays remain — this deal is stuck.";
   $("wTime").textContent = fmtTime(elapsed);
   $("wMoves").textContent = moves;
   $("wStreak").textContent = displayStreak();
   $("wBadges").innerHTML = "";
   $("wNote").textContent = "Undo a few moves to try a different path, or start a new game.";
   $("btnAgain").textContent = "New Game";
+  $("btnReplayDeal").style.display = "";
   $("btnAdmire").textContent = "Go back & undo";
   $("overlay").classList.add("show");
 }
@@ -2262,6 +2370,8 @@ function showDrawOneOffer(){
   $("wBadges").innerHTML = '<span class="badge">Draw three</span>';
   $("wNote").textContent = "A playable card is buried in the stock. Switch to draw one to keep this deal going.";
   $("btnAgain").textContent = "Switch to draw one";
+  // Restarting mid-deal is not the offer being made here.
+  $("btnReplayDeal").style.display = "none";
   $("btnAdmire").textContent = "Stay with draw three";
   $("overlay").classList.add("show");
 }
@@ -2524,6 +2634,7 @@ function showWin(r){
   else if(r.firstWinToday) $("winTitle").textContent = "First win of the day!";
   else $("winTitle").textContent = "You won!";
   $("btnAgain").textContent = "Deal again";
+  $("btnReplayDeal").style.display = "";
   $("btnAdmire").textContent = "Admire the cascade";
   $("wTime").textContent = fmtTime(elapsed);
   $("wMoves").textContent = moves;
@@ -2681,6 +2792,11 @@ $("btnAgain").onclick = ()=>{
     return;
   }
   endCascade(); $("overlay").classList.remove("show"); newGame();
+};
+$("btnReplayDeal").onclick = ()=>{
+  // Same cards, fresh start — the "restart" the menu offers, from the overlay.
+  endCascade(); $("overlay").classList.remove("show");
+  newGame(initialDeal);
 };
 $("btnAdmire").onclick = ()=>{
   $("overlay").classList.remove("show");

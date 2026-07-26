@@ -3840,7 +3840,7 @@
     "minHeight": "auto",
     "minWidth": "auto",
     "width": "350px",
-    "height": "319.922px",
+    "height": "360.922px",
     "position": "static",
     "boxShadow": "rgba(0, 0, 0, 0.5) 0px 20px 60px 0px",
     "textShadow": "none",
@@ -3849,9 +3849,9 @@
     "webkitTextStrokeColor": "rgb(38, 40, 46)",
     "_rect": [
      20,
-     262,
+     241.5,
      350,
-     320
+     361
     ]
    },
    ".panel h2": {
@@ -3899,7 +3899,7 @@
     "webkitTextStrokeColor": "rgb(38, 40, 46)",
     "_rect": [
      48,
-     292,
+     271.5,
      294,
      40
     ]
@@ -3949,7 +3949,7 @@
     "webkitTextStrokeColor": "rgb(122, 111, 86)",
     "_rect": [
      48,
-     334,
+     313.5,
      294,
      20
     ]
@@ -3999,7 +3999,7 @@
     "webkitTextStrokeColor": "rgb(38, 40, 46)",
     "_rect": [
      48,
-     372,
+     351.5,
      294,
      48
     ]
@@ -4049,7 +4049,7 @@
     "webkitTextStrokeColor": "rgb(38, 40, 46)",
     "_rect": [
      72,
-     372,
+     351.5,
      70,
      48
     ]
@@ -4099,7 +4099,7 @@
     "webkitTextStrokeColor": "rgb(38, 40, 46)",
     "_rect": [
      72,
-     372,
+     351.5,
      70,
      30
     ]
@@ -4149,7 +4149,7 @@
     "webkitTextStrokeColor": "rgb(138, 125, 96)",
     "_rect": [
      90.5,
-     405,
+     384.5,
      32.5,
      15
     ]
@@ -4199,7 +4199,7 @@
     "webkitTextStrokeColor": "rgb(109, 98, 72)",
     "_rect": [
      48,
-     434,
+     413.5,
      294,
      16
     ]
@@ -4249,7 +4249,7 @@
     "webkitTextStrokeColor": "rgb(250, 245, 233)",
     "_rect": [
      48,
-     470,
+     449.5,
      294,
      47
     ]
@@ -4299,7 +4299,7 @@
     "webkitTextStrokeColor": "rgb(109, 98, 72)",
     "_rect": [
      48,
-     521,
+     500.5,
      294,
      37
     ]
@@ -8147,7 +8147,7 @@
     "minHeight": "auto",
     "minWidth": "auto",
     "width": "390px",
-    "height": "272.922px",
+    "height": "313.922px",
     "position": "static",
     "boxShadow": "rgba(0, 0, 0, 0.5) 0px 20px 60px 0px",
     "textShadow": "none",
@@ -8156,9 +8156,9 @@
     "webkitTextStrokeColor": "rgb(38, 40, 46)",
     "_rect": [
      227,
-     58.5,
+     38,
      390,
-     273
+     314
     ]
    },
    ".panel h2": {
@@ -8206,7 +8206,7 @@
     "webkitTextStrokeColor": "rgb(38, 40, 46)",
     "_rect": [
      253,
-     76.5,
+     56,
      338,
      40
     ]
@@ -8256,7 +8256,7 @@
     "webkitTextStrokeColor": "rgb(122, 111, 86)",
     "_rect": [
      253,
-     118.5,
+     98,
      338,
      20
     ]
@@ -8306,7 +8306,7 @@
     "webkitTextStrokeColor": "rgb(38, 40, 46)",
     "_rect": [
      253,
-     148.5,
+     128,
      338,
      48
     ]
@@ -8356,7 +8356,7 @@
     "webkitTextStrokeColor": "rgb(38, 40, 46)",
     "_rect": [
      299,
-     148.5,
+     128,
      70,
      48
     ]
@@ -8406,7 +8406,7 @@
     "webkitTextStrokeColor": "rgb(38, 40, 46)",
     "_rect": [
      299,
-     148.5,
+     128,
      70,
      30
     ]
@@ -8456,7 +8456,7 @@
     "webkitTextStrokeColor": "rgb(138, 125, 96)",
     "_rect": [
      317.5,
-     181.5,
+     161,
      32.5,
      15
     ]
@@ -8506,7 +8506,7 @@
     "webkitTextStrokeColor": "rgb(109, 98, 72)",
     "_rect": [
      253,
-     204.5,
+     184,
      338,
      16
     ]
@@ -8556,7 +8556,7 @@
     "webkitTextStrokeColor": "rgb(250, 245, 233)",
     "_rect": [
      253,
-     233.5,
+     213,
      338,
      41
     ]
@@ -8606,7 +8606,7 @@
     "webkitTextStrokeColor": "rgb(109, 98, 72)",
     "_rect": [
      253,
-     278.5,
+     258,
      338,
      37
     ]
@@ -12454,7 +12454,7 @@
     "minHeight": "auto",
     "minWidth": "auto",
     "width": "520px",
-    "height": "414.781px",
+    "height": "460.781px",
     "position": "static",
     "boxShadow": "rgba(0, 0, 0, 0.5) 0px 20px 60px 0px",
     "textShadow": "none",
@@ -12463,9 +12463,9 @@
     "webkitTextStrokeColor": "rgb(38, 40, 46)",
     "_rect": [
      150,
-     382.5,
+     359.5,
      520,
-     415
+     461
     ]
    },
    ".panel h2": {
@@ -12513,7 +12513,7 @@
     "webkitTextStrokeColor": "rgb(38, 40, 46)",
     "_rect": [
      188,
-     424.5,
+     401.5,
      444,
      55
     ]
@@ -12563,7 +12563,7 @@
     "webkitTextStrokeColor": "rgb(122, 111, 86)",
     "_rect": [
      188,
-     481.5,
+     458.5,
      444,
      23
     ]
@@ -12613,7 +12613,7 @@
     "webkitTextStrokeColor": "rgb(38, 40, 46)",
     "_rect": [
      188,
-     530.5,
+     507.5,
      444,
      57.5
     ]
@@ -12663,7 +12663,7 @@
     "webkitTextStrokeColor": "rgb(38, 40, 46)",
     "_rect": [
      218.5,
-     530.5,
+     507.5,
      105,
      57.5
     ]
@@ -12713,7 +12713,7 @@
     "webkitTextStrokeColor": "rgb(38, 40, 46)",
     "_rect": [
      218.5,
-     530.5,
+     507.5,
      105,
      39.5
     ]
@@ -12763,7 +12763,7 @@
     "webkitTextStrokeColor": "rgb(138, 125, 96)",
     "_rect": [
      250,
-     570,
+     547,
      42,
      18
     ]
@@ -12813,7 +12813,7 @@
     "webkitTextStrokeColor": "rgb(109, 98, 72)",
     "_rect": [
      188,
-     612,
+     589,
      444,
      19
     ]
@@ -12863,7 +12863,7 @@
     "webkitTextStrokeColor": "rgb(250, 245, 233)",
     "_rect": [
      188,
-     657.5,
+     634.5,
      444,
      62
     ]
@@ -12913,7 +12913,7 @@
     "webkitTextStrokeColor": "rgb(109, 98, 72)",
     "_rect": [
      188,
-     723.5,
+     700.5,
      444,
      42
     ]
@@ -16761,7 +16761,7 @@
     "minHeight": "auto",
     "minWidth": "auto",
     "width": "520px",
-    "height": "360.781px",
+    "height": "406.781px",
     "position": "static",
     "boxShadow": "rgba(0, 0, 0, 0.5) 0px 20px 60px 0px",
     "textShadow": "none",
@@ -16770,9 +16770,9 @@
     "webkitTextStrokeColor": "rgb(38, 40, 46)",
     "_rect": [
      330,
-     229.5,
+     206.5,
      520,
-     361
+     407
     ]
    },
    ".panel h2": {
@@ -16820,7 +16820,7 @@
     "webkitTextStrokeColor": "rgb(38, 40, 46)",
     "_rect": [
      366,
-     259.5,
+     236.5,
      448,
      55
     ]
@@ -16870,7 +16870,7 @@
     "webkitTextStrokeColor": "rgb(122, 111, 86)",
     "_rect": [
      366,
-     316.5,
+     293.5,
      448,
      23
     ]
@@ -16920,7 +16920,7 @@
     "webkitTextStrokeColor": "rgb(38, 40, 46)",
     "_rect": [
      366,
-     355.5,
+     332.5,
      448,
      57.5
     ]
@@ -16970,7 +16970,7 @@
     "webkitTextStrokeColor": "rgb(38, 40, 46)",
     "_rect": [
      398.5,
-     355.5,
+     332.5,
      105,
      57.5
     ]
@@ -17020,7 +17020,7 @@
     "webkitTextStrokeColor": "rgb(38, 40, 46)",
     "_rect": [
      398.5,
-     355.5,
+     332.5,
      105,
      39.5
     ]
@@ -17070,7 +17070,7 @@
     "webkitTextStrokeColor": "rgb(138, 125, 96)",
     "_rect": [
      430,
-     395,
+     372,
      42,
      18
     ]
@@ -17120,7 +17120,7 @@
     "webkitTextStrokeColor": "rgb(109, 98, 72)",
     "_rect": [
      366,
-     427,
+     404,
      448,
      19
     ]
@@ -17170,7 +17170,7 @@
     "webkitTextStrokeColor": "rgb(250, 245, 233)",
     "_rect": [
      366,
-     464.5,
+     441.5,
      448,
      54
     ]
@@ -17220,7 +17220,7 @@
     "webkitTextStrokeColor": "rgb(109, 98, 72)",
     "_rect": [
      366,
-     522.5,
+     499.5,
      448,
      42
     ]
@@ -21068,7 +21068,7 @@
     "minHeight": "auto",
     "minWidth": "auto",
     "width": "350px",
-    "height": "333.922px",
+    "height": "376.922px",
     "position": "static",
     "boxShadow": "rgba(0, 0, 0, 0.5) 0px 20px 60px 0px",
     "textShadow": "none",
@@ -21077,9 +21077,9 @@
     "webkitTextStrokeColor": "rgb(76, 23, 24)",
     "_rect": [
      20,
-     255,
+     233.5,
      350,
-     334
+     377
     ]
    },
    ".panel h2": {
@@ -21127,7 +21127,7 @@
     "webkitTextStrokeColor": "rgb(76, 23, 24)",
     "_rect": [
      51,
-     288,
+     266.5,
      288,
      41
     ]
@@ -21177,7 +21177,7 @@
     "webkitTextStrokeColor": "rgb(122, 111, 86)",
     "_rect": [
      51,
-     331,
+     309.5,
      288,
      21
     ]
@@ -21227,7 +21227,7 @@
     "webkitTextStrokeColor": "rgb(76, 23, 24)",
     "_rect": [
      51,
-     370,
+     348.5,
      288,
      50
     ]
@@ -21277,7 +21277,7 @@
     "webkitTextStrokeColor": "rgb(76, 23, 24)",
     "_rect": [
      72,
-     370,
+     348.5,
      70,
      50
     ]
@@ -21327,7 +21327,7 @@
     "webkitTextStrokeColor": "rgb(76, 23, 24)",
     "_rect": [
      72,
-     370,
+     348.5,
      70,
      30
     ]
@@ -21377,7 +21377,7 @@
     "webkitTextStrokeColor": "rgb(138, 125, 96)",
     "_rect": [
      88,
-     403,
+     381.5,
      38,
      15
     ]
@@ -21427,7 +21427,7 @@
     "webkitTextStrokeColor": "rgb(109, 98, 72)",
     "_rect": [
      51,
-     434,
+     412.5,
      288,
      16
     ]
@@ -21477,7 +21477,7 @@
     "webkitTextStrokeColor": "rgb(243, 231, 201)",
     "_rect": [
      51,
-     470,
+     448.5,
      288,
      49
     ]
@@ -21527,7 +21527,7 @@
     "webkitTextStrokeColor": "rgb(118, 83, 74)",
     "_rect": [
      51,
-     523,
+     501.5,
      288,
      39
     ]
@@ -25375,7 +25375,7 @@
     "minHeight": "auto",
     "minWidth": "auto",
     "width": "390px",
-    "height": "286.922px",
+    "height": "329.922px",
     "position": "static",
     "boxShadow": "rgba(0, 0, 0, 0.5) 0px 20px 60px 0px",
     "textShadow": "none",
@@ -25384,9 +25384,9 @@
     "webkitTextStrokeColor": "rgb(76, 23, 24)",
     "_rect": [
      227,
-     51.5,
+     30,
      390,
-     287
+     330
     ]
    },
    ".panel h2": {
@@ -25434,7 +25434,7 @@
     "webkitTextStrokeColor": "rgb(76, 23, 24)",
     "_rect": [
      256,
-     72.5,
+     51,
      332,
      41
     ]
@@ -25484,7 +25484,7 @@
     "webkitTextStrokeColor": "rgb(122, 111, 86)",
     "_rect": [
      256,
-     115.5,
+     94,
      332,
      21
     ]
@@ -25534,7 +25534,7 @@
     "webkitTextStrokeColor": "rgb(76, 23, 24)",
     "_rect": [
      256,
-     146.5,
+     125,
      332,
      50
     ]
@@ -25584,7 +25584,7 @@
     "webkitTextStrokeColor": "rgb(76, 23, 24)",
     "_rect": [
      299,
-     146.5,
+     125,
      70,
      50
     ]
@@ -25634,7 +25634,7 @@
     "webkitTextStrokeColor": "rgb(76, 23, 24)",
     "_rect": [
      299,
-     146.5,
+     125,
      70,
      30
     ]
@@ -25684,7 +25684,7 @@
     "webkitTextStrokeColor": "rgb(138, 125, 96)",
     "_rect": [
      315,
-     179.5,
+     158,
      38,
      15
     ]
@@ -25734,7 +25734,7 @@
     "webkitTextStrokeColor": "rgb(109, 98, 72)",
     "_rect": [
      256,
-     204.5,
+     183,
      332,
      16
     ]
@@ -25784,7 +25784,7 @@
     "webkitTextStrokeColor": "rgb(243, 231, 201)",
     "_rect": [
      256,
-     233.5,
+     212,
      332,
      43
     ]
@@ -25834,7 +25834,7 @@
     "webkitTextStrokeColor": "rgb(118, 83, 74)",
     "_rect": [
      256,
-     280.5,
+     259,
      332,
      39
     ]
@@ -29682,7 +29682,7 @@
     "minHeight": "auto",
     "minWidth": "auto",
     "width": "520px",
-    "height": "429.781px",
+    "height": "477.781px",
     "position": "static",
     "boxShadow": "rgba(0, 0, 0, 0.5) 0px 20px 60px 0px",
     "textShadow": "none",
@@ -29691,9 +29691,9 @@
     "webkitTextStrokeColor": "rgb(76, 23, 24)",
     "_rect": [
      150,
-     375,
+     351,
      520,
-     430
+     478
     ]
    },
    ".panel h2": {
@@ -29741,7 +29741,7 @@
     "webkitTextStrokeColor": "rgb(76, 23, 24)",
     "_rect": [
      191,
-     420,
+     396,
      438,
      56
     ]
@@ -29791,7 +29791,7 @@
     "webkitTextStrokeColor": "rgb(122, 111, 86)",
     "_rect": [
      191,
-     478,
+     454,
      438,
      25
     ]
@@ -29841,7 +29841,7 @@
     "webkitTextStrokeColor": "rgb(76, 23, 24)",
     "_rect": [
      191,
-     529,
+     505,
      438,
      59.5
     ]
@@ -29891,7 +29891,7 @@
     "webkitTextStrokeColor": "rgb(76, 23, 24)",
     "_rect": [
      218.5,
-     529,
+     505,
      105,
      59.5
     ]
@@ -29941,7 +29941,7 @@
     "webkitTextStrokeColor": "rgb(76, 23, 24)",
     "_rect": [
      218.5,
-     529,
+     505,
      105,
      39.5
     ]
@@ -29991,7 +29991,7 @@
     "webkitTextStrokeColor": "rgb(138, 125, 96)",
     "_rect": [
      246,
-     568.5,
+     544.5,
      50,
      20
     ]
@@ -30041,7 +30041,7 @@
     "webkitTextStrokeColor": "rgb(109, 98, 72)",
     "_rect": [
      191,
-     612.5,
+     588.5,
      438,
      19
     ]
@@ -30091,7 +30091,7 @@
     "webkitTextStrokeColor": "rgb(243, 231, 201)",
     "_rect": [
      191,
-     658,
+     634,
      438,
      64
     ]
@@ -30141,7 +30141,7 @@
     "webkitTextStrokeColor": "rgb(118, 83, 74)",
     "_rect": [
      191,
-     726,
+     702,
      438,
      44
     ]
@@ -33989,7 +33989,7 @@
     "minHeight": "auto",
     "minWidth": "auto",
     "width": "520px",
-    "height": "375.781px",
+    "height": "423.781px",
     "position": "static",
     "boxShadow": "rgba(0, 0, 0, 0.5) 0px 20px 60px 0px",
     "textShadow": "none",
@@ -33998,9 +33998,9 @@
     "webkitTextStrokeColor": "rgb(76, 23, 24)",
     "_rect": [
      330,
-     222,
+     198,
      520,
-     376
+     424
     ]
    },
    ".panel h2": {
@@ -34048,7 +34048,7 @@
     "webkitTextStrokeColor": "rgb(76, 23, 24)",
     "_rect": [
      369,
-     255,
+     231,
      442,
      56
     ]
@@ -34098,7 +34098,7 @@
     "webkitTextStrokeColor": "rgb(122, 111, 86)",
     "_rect": [
      369,
-     313,
+     289,
      442,
      25
     ]
@@ -34148,7 +34148,7 @@
     "webkitTextStrokeColor": "rgb(76, 23, 24)",
     "_rect": [
      369,
-     354,
+     330,
      442,
      59.5
     ]
@@ -34198,7 +34198,7 @@
     "webkitTextStrokeColor": "rgb(76, 23, 24)",
     "_rect": [
      398.5,
-     354,
+     330,
      105,
      59.5
     ]
@@ -34248,7 +34248,7 @@
     "webkitTextStrokeColor": "rgb(76, 23, 24)",
     "_rect": [
      398.5,
-     354,
+     330,
      105,
      39.5
     ]
@@ -34298,7 +34298,7 @@
     "webkitTextStrokeColor": "rgb(138, 125, 96)",
     "_rect": [
      426,
-     393.5,
+     369.5,
      50,
      20
     ]
@@ -34348,7 +34348,7 @@
     "webkitTextStrokeColor": "rgb(109, 98, 72)",
     "_rect": [
      369,
-     427.5,
+     403.5,
      442,
      19
     ]
@@ -34398,7 +34398,7 @@
     "webkitTextStrokeColor": "rgb(243, 231, 201)",
     "_rect": [
      369,
-     465,
+     441,
      442,
      56
     ]
@@ -34448,7 +34448,7 @@
     "webkitTextStrokeColor": "rgb(118, 83, 74)",
     "_rect": [
      369,
-     525,
+     501,
      442,
      44
     ]

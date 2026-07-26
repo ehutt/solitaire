@@ -408,7 +408,17 @@ function ruleContext(P) {
     topOf: (arr) => arr[arr.length - 1],
   };
   vm.createContext(context);
-  for (const name of ["canFound", "canTab", "findAnyMove", "findHint", "hasKingForEmptyColumn"]) {
+  for (const line of ["PROGRESS_DEPTH", "PROGRESS_NODES"]) {
+    const source = script.match(new RegExp(`^const ${line} = .*$`, "m"));
+    assert.ok(source, `${line} should exist`);
+    vm.runInContext(source[0], context);
+  }
+  for (const name of [
+    "canFound", "canSafelyAutoFound", "canTab", "findAnyMove", "findHint",
+    "hasKingForEmptyColumn",
+    "snapshotTableau", "simAccepts", "simKey", "simMoves", "simApply",
+    "simProgress", "findProgressPath",
+  ]) {
     vm.runInContext(functionSource(name), context);
   }
   return context;
@@ -437,13 +447,72 @@ test("findAnyMove reports a genuinely dead table as having no moves", () => {
   assert.equal(context.findAnyMove(), null);
 });
 
-test("hint offers a shuffling move before declaring the deal stuck", () => {
+test("a shuffle-only table has no progress path, so hint reports it stuck", () => {
+  const { P } = shuffleOnlyTable();
+  const context = ruleContext(P);
+
+  assert.equal(context.findHint(), null, "no single move makes progress");
+  assert.ok(context.findAnyMove(), "shuffles are still legal");
+  assert.equal(context.findProgressPath(), null, "but none of them lead anywhere");
+});
+
+test("hint searches several plies for a line that reaches real progress", () => {
+  const card = (id, suit, rank) => ({ id, suit, rank, faceUp: true });
+  const down = (id, suit, rank) => ({ id, suit, rank, faceUp: false });
+  const sevenS = card(6, 0, 7), eightH = card(20, 1, 8);
+  const sevenD = card(32, 2, 7), eightS = card(7, 0, 8);
+  const P = {
+    stock: [], waste: [], f: [[], [], [], []],
+    // 7♠ can only come off onto 8♥, which is buried under 7♦. Parking 7♦ on
+    // 8♠ makes no progress by itself but opens the reveal one move later.
+    t: [[down(51, 3, 13), sevenS], [eightH, sevenD], [eightS], [], [], [], []],
+  };
+  const context = ruleContext(P);
+
+  assert.equal(context.findHint(), null, "no single move makes progress");
+  const path = context.findProgressPath();
+  assert.ok(path, "a two-move line reaches a face-down card");
+  assert.deepEqual(path.src, [sevenD]);
+  assert.equal(path.dst, "t2");
+  assert.equal(path.depth, 2);
+});
+
+test("hint never offers a shuffle for its own sake", () => {
   const hintSource = functionSource("hint");
-  const fallbackAt = hintSource.indexOf("findAnyMove()");
+  const searchAt = hintSource.indexOf("findProgressPath()");
   const stuckAt = hintSource.indexOf("showStuck()");
-  assert.notEqual(fallbackAt, -1, "hint falls back to any legal move");
-  assert.ok(fallbackAt < stuckAt, "the fallback is tried before showStuck");
-  assert.match(hintSource, /Only shuffling moves remain/);
+  assert.notEqual(searchAt, -1, "hint searches for a productive line");
+  assert.ok(searchAt < stuckAt, "the search runs before showStuck");
+  assert.doesNotMatch(hintSource, /findAnyMove/, "no blind shuffle fallback");
+});
+
+test("hint prefers a reveal over a foundation play that could strand a card", () => {
+  const card = (id, suit, rank) => ({ id, suit, rank, faceUp: true });
+  const down = (id, suit, rank) => ({ id, suit, rank, faceUp: false });
+  const fiveS = card(4, 0, 5), sevenH = card(19, 1, 7), eightS = card(7, 0, 8);
+  // ♠5 fits the spade foundation, but ♦ is only up to 3 — sending it up now
+  // can strand a red four. Uncovering a face-down card costs nothing.
+  const P = {
+    stock: [], waste: [], f: [Array(4), Array(4), Array(3), []],
+    t: [[fiveS], [down(51, 3, 13), sevenH], [eightS], [], [], [], []],
+  };
+  const context = ruleContext(P);
+
+  const reveal = context.findHint();
+  assert.deepEqual([...reveal.src].map((c) => c.id), [sevenH.id]);
+  assert.equal(reveal.dst, "t2");
+
+  // With no reveal available the risky foundation play is still offered, so
+  // the deal never looks stuck when a legal advancing move exists.
+  P.t[1] = [sevenH];
+  const risky = context.findHint();
+  assert.deepEqual([...risky.src].map((c) => c.id), [fiveS.id]);
+  assert.equal(risky.dst, "f0");
+});
+
+test("the end-game overlay can restart the same deal", () => {
+  assert.match(html, /id="btnReplayDeal"/);
+  assert.match(script, /\$\("btnReplayDeal"\)\.onclick[\s\S]{0,200}newGame\(initialDeal\)/);
 });
 
 test("a new cascade cancels the previous run instead of racing it", () => {
