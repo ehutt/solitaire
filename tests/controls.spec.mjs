@@ -83,8 +83,18 @@ test("the end-game cascade does disable the rail, and releases it after", async 
   });
   expect(await page.evaluate(() => finishable())).toBe(true);
 
-  const samples = await sampleWhile(page, "maybeAutoFinish()", 1600);
-  expect(samples.some((s) => s.hint && s.undo)).toBe(true);
+  // Wait for the disabled state rather than sampling a fixed window: the first
+  // beat is on a timer, and under a loaded machine it can land after any window
+  // short enough to keep the suite quick. Waiting asserts the same thing without
+  // racing the scheduler.
+  await page.evaluate(() => maybeAutoFinish());
+  // `&& !won` matters: once the cascade finishes the game the rail is disabled
+  // for a different reason, which would satisfy a looser wait even if the
+  // cascade itself never dimmed anything.
+  await page.waitForFunction(
+    () => !won && document.getElementById("btnHint").disabled &&
+          document.getElementById("btnUndo").disabled,
+    null, { timeout: 10000 });
 
   // And when it stops, the rail comes back (unless the game has been won, in
   // which case staying disabled is correct).
