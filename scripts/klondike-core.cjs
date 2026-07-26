@@ -282,7 +282,9 @@ function solve(order, drawCount, options = {}) {
     return false;
   }
 
-  const solved = visit(createState(order), 0);
+  // Solving from a supplied mid-game position, not just a fresh deal, is what
+  // lets a caller ask "is this table still winnable?" of any state.
+  const solved = visit(options.state ? cloneState(options.state) : createState(order), 0);
   return {
     solved,
     solution: solved ? path.slice() : null,
@@ -303,6 +305,7 @@ module.exports = {
   applyAction,
   createState,
   isWon,
+  legalActions,
   replay,
   seededShuffle,
   solve,

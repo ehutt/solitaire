@@ -10,6 +10,7 @@
     "solver:build": "node scripts/build-solvitaire.cjs",
     "deals:generate": "node scripts/generate-winnable-deals.cjs",
     "deals:verify": "node --test tests/winnable-deals.test.cjs",
+    "verify:hints": "node scripts/verify-hints.cjs",
     "sync": "cap sync",
     "ios": "cap sync ios && cap open ios",
     "assets": "capacitor-assets generate",
