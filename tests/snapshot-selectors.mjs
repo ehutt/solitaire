@@ -28,7 +28,10 @@ export const PROPS = [
   // Every element here also records its rect, so margin effects are still pinned.
   "display", "flexDirection", "justifyContent", "alignItems", "gap",
   "minHeight", "minWidth", "width", "height",
-  "position", "boxShadow", "textShadow", "transform"
+  "position", "boxShadow", "textShadow", "transform",
+  // Stroke is how a face with no bold weight gets its weight. It is paint, not
+  // layout, so nothing else in this snapshot would move if it changed.
+  "webkitTextStrokeWidth", "webkitTextStrokeColor"
 ];
 
 // Selectors are grouped by the screen they live on, because each group needs a
@@ -44,6 +47,10 @@ export const GROUPS = {
     "#board", ".ph", '.ph[data-slot="f0"]',
     '.card[data-id="0"]', '.card[data-id="0"] .face',
     '.card[data-id="20"]', '.card[data-id="20"] .front',
+    // The index band and its rank: where the card's type actually lives. Rects
+    // are skipped — these move with whatever pile the shuffle dealt them to.
+    '!.card[data-id="20"] .ix', '!.card[data-id="20"] .ix i',
+    '!.card[data-id="20"] .ix b',
     "#controls", "#btnNew", "#btnHint", "#btnUndo", "#btnMenu",
     "#btnNew .control-label", "#btnNew .classic-icon", "#btnNew .vintage-icon",
     "#toast"

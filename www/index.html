@@ -142,6 +142,10 @@
        never reads --face-card at all. */
     --face-display:var(--serif);   /* the marquee title */
     --face-card:var(--serif);      /* rank and suit on a drawn card face */
+    /* Extra ink on a drawn card's rank, for faces with no bold weight. Dial
+       this to change how heavy the index reads; 0 is "whatever the face and
+       the browser's synthetic bold give you". */
+    --card-rank-stroke:0;
     --face-title:var(--serif);     /* sheet, stats, and group headings */
     --face-label:var(--ui);        /* chips and control-rail labels */
     --face-sheet:var(--ui);        /* everything inside the settings sheet */
@@ -183,6 +187,7 @@
        joints gave out at the 20px index. */
     --face-display:"Limelight",var(--serif);
     --face-card:"Marcellus",var(--serif);
+    --card-rank-stroke:.03em;
     --face-label:"Marcellus",var(--serif);
     --face-title:"Marcellus",var(--serif);
     --face-sheet:"Marcellus",var(--serif);
@@ -343,7 +348,17 @@
     display:flex;align-items:center;justify-content:space-between;
     line-height:.9;font-weight:400;letter-spacing:0;
   }
-  body[data-card-style="original"] .ix i{display:inline-block;font-style:normal;font-weight:800}
+  /* Marcellus ships a single weight, so `font-weight:800` only ever bought the
+     browser's synthetic emboldening — about 4% of extra width and very little
+     extra ink. The rank carries the card, so it gets a real stroke on top.
+     Stroke is a paint operation: it adds no advance width, so the index band's
+     layout and the `ch` reservations are untouched. Only the rank is stroked —
+     the suit pip comes from the serif fallback as a filled glyph and turns
+     blobby if it is thickened too. */
+  body[data-card-style="original"] .ix i{
+    display:inline-block;font-style:normal;font-weight:800;
+    -webkit-text-stroke:var(--card-rank-stroke) currentColor;
+  }
   body[data-card-style="original"] .ix.j i{transform:translateX(calc(var(--cw)*.018))}
   body[data-card-style="original"] .ix b{
     flex:none;font-weight:700;text-align:right;
