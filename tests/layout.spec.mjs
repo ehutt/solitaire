@@ -98,6 +98,43 @@ for (const cardStyle of STYLES) {
   }
 }
 
+// The same bug, one breakpoint over. Classic's phone-landscape block sets
+// --type-display on `body[data-card-style="original"]`, which out-ranks the
+// tablet-landscape block's plain `body` — so a tablet held horizontally drew
+// the marquee at the phone's size, and the HUD chips at the theme block's own
+// default. Vintage restates its values and escaped it, so this is Classic's.
+const TABLET_LANDSCAPE = VIEWPORTS[3];
+for (const [what, selector] of [["marquee", ".brand"], ["HUD chips", ".chip b"]]) {
+  test(`original — the ${what} is larger on a landscape tablet than on a phone`, async ({ page }) => {
+    const size = async (viewport) => {
+      await load(page, "original", viewport);
+      return page.evaluate(
+        sel => parseFloat(getComputedStyle(document.querySelector(sel)).fontSize), selector);
+    };
+    const phone = await size(PHONE);
+    const tablet = await size(TABLET_LANDSCAPE);
+    expect(tablet).toBeGreaterThan(phone * 1.2);
+  });
+}
+
+// Sizing the marquee up fails *quietly*: the HUD is nowrap, so the title does
+// not overflow — its own text wraps to a second line and doubles the HUD's
+// height instead. Nothing else in this suite would notice.
+for (const cardStyle of STYLES) {
+  for (const viewport of VIEWPORTS) {
+    test(`${cardStyle} — ${viewport.name} — the marquee stays on one line`, async ({ page }) => {
+      await load(page, cardStyle, viewport);
+      const brand = await page.evaluate(() => {
+        const el = document.querySelector(".brand");
+        const fontSize = parseFloat(getComputedStyle(el).fontSize);
+        return { fontSize, height: el.getBoundingClientRect().height };
+      });
+      // One line box is ~1.2x the font size; two would be ~2.4x.
+      expect(brand.height).toBeLessThan(brand.fontSize * 1.7);
+    });
+  }
+}
+
 for (const cardStyle of STYLES) {
   for (const viewport of VIEWPORTS) {
     test.describe(`${cardStyle} — ${viewport.name}`, () => {

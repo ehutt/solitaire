@@ -1208,6 +1208,21 @@
     #app{--control-rail:clamp(132px,13vw,156px)}
     #hud{padding:calc(env(safe-area-inset-top, 0px) + 10px) 20px 9px}
     body{--type-display:2.05rem;--type-chip:1.5rem;--type-chip-label:1.1rem}
+    /* Classic has to restate these at theme specificity. The phone-landscape
+       block sets --type-display on `body[data-card-style="original"]` (0,2,0),
+       which out-ranks this block's `body` (0,0,1) whatever the source order —
+       so a tablet in landscape was rendering the marquee at the phone's
+       1.5rem, smaller than an iPhone in portrait, and the HUD chips at the
+       Classic theme block's own .92rem default. Vintage restates its values
+       below for exactly this reason; Classic was the one left behind. */
+    /* Sized against the narrowest tablet landscape (1024x768), where the
+       marquee and the chips share one 851px row: 363 + 454 + the 10px gap
+       leaves 24px spare. Push the title much past this and it wraps to two
+       lines, which doubles the HUD's height rather than overflowing, so the
+       failure is quiet — hence the regression test on the brand's line count. */
+    body[data-card-style="original"]{
+      --type-display:2.3rem;--type-chip:1.15rem;--type-chip-label:.8rem;
+    }
     .chip{padding:9px 14px}
     #controls{
       top:calc(env(safe-area-inset-top, 0px) + 54px);padding:10px 12px;gap:12px;

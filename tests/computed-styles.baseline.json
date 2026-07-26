@@ -13058,7 +13058,7 @@
     "minHeight": "auto",
     "minWidth": "auto",
     "width": "946.609px",
-    "height": "53px",
+    "height": "72px",
     "position": "static",
     "boxShadow": "none",
     "textShadow": "none",
@@ -13069,16 +13069,16 @@
      40,
      0,
      946.5,
-     53
+     72
     ]
    },
    ".brand": {
     "fontFamily": "Limelight, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
-    "fontSize": "24px",
+    "fontSize": "36.8px",
     "fontWeight": "400",
     "fontStyle": "normal",
     "lineHeight": "normal",
-    "letterSpacing": "0.24px",
+    "letterSpacing": "0.368px",
     "textTransform": "none",
     "fontVariantNumeric": "normal",
     "textAlign": "start",
@@ -13107,8 +13107,8 @@
     "gap": "6.4px",
     "minHeight": "auto",
     "minWidth": "auto",
-    "width": "241.391px",
-    "height": "34px",
+    "width": "363.297px",
+    "height": "53px",
     "position": "static",
     "boxShadow": "none",
     "textShadow": "none",
@@ -13118,17 +13118,17 @@
     "_rect": [
      60,
      10,
-     241.5,
-     34
+     363.5,
+     53
     ]
    },
    ".brand .pip": {
     "fontFamily": "\"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
-    "fontSize": "25.2px",
+    "fontSize": "38.64px",
     "fontWeight": "400",
     "fontStyle": "normal",
     "lineHeight": "normal",
-    "letterSpacing": "0.24px",
+    "letterSpacing": "0.368px",
     "textTransform": "none",
     "fontVariantNumeric": "normal",
     "textAlign": "start",
@@ -13157,8 +13157,8 @@
     "gap": "normal",
     "minHeight": "auto",
     "minWidth": "auto",
-    "width": "13.6406px",
-    "height": "34px",
+    "width": "20.9062px",
+    "height": "53px",
     "position": "static",
     "boxShadow": "none",
     "textShadow": "none",
@@ -13168,8 +13168,8 @@
     "_rect": [
      60,
      10,
-     13.5,
-     34
+     21,
+     53
     ]
    },
    ".chips": {
@@ -13207,8 +13207,8 @@
     "gap": "9px",
     "minHeight": "auto",
     "minWidth": "auto",
-    "width": "380.078px",
-    "height": "28px",
+    "width": "447.516px",
+    "height": "33px",
     "position": "static",
     "boxShadow": "none",
     "textShadow": "none",
@@ -13216,15 +13216,15 @@
     "webkitTextStrokeWidth": "0px",
     "webkitTextStrokeColor": "rgb(233, 226, 207)",
     "_rect": [
-     586.5,
-     13,
-     380,
-     28
+     519,
+     20,
+     447.5,
+     33
     ]
    },
    ".chip": {
     "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
-    "fontSize": "14.72px",
+    "fontSize": "18.4px",
     "fontWeight": "500",
     "fontStyle": "normal",
     "lineHeight": "normal",
@@ -13257,8 +13257,8 @@
     "gap": "6px",
     "minHeight": "auto",
     "minWidth": "auto",
-    "width": "122.609px",
-    "height": "28px",
+    "width": "145.656px",
+    "height": "33px",
     "position": "static",
     "boxShadow": "none",
     "textShadow": "none",
@@ -13266,19 +13266,19 @@
     "webkitTextStrokeWidth": "0px",
     "webkitTextStrokeColor": "rgb(240, 232, 210)",
     "_rect": [
-     586.5,
-     13,
-     122.5,
-     28
+     519,
+     20,
+     145.5,
+     33
     ]
    },
    ".chip small": {
     "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
-    "fontSize": "9.92px",
+    "fontSize": "12.8px",
     "fontWeight": "500",
     "fontStyle": "normal",
     "lineHeight": "normal",
-    "letterSpacing": "1.1904px",
+    "letterSpacing": "1.536px",
     "textTransform": "uppercase",
     "fontVariantNumeric": "tabular-nums",
     "textAlign": "start",
@@ -13307,8 +13307,8 @@
     "gap": "normal",
     "minHeight": "auto",
     "minWidth": "auto",
-    "width": "28.2812px",
-    "height": "13px",
+    "width": "36.5px",
+    "height": "16px",
     "position": "static",
     "boxShadow": "none",
     "textShadow": "none",
@@ -13316,15 +13316,15 @@
     "webkitTextStrokeWidth": "0px",
     "webkitTextStrokeColor": "rgb(201, 180, 119)",
     "_rect": [
-     601.5,
-     22,
-     28.5,
-     13
+     534,
+     31,
+     36.5,
+     16
     ]
    },
    ".chip b": {
     "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
-    "fontSize": "14.72px",
+    "fontSize": "18.4px",
     "fontWeight": "600",
     "fontStyle": "normal",
     "lineHeight": "normal",
@@ -13356,9 +13356,9 @@
     "alignItems": "normal",
     "gap": "normal",
     "minHeight": "auto",
-    "minWidth": "59.3328px",
-    "width": "59.3281px",
-    "height": "18px",
+    "minWidth": "74.166px",
+    "width": "74.1562px",
+    "height": "23px",
     "position": "static",
     "boxShadow": "none",
     "textShadow": "none",
@@ -13366,15 +13366,65 @@
     "webkitTextStrokeWidth": "0px",
     "webkitTextStrokeColor": "rgb(240, 232, 210)",
     "_rect": [
-     636,
-     18,
-     59.5,
-     18
+     576.5,
+     25,
+     74,
+     23
     ]
    },
    "#vTime": {
     "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
-    "fontSize": "14.72px",
+    "fontSize": "18.4px",
+    "fontWeight": "600",
+    "fontStyle": "normal",
+    "lineHeight": "normal",
+    "letterSpacing": "normal",
+    "textTransform": "none",
+    "fontVariantNumeric": "tabular-nums",
+    "textAlign": "right",
+    "color": "rgb(240, 232, 210)",
+    "backgroundColor": "rgba(0, 0, 0, 0)",
+    "backgroundImage": "none",
+    "opacity": "1",
+    "borderTopWidth": "0px",
+    "borderRightWidth": "0px",
+    "borderBottomWidth": "0px",
+    "borderLeftWidth": "0px",
+    "borderTopStyle": "none",
+    "borderTopColor": "rgb(240, 232, 210)",
+    "borderRightColor": "rgb(240, 232, 210)",
+    "borderBottomColor": "rgb(240, 232, 210)",
+    "borderLeftColor": "rgb(240, 232, 210)",
+    "borderRadius": "0px",
+    "paddingTop": "0px",
+    "paddingRight": "0px",
+    "paddingBottom": "0px",
+    "paddingLeft": "0px",
+    "display": "block",
+    "flexDirection": "row",
+    "justifyContent": "normal",
+    "alignItems": "normal",
+    "gap": "normal",
+    "minHeight": "auto",
+    "minWidth": "74.166px",
+    "width": "74.1562px",
+    "height": "23px",
+    "position": "static",
+    "boxShadow": "none",
+    "textShadow": "none",
+    "transform": "none",
+    "webkitTextStrokeWidth": "0px",
+    "webkitTextStrokeColor": "rgb(240, 232, 210)",
+    "_rect": [
+     576.5,
+     25,
+     74,
+     23
+    ]
+   },
+   "#vMoves": {
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
+    "fontSize": "18.4px",
     "fontWeight": "600",
     "fontStyle": "normal",
     "lineHeight": "normal",
@@ -13408,7 +13458,7 @@
     "minHeight": "auto",
     "minWidth": "59.3328px",
     "width": "59.3281px",
-    "height": "18px",
+    "height": "23px",
     "position": "static",
     "boxShadow": "none",
     "textShadow": "none",
@@ -13416,65 +13466,15 @@
     "webkitTextStrokeWidth": "0px",
     "webkitTextStrokeColor": "rgb(240, 232, 210)",
     "_rect": [
-     636,
-     18,
+     746.5,
+     25,
      59.5,
-     18
-    ]
-   },
-   "#vMoves": {
-    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
-    "fontSize": "14.72px",
-    "fontWeight": "600",
-    "fontStyle": "normal",
-    "lineHeight": "normal",
-    "letterSpacing": "normal",
-    "textTransform": "none",
-    "fontVariantNumeric": "tabular-nums",
-    "textAlign": "right",
-    "color": "rgb(240, 232, 210)",
-    "backgroundColor": "rgba(0, 0, 0, 0)",
-    "backgroundImage": "none",
-    "opacity": "1",
-    "borderTopWidth": "0px",
-    "borderRightWidth": "0px",
-    "borderBottomWidth": "0px",
-    "borderLeftWidth": "0px",
-    "borderTopStyle": "none",
-    "borderTopColor": "rgb(240, 232, 210)",
-    "borderRightColor": "rgb(240, 232, 210)",
-    "borderBottomColor": "rgb(240, 232, 210)",
-    "borderLeftColor": "rgb(240, 232, 210)",
-    "borderRadius": "0px",
-    "paddingTop": "0px",
-    "paddingRight": "0px",
-    "paddingBottom": "0px",
-    "paddingLeft": "0px",
-    "display": "block",
-    "flexDirection": "row",
-    "justifyContent": "normal",
-    "alignItems": "normal",
-    "gap": "normal",
-    "minHeight": "auto",
-    "minWidth": "47.4663px",
-    "width": "47.4531px",
-    "height": "18px",
-    "position": "static",
-    "boxShadow": "none",
-    "textShadow": "none",
-    "transform": "none",
-    "webkitTextStrokeWidth": "0px",
-    "webkitTextStrokeColor": "rgb(240, 232, 210)",
-    "_rect": [
-     779,
-     18,
-     47.5,
-     18
+     23
     ]
    },
    "#vStreak": {
     "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
-    "fontSize": "14.72px",
+    "fontSize": "18.4px",
     "fontWeight": "600",
     "fontStyle": "normal",
     "lineHeight": "normal",
@@ -13506,9 +13506,9 @@
     "alignItems": "normal",
     "gap": "normal",
     "minHeight": "auto",
-    "minWidth": "35.5997px",
-    "width": "35.5938px",
-    "height": "18px",
+    "minWidth": "44.4996px",
+    "width": "44.4844px",
+    "height": "23px",
     "position": "static",
     "boxShadow": "none",
     "textShadow": "none",
@@ -13516,10 +13516,10 @@
     "webkitTextStrokeWidth": "0px",
     "webkitTextStrokeColor": "rgb(240, 232, 210)",
     "_rect": [
-     917,
-     18,
-     35.5,
-     18
+     908,
+     25,
+     44.5,
+     23
     ]
    },
    "#board": {
@@ -13558,7 +13558,7 @@
     "minHeight": "0px",
     "minWidth": "auto",
     "width": "946.609px",
-    "height": "767px",
+    "height": "748px",
     "position": "relative",
     "boxShadow": "none",
     "textShadow": "none",
@@ -13567,9 +13567,9 @@
     "webkitTextStrokeColor": "rgb(233, 226, 207)",
     "_rect": [
      40,
-     53,
+     72,
      946.5,
-     767
+     748
     ]
    },
    ".ph": {
@@ -13612,12 +13612,12 @@
     "position": "absolute",
     "boxShadow": "none",
     "textShadow": "none",
-    "transform": "matrix(1, 0, 0, 1, 845.805, 314.253)",
+    "transform": "matrix(1, 0, 0, 1, 845.805, 304.753)",
     "webkitTextStrokeWidth": "0px",
     "webkitTextStrokeColor": "rgb(44, 90, 73)",
     "_rect": [
      886,
-     367.5,
+     377,
      95.5,
      138.5
     ]
@@ -13667,7 +13667,7 @@
     "webkitTextStrokeColor": "rgb(44, 90, 73)",
     "_rect": [
      45.5,
-     57,
+     76,
      95.5,
      138.5
     ]
@@ -13712,12 +13712,12 @@
     "position": "absolute",
     "boxShadow": "none",
     "textShadow": "none",
-    "transform": "matrix(1, 0, 0, 1, 845.805, 314.253)",
+    "transform": "matrix(1, 0, 0, 1, 845.805, 304.753)",
     "webkitTextStrokeWidth": "0px",
     "webkitTextStrokeColor": "rgb(233, 226, 207)",
     "_rect": [
      886,
-     367.5,
+     377,
      95.5,
      138.5
     ]
@@ -13767,7 +13767,7 @@
     "webkitTextStrokeColor": "rgb(38, 40, 46)",
     "_rect": [
      886,
-     367.5,
+     377,
      95.5,
      138.5
     ]
@@ -13812,12 +13812,12 @@
     "position": "absolute",
     "boxShadow": "none",
     "textShadow": "none",
-    "transform": "matrix(1, 0, 0, 1, 845.805, 314.253)",
+    "transform": "matrix(1, 0, 0, 1, 845.805, 304.753)",
     "webkitTextStrokeWidth": "0px",
     "webkitTextStrokeColor": "rgb(233, 226, 207)",
     "_rect": [
      886,
-     367.5,
+     377,
      95.5,
      138.5
     ]
@@ -13867,7 +13867,7 @@
     "webkitTextStrokeColor": "rgb(191, 59, 51)",
     "_rect": [
      886,
-     367.5,
+     377,
      95.5,
      138.5
     ]
