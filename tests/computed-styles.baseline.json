@@ -133,7 +133,7 @@
     "minHeight": "auto",
     "minWidth": "auto",
     "width": "390px",
-    "height": "103px",
+    "height": "102px",
     "position": "static",
     "boxShadow": "none",
     "textShadow": "none",
@@ -142,7 +142,7 @@
      0,
      0,
      390,
-     103
+     102
     ]
    },
    ".brand": {
@@ -277,7 +277,7 @@
     "minHeight": "auto",
     "minWidth": "auto",
     "width": "358px",
-    "height": "26px",
+    "height": "25px",
     "position": "static",
     "boxShadow": "none",
     "textShadow": "none",
@@ -286,11 +286,11 @@
      16,
      64,
      358,
-     26
+     25
     ]
    },
    ".chip": {
-    "fontFamily": "Cinzel, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "13.76px",
     "fontWeight": "500",
     "fontStyle": "normal",
@@ -324,21 +324,21 @@
     "gap": "5px",
     "minHeight": "auto",
     "minWidth": "auto",
-    "width": "100.344px",
-    "height": "26px",
+    "width": "112.062px",
+    "height": "25px",
     "position": "static",
     "boxShadow": "none",
     "textShadow": "none",
     "transform": "none",
     "_rect": [
-     38.5,
+     26,
      64,
-     100.5,
-     26
+     112,
+     25
     ]
    },
    ".chip small": {
-    "fontFamily": "Cinzel, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "9.6px",
     "fontWeight": "500",
     "fontStyle": "normal",
@@ -372,21 +372,21 @@
     "gap": "normal",
     "minHeight": "auto",
     "minWidth": "auto",
-    "width": "28.0469px",
-    "height": "13px",
+    "width": "26.6094px",
+    "height": "12px",
     "position": "static",
     "boxShadow": "none",
     "textShadow": "none",
     "transform": "none",
     "_rect": [
-     51.5,
+     39,
      72,
-     28,
-     13
+     26.5,
+     12
     ]
    },
    ".chip b": {
-    "fontFamily": "Cinzel, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "13.76px",
     "fontWeight": "600",
     "fontStyle": "normal",
@@ -419,22 +419,22 @@
     "alignItems": "normal",
     "gap": "normal",
     "minHeight": "auto",
-    "minWidth": "42.312px",
-    "width": "42.2969px",
-    "height": "18px",
+    "minWidth": "55.4633px",
+    "width": "55.4531px",
+    "height": "17px",
     "position": "static",
     "boxShadow": "none",
     "textShadow": "none",
     "transform": "none",
     "_rect": [
-     84.5,
+     70.5,
      68,
-     42.5,
-     18
+     55.5,
+     17
     ]
    },
    "#vTime": {
-    "fontFamily": "Cinzel, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "13.76px",
     "fontWeight": "600",
     "fontStyle": "normal",
@@ -467,22 +467,22 @@
     "alignItems": "normal",
     "gap": "normal",
     "minHeight": "auto",
-    "minWidth": "42.312px",
-    "width": "42.2969px",
-    "height": "18px",
+    "minWidth": "55.4633px",
+    "width": "55.4531px",
+    "height": "17px",
     "position": "static",
     "boxShadow": "none",
     "textShadow": "none",
     "transform": "none",
     "_rect": [
-     84.5,
+     70.5,
      68,
-     42.5,
-     18
+     55.5,
+     17
     ]
    },
    "#vMoves": {
-    "fontFamily": "Cinzel, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "13.76px",
     "fontWeight": "600",
     "fontStyle": "normal",
@@ -515,22 +515,22 @@
     "alignItems": "normal",
     "gap": "normal",
     "minHeight": "auto",
-    "minWidth": "33.8496px",
-    "width": "33.8438px",
-    "height": "18px",
+    "minWidth": "44.3706px",
+    "width": "44.3594px",
+    "height": "17px",
     "position": "static",
     "boxShadow": "none",
     "textShadow": "none",
     "transform": "none",
     "_rect": [
-     202,
+     199.5,
      68,
-     34,
-     18
+     44.5,
+     17
     ]
    },
    "#vStreak": {
-    "fontFamily": "Cinzel, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "13.76px",
     "fontWeight": "600",
     "fontStyle": "normal",
@@ -563,18 +563,18 @@
     "alignItems": "normal",
     "gap": "normal",
     "minHeight": "auto",
-    "minWidth": "25.3872px",
-    "width": "25.375px",
-    "height": "18px",
+    "minWidth": "33.278px",
+    "width": "33.2656px",
+    "height": "17px",
     "position": "static",
     "boxShadow": "none",
     "textShadow": "none",
     "transform": "none",
     "_rect": [
-     314,
+     319,
      68,
-     25.5,
-     18
+     33.5,
+     17
     ]
    },
    "#board": {
@@ -613,16 +613,16 @@
     "minHeight": "0px",
     "minWidth": "auto",
     "width": "390px",
-    "height": "660.797px",
+    "height": "661.797px",
     "position": "relative",
     "boxShadow": "none",
     "textShadow": "none",
     "transform": "none",
     "_rect": [
      0,
-     103,
+     102,
      390,
-     661
+     662
     ]
    },
    ".ph": {
@@ -668,7 +668,7 @@
     "transform": "matrix(1, 0, 0, 1, 334.62, 8)",
     "_rect": [
      334.5,
-     111,
+     110,
      53,
      77
     ]
@@ -716,7 +716,7 @@
     "transform": "matrix(1, 0, 0, 1, 2.34, 8)",
     "_rect": [
      2.5,
-     111,
+     110,
      53,
      77
     ]
@@ -764,13 +764,13 @@
     "transform": "matrix(1, 0, 0, 1, 334.62, 8)",
     "_rect": [
      334.5,
-     111,
+     110,
      53,
      77
     ]
    },
    ".card[data-id=\"0\"] .face": {
-    "fontFamily": "Limelight, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "7.4256px",
     "fontWeight": "400",
     "fontStyle": "normal",
@@ -812,7 +812,7 @@
     "transform": "none",
     "_rect": [
      334.5,
-     111,
+     110,
      53,
      77
     ]
@@ -860,13 +860,13 @@
     "transform": "matrix(1, 0, 0, 1, 334.62, 8)",
     "_rect": [
      334.5,
-     111,
+     110,
      53,
      77
     ]
    },
    ".card[data-id=\"20\"] .front": {
-    "fontFamily": "Limelight, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "7.4256px",
     "fontWeight": "400",
     "fontStyle": "normal",
@@ -908,7 +908,7 @@
     "transform": "none",
     "_rect": [
      334.5,
-     111,
+     110,
      53,
      77
     ]
@@ -962,7 +962,7 @@
     ]
    },
    "#btnNew": {
-    "fontFamily": "Cinzel, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "14.4px",
     "fontWeight": "500",
     "fontStyle": "normal",
@@ -996,21 +996,21 @@
     "gap": "6px",
     "minHeight": "50px",
     "minWidth": "auto",
-    "width": "67.0312px",
+    "width": "64.625px",
     "height": "53.2031px",
     "position": "static",
     "boxShadow": "none",
     "textShadow": "none",
     "transform": "none",
     "_rect": [
-     43,
+     49,
      776,
-     67,
+     64.5,
      53
     ]
    },
    "#btnHint": {
-    "fontFamily": "Cinzel, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "14.4px",
     "fontWeight": "500",
     "fontStyle": "normal",
@@ -1044,21 +1044,21 @@
     "gap": "6px",
     "minHeight": "50px",
     "minWidth": "auto",
-    "width": "72.1562px",
+    "width": "67.2969px",
     "height": "53.2031px",
     "position": "static",
     "boxShadow": "none",
     "textShadow": "none",
     "transform": "none",
     "_rect": [
-     119,
+     122.5,
      776,
-     72,
+     67.5,
      53
     ]
    },
    "#btnUndo": {
-    "fontFamily": "Cinzel, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "14.4px",
     "fontWeight": "500",
     "fontStyle": "normal",
@@ -1092,21 +1092,21 @@
     "gap": "6px",
     "minHeight": "50px",
     "minWidth": "auto",
-    "width": "81.1562px",
+    "width": "76.5156px",
     "height": "53.2031px",
     "position": "static",
     "boxShadow": "none",
     "textShadow": "none",
     "transform": "none",
     "_rect": [
-     200,
+     198.5,
      776,
-     81,
+     76.5,
      53
     ]
    },
    "#btnMenu": {
-    "fontFamily": "Cinzel, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "14.4px",
     "fontWeight": "500",
     "fontStyle": "normal",
@@ -1147,14 +1147,14 @@
     "textShadow": "none",
     "transform": "none",
     "_rect": [
-     290,
+     284,
      776,
      57,
      53
     ]
    },
    "#btnNew .control-label": {
-    "fontFamily": "Cinzel, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "14.4px",
     "fontWeight": "500",
     "fontStyle": "normal",
@@ -1188,21 +1188,21 @@
     "gap": "normal",
     "minHeight": "auto",
     "minWidth": "auto",
-    "width": "39.0312px",
-    "height": "19px",
+    "width": "36.625px",
+    "height": "18px",
     "position": "static",
     "boxShadow": "none",
     "textShadow": "none",
     "transform": "none",
     "_rect": [
-     57,
-     793,
-     39,
-     19
+     63,
+     793.5,
+     36.5,
+     18
     ]
    },
    "#btnNew .classic-icon": {
-    "fontFamily": "Cinzel, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "14.4px",
     "fontWeight": "500",
     "fontStyle": "normal",
@@ -1250,7 +1250,7 @@
     ]
    },
    "#btnNew .vintage-icon": {
-    "fontFamily": "Cinzel, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "14.4px",
     "fontWeight": "500",
     "fontStyle": "normal",
@@ -1298,7 +1298,7 @@
     ]
    },
    "#toast": {
-    "fontFamily": "ui-rounded, -apple-system, \"system-ui\", \"SF Pro Rounded\", system-ui, sans-serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "16px",
     "fontWeight": "400",
     "fontStyle": "normal",
@@ -1346,7 +1346,7 @@
     ]
    },
    ".pinned-header::before": {
-    "fontFamily": "\"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "16px",
     "fontWeight": "400",
     "fontStyle": "normal",
@@ -1474,7 +1474,7 @@
   },
   "sheet": {
    "#sheet": {
-    "fontFamily": "\"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "16px",
     "fontWeight": "400",
     "fontStyle": "normal",
@@ -1522,7 +1522,7 @@
     ]
    },
    ".pinned-header": {
-    "fontFamily": "\"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "16px",
     "fontWeight": "400",
     "fontStyle": "normal",
@@ -1570,7 +1570,7 @@
     ]
    },
    ".title-row": {
-    "fontFamily": "\"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "16px",
     "fontWeight": "400",
     "fontStyle": "normal",
@@ -1618,7 +1618,7 @@
     ]
    },
    "#sheet h3": {
-    "fontFamily": "\"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "24px",
     "fontWeight": "600",
     "fontStyle": "normal",
@@ -1762,7 +1762,7 @@
     ]
    },
    ".row": {
-    "fontFamily": "\"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "17.28px",
     "fontWeight": "400",
     "fontStyle": "normal",
@@ -1797,7 +1797,7 @@
     "minHeight": "0px",
     "minWidth": "0px",
     "width": "346px",
-    "height": "105.672px",
+    "height": "103.672px",
     "position": "static",
     "boxShadow": "none",
     "textShadow": "none",
@@ -1806,11 +1806,11 @@
      22,
      68.5,
      346,
-     105.5
+     103.5
     ]
    },
    ".row .sub2": {
-    "fontFamily": "\"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "13.76px",
     "fontWeight": "400",
     "fontStyle": "normal",
@@ -1844,7 +1844,7 @@
     "gap": "normal",
     "minHeight": "0px",
     "minWidth": "0px",
-    "width": "154.359px",
+    "width": "164.234px",
     "height": "53.6719px",
     "position": "static",
     "boxShadow": "none",
@@ -1852,13 +1852,13 @@
     "transform": "none",
     "_rect": [
      22,
-     107.5,
-     154.5,
+     105.5,
+     164,
      53.5
     ]
    },
    ".seg": {
-    "fontFamily": "\"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "17.28px",
     "fontWeight": "400",
     "fontStyle": "normal",
@@ -1892,21 +1892,21 @@
     "gap": "2px",
     "minHeight": "auto",
     "minWidth": "auto",
-    "width": "175.641px",
+    "width": "165.766px",
     "height": "42px",
     "position": "static",
     "boxShadow": "none",
     "textShadow": "none",
     "transform": "none",
     "_rect": [
-     192.5,
-     100,
-     175.5,
+     202,
+     99,
+     166,
      42
     ]
    },
    ".seg button": {
-    "fontFamily": "\"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "15.36px",
     "fontWeight": "600",
     "fontStyle": "normal",
@@ -1940,21 +1940,21 @@
     "gap": "normal",
     "minHeight": "36px",
     "minWidth": "auto",
-    "width": "81.2812px",
+    "width": "74.3906px",
     "height": "36px",
     "position": "static",
     "boxShadow": "none",
     "textShadow": "none",
     "transform": "none",
     "_rect": [
-     195.5,
-     103,
-     81.5,
+     205,
+     102,
+     74.5,
      36
     ]
    },
    "#segCardsOriginal": {
-    "fontFamily": "\"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "15.36px",
     "fontWeight": "600",
     "fontStyle": "normal",
@@ -1988,21 +1988,21 @@
     "gap": "normal",
     "minHeight": "36px",
     "minWidth": "auto",
-    "width": "81.2812px",
+    "width": "74.3906px",
     "height": "36px",
     "position": "static",
     "boxShadow": "none",
     "textShadow": "none",
     "transform": "none",
     "_rect": [
-     195.5,
-     103,
-     81.5,
+     205,
+     102,
+     74.5,
      36
     ]
    },
    ".deal-mix": {
-    "fontFamily": "\"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "17.28px",
     "fontWeight": "400",
     "fontStyle": "normal",
@@ -2037,20 +2037,20 @@
     "minHeight": "auto",
     "minWidth": "auto",
     "width": "179.391px",
-    "height": "56.875px",
+    "height": "55.875px",
     "position": "static",
     "boxShadow": "none",
     "textShadow": "none",
     "transform": "none",
     "_rect": [
      188.5,
-     452.5,
+     444,
      179.5,
-     57
+     56
     ]
    },
    ".deal-mix-labels": {
-    "fontFamily": "\"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "12.8px",
     "fontWeight": "400",
     "fontStyle": "normal",
@@ -2085,20 +2085,20 @@
     "minHeight": "0px",
     "minWidth": "0px",
     "width": "179.391px",
-    "height": "17px",
+    "height": "16px",
     "position": "static",
     "boxShadow": "none",
     "textShadow": "none",
     "transform": "none",
     "_rect": [
      188.5,
-     452.5,
+     444,
      179.5,
-     17
+     16
     ]
    },
    ".deal-mix-stops": {
-    "fontFamily": "\"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "10.88px",
     "fontWeight": "400",
     "fontStyle": "normal",
@@ -2140,7 +2140,7 @@
     "transform": "none",
     "_rect": [
      188.5,
-     498.5,
+     489,
      179.5,
      11
     ]
@@ -2188,13 +2188,13 @@
     "transform": "none",
     "_rect": [
      188.5,
-     471.5,
+     462,
      179.5,
      32
     ]
    },
    "#btnRestart": {
-    "fontFamily": "\"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "15.2px",
     "fontWeight": "600",
     "fontStyle": "normal",
@@ -2228,21 +2228,21 @@
     "gap": "normal",
     "minHeight": "auto",
     "minWidth": "auto",
-    "width": "87.0156px",
-    "height": "43px",
+    "width": "82.0938px",
+    "height": "41px",
     "position": "static",
     "boxShadow": "none",
     "textShadow": "none",
     "transform": "none",
     "_rect": [
-     281,
-     538.5,
-     87,
-     43
+     286,
+     528.5,
+     82,
+     41
     ]
    },
    ".record-preview": {
-    "fontFamily": "\"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "17.28px",
     "fontWeight": "400",
     "fontStyle": "normal",
@@ -2277,20 +2277,20 @@
     "minHeight": "0px",
     "minWidth": "0px",
     "width": "346px",
-    "height": "86.1562px",
+    "height": "84.1562px",
     "position": "static",
     "boxShadow": "none",
     "textShadow": "none",
     "transform": "none",
     "_rect": [
      22,
-     641.5,
+     627.5,
      346,
-     86
+     84
     ]
    },
    ".record-card": {
-    "fontFamily": "\"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "17.28px",
     "fontWeight": "400",
     "fontStyle": "normal",
@@ -2332,14 +2332,14 @@
     "transform": "none",
     "_rect": [
      22,
-     641.5,
+     627.5,
      346,
      46
     ]
    },
    ".record-card strong": "ABSENT",
    ".record-card span": {
-    "fontFamily": "\"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "13.44px",
     "fontWeight": "400",
     "fontStyle": "normal",
@@ -2381,13 +2381,13 @@
     "transform": "none",
     "_rect": [
      36,
-     654.5,
+     640.5,
      100.5,
      20
     ]
    },
    ".record-link": {
-    "fontFamily": "\"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "15.36px",
     "fontWeight": "600",
     "fontStyle": "normal",
@@ -2422,16 +2422,16 @@
     "minHeight": "42px",
     "minWidth": "0px",
     "width": "346px",
-    "height": "45px",
+    "height": "43px",
     "position": "static",
     "boxShadow": "none",
     "textShadow": "none",
     "transform": "none",
     "_rect": [
      22,
-     737.5,
+     721.5,
      346,
-     45
+     43
     ]
    },
    "#sheetBack": {
@@ -2483,7 +2483,7 @@
     ]
    },
    ".pinned-header::before": {
-    "fontFamily": "\"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "16px",
     "fontWeight": "400",
     "fontStyle": "normal",
@@ -2611,7 +2611,7 @@
   },
   "stats": {
    "#statsPage": {
-    "fontFamily": "ui-rounded, -apple-system, \"system-ui\", \"SF Pro Rounded\", system-ui, sans-serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "16px",
     "fontWeight": "400",
     "fontStyle": "normal",
@@ -2659,7 +2659,7 @@
     ]
    },
    ".stats-page-inner": {
-    "fontFamily": "ui-rounded, -apple-system, \"system-ui\", \"SF Pro Rounded\", system-ui, sans-serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "16px",
     "fontWeight": "400",
     "fontStyle": "normal",
@@ -2694,7 +2694,7 @@
     "minHeight": "0px",
     "minWidth": "0px",
     "width": "350px",
-    "height": "837.062px",
+    "height": "848.062px",
     "position": "static",
     "boxShadow": "none",
     "textShadow": "none",
@@ -2703,11 +2703,11 @@
      20,
      18,
      350,
-     837
+     848
     ]
    },
    ".stats-header": {
-    "fontFamily": "ui-rounded, -apple-system, \"system-ui\", \"SF Pro Rounded\", system-ui, sans-serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "16px",
     "fontWeight": "400",
     "fontStyle": "normal",
@@ -2755,7 +2755,7 @@
     ]
    },
    ".stats-header h2": {
-    "fontFamily": "\"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "24.8px",
     "fontWeight": "600",
     "fontStyle": "normal",
@@ -2789,17 +2789,17 @@
     "gap": "normal",
     "minHeight": "auto",
     "minWidth": "auto",
-    "width": "140.797px",
-    "height": "34px",
+    "width": "126.469px",
+    "height": "31px",
     "position": "static",
     "boxShadow": "none",
     "textShadow": "none",
     "transform": "none",
     "_rect": [
      20,
-     21.5,
-     141,
-     34
+     23,
+     126.5,
+     31
     ]
    },
    "#btnStatsClose": {
@@ -2851,7 +2851,7 @@
     ]
    },
    ".stats-tabs": {
-    "fontFamily": "ui-rounded, -apple-system, \"system-ui\", \"SF Pro Rounded\", system-ui, sans-serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "16px",
     "fontWeight": "400",
     "fontStyle": "normal",
@@ -2899,7 +2899,7 @@
     ]
    },
    ".stats-tabs button": {
-    "fontFamily": "ui-rounded, -apple-system, \"system-ui\", \"SF Pro Rounded\", system-ui, sans-serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "15.36px",
     "fontWeight": "600",
     "fontStyle": "normal",
@@ -2947,7 +2947,7 @@
     ]
    },
    ".stats-hero": {
-    "fontFamily": "ui-rounded, -apple-system, \"system-ui\", \"SF Pro Rounded\", system-ui, sans-serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "16px",
     "fontWeight": "400",
     "fontStyle": "normal",
@@ -2982,7 +2982,7 @@
     "minHeight": "0px",
     "minWidth": "0px",
     "width": "350px",
-    "height": "80px",
+    "height": "79px",
     "position": "static",
     "boxShadow": "none",
     "textShadow": "none",
@@ -2991,11 +2991,11 @@
      20,
      135,
      350,
-     80
+     79
     ]
    },
    ".stats-hero div": {
-    "fontFamily": "ui-rounded, -apple-system, \"system-ui\", \"SF Pro Rounded\", system-ui, sans-serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "16px",
     "fontWeight": "400",
     "fontStyle": "normal",
@@ -3030,7 +3030,7 @@
     "minHeight": "auto",
     "minWidth": "auto",
     "width": "111.328px",
-    "height": "80px",
+    "height": "79px",
     "position": "static",
     "boxShadow": "none",
     "textShadow": "none",
@@ -3039,11 +3039,11 @@
      20,
      135,
      111.5,
-     80
+     79
     ]
    },
    ".stats-hero b": {
-    "fontFamily": "\"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "24.8px",
     "fontWeight": "700",
     "fontStyle": "normal",
@@ -3078,7 +3078,7 @@
     "minHeight": "0px",
     "minWidth": "0px",
     "width": "99.3281px",
-    "height": "34px",
+    "height": "31px",
     "position": "static",
     "boxShadow": "none",
     "textShadow": "none",
@@ -3087,11 +3087,11 @@
      26,
      149,
      99.5,
-     34
+     31
     ]
    },
    ".stats-hero span": {
-    "fontFamily": "ui-rounded, -apple-system, \"system-ui\", \"SF Pro Rounded\", system-ui, sans-serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "11.52px",
     "fontWeight": "400",
     "fontStyle": "normal",
@@ -3133,13 +3133,13 @@
     "transform": "none",
     "_rect": [
      36,
-     187,
+     185,
      79.5,
-     13
+     14
     ]
    },
    ".stats-group": {
-    "fontFamily": "ui-rounded, -apple-system, \"system-ui\", \"SF Pro Rounded\", system-ui, sans-serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "16px",
     "fontWeight": "400",
     "fontStyle": "normal",
@@ -3174,20 +3174,20 @@
     "minHeight": "0px",
     "minWidth": "0px",
     "width": "350px",
-    "height": "166px",
+    "height": "170px",
     "position": "static",
     "boxShadow": "none",
     "textShadow": "none",
     "transform": "none",
     "_rect": [
      20,
-     233,
+     232,
      350,
-     166
+     170
     ]
    },
    ".stats-group h3": {
-    "fontFamily": "\"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "16px",
     "fontWeight": "600",
     "fontStyle": "normal",
@@ -3222,20 +3222,20 @@
     "minHeight": "0px",
     "minWidth": "0px",
     "width": "318px",
-    "height": "40px",
+    "height": "38px",
     "position": "static",
     "boxShadow": "none",
     "textShadow": "none",
     "transform": "none",
     "_rect": [
      36,
-     238,
+     237,
      318,
-     40
+     38
     ]
    },
    ".stats-detail-row": {
-    "fontFamily": "ui-rounded, -apple-system, \"system-ui\", \"SF Pro Rounded\", system-ui, sans-serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "16px",
     "fontWeight": "400",
     "fontStyle": "normal",
@@ -3270,20 +3270,20 @@
     "minHeight": "0px",
     "minWidth": "0px",
     "width": "318px",
-    "height": "39px",
+    "height": "41px",
     "position": "static",
     "boxShadow": "none",
     "textShadow": "none",
     "transform": "none",
     "_rect": [
      36,
-     278,
+     275,
      318,
-     39
+     41
     ]
    },
    ".stats-detail-row b": {
-    "fontFamily": "ui-rounded, -apple-system, \"system-ui\", \"SF Pro Rounded\", system-ui, sans-serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "16px",
     "fontWeight": "700",
     "fontStyle": "normal",
@@ -3317,17 +3317,17 @@
     "gap": "normal",
     "minHeight": "auto",
     "minWidth": "auto",
-    "width": "14.2031px",
-    "height": "18px",
+    "width": "16px",
+    "height": "20px",
     "position": "static",
     "boxShadow": "none",
     "textShadow": "none",
     "transform": "none",
     "_rect": [
-     340,
-     288,
-     14,
-     18
+     338,
+     285,
+     16,
+     20
     ]
    }
   },
@@ -3416,20 +3416,20 @@
     "minHeight": "auto",
     "minWidth": "auto",
     "width": "350px",
-    "height": "314.922px",
+    "height": "319.922px",
     "position": "static",
     "boxShadow": "rgba(0, 0, 0, 0.5) 0px 20px 60px 0px",
     "textShadow": "none",
     "transform": "none",
     "_rect": [
      20,
-     264.5,
+     262,
      350,
-     315
+     320
     ]
    },
    ".panel h2": {
-    "fontFamily": "Limelight, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "32px",
     "fontWeight": "400",
     "fontStyle": "normal",
@@ -3464,16 +3464,16 @@
     "minHeight": "0px",
     "minWidth": "0px",
     "width": "294px",
-    "height": "39px",
+    "height": "40px",
     "position": "static",
     "boxShadow": "none",
     "textShadow": "none",
     "transform": "none",
     "_rect": [
      48,
-     294.5,
+     292,
      294,
-     39
+     40
     ]
    },
    ".panel .sub": {
@@ -3519,7 +3519,7 @@
     "transform": "none",
     "_rect": [
      48,
-     335.5,
+     334,
      294,
      20
     ]
@@ -3567,7 +3567,7 @@
     "transform": "none",
     "_rect": [
      48,
-     373.5,
+     372,
      294,
      48
     ]
@@ -3615,7 +3615,7 @@
     "transform": "none",
     "_rect": [
      72,
-     373.5,
+     372,
      70,
      48
     ]
@@ -3663,7 +3663,7 @@
     "transform": "none",
     "_rect": [
      72,
-     373.5,
+     372,
      70,
      30
     ]
@@ -3711,7 +3711,7 @@
     "transform": "none",
     "_rect": [
      90.5,
-     406.5,
+     405,
      32.5,
      15
     ]
@@ -3759,13 +3759,13 @@
     "transform": "none",
     "_rect": [
      48,
-     435.5,
+     434,
      294,
      16
     ]
    },
    ".panel button": {
-    "fontFamily": "ui-rounded, -apple-system, \"system-ui\", \"SF Pro Rounded\", system-ui, sans-serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "16.32px",
     "fontWeight": "600",
     "fontStyle": "normal",
@@ -3800,20 +3800,20 @@
     "minHeight": "0px",
     "minWidth": "0px",
     "width": "294px",
-    "height": "45px",
+    "height": "47px",
     "position": "static",
     "boxShadow": "none",
     "textShadow": "none",
     "transform": "none",
     "_rect": [
      48,
-     471.5,
+     470,
      294,
-     45
+     47
     ]
    },
    ".panel button.ghost": {
-    "fontFamily": "ui-rounded, -apple-system, \"system-ui\", \"SF Pro Rounded\", system-ui, sans-serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "16.32px",
     "fontWeight": "500",
     "fontStyle": "normal",
@@ -3848,16 +3848,16 @@
     "minHeight": "0px",
     "minWidth": "0px",
     "width": "294px",
-    "height": "35px",
+    "height": "37px",
     "position": "static",
     "boxShadow": "none",
     "textShadow": "none",
     "transform": "none",
     "_rect": [
      48,
-     520.5,
+     521,
      294,
-     35
+     37
     ]
    }
   }
@@ -4139,21 +4139,21 @@
     "gap": "6px",
     "minHeight": "auto",
     "minWidth": "auto",
-    "width": "341.922px",
-    "height": "29px",
+    "width": "369.078px",
+    "height": "28px",
     "position": "static",
     "boxShadow": "none",
     "textShadow": "none",
     "transform": "none",
     "_rect": [
-     399.5,
-     7.5,
-     342,
-     29
+     372,
+     8,
+     369,
+     28
     ]
    },
    ".chip": {
-    "fontFamily": "Cinzel, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "14.72px",
     "fontWeight": "500",
     "fontStyle": "normal",
@@ -4187,21 +4187,21 @@
     "gap": "6px",
     "minHeight": "auto",
     "minWidth": "auto",
-    "width": "110.031px",
-    "height": "29px",
+    "width": "122.609px",
+    "height": "28px",
     "position": "static",
     "boxShadow": "none",
     "textShadow": "none",
     "transform": "none",
     "_rect": [
-     399.5,
-     7.5,
-     110,
-     29
+     372,
+     8,
+     122.5,
+     28
     ]
    },
    ".chip small": {
-    "fontFamily": "Cinzel, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "9.92px",
     "fontWeight": "500",
     "fontStyle": "normal",
@@ -4235,21 +4235,21 @@
     "gap": "normal",
     "minHeight": "auto",
     "minWidth": "auto",
-    "width": "29.7812px",
-    "height": "14px",
+    "width": "28.2812px",
+    "height": "13px",
     "position": "static",
     "boxShadow": "none",
     "textShadow": "none",
     "transform": "none",
     "_rect": [
-     414.5,
-     16.5,
-     30,
-     14
+     387,
+     17,
+     28.5,
+     13
     ]
    },
    ".chip b": {
-    "fontFamily": "Cinzel, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "14.72px",
     "fontWeight": "600",
     "fontStyle": "normal",
@@ -4282,22 +4282,22 @@
     "alignItems": "normal",
     "gap": "normal",
     "minHeight": "auto",
-    "minWidth": "45.264px",
-    "width": "45.25px",
-    "height": "19px",
+    "minWidth": "59.3328px",
+    "width": "59.3281px",
+    "height": "18px",
     "position": "static",
     "boxShadow": "none",
     "textShadow": "none",
     "transform": "none",
     "_rect": [
-     450,
-     12.5,
-     45.5,
-     19
+     421.5,
+     13,
+     59.5,
+     18
     ]
    },
    "#vTime": {
-    "fontFamily": "Cinzel, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "14.72px",
     "fontWeight": "600",
     "fontStyle": "normal",
@@ -4330,22 +4330,22 @@
     "alignItems": "normal",
     "gap": "normal",
     "minHeight": "auto",
-    "minWidth": "45.264px",
-    "width": "45.25px",
-    "height": "19px",
+    "minWidth": "59.3328px",
+    "width": "59.3281px",
+    "height": "18px",
     "position": "static",
     "boxShadow": "none",
     "textShadow": "none",
     "transform": "none",
     "_rect": [
-     450,
-     12.5,
-     45.5,
-     19
+     421.5,
+     13,
+     59.5,
+     18
     ]
    },
    "#vMoves": {
-    "fontFamily": "Cinzel, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "14.72px",
     "fontWeight": "600",
     "fontStyle": "normal",
@@ -4378,22 +4378,22 @@
     "alignItems": "normal",
     "gap": "normal",
     "minHeight": "auto",
-    "minWidth": "36.2112px",
-    "width": "36.2031px",
-    "height": "19px",
+    "minWidth": "47.4663px",
+    "width": "47.4531px",
+    "height": "18px",
     "position": "static",
     "boxShadow": "none",
     "textShadow": "none",
     "transform": "none",
     "_rect": [
-     578,
-     12.5,
-     36,
-     19
+     561.5,
+     13,
+     47.5,
+     18
     ]
    },
    "#vStreak": {
-    "fontFamily": "Cinzel, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "14.72px",
     "fontWeight": "600",
     "fontStyle": "normal",
@@ -4426,18 +4426,18 @@
     "alignItems": "normal",
     "gap": "normal",
     "minHeight": "auto",
-    "minWidth": "27.1584px",
-    "width": "27.1562px",
-    "height": "19px",
+    "minWidth": "35.5997px",
+    "width": "35.5938px",
+    "height": "18px",
     "position": "static",
     "boxShadow": "none",
     "textShadow": "none",
     "transform": "none",
     "_rect": [
-     700,
-     12.5,
-     27,
-     19
+     691.5,
+     13,
+     35.5,
+     18
     ]
    },
    "#board": {
@@ -4633,7 +4633,7 @@
     ]
    },
    ".card[data-id=\"0\"] .face": {
-    "fontFamily": "Limelight, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "7.29751px",
     "fontWeight": "400",
     "fontStyle": "normal",
@@ -4729,7 +4729,7 @@
     ]
    },
    ".card[data-id=\"20\"] .front": {
-    "fontFamily": "Limelight, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "7.29751px",
     "fontWeight": "400",
     "fontStyle": "normal",
@@ -4825,7 +4825,7 @@
     ]
    },
    "#btnNew": {
-    "fontFamily": "Cinzel, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "12.48px",
     "fontWeight": "500",
     "fontStyle": "normal",
@@ -4873,7 +4873,7 @@
     ]
    },
    "#btnHint": {
-    "fontFamily": "Cinzel, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "12.48px",
     "fontWeight": "500",
     "fontStyle": "normal",
@@ -4921,7 +4921,7 @@
     ]
    },
    "#btnUndo": {
-    "fontFamily": "Cinzel, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "12.48px",
     "fontWeight": "500",
     "fontStyle": "normal",
@@ -4969,7 +4969,7 @@
     ]
    },
    "#btnMenu": {
-    "fontFamily": "Cinzel, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "12.48px",
     "fontWeight": "500",
     "fontStyle": "normal",
@@ -5017,7 +5017,7 @@
     ]
    },
    "#btnNew .control-label": {
-    "fontFamily": "Cinzel, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "12.48px",
     "fontWeight": "500",
     "fontStyle": "normal",
@@ -5051,21 +5051,21 @@
     "gap": "normal",
     "minHeight": "auto",
     "minWidth": "auto",
-    "width": "33.8281px",
-    "height": "17px",
+    "width": "31.75px",
+    "height": "15px",
     "position": "static",
     "boxShadow": "none",
     "textShadow": "none",
     "transform": "none",
     "_rect": [
-     780.5,
-     118.5,
-     34,
-     17
+     781.5,
+     119.5,
+     32,
+     15
     ]
    },
    "#btnNew .classic-icon": {
-    "fontFamily": "Cinzel, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "12.48px",
     "fontWeight": "500",
     "fontStyle": "normal",
@@ -5113,7 +5113,7 @@
     ]
    },
    "#btnNew .vintage-icon": {
-    "fontFamily": "Cinzel, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "12.48px",
     "fontWeight": "500",
     "fontStyle": "normal",
@@ -5161,7 +5161,7 @@
     ]
    },
    "#toast": {
-    "fontFamily": "ui-rounded, -apple-system, \"system-ui\", \"SF Pro Rounded\", system-ui, sans-serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "16px",
     "fontWeight": "400",
     "fontStyle": "normal",
@@ -5209,7 +5209,7 @@
     ]
    },
    ".pinned-header::before": {
-    "fontFamily": "\"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "16px",
     "fontWeight": "400",
     "fontStyle": "normal",
@@ -5337,7 +5337,7 @@
   },
   "sheet": {
    "#sheet": {
-    "fontFamily": "\"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "16px",
     "fontWeight": "400",
     "fontStyle": "normal",
@@ -5385,7 +5385,7 @@
     ]
    },
    ".pinned-header": {
-    "fontFamily": "\"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "16px",
     "fontWeight": "400",
     "fontStyle": "normal",
@@ -5433,7 +5433,7 @@
     ]
    },
    ".title-row": {
-    "fontFamily": "\"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "16px",
     "fontWeight": "400",
     "fontStyle": "normal",
@@ -5481,7 +5481,7 @@
     ]
    },
    "#sheet h3": {
-    "fontFamily": "\"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "24px",
     "fontWeight": "600",
     "fontStyle": "normal",
@@ -5625,7 +5625,7 @@
     ]
    },
    ".row": {
-    "fontFamily": "\"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "17.28px",
     "fontWeight": "400",
     "fontStyle": "normal",
@@ -5660,7 +5660,7 @@
     "minHeight": "0px",
     "minWidth": "0px",
     "width": "804px",
-    "height": "69.8906px",
+    "height": "67.8906px",
     "position": "static",
     "boxShadow": "none",
     "textShadow": "none",
@@ -5669,11 +5669,11 @@
      20,
      68.5,
      804,
-     70
+     68
     ]
    },
    ".row .sub2": {
-    "fontFamily": "\"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "13.76px",
     "fontWeight": "400",
     "fontStyle": "normal",
@@ -5707,7 +5707,7 @@
     "gap": "normal",
     "minHeight": "0px",
     "minWidth": "0px",
-    "width": "612.359px",
+    "width": "622.234px",
     "height": "17.8906px",
     "position": "static",
     "boxShadow": "none",
@@ -5715,13 +5715,13 @@
     "transform": "none",
     "_rect": [
      20,
-     107.5,
-     612.5,
+     105.5,
+     622,
      18
     ]
    },
    ".seg": {
-    "fontFamily": "\"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "17.28px",
     "fontWeight": "400",
     "fontStyle": "normal",
@@ -5755,21 +5755,21 @@
     "gap": "2px",
     "minHeight": "auto",
     "minWidth": "auto",
-    "width": "175.641px",
+    "width": "165.766px",
     "height": "42px",
     "position": "static",
     "boxShadow": "none",
     "textShadow": "none",
     "transform": "none",
     "_rect": [
-     648.5,
-     82,
-     175.5,
+     658,
+     81,
+     166,
      42
     ]
    },
    ".seg button": {
-    "fontFamily": "\"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "15.36px",
     "fontWeight": "600",
     "fontStyle": "normal",
@@ -5803,21 +5803,21 @@
     "gap": "normal",
     "minHeight": "36px",
     "minWidth": "auto",
-    "width": "81.2812px",
+    "width": "74.3906px",
     "height": "36px",
     "position": "static",
     "boxShadow": "none",
     "textShadow": "none",
     "transform": "none",
     "_rect": [
-     651.5,
-     85,
-     81.5,
+     661,
+     84,
+     74.5,
      36
     ]
    },
    "#segCardsOriginal": {
-    "fontFamily": "\"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "15.36px",
     "fontWeight": "600",
     "fontStyle": "normal",
@@ -5851,21 +5851,21 @@
     "gap": "normal",
     "minHeight": "36px",
     "minWidth": "auto",
-    "width": "81.2812px",
+    "width": "74.3906px",
     "height": "36px",
     "position": "static",
     "boxShadow": "none",
     "textShadow": "none",
     "transform": "none",
     "_rect": [
-     651.5,
-     85,
-     81.5,
+     661,
+     84,
+     74.5,
      36
     ]
    },
    ".deal-mix": {
-    "fontFamily": "\"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "17.28px",
     "fontWeight": "400",
     "fontStyle": "normal",
@@ -5900,20 +5900,20 @@
     "minHeight": "auto",
     "minWidth": "auto",
     "width": "220px",
-    "height": "56.875px",
+    "height": "55.875px",
     "position": "static",
     "boxShadow": "none",
     "textShadow": "none",
     "transform": "none",
     "_rect": [
      604,
-     360,
+     352,
      220,
-     57
+     56
     ]
    },
    ".deal-mix-labels": {
-    "fontFamily": "\"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "12.8px",
     "fontWeight": "400",
     "fontStyle": "normal",
@@ -5948,20 +5948,20 @@
     "minHeight": "0px",
     "minWidth": "0px",
     "width": "220px",
-    "height": "17px",
+    "height": "16px",
     "position": "static",
     "boxShadow": "none",
     "textShadow": "none",
     "transform": "none",
     "_rect": [
      604,
-     360,
+     352,
      220,
-     17
+     16
     ]
    },
    ".deal-mix-stops": {
-    "fontFamily": "\"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "10.88px",
     "fontWeight": "400",
     "fontStyle": "normal",
@@ -6003,7 +6003,7 @@
     "transform": "none",
     "_rect": [
      604,
-     406,
+     397,
      220,
      11
     ]
@@ -6051,13 +6051,13 @@
     "transform": "none",
     "_rect": [
      604,
-     379,
+     370,
      220,
      32
     ]
    },
    "#btnRestart": {
-    "fontFamily": "\"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "15.2px",
     "fontWeight": "600",
     "fontStyle": "normal",
@@ -6091,21 +6091,21 @@
     "gap": "normal",
     "minHeight": "auto",
     "minWidth": "auto",
-    "width": "87.0156px",
-    "height": "43px",
+    "width": "82.0938px",
+    "height": "41px",
     "position": "static",
     "boxShadow": "none",
     "textShadow": "none",
     "transform": "none",
     "_rect": [
-     737,
-     443,
-     87,
-     43
+     742,
+     434,
+     82,
+     41
     ]
    },
    ".record-preview": {
-    "fontFamily": "\"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "17.28px",
     "fontWeight": "400",
     "fontStyle": "normal",
@@ -6140,20 +6140,20 @@
     "minHeight": "0px",
     "minWidth": "0px",
     "width": "804px",
-    "height": "86.1562px",
+    "height": "84.1562px",
     "position": "static",
     "boxShadow": "none",
     "textShadow": "none",
     "transform": "none",
     "_rect": [
      20,
-     546,
+     533,
      804,
-     86
+     84
     ]
    },
    ".record-card": {
-    "fontFamily": "\"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "17.28px",
     "fontWeight": "400",
     "fontStyle": "normal",
@@ -6195,14 +6195,14 @@
     "transform": "none",
     "_rect": [
      20,
-     546,
+     533,
      804,
      46
     ]
    },
    ".record-card strong": "ABSENT",
    ".record-card span": {
-    "fontFamily": "\"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "13.44px",
     "fontWeight": "400",
     "fontStyle": "normal",
@@ -6244,13 +6244,13 @@
     "transform": "none",
     "_rect": [
      34,
-     559,
+     546,
      253.5,
      20
     ]
    },
    ".record-link": {
-    "fontFamily": "\"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "15.36px",
     "fontWeight": "600",
     "fontStyle": "normal",
@@ -6285,16 +6285,16 @@
     "minHeight": "42px",
     "minWidth": "0px",
     "width": "804px",
-    "height": "45px",
+    "height": "43px",
     "position": "static",
     "boxShadow": "none",
     "textShadow": "none",
     "transform": "none",
     "_rect": [
      20,
-     642,
+     627,
      804,
-     45
+     43
     ]
    },
    "#sheetBack": {
@@ -6346,7 +6346,7 @@
     ]
    },
    ".pinned-header::before": {
-    "fontFamily": "\"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "16px",
     "fontWeight": "400",
     "fontStyle": "normal",
@@ -6474,7 +6474,7 @@
   },
   "stats": {
    "#statsPage": {
-    "fontFamily": "ui-rounded, -apple-system, \"system-ui\", \"SF Pro Rounded\", system-ui, sans-serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "16px",
     "fontWeight": "400",
     "fontStyle": "normal",
@@ -6522,7 +6522,7 @@
     ]
    },
    ".stats-page-inner": {
-    "fontFamily": "ui-rounded, -apple-system, \"system-ui\", \"SF Pro Rounded\", system-ui, sans-serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "16px",
     "fontWeight": "400",
     "fontStyle": "normal",
@@ -6557,7 +6557,7 @@
     "minHeight": "0px",
     "minWidth": "0px",
     "width": "620px",
-    "height": "837.062px",
+    "height": "848.062px",
     "position": "static",
     "boxShadow": "none",
     "textShadow": "none",
@@ -6566,11 +6566,11 @@
      112,
      18,
      620,
-     837
+     848
     ]
    },
    ".stats-header": {
-    "fontFamily": "ui-rounded, -apple-system, \"system-ui\", \"SF Pro Rounded\", system-ui, sans-serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "16px",
     "fontWeight": "400",
     "fontStyle": "normal",
@@ -6618,7 +6618,7 @@
     ]
    },
    ".stats-header h2": {
-    "fontFamily": "\"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "24.8px",
     "fontWeight": "600",
     "fontStyle": "normal",
@@ -6652,17 +6652,17 @@
     "gap": "normal",
     "minHeight": "auto",
     "minWidth": "auto",
-    "width": "140.797px",
-    "height": "34px",
+    "width": "126.469px",
+    "height": "31px",
     "position": "static",
     "boxShadow": "none",
     "textShadow": "none",
     "transform": "none",
     "_rect": [
      112,
-     21.5,
-     141,
-     34
+     23,
+     126.5,
+     31
     ]
    },
    "#btnStatsClose": {
@@ -6714,7 +6714,7 @@
     ]
    },
    ".stats-tabs": {
-    "fontFamily": "ui-rounded, -apple-system, \"system-ui\", \"SF Pro Rounded\", system-ui, sans-serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "16px",
     "fontWeight": "400",
     "fontStyle": "normal",
@@ -6762,7 +6762,7 @@
     ]
    },
    ".stats-tabs button": {
-    "fontFamily": "ui-rounded, -apple-system, \"system-ui\", \"SF Pro Rounded\", system-ui, sans-serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "15.36px",
     "fontWeight": "600",
     "fontStyle": "normal",
@@ -6810,7 +6810,7 @@
     ]
    },
    ".stats-hero": {
-    "fontFamily": "ui-rounded, -apple-system, \"system-ui\", \"SF Pro Rounded\", system-ui, sans-serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "16px",
     "fontWeight": "400",
     "fontStyle": "normal",
@@ -6845,7 +6845,7 @@
     "minHeight": "0px",
     "minWidth": "0px",
     "width": "620px",
-    "height": "80px",
+    "height": "79px",
     "position": "static",
     "boxShadow": "none",
     "textShadow": "none",
@@ -6854,11 +6854,11 @@
      112,
      135,
      620,
-     80
+     79
     ]
    },
    ".stats-hero div": {
-    "fontFamily": "ui-rounded, -apple-system, \"system-ui\", \"SF Pro Rounded\", system-ui, sans-serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "16px",
     "fontWeight": "400",
     "fontStyle": "normal",
@@ -6893,7 +6893,7 @@
     "minHeight": "auto",
     "minWidth": "auto",
     "width": "201.328px",
-    "height": "80px",
+    "height": "79px",
     "position": "static",
     "boxShadow": "none",
     "textShadow": "none",
@@ -6902,11 +6902,11 @@
      112,
      135,
      201.5,
-     80
+     79
     ]
    },
    ".stats-hero b": {
-    "fontFamily": "\"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "24.8px",
     "fontWeight": "700",
     "fontStyle": "normal",
@@ -6941,7 +6941,7 @@
     "minHeight": "0px",
     "minWidth": "0px",
     "width": "189.328px",
-    "height": "34px",
+    "height": "31px",
     "position": "static",
     "boxShadow": "none",
     "textShadow": "none",
@@ -6950,11 +6950,11 @@
      118,
      149,
      189.5,
-     34
+     31
     ]
    },
    ".stats-hero span": {
-    "fontFamily": "ui-rounded, -apple-system, \"system-ui\", \"SF Pro Rounded\", system-ui, sans-serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "11.52px",
     "fontWeight": "400",
     "fontStyle": "normal",
@@ -6996,13 +6996,13 @@
     "transform": "none",
     "_rect": [
      173,
-     187,
+     185,
      79.5,
-     13
+     14
     ]
    },
    ".stats-group": {
-    "fontFamily": "ui-rounded, -apple-system, \"system-ui\", \"SF Pro Rounded\", system-ui, sans-serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "16px",
     "fontWeight": "400",
     "fontStyle": "normal",
@@ -7037,20 +7037,20 @@
     "minHeight": "0px",
     "minWidth": "0px",
     "width": "620px",
-    "height": "166px",
+    "height": "170px",
     "position": "static",
     "boxShadow": "none",
     "textShadow": "none",
     "transform": "none",
     "_rect": [
      112,
-     233,
+     232,
      620,
-     166
+     170
     ]
    },
    ".stats-group h3": {
-    "fontFamily": "\"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "16px",
     "fontWeight": "600",
     "fontStyle": "normal",
@@ -7085,20 +7085,20 @@
     "minHeight": "0px",
     "minWidth": "0px",
     "width": "588px",
-    "height": "40px",
+    "height": "38px",
     "position": "static",
     "boxShadow": "none",
     "textShadow": "none",
     "transform": "none",
     "_rect": [
      128,
-     238,
+     237,
      588,
-     40
+     38
     ]
    },
    ".stats-detail-row": {
-    "fontFamily": "ui-rounded, -apple-system, \"system-ui\", \"SF Pro Rounded\", system-ui, sans-serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "16px",
     "fontWeight": "400",
     "fontStyle": "normal",
@@ -7133,20 +7133,20 @@
     "minHeight": "0px",
     "minWidth": "0px",
     "width": "588px",
-    "height": "39px",
+    "height": "41px",
     "position": "static",
     "boxShadow": "none",
     "textShadow": "none",
     "transform": "none",
     "_rect": [
      128,
-     278,
+     275,
      588,
-     39
+     41
     ]
    },
    ".stats-detail-row b": {
-    "fontFamily": "ui-rounded, -apple-system, \"system-ui\", \"SF Pro Rounded\", system-ui, sans-serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "16px",
     "fontWeight": "700",
     "fontStyle": "normal",
@@ -7180,17 +7180,17 @@
     "gap": "normal",
     "minHeight": "auto",
     "minWidth": "auto",
-    "width": "14.2031px",
-    "height": "18px",
+    "width": "16px",
+    "height": "20px",
     "position": "static",
     "boxShadow": "none",
     "textShadow": "none",
     "transform": "none",
     "_rect": [
-     702,
-     288,
-     14,
-     18
+     700,
+     285,
+     16,
+     20
     ]
    }
   },
@@ -7279,20 +7279,20 @@
     "minHeight": "auto",
     "minWidth": "auto",
     "width": "390px",
-    "height": "267.922px",
+    "height": "272.922px",
     "position": "static",
     "boxShadow": "rgba(0, 0, 0, 0.5) 0px 20px 60px 0px",
     "textShadow": "none",
     "transform": "none",
     "_rect": [
      227,
-     61,
+     58.5,
      390,
-     268
+     273
     ]
    },
    ".panel h2": {
-    "fontFamily": "Limelight, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "32px",
     "fontWeight": "400",
     "fontStyle": "normal",
@@ -7327,16 +7327,16 @@
     "minHeight": "0px",
     "minWidth": "0px",
     "width": "338px",
-    "height": "39px",
+    "height": "40px",
     "position": "static",
     "boxShadow": "none",
     "textShadow": "none",
     "transform": "none",
     "_rect": [
      253,
-     79,
+     76.5,
      338,
-     39
+     40
     ]
    },
    ".panel .sub": {
@@ -7382,7 +7382,7 @@
     "transform": "none",
     "_rect": [
      253,
-     120,
+     118.5,
      338,
      20
     ]
@@ -7430,7 +7430,7 @@
     "transform": "none",
     "_rect": [
      253,
-     150,
+     148.5,
      338,
      48
     ]
@@ -7478,7 +7478,7 @@
     "transform": "none",
     "_rect": [
      299,
-     150,
+     148.5,
      70,
      48
     ]
@@ -7526,7 +7526,7 @@
     "transform": "none",
     "_rect": [
      299,
-     150,
+     148.5,
      70,
      30
     ]
@@ -7574,7 +7574,7 @@
     "transform": "none",
     "_rect": [
      317.5,
-     183,
+     181.5,
      32.5,
      15
     ]
@@ -7622,13 +7622,13 @@
     "transform": "none",
     "_rect": [
      253,
-     206,
+     204.5,
      338,
      16
     ]
    },
    ".panel button": {
-    "fontFamily": "ui-rounded, -apple-system, \"system-ui\", \"SF Pro Rounded\", system-ui, sans-serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "16.32px",
     "fontWeight": "600",
     "fontStyle": "normal",
@@ -7663,20 +7663,20 @@
     "minHeight": "0px",
     "minWidth": "0px",
     "width": "338px",
-    "height": "39px",
+    "height": "41px",
     "position": "static",
     "boxShadow": "none",
     "textShadow": "none",
     "transform": "none",
     "_rect": [
      253,
-     235,
+     233.5,
      338,
-     39
+     41
     ]
    },
    ".panel button.ghost": {
-    "fontFamily": "ui-rounded, -apple-system, \"system-ui\", \"SF Pro Rounded\", system-ui, sans-serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "16.32px",
     "fontWeight": "500",
     "fontStyle": "normal",
@@ -7711,16 +7711,16 @@
     "minHeight": "0px",
     "minWidth": "0px",
     "width": "338px",
-    "height": "35px",
+    "height": "37px",
     "position": "static",
     "boxShadow": "none",
     "textShadow": "none",
     "transform": "none",
     "_rect": [
      253,
-     278,
+     278.5,
      338,
-     35
+     37
     ]
    }
   }
@@ -8003,20 +8003,20 @@
     "minHeight": "auto",
     "minWidth": "auto",
     "width": "419.766px",
-    "height": "29px",
+    "height": "28px",
     "position": "static",
     "boxShadow": "none",
     "textShadow": "none",
     "transform": "none",
     "_rect": [
      384,
-     27,
+     27.5,
      420,
-     29
+     28
     ]
    },
    ".chip": {
-    "fontFamily": "Cinzel, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "14.72px",
     "fontWeight": "500",
     "fontStyle": "normal",
@@ -8050,21 +8050,21 @@
     "gap": "6px",
     "minHeight": "auto",
     "minWidth": "auto",
-    "width": "110.031px",
-    "height": "29px",
+    "width": "122.609px",
+    "height": "28px",
     "position": "static",
     "boxShadow": "none",
     "textShadow": "none",
     "transform": "none",
     "_rect": [
-     451,
-     27,
-     110,
-     29
+     424,
+     27.5,
+     122.5,
+     28
     ]
    },
    ".chip small": {
-    "fontFamily": "Cinzel, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "9.92px",
     "fontWeight": "500",
     "fontStyle": "normal",
@@ -8098,21 +8098,21 @@
     "gap": "normal",
     "minHeight": "auto",
     "minWidth": "auto",
-    "width": "29.7812px",
-    "height": "14px",
+    "width": "28.2812px",
+    "height": "13px",
     "position": "static",
     "boxShadow": "none",
     "textShadow": "none",
     "transform": "none",
     "_rect": [
-     466,
-     36,
-     30,
-     14
+     439,
+     36.5,
+     28.5,
+     13
     ]
    },
    ".chip b": {
-    "fontFamily": "Cinzel, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "14.72px",
     "fontWeight": "600",
     "fontStyle": "normal",
@@ -8145,22 +8145,22 @@
     "alignItems": "normal",
     "gap": "normal",
     "minHeight": "auto",
-    "minWidth": "45.264px",
-    "width": "45.25px",
-    "height": "19px",
+    "minWidth": "59.3328px",
+    "width": "59.3281px",
+    "height": "18px",
     "position": "static",
     "boxShadow": "none",
     "textShadow": "none",
     "transform": "none",
     "_rect": [
-     502,
-     32,
-     45.5,
-     19
+     473,
+     32.5,
+     59.5,
+     18
     ]
    },
    "#vTime": {
-    "fontFamily": "Cinzel, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "14.72px",
     "fontWeight": "600",
     "fontStyle": "normal",
@@ -8193,22 +8193,22 @@
     "alignItems": "normal",
     "gap": "normal",
     "minHeight": "auto",
-    "minWidth": "45.264px",
-    "width": "45.25px",
-    "height": "19px",
+    "minWidth": "59.3328px",
+    "width": "59.3281px",
+    "height": "18px",
     "position": "static",
     "boxShadow": "none",
     "textShadow": "none",
     "transform": "none",
     "_rect": [
-     502,
-     32,
-     45.5,
-     19
+     473,
+     32.5,
+     59.5,
+     18
     ]
    },
    "#vMoves": {
-    "fontFamily": "Cinzel, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "14.72px",
     "fontWeight": "600",
     "fontStyle": "normal",
@@ -8241,22 +8241,22 @@
     "alignItems": "normal",
     "gap": "normal",
     "minHeight": "auto",
-    "minWidth": "36.2112px",
-    "width": "36.2031px",
-    "height": "19px",
+    "minWidth": "47.4663px",
+    "width": "47.4531px",
+    "height": "18px",
     "position": "static",
     "boxShadow": "none",
     "textShadow": "none",
     "transform": "none",
     "_rect": [
-     632.5,
-     32,
-     36,
-     19
+     616.5,
+     32.5,
+     47.5,
+     18
     ]
    },
    "#vStreak": {
-    "fontFamily": "Cinzel, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "14.72px",
     "fontWeight": "600",
     "fontStyle": "normal",
@@ -8289,18 +8289,18 @@
     "alignItems": "normal",
     "gap": "normal",
     "minHeight": "auto",
-    "minWidth": "27.1584px",
-    "width": "27.1562px",
-    "height": "19px",
+    "minWidth": "35.5997px",
+    "width": "35.5938px",
+    "height": "18px",
     "position": "static",
     "boxShadow": "none",
     "textShadow": "none",
     "transform": "none",
     "_rect": [
-     763,
-     32,
-     27,
-     19
+     754.5,
+     32.5,
+     35.5,
+     18
     ]
    },
    "#board": {
@@ -8496,7 +8496,7 @@
     ]
    },
    ".card[data-id=\"0\"] .face": {
-    "fontFamily": "Limelight, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "15.6128px",
     "fontWeight": "400",
     "fontStyle": "normal",
@@ -8592,7 +8592,7 @@
     ]
    },
    ".card[data-id=\"20\"] .front": {
-    "fontFamily": "Limelight, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "15.6128px",
     "fontWeight": "400",
     "fontStyle": "normal",
@@ -8688,7 +8688,7 @@
     ]
    },
    "#btnNew": {
-    "fontFamily": "Cinzel, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "20.48px",
     "fontWeight": "500",
     "fontStyle": "normal",
@@ -8736,7 +8736,7 @@
     ]
    },
    "#btnHint": {
-    "fontFamily": "Cinzel, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "20.48px",
     "fontWeight": "500",
     "fontStyle": "normal",
@@ -8784,7 +8784,7 @@
     ]
    },
    "#btnUndo": {
-    "fontFamily": "Cinzel, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "20.48px",
     "fontWeight": "500",
     "fontStyle": "normal",
@@ -8832,7 +8832,7 @@
     ]
    },
    "#btnMenu": {
-    "fontFamily": "Cinzel, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "24px",
     "fontWeight": "500",
     "fontStyle": "normal",
@@ -8880,7 +8880,7 @@
     ]
    },
    "#btnNew .control-label": {
-    "fontFamily": "Cinzel, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "20.48px",
     "fontWeight": "500",
     "fontStyle": "normal",
@@ -8914,21 +8914,21 @@
     "gap": "normal",
     "minHeight": "auto",
     "minWidth": "auto",
-    "width": "55.5156px",
-    "height": "28px",
+    "width": "52.0938px",
+    "height": "26px",
     "position": "static",
     "boxShadow": "none",
     "textShadow": "none",
     "transform": "none",
     "_rect": [
-     109.5,
-     1119,
-     55.5,
-     28
+     111.5,
+     1120,
+     52,
+     26
     ]
    },
    "#btnNew .classic-icon": {
-    "fontFamily": "Cinzel, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "20.48px",
     "fontWeight": "500",
     "fontStyle": "normal",
@@ -8976,7 +8976,7 @@
     ]
    },
    "#btnNew .vintage-icon": {
-    "fontFamily": "Cinzel, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "20.48px",
     "fontWeight": "500",
     "fontStyle": "normal",
@@ -9024,7 +9024,7 @@
     ]
    },
    "#toast": {
-    "fontFamily": "ui-rounded, -apple-system, \"system-ui\", \"SF Pro Rounded\", system-ui, sans-serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "20.8px",
     "fontWeight": "400",
     "fontStyle": "normal",
@@ -9072,7 +9072,7 @@
     ]
    },
    ".pinned-header::before": {
-    "fontFamily": "\"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "16px",
     "fontWeight": "400",
     "fontStyle": "normal",
@@ -9200,7 +9200,7 @@
   },
   "sheet": {
    "#sheet": {
-    "fontFamily": "\"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "16px",
     "fontWeight": "400",
     "fontStyle": "normal",
@@ -9248,7 +9248,7 @@
     ]
    },
    ".pinned-header": {
-    "fontFamily": "\"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "16px",
     "fontWeight": "400",
     "fontStyle": "normal",
@@ -9296,7 +9296,7 @@
     ]
    },
    ".title-row": {
-    "fontFamily": "\"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "16px",
     "fontWeight": "400",
     "fontStyle": "normal",
@@ -9344,7 +9344,7 @@
     ]
    },
    "#sheet h3": {
-    "fontFamily": "\"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "43.2px",
     "fontWeight": "600",
     "fontStyle": "normal",
@@ -9488,7 +9488,7 @@
     ]
    },
    ".row": {
-    "fontFamily": "\"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "26.4px",
     "fontWeight": "400",
     "fontStyle": "normal",
@@ -9523,7 +9523,7 @@
     "minHeight": "0px",
     "minWidth": "0px",
     "width": "740px",
-    "height": "113.031px",
+    "height": "110.031px",
     "position": "static",
     "boxShadow": "none",
     "textShadow": "none",
@@ -9532,11 +9532,11 @@
      40,
      138.5,
      740,
-     113
+     110
     ]
    },
    ".row .sub2": {
-    "fontFamily": "\"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "20.8px",
     "fontWeight": "400",
     "fontStyle": "normal",
@@ -9570,7 +9570,7 @@
     "gap": "normal",
     "minHeight": "0px",
     "minWidth": "0px",
-    "width": "448.781px",
+    "width": "463.406px",
     "height": "27.0312px",
     "position": "static",
     "boxShadow": "none",
@@ -9578,13 +9578,13 @@
     "transform": "none",
     "_rect": [
      40,
-     202.5,
-     449,
+     199.5,
+     463.5,
      27
     ]
    },
    ".seg": {
-    "fontFamily": "\"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "26.4px",
     "fontWeight": "400",
     "fontStyle": "normal",
@@ -9618,21 +9618,21 @@
     "gap": "2px",
     "minHeight": "auto",
     "minWidth": "auto",
-    "width": "275.219px",
-    "height": "63px",
+    "width": "260.594px",
+    "height": "60px",
     "position": "static",
     "boxShadow": "none",
     "textShadow": "none",
     "transform": "none",
     "_rect": [
-     505,
+     519.5,
      163,
-     275,
-     63
+     260.5,
+     60
     ]
    },
    ".seg button": {
-    "fontFamily": "\"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "22.72px",
     "fontWeight": "600",
     "fontStyle": "normal",
@@ -9666,21 +9666,21 @@
     "gap": "normal",
     "minHeight": "36px",
     "minWidth": "auto",
-    "width": "129.859px",
-    "height": "57px",
+    "width": "119.656px",
+    "height": "54px",
     "position": "static",
     "boxShadow": "none",
     "textShadow": "none",
     "transform": "none",
     "_rect": [
-     508,
+     522.5,
      166,
-     130,
-     57
+     119.5,
+     54
     ]
    },
    "#segCardsOriginal": {
-    "fontFamily": "\"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "22.72px",
     "fontWeight": "600",
     "fontStyle": "normal",
@@ -9714,21 +9714,21 @@
     "gap": "normal",
     "minHeight": "36px",
     "minWidth": "auto",
-    "width": "129.859px",
-    "height": "57px",
+    "width": "119.656px",
+    "height": "54px",
     "position": "static",
     "boxShadow": "none",
     "textShadow": "none",
     "transform": "none",
     "_rect": [
-     508,
+     522.5,
      166,
-     130,
-     57
+     119.5,
+     54
     ]
    },
    ".deal-mix": {
-    "fontFamily": "\"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "26.4px",
     "fontWeight": "400",
     "fontStyle": "normal",
@@ -9763,20 +9763,20 @@
     "minHeight": "auto",
     "minWidth": "auto",
     "width": "300px",
-    "height": "74.4062px",
+    "height": "72.4062px",
     "position": "static",
     "boxShadow": "none",
     "textShadow": "none",
     "transform": "none",
     "_rect": [
      480,
-     612,
+     600,
      300,
-     74.5
+     72.5
     ]
    },
    ".deal-mix-labels": {
-    "fontFamily": "\"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "16.8px",
     "fontWeight": "400",
     "fontStyle": "normal",
@@ -9811,20 +9811,20 @@
     "minHeight": "0px",
     "minWidth": "0px",
     "width": "300px",
-    "height": "23px",
+    "height": "21px",
     "position": "static",
     "boxShadow": "none",
     "textShadow": "none",
     "transform": "none",
     "_rect": [
      480,
-     612,
+     600,
      300,
-     23
+     21
     ]
    },
    ".deal-mix-stops": {
-    "fontFamily": "\"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "14.4px",
     "fontWeight": "400",
     "fontStyle": "normal",
@@ -9866,7 +9866,7 @@
     "transform": "none",
     "_rect": [
      480,
-     672,
+     658,
      300,
      14.5
     ]
@@ -9914,13 +9914,13 @@
     "transform": "none",
     "_rect": [
      480,
-     637,
+     623,
      300,
      40
     ]
    },
    "#btnRestart": {
-    "fontFamily": "\"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "22.72px",
     "fontWeight": "600",
     "fontStyle": "normal",
@@ -9954,21 +9954,21 @@
     "gap": "normal",
     "minHeight": "auto",
     "minWidth": "auto",
-    "width": "137.25px",
-    "height": "61px",
+    "width": "129.891px",
+    "height": "58px",
     "position": "static",
     "boxShadow": "none",
     "textShadow": "none",
     "transform": "none",
     "_rect": [
-     643,
-     733.5,
-     137.5,
-     61
+     650,
+     719.5,
+     130,
+     58
     ]
    },
    ".record-preview": {
-    "fontFamily": "\"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "26.4px",
     "fontWeight": "400",
     "fontStyle": "normal",
@@ -10003,20 +10003,20 @@
     "minHeight": "0px",
     "minWidth": "0px",
     "width": "740px",
-    "height": "127.688px",
+    "height": "125.688px",
     "position": "static",
     "boxShadow": "none",
     "textShadow": "none",
     "transform": "none",
     "_rect": [
      40,
-     892,
+     872,
      740,
-     127.5
+     125.5
     ]
    },
    ".record-card": {
-    "fontFamily": "\"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "26.4px",
     "fontWeight": "400",
     "fontStyle": "normal",
@@ -10058,14 +10058,14 @@
     "transform": "none",
     "_rect": [
      40,
-     892,
+     872,
      740,
      65.5
     ]
    },
    ".record-card strong": "ABSENT",
    ".record-card span": {
-    "fontFamily": "\"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "21.12px",
     "fontWeight": "400",
     "fontStyle": "normal",
@@ -10107,13 +10107,13 @@
     "transform": "none",
     "_rect": [
      59,
-     909,
+     889,
      228.5,
      31.5
     ]
    },
    ".record-link": {
-    "fontFamily": "\"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "22.72px",
     "fontWeight": "600",
     "fontStyle": "normal",
@@ -10148,16 +10148,16 @@
     "minHeight": "60px",
     "minWidth": "0px",
     "width": "740px",
-    "height": "61px",
+    "height": "60px",
     "position": "static",
     "boxShadow": "none",
     "textShadow": "none",
     "transform": "none",
     "_rect": [
      40,
-     1034,
+     1012,
      740,
-     61
+     60
     ]
    },
    "#sheetBack": {
@@ -10209,7 +10209,7 @@
     ]
    },
    ".pinned-header::before": {
-    "fontFamily": "\"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "16px",
     "fontWeight": "400",
     "fontStyle": "normal",
@@ -10337,7 +10337,7 @@
   },
   "stats": {
    "#statsPage": {
-    "fontFamily": "ui-rounded, -apple-system, \"system-ui\", \"SF Pro Rounded\", system-ui, sans-serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "16px",
     "fontWeight": "400",
     "fontStyle": "normal",
@@ -10385,7 +10385,7 @@
     ]
    },
    ".stats-page-inner": {
-    "fontFamily": "ui-rounded, -apple-system, \"system-ui\", \"SF Pro Rounded\", system-ui, sans-serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "16px",
     "fontWeight": "400",
     "fontStyle": "normal",
@@ -10420,7 +10420,7 @@
     "minHeight": "0px",
     "minWidth": "0px",
     "width": "764px",
-    "height": "1176.11px",
+    "height": "1172.11px",
     "position": "static",
     "boxShadow": "none",
     "textShadow": "none",
@@ -10429,11 +10429,11 @@
      28,
      26,
      764,
-     1176
+     1172
     ]
    },
    ".stats-header": {
-    "fontFamily": "ui-rounded, -apple-system, \"system-ui\", \"SF Pro Rounded\", system-ui, sans-serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "16px",
     "fontWeight": "400",
     "fontStyle": "normal",
@@ -10481,7 +10481,7 @@
     ]
    },
    ".stats-header h2": {
-    "fontFamily": "\"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "40px",
     "fontWeight": "600",
     "fontStyle": "normal",
@@ -10515,17 +10515,17 @@
     "gap": "normal",
     "minHeight": "auto",
     "minWidth": "auto",
-    "width": "227.094px",
-    "height": "54px",
+    "width": "203.969px",
+    "height": "50px",
     "position": "static",
     "boxShadow": "none",
     "textShadow": "none",
     "transform": "none",
     "_rect": [
      28,
-     31.5,
-     227,
-     54
+     33.5,
+     204,
+     50
     ]
    },
    "#btnStatsClose": {
@@ -10577,7 +10577,7 @@
     ]
    },
    ".stats-tabs": {
-    "fontFamily": "ui-rounded, -apple-system, \"system-ui\", \"SF Pro Rounded\", system-ui, sans-serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "16px",
     "fontWeight": "400",
     "fontStyle": "normal",
@@ -10612,7 +10612,7 @@
     "minHeight": "0px",
     "minWidth": "0px",
     "width": "764px",
-    "height": "59px",
+    "height": "60px",
     "position": "static",
     "boxShadow": "none",
     "textShadow": "none",
@@ -10621,11 +10621,11 @@
      28,
      115,
      764,
-     59
+     60
     ]
    },
    ".stats-tabs button": {
-    "fontFamily": "ui-rounded, -apple-system, \"system-ui\", \"SF Pro Rounded\", system-ui, sans-serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "22.72px",
     "fontWeight": "600",
     "fontStyle": "normal",
@@ -10660,7 +10660,7 @@
     "minHeight": "36px",
     "minWidth": "auto",
     "width": "378px",
-    "height": "53px",
+    "height": "54px",
     "position": "static",
     "boxShadow": "none",
     "textShadow": "none",
@@ -10669,11 +10669,11 @@
      31,
      118,
      378,
-     53
+     54
     ]
    },
    ".stats-hero": {
-    "fontFamily": "ui-rounded, -apple-system, \"system-ui\", \"SF Pro Rounded\", system-ui, sans-serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "16px",
     "fontWeight": "400",
     "fontStyle": "normal",
@@ -10708,20 +10708,20 @@
     "minHeight": "0px",
     "minWidth": "0px",
     "width": "764px",
-    "height": "110px",
+    "height": "107px",
     "position": "static",
     "boxShadow": "none",
     "textShadow": "none",
     "transform": "none",
     "_rect": [
      28,
-     190,
+     191,
      764,
-     110
+     107
     ]
    },
    ".stats-hero div": {
-    "fontFamily": "ui-rounded, -apple-system, \"system-ui\", \"SF Pro Rounded\", system-ui, sans-serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "16px",
     "fontWeight": "400",
     "fontStyle": "normal",
@@ -10756,20 +10756,20 @@
     "minHeight": "auto",
     "minWidth": "auto",
     "width": "246.656px",
-    "height": "110px",
+    "height": "107px",
     "position": "static",
     "boxShadow": "none",
     "textShadow": "none",
     "transform": "none",
     "_rect": [
      28,
-     190,
+     191,
      246.5,
-     110
+     107
     ]
    },
    ".stats-hero b": {
-    "fontFamily": "\"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "38.4px",
     "fontWeight": "700",
     "fontStyle": "normal",
@@ -10804,20 +10804,20 @@
     "minHeight": "0px",
     "minWidth": "0px",
     "width": "228.656px",
-    "height": "53px",
+    "height": "48px",
     "position": "static",
     "boxShadow": "none",
     "textShadow": "none",
     "transform": "none",
     "_rect": [
      37,
-     209,
+     210,
      228.5,
-     53
+     48
     ]
    },
    ".stats-hero span": {
-    "fontFamily": "ui-rounded, -apple-system, \"system-ui\", \"SF Pro Rounded\", system-ui, sans-serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "16.32px",
     "fontWeight": "400",
     "fontStyle": "normal",
@@ -10858,14 +10858,14 @@
     "textShadow": "none",
     "transform": "none",
     "_rect": [
-     97,
-     262,
-     109,
-     19
+     95,
+     258,
+     112.5,
+     21
     ]
    },
    ".stats-group": {
-    "fontFamily": "ui-rounded, -apple-system, \"system-ui\", \"SF Pro Rounded\", system-ui, sans-serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "16px",
     "fontWeight": "400",
     "fontStyle": "normal",
@@ -10907,13 +10907,13 @@
     "transform": "none",
     "_rect": [
      28,
-     324,
+     322,
      764,
      235
     ]
    },
    ".stats-group h3": {
-    "fontFamily": "\"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "24px",
     "fontWeight": "600",
     "fontStyle": "normal",
@@ -10948,20 +10948,20 @@
     "minHeight": "0px",
     "minWidth": "0px",
     "width": "718px",
-    "height": "57px",
+    "height": "54px",
     "position": "static",
     "boxShadow": "none",
     "textShadow": "none",
     "transform": "none",
     "_rect": [
      51,
-     331,
+     329,
      718,
-     57
+     54
     ]
    },
    ".stats-detail-row": {
-    "fontFamily": "ui-rounded, -apple-system, \"system-ui\", \"SF Pro Rounded\", system-ui, sans-serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "21.6px",
     "fontWeight": "400",
     "fontStyle": "normal",
@@ -10996,20 +10996,20 @@
     "minHeight": "0px",
     "minWidth": "0px",
     "width": "718px",
-    "height": "55px",
+    "height": "56px",
     "position": "static",
     "boxShadow": "none",
     "textShadow": "none",
     "transform": "none",
     "_rect": [
      51,
-     388,
+     383,
      718,
-     55
+     56
     ]
    },
    ".stats-detail-row b": {
-    "fontFamily": "ui-rounded, -apple-system, \"system-ui\", \"SF Pro Rounded\", system-ui, sans-serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "21.6px",
     "fontWeight": "700",
     "fontStyle": "normal",
@@ -11043,17 +11043,17 @@
     "gap": "normal",
     "minHeight": "auto",
     "minWidth": "auto",
-    "width": "18.8281px",
-    "height": "26px",
+    "width": "21.6094px",
+    "height": "27px",
     "position": "static",
     "boxShadow": "none",
     "textShadow": "none",
     "transform": "none",
     "_rect": [
-     750,
-     402,
-     19,
-     26
+     747.5,
+     397,
+     21.5,
+     27
     ]
    }
   },
@@ -11142,20 +11142,20 @@
     "minHeight": "auto",
     "minWidth": "auto",
     "width": "520px",
-    "height": "409.781px",
+    "height": "414.781px",
     "position": "static",
     "boxShadow": "rgba(0, 0, 0, 0.5) 0px 20px 60px 0px",
     "textShadow": "none",
     "transform": "none",
     "_rect": [
      150,
-     385,
+     382.5,
      520,
-     410
+     415
     ]
    },
    ".panel h2": {
-    "fontFamily": "Limelight, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "44px",
     "fontWeight": "400",
     "fontStyle": "normal",
@@ -11190,16 +11190,16 @@
     "minHeight": "0px",
     "minWidth": "0px",
     "width": "444px",
-    "height": "54px",
+    "height": "55px",
     "position": "static",
     "boxShadow": "none",
     "textShadow": "none",
     "transform": "none",
     "_rect": [
      188,
-     427,
+     424.5,
      444,
-     54
+     55
     ]
    },
    ".panel .sub": {
@@ -11245,7 +11245,7 @@
     "transform": "none",
     "_rect": [
      188,
-     483,
+     481.5,
      444,
      23
     ]
@@ -11293,7 +11293,7 @@
     "transform": "none",
     "_rect": [
      188,
-     532,
+     530.5,
      444,
      57.5
     ]
@@ -11341,7 +11341,7 @@
     "transform": "none",
     "_rect": [
      218.5,
-     532,
+     530.5,
      105,
      57.5
     ]
@@ -11389,7 +11389,7 @@
     "transform": "none",
     "_rect": [
      218.5,
-     532,
+     530.5,
      105,
      39.5
     ]
@@ -11437,7 +11437,7 @@
     "transform": "none",
     "_rect": [
      250,
-     571.5,
+     570,
      42,
      18
     ]
@@ -11485,13 +11485,13 @@
     "transform": "none",
     "_rect": [
      188,
-     613.5,
+     612,
      444,
      19
     ]
    },
    ".panel button": {
-    "fontFamily": "ui-rounded, -apple-system, \"system-ui\", \"SF Pro Rounded\", system-ui, sans-serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "20.48px",
     "fontWeight": "600",
     "fontStyle": "normal",
@@ -11526,20 +11526,20 @@
     "minHeight": "0px",
     "minWidth": "0px",
     "width": "444px",
-    "height": "60px",
+    "height": "62px",
     "position": "static",
     "boxShadow": "none",
     "textShadow": "none",
     "transform": "none",
     "_rect": [
      188,
-     659,
+     657.5,
      444,
-     60
+     62
     ]
    },
    ".panel button.ghost": {
-    "fontFamily": "ui-rounded, -apple-system, \"system-ui\", \"SF Pro Rounded\", system-ui, sans-serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "20.48px",
     "fontWeight": "500",
     "fontStyle": "normal",
@@ -11574,16 +11574,16 @@
     "minHeight": "0px",
     "minWidth": "0px",
     "width": "444px",
-    "height": "40px",
+    "height": "42px",
     "position": "static",
     "boxShadow": "none",
     "textShadow": "none",
     "transform": "none",
     "_rect": [
      188,
-     723,
+     723.5,
      444,
-     40
+     42
     ]
    }
   }
@@ -11865,21 +11865,21 @@
     "gap": "9px",
     "minHeight": "auto",
     "minWidth": "auto",
-    "width": "352.922px",
-    "height": "29px",
+    "width": "380.078px",
+    "height": "28px",
     "position": "static",
     "boxShadow": "none",
     "textShadow": "none",
     "transform": "none",
     "_rect": [
-     613.5,
-     12.5,
-     353,
-     29
+     586.5,
+     13,
+     380,
+     28
     ]
    },
    ".chip": {
-    "fontFamily": "Cinzel, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "14.72px",
     "fontWeight": "500",
     "fontStyle": "normal",
@@ -11913,21 +11913,21 @@
     "gap": "6px",
     "minHeight": "auto",
     "minWidth": "auto",
-    "width": "110.031px",
-    "height": "29px",
+    "width": "122.609px",
+    "height": "28px",
     "position": "static",
     "boxShadow": "none",
     "textShadow": "none",
     "transform": "none",
     "_rect": [
-     613.5,
-     12.5,
-     110,
-     29
+     586.5,
+     13,
+     122.5,
+     28
     ]
    },
    ".chip small": {
-    "fontFamily": "Cinzel, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "9.92px",
     "fontWeight": "500",
     "fontStyle": "normal",
@@ -11961,21 +11961,21 @@
     "gap": "normal",
     "minHeight": "auto",
     "minWidth": "auto",
-    "width": "29.7812px",
-    "height": "14px",
+    "width": "28.2812px",
+    "height": "13px",
     "position": "static",
     "boxShadow": "none",
     "textShadow": "none",
     "transform": "none",
     "_rect": [
-     628.5,
-     21.5,
-     30,
-     14
+     601.5,
+     22,
+     28.5,
+     13
     ]
    },
    ".chip b": {
-    "fontFamily": "Cinzel, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "14.72px",
     "fontWeight": "600",
     "fontStyle": "normal",
@@ -12008,22 +12008,22 @@
     "alignItems": "normal",
     "gap": "normal",
     "minHeight": "auto",
-    "minWidth": "45.264px",
-    "width": "45.25px",
-    "height": "19px",
+    "minWidth": "59.3328px",
+    "width": "59.3281px",
+    "height": "18px",
     "position": "static",
     "boxShadow": "none",
     "textShadow": "none",
     "transform": "none",
     "_rect": [
-     664.5,
-     17.5,
-     45.5,
-     19
+     636,
+     18,
+     59.5,
+     18
     ]
    },
    "#vTime": {
-    "fontFamily": "Cinzel, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "14.72px",
     "fontWeight": "600",
     "fontStyle": "normal",
@@ -12056,22 +12056,22 @@
     "alignItems": "normal",
     "gap": "normal",
     "minHeight": "auto",
-    "minWidth": "45.264px",
-    "width": "45.25px",
-    "height": "19px",
+    "minWidth": "59.3328px",
+    "width": "59.3281px",
+    "height": "18px",
     "position": "static",
     "boxShadow": "none",
     "textShadow": "none",
     "transform": "none",
     "_rect": [
-     664.5,
-     17.5,
-     45.5,
-     19
+     636,
+     18,
+     59.5,
+     18
     ]
    },
    "#vMoves": {
-    "fontFamily": "Cinzel, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "14.72px",
     "fontWeight": "600",
     "fontStyle": "normal",
@@ -12104,22 +12104,22 @@
     "alignItems": "normal",
     "gap": "normal",
     "minHeight": "auto",
-    "minWidth": "36.2112px",
-    "width": "36.2031px",
-    "height": "19px",
+    "minWidth": "47.4663px",
+    "width": "47.4531px",
+    "height": "18px",
     "position": "static",
     "boxShadow": "none",
     "textShadow": "none",
     "transform": "none",
     "_rect": [
-     795,
-     17.5,
-     36,
-     19
+     779,
+     18,
+     47.5,
+     18
     ]
    },
    "#vStreak": {
-    "fontFamily": "Cinzel, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "14.72px",
     "fontWeight": "600",
     "fontStyle": "normal",
@@ -12152,18 +12152,18 @@
     "alignItems": "normal",
     "gap": "normal",
     "minHeight": "auto",
-    "minWidth": "27.1584px",
-    "width": "27.1562px",
-    "height": "19px",
+    "minWidth": "35.5997px",
+    "width": "35.5938px",
+    "height": "18px",
     "position": "static",
     "boxShadow": "none",
     "textShadow": "none",
     "transform": "none",
     "_rect": [
-     925.5,
-     17.5,
-     27,
-     19
+     917,
+     18,
+     35.5,
+     18
     ]
    },
    "#board": {
@@ -12359,7 +12359,7 @@
     ]
    },
    ".card[data-id=\"0\"] .face": {
-    "fontFamily": "Limelight, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "13.8472px",
     "fontWeight": "400",
     "fontStyle": "normal",
@@ -12455,7 +12455,7 @@
     ]
    },
    ".card[data-id=\"20\"] .front": {
-    "fontFamily": "Limelight, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "13.8472px",
     "fontWeight": "400",
     "fontStyle": "normal",
@@ -12551,7 +12551,7 @@
     ]
    },
    "#btnNew": {
-    "fontFamily": "Cinzel, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "16.8px",
     "fontWeight": "500",
     "fontStyle": "normal",
@@ -12599,7 +12599,7 @@
     ]
    },
    "#btnHint": {
-    "fontFamily": "Cinzel, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "16.8px",
     "fontWeight": "500",
     "fontStyle": "normal",
@@ -12647,7 +12647,7 @@
     ]
    },
    "#btnUndo": {
-    "fontFamily": "Cinzel, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "16.8px",
     "fontWeight": "500",
     "fontStyle": "normal",
@@ -12695,7 +12695,7 @@
     ]
    },
    "#btnMenu": {
-    "fontFamily": "Cinzel, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "16.8px",
     "fontWeight": "500",
     "fontStyle": "normal",
@@ -12743,7 +12743,7 @@
     ]
    },
    "#btnNew .control-label": {
-    "fontFamily": "Cinzel, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "16.8px",
     "fontWeight": "500",
     "fontStyle": "normal",
@@ -12777,21 +12777,21 @@
     "gap": "normal",
     "minHeight": "auto",
     "minWidth": "auto",
-    "width": "45.5156px",
-    "height": "22px",
+    "width": "42.7031px",
+    "height": "21px",
     "position": "static",
     "boxShadow": "none",
     "textShadow": "none",
     "transform": "none",
     "_rect": [
-     1080.5,
-     318,
-     45.5,
-     22
+     1082,
+     318.5,
+     42.5,
+     21
     ]
    },
    "#btnNew .classic-icon": {
-    "fontFamily": "Cinzel, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "16.8px",
     "fontWeight": "500",
     "fontStyle": "normal",
@@ -12839,7 +12839,7 @@
     ]
    },
    "#btnNew .vintage-icon": {
-    "fontFamily": "Cinzel, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "16.8px",
     "fontWeight": "500",
     "fontStyle": "normal",
@@ -12887,7 +12887,7 @@
     ]
    },
    "#toast": {
-    "fontFamily": "ui-rounded, -apple-system, \"system-ui\", \"SF Pro Rounded\", system-ui, sans-serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "20.8px",
     "fontWeight": "400",
     "fontStyle": "normal",
@@ -12935,7 +12935,7 @@
     ]
    },
    ".pinned-header::before": {
-    "fontFamily": "\"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "16px",
     "fontWeight": "400",
     "fontStyle": "normal",
@@ -13063,7 +13063,7 @@
   },
   "sheet": {
    "#sheet": {
-    "fontFamily": "\"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "16px",
     "fontWeight": "400",
     "fontStyle": "normal",
@@ -13111,7 +13111,7 @@
     ]
    },
    ".pinned-header": {
-    "fontFamily": "\"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "16px",
     "fontWeight": "400",
     "fontStyle": "normal",
@@ -13159,7 +13159,7 @@
     ]
    },
    ".title-row": {
-    "fontFamily": "\"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "16px",
     "fontWeight": "400",
     "fontStyle": "normal",
@@ -13207,7 +13207,7 @@
     ]
    },
    "#sheet h3": {
-    "fontFamily": "\"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "43.2px",
     "fontWeight": "600",
     "fontStyle": "normal",
@@ -13351,7 +13351,7 @@
     ]
    },
    ".row": {
-    "fontFamily": "\"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "26.4px",
     "fontWeight": "400",
     "fontStyle": "normal",
@@ -13386,7 +13386,7 @@
     "minHeight": "0px",
     "minWidth": "0px",
     "width": "780px",
-    "height": "113.031px",
+    "height": "110.031px",
     "position": "static",
     "boxShadow": "none",
     "textShadow": "none",
@@ -13395,11 +13395,11 @@
      200,
      138.5,
      780,
-     113
+     110
     ]
    },
    ".row .sub2": {
-    "fontFamily": "\"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "20.8px",
     "fontWeight": "400",
     "fontStyle": "normal",
@@ -13433,7 +13433,7 @@
     "gap": "normal",
     "minHeight": "0px",
     "minWidth": "0px",
-    "width": "488.781px",
+    "width": "503.406px",
     "height": "27.0312px",
     "position": "static",
     "boxShadow": "none",
@@ -13441,13 +13441,13 @@
     "transform": "none",
     "_rect": [
      200,
-     202.5,
-     489,
+     199.5,
+     503.5,
      27
     ]
    },
    ".seg": {
-    "fontFamily": "\"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "26.4px",
     "fontWeight": "400",
     "fontStyle": "normal",
@@ -13481,21 +13481,21 @@
     "gap": "2px",
     "minHeight": "auto",
     "minWidth": "auto",
-    "width": "275.219px",
-    "height": "63px",
+    "width": "260.594px",
+    "height": "60px",
     "position": "static",
     "boxShadow": "none",
     "textShadow": "none",
     "transform": "none",
     "_rect": [
-     705,
+     719.5,
      163,
-     275,
-     63
+     260.5,
+     60
     ]
    },
    ".seg button": {
-    "fontFamily": "\"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "22.72px",
     "fontWeight": "600",
     "fontStyle": "normal",
@@ -13529,21 +13529,21 @@
     "gap": "normal",
     "minHeight": "36px",
     "minWidth": "auto",
-    "width": "129.859px",
-    "height": "57px",
+    "width": "119.656px",
+    "height": "54px",
     "position": "static",
     "boxShadow": "none",
     "textShadow": "none",
     "transform": "none",
     "_rect": [
-     708,
+     722.5,
      166,
-     130,
-     57
+     119.5,
+     54
     ]
    },
    "#segCardsOriginal": {
-    "fontFamily": "\"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "22.72px",
     "fontWeight": "600",
     "fontStyle": "normal",
@@ -13577,21 +13577,21 @@
     "gap": "normal",
     "minHeight": "36px",
     "minWidth": "auto",
-    "width": "129.859px",
-    "height": "57px",
+    "width": "119.656px",
+    "height": "54px",
     "position": "static",
     "boxShadow": "none",
     "textShadow": "none",
     "transform": "none",
     "_rect": [
-     708,
+     722.5,
      166,
-     130,
-     57
+     119.5,
+     54
     ]
    },
    ".deal-mix": {
-    "fontFamily": "\"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "26.4px",
     "fontWeight": "400",
     "fontStyle": "normal",
@@ -13626,20 +13626,20 @@
     "minHeight": "auto",
     "minWidth": "auto",
     "width": "300px",
-    "height": "74.4062px",
+    "height": "72.4062px",
     "position": "static",
     "boxShadow": "none",
     "textShadow": "none",
     "transform": "none",
     "_rect": [
      680,
-     612,
+     600,
      300,
-     74.5
+     72.5
     ]
    },
    ".deal-mix-labels": {
-    "fontFamily": "\"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "16.8px",
     "fontWeight": "400",
     "fontStyle": "normal",
@@ -13674,20 +13674,20 @@
     "minHeight": "0px",
     "minWidth": "0px",
     "width": "300px",
-    "height": "23px",
+    "height": "21px",
     "position": "static",
     "boxShadow": "none",
     "textShadow": "none",
     "transform": "none",
     "_rect": [
      680,
-     612,
+     600,
      300,
-     23
+     21
     ]
    },
    ".deal-mix-stops": {
-    "fontFamily": "\"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "14.4px",
     "fontWeight": "400",
     "fontStyle": "normal",
@@ -13729,7 +13729,7 @@
     "transform": "none",
     "_rect": [
      680,
-     672,
+     658,
      300,
      14.5
     ]
@@ -13777,13 +13777,13 @@
     "transform": "none",
     "_rect": [
      680,
-     637,
+     623,
      300,
      40
     ]
    },
    "#btnRestart": {
-    "fontFamily": "\"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "22.72px",
     "fontWeight": "600",
     "fontStyle": "normal",
@@ -13817,21 +13817,21 @@
     "gap": "normal",
     "minHeight": "auto",
     "minWidth": "auto",
-    "width": "137.25px",
-    "height": "61px",
+    "width": "129.891px",
+    "height": "58px",
     "position": "static",
     "boxShadow": "none",
     "textShadow": "none",
     "transform": "none",
     "_rect": [
-     843,
-     733.5,
-     137.5,
-     61
+     850,
+     719.5,
+     130,
+     58
     ]
    },
    ".record-preview": {
-    "fontFamily": "\"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "26.4px",
     "fontWeight": "400",
     "fontStyle": "normal",
@@ -13866,20 +13866,20 @@
     "minHeight": "0px",
     "minWidth": "0px",
     "width": "780px",
-    "height": "127.688px",
+    "height": "125.688px",
     "position": "static",
     "boxShadow": "none",
     "textShadow": "none",
     "transform": "none",
     "_rect": [
      200,
-     892,
+     872,
      780,
-     127.5
+     125.5
     ]
    },
    ".record-card": {
-    "fontFamily": "\"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "26.4px",
     "fontWeight": "400",
     "fontStyle": "normal",
@@ -13921,14 +13921,14 @@
     "transform": "none",
     "_rect": [
      200,
-     892,
+     872,
      780,
      65.5
     ]
    },
    ".record-card strong": "ABSENT",
    ".record-card span": {
-    "fontFamily": "\"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "21.12px",
     "fontWeight": "400",
     "fontStyle": "normal",
@@ -13970,13 +13970,13 @@
     "transform": "none",
     "_rect": [
      219,
-     909,
+     889,
      242,
      31.5
     ]
    },
    ".record-link": {
-    "fontFamily": "\"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "22.72px",
     "fontWeight": "600",
     "fontStyle": "normal",
@@ -14011,16 +14011,16 @@
     "minHeight": "60px",
     "minWidth": "0px",
     "width": "780px",
-    "height": "61px",
+    "height": "60px",
     "position": "static",
     "boxShadow": "none",
     "textShadow": "none",
     "transform": "none",
     "_rect": [
      200,
-     1034,
+     1012,
      780,
-     61
+     60
     ]
    },
    "#sheetBack": {
@@ -14072,7 +14072,7 @@
     ]
    },
    ".pinned-header::before": {
-    "fontFamily": "\"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "16px",
     "fontWeight": "400",
     "fontStyle": "normal",
@@ -14200,7 +14200,7 @@
   },
   "stats": {
    "#statsPage": {
-    "fontFamily": "ui-rounded, -apple-system, \"system-ui\", \"SF Pro Rounded\", system-ui, sans-serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "16px",
     "fontWeight": "400",
     "fontStyle": "normal",
@@ -14248,7 +14248,7 @@
     ]
    },
    ".stats-page-inner": {
-    "fontFamily": "ui-rounded, -apple-system, \"system-ui\", \"SF Pro Rounded\", system-ui, sans-serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "16px",
     "fontWeight": "400",
     "fontStyle": "normal",
@@ -14283,7 +14283,7 @@
     "minHeight": "0px",
     "minWidth": "0px",
     "width": "780px",
-    "height": "1176.11px",
+    "height": "1172.11px",
     "position": "static",
     "boxShadow": "none",
     "textShadow": "none",
@@ -14292,11 +14292,11 @@
      200,
      26,
      780,
-     1176
+     1172
     ]
    },
    ".stats-header": {
-    "fontFamily": "ui-rounded, -apple-system, \"system-ui\", \"SF Pro Rounded\", system-ui, sans-serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "16px",
     "fontWeight": "400",
     "fontStyle": "normal",
@@ -14344,7 +14344,7 @@
     ]
    },
    ".stats-header h2": {
-    "fontFamily": "\"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "40px",
     "fontWeight": "600",
     "fontStyle": "normal",
@@ -14378,17 +14378,17 @@
     "gap": "normal",
     "minHeight": "auto",
     "minWidth": "auto",
-    "width": "227.094px",
-    "height": "54px",
+    "width": "203.969px",
+    "height": "50px",
     "position": "static",
     "boxShadow": "none",
     "textShadow": "none",
     "transform": "none",
     "_rect": [
      200,
-     31.5,
-     227,
-     54
+     33.5,
+     204,
+     50
     ]
    },
    "#btnStatsClose": {
@@ -14440,7 +14440,7 @@
     ]
    },
    ".stats-tabs": {
-    "fontFamily": "ui-rounded, -apple-system, \"system-ui\", \"SF Pro Rounded\", system-ui, sans-serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "16px",
     "fontWeight": "400",
     "fontStyle": "normal",
@@ -14475,7 +14475,7 @@
     "minHeight": "0px",
     "minWidth": "0px",
     "width": "780px",
-    "height": "59px",
+    "height": "60px",
     "position": "static",
     "boxShadow": "none",
     "textShadow": "none",
@@ -14484,11 +14484,11 @@
      200,
      115,
      780,
-     59
+     60
     ]
    },
    ".stats-tabs button": {
-    "fontFamily": "ui-rounded, -apple-system, \"system-ui\", \"SF Pro Rounded\", system-ui, sans-serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "22.72px",
     "fontWeight": "600",
     "fontStyle": "normal",
@@ -14523,7 +14523,7 @@
     "minHeight": "36px",
     "minWidth": "auto",
     "width": "386px",
-    "height": "53px",
+    "height": "54px",
     "position": "static",
     "boxShadow": "none",
     "textShadow": "none",
@@ -14532,11 +14532,11 @@
      203,
      118,
      386,
-     53
+     54
     ]
    },
    ".stats-hero": {
-    "fontFamily": "ui-rounded, -apple-system, \"system-ui\", \"SF Pro Rounded\", system-ui, sans-serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "16px",
     "fontWeight": "400",
     "fontStyle": "normal",
@@ -14571,20 +14571,20 @@
     "minHeight": "0px",
     "minWidth": "0px",
     "width": "780px",
-    "height": "110px",
+    "height": "107px",
     "position": "static",
     "boxShadow": "none",
     "textShadow": "none",
     "transform": "none",
     "_rect": [
      200,
-     190,
+     191,
      780,
-     110
+     107
     ]
    },
    ".stats-hero div": {
-    "fontFamily": "ui-rounded, -apple-system, \"system-ui\", \"SF Pro Rounded\", system-ui, sans-serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "16px",
     "fontWeight": "400",
     "fontStyle": "normal",
@@ -14619,20 +14619,20 @@
     "minHeight": "auto",
     "minWidth": "auto",
     "width": "252px",
-    "height": "110px",
+    "height": "107px",
     "position": "static",
     "boxShadow": "none",
     "textShadow": "none",
     "transform": "none",
     "_rect": [
      200,
-     190,
+     191,
      252,
-     110
+     107
     ]
    },
    ".stats-hero b": {
-    "fontFamily": "\"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "38.4px",
     "fontWeight": "700",
     "fontStyle": "normal",
@@ -14667,20 +14667,20 @@
     "minHeight": "0px",
     "minWidth": "0px",
     "width": "234px",
-    "height": "53px",
+    "height": "48px",
     "position": "static",
     "boxShadow": "none",
     "textShadow": "none",
     "transform": "none",
     "_rect": [
      209,
-     209,
+     210,
      234,
-     53
+     48
     ]
    },
    ".stats-hero span": {
-    "fontFamily": "ui-rounded, -apple-system, \"system-ui\", \"SF Pro Rounded\", system-ui, sans-serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "16.32px",
     "fontWeight": "400",
     "fontStyle": "normal",
@@ -14721,14 +14721,14 @@
     "textShadow": "none",
     "transform": "none",
     "_rect": [
-     271.5,
-     262,
-     109,
-     19
+     270,
+     258,
+     112.5,
+     21
     ]
    },
    ".stats-group": {
-    "fontFamily": "ui-rounded, -apple-system, \"system-ui\", \"SF Pro Rounded\", system-ui, sans-serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "16px",
     "fontWeight": "400",
     "fontStyle": "normal",
@@ -14770,13 +14770,13 @@
     "transform": "none",
     "_rect": [
      200,
-     324,
+     322,
      780,
      235
     ]
    },
    ".stats-group h3": {
-    "fontFamily": "\"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "24px",
     "fontWeight": "600",
     "fontStyle": "normal",
@@ -14811,20 +14811,20 @@
     "minHeight": "0px",
     "minWidth": "0px",
     "width": "734px",
-    "height": "57px",
+    "height": "54px",
     "position": "static",
     "boxShadow": "none",
     "textShadow": "none",
     "transform": "none",
     "_rect": [
      223,
-     331,
+     329,
      734,
-     57
+     54
     ]
    },
    ".stats-detail-row": {
-    "fontFamily": "ui-rounded, -apple-system, \"system-ui\", \"SF Pro Rounded\", system-ui, sans-serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "21.6px",
     "fontWeight": "400",
     "fontStyle": "normal",
@@ -14859,20 +14859,20 @@
     "minHeight": "0px",
     "minWidth": "0px",
     "width": "734px",
-    "height": "55px",
+    "height": "56px",
     "position": "static",
     "boxShadow": "none",
     "textShadow": "none",
     "transform": "none",
     "_rect": [
      223,
-     388,
+     383,
      734,
-     55
+     56
     ]
    },
    ".stats-detail-row b": {
-    "fontFamily": "ui-rounded, -apple-system, \"system-ui\", \"SF Pro Rounded\", system-ui, sans-serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "21.6px",
     "fontWeight": "700",
     "fontStyle": "normal",
@@ -14906,17 +14906,17 @@
     "gap": "normal",
     "minHeight": "auto",
     "minWidth": "auto",
-    "width": "18.8281px",
-    "height": "26px",
+    "width": "21.6094px",
+    "height": "27px",
     "position": "static",
     "boxShadow": "none",
     "textShadow": "none",
     "transform": "none",
     "_rect": [
-     938,
-     402,
-     19,
-     26
+     935.5,
+     397,
+     21.5,
+     27
     ]
    }
   },
@@ -15005,20 +15005,20 @@
     "minHeight": "auto",
     "minWidth": "auto",
     "width": "520px",
-    "height": "355.781px",
+    "height": "360.781px",
     "position": "static",
     "boxShadow": "rgba(0, 0, 0, 0.5) 0px 20px 60px 0px",
     "textShadow": "none",
     "transform": "none",
     "_rect": [
      330,
-     232,
+     229.5,
      520,
-     356
+     361
     ]
    },
    ".panel h2": {
-    "fontFamily": "Limelight, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "44px",
     "fontWeight": "400",
     "fontStyle": "normal",
@@ -15053,16 +15053,16 @@
     "minHeight": "0px",
     "minWidth": "0px",
     "width": "448px",
-    "height": "54px",
+    "height": "55px",
     "position": "static",
     "boxShadow": "none",
     "textShadow": "none",
     "transform": "none",
     "_rect": [
      366,
-     262,
+     259.5,
      448,
-     54
+     55
     ]
    },
    ".panel .sub": {
@@ -15108,7 +15108,7 @@
     "transform": "none",
     "_rect": [
      366,
-     318,
+     316.5,
      448,
      23
     ]
@@ -15156,7 +15156,7 @@
     "transform": "none",
     "_rect": [
      366,
-     357,
+     355.5,
      448,
      57.5
     ]
@@ -15204,7 +15204,7 @@
     "transform": "none",
     "_rect": [
      398.5,
-     357,
+     355.5,
      105,
      57.5
     ]
@@ -15252,7 +15252,7 @@
     "transform": "none",
     "_rect": [
      398.5,
-     357,
+     355.5,
      105,
      39.5
     ]
@@ -15300,7 +15300,7 @@
     "transform": "none",
     "_rect": [
      430,
-     396.5,
+     395,
      42,
      18
     ]
@@ -15348,13 +15348,13 @@
     "transform": "none",
     "_rect": [
      366,
-     428.5,
+     427,
      448,
      19
     ]
    },
    ".panel button": {
-    "fontFamily": "ui-rounded, -apple-system, \"system-ui\", \"SF Pro Rounded\", system-ui, sans-serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "20.48px",
     "fontWeight": "600",
     "fontStyle": "normal",
@@ -15389,20 +15389,20 @@
     "minHeight": "0px",
     "minWidth": "0px",
     "width": "448px",
-    "height": "52px",
+    "height": "54px",
     "position": "static",
     "boxShadow": "none",
     "textShadow": "none",
     "transform": "none",
     "_rect": [
      366,
-     466,
+     464.5,
      448,
-     52
+     54
     ]
    },
    ".panel button.ghost": {
-    "fontFamily": "ui-rounded, -apple-system, \"system-ui\", \"SF Pro Rounded\", system-ui, sans-serif",
+    "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
     "fontSize": "20.48px",
     "fontWeight": "500",
     "fontStyle": "normal",
@@ -15437,16 +15437,16 @@
     "minHeight": "0px",
     "minWidth": "0px",
     "width": "448px",
-    "height": "40px",
+    "height": "42px",
     "position": "static",
     "boxShadow": "none",
     "textShadow": "none",
     "transform": "none",
     "_rect": [
      366,
-     522,
+     522.5,
      448,
-     40
+     42
     ]
    }
   }

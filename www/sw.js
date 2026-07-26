@@ -1,7 +1,7 @@
 /* Better Solitaire — service worker
    Offline-first shell caching. Bump CACHE when assets change so clients
    pick up the new version (old caches are purged on activate). */
-const CACHE = "solitaire-v39";
+const CACHE = "solitaire-v40";
 const CARDS = Array.from({ length: 52 }, (_, id) => {
   const suit = Math.floor(id / 13);
   const rank = (id % 13) + 1;
@@ -16,7 +16,7 @@ const SHELL = [
   "assets/audio/card-shuffle.mp3",
   "assets/fonts/imfell-english.woff2",
   "assets/fonts/limelight.woff2",
-  "assets/fonts/cinzel.woff2",
+  "assets/fonts/marcellus.woff2",
   "icons/icon-192.png",
   "icons/icon-512.png",
   "icons/maskable-512.png",

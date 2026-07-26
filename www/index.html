@@ -15,7 +15,10 @@
 <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
 <style>
   /* Bundled display faces (SIL OFL — see assets/fonts/LICENSES.txt).
-     IM Fell English carries the Vintage table; Limelight & Cinzel the Classic. */
+     IM Fell English carries the Vintage table. Classic runs on two: Limelight
+     for the marquee title only, and Marcellus for everything else — cards,
+     rail, chips, sheet, stats and dialogs. Neither carries pip or chess
+     glyphs, so suits and courts fall back to --serif, as they always have. */
   @font-face{
     font-family:"IM Fell English";
     src:url("assets/fonts/imfell-english.woff2") format("woff2");
@@ -27,9 +30,8 @@
     font-display:swap;
   }
   @font-face{
-    font-family:"Cinzel";
-    src:url("assets/fonts/cinzel.woff2") format("woff2");
-    font-weight:500;
+    font-family:"Marcellus";
+    src:url("assets/fonts/marcellus.woff2") format("woff2");
     font-display:swap;
   }
   /* ============================================================
@@ -38,7 +40,8 @@
        felt      #0F2E25   felt-deep #08201A   line #2C5A49
        paper     #FAF5E9   shade     #EDE4D0
        carmine   #BF3B33   ink       #26282E   brass #D9A648
-     Type: Palatino/Iowan serif for cards & display, system UI for chrome
+     Type: Classic runs on Limelight (marquee) + Marcellus (everything else);
+           Vintage on IM Fell English; the default theme on Palatino/system UI
      ============================================================ */
   :root{
     --felt:#0f2e25; --felt-deep:#071d17; --line:#2c5a49; --line-soft:#24493c;
@@ -132,11 +135,13 @@
     --confirm-surface:rgba(217,166,72,.28);
     --confirm-border:rgba(217,166,72,.72);
     --focus-ring:var(--brass);
-    /* Type faces by role. A theme swaps faces by restating these five; the
-       roles are separate because the themes do not move them together —
-       Classic puts a serif in the sheet but leaves the stats page on the UI
-       face, and reserves Limelight for the marquee and the win dialog. */
-    --face-display:var(--serif);   /* marquee and win dialog */
+    /* Type faces by role. A theme swaps faces by restating these six. The
+       roles stay separate because the themes do not move them together:
+       Classic reserves --face-display for the marquee alone and runs every
+       other role on one face, while Vintage sets its cards in artwork and
+       never reads --face-card at all. */
+    --face-display:var(--serif);   /* the marquee title */
+    --face-card:var(--serif);      /* rank and suit on a drawn card face */
     --face-title:var(--serif);     /* sheet, stats, and group headings */
     --face-label:var(--ui);        /* chips and control-rail labels */
     --face-sheet:var(--ui);        /* everything inside the settings sheet */
@@ -171,9 +176,17 @@
        the control buttons share that brightness, nothing else does. */
     --chip-ink:#f0e8d2;
     --control-ink:#f0e8d2;
+    /* Two faces, and only two: Limelight is reserved for the marquee title,
+       Marcellus carries every other role. Marcellus replaced Cinzel (whose
+       lowercase is drawn as small caps, so it could never hold the sheet or
+       popup text) and Limelight on the cards, where a marquee face's hairline
+       joints gave out at the 20px index. */
     --face-display:"Limelight",var(--serif);
-    --face-label:"Cinzel",var(--serif);
-    --face-sheet:var(--serif);
+    --face-card:"Marcellus",var(--serif);
+    --face-label:"Marcellus",var(--serif);
+    --face-title:"Marcellus",var(--serif);
+    --face-sheet:"Marcellus",var(--serif);
+    --face-chrome:"Marcellus",var(--serif);
     --chip-label-ink:#c9b477;
     --card-back-stripe:#163f31;
     --card-back-field:#12352a;
@@ -197,9 +210,13 @@
     font-size:var(--type-chip);font-variant-numeric:tabular-nums;
     color:var(--chip-ink,var(--chrome-ink-strong));white-space:nowrap;
   }
-  /* Figures are reserved their widest plausible value so a ticking clock or a
-     rolling move count never shifts the pills (or their neighbours) sideways.
-     tabular-nums makes 1ch an exact digit width. */
+  /* Figures are reserved their widest plausible value (the `ch` min-widths
+     below) so a ticking clock or a rolling move count never resizes the pills
+     or shifts their neighbours. Note that tabular-nums does nothing here: none
+     of the bundled display faces ships a `tnum` feature and browsers do not
+     synthesise one, so the digits still have proportional widths and the value
+     shifts slightly *inside* its reserved, right-aligned box. It is declared
+     for the default theme's system face, which does have tabular figures. */
   .chip b{
     font-weight:600;display:inline-block;text-align:right;
     font-variant-numeric:tabular-nums;
@@ -208,7 +225,7 @@
   #vMoves{min-width:4ch}
   #vStreak{min-width:3ch}
   .chip small{color:var(--chip-label-ink,var(--chrome-ink-muted));font-size:var(--type-chip-label);margin-left:1px}
-  /* J2-b "club rail": darker pills, brass hairline, Cinzel figures. */
+  /* J2-b "club rail": darker pills, brass hairline, Marcellus figures. */
   body[data-card-style="original"] .chip{
     align-items:baseline;gap:6px;
     background:rgba(0,0,0,.28);
@@ -295,9 +312,10 @@
     background:linear-gradient(160deg,var(--paper) 65%,var(--paper-shade));
     border:1px solid rgba(70,60,40,.25);
     color:var(--ink);
-    /* Limelight ranks match the marquee title; suits and the chess courts
-       fall back to the serif (Limelight has no pip/chess glyphs). */
-    font-family:"Limelight",var(--serif);
+    /* Marcellus ranks: Roman capitals that hold their strokes at the 20px
+       index, including through the ~24px sliver a fanned pile reveals. Suits
+       and the chess courts fall back to the serif, as under Limelight. */
+    font-family:var(--face-card);
   }
   body[data-card-style="original"] .card.red .front{color:var(--red)}
   body[data-card-style="original"] .back{
@@ -339,7 +357,7 @@
   }
   body[data-card-style="original"] .mid.ace{opacity:1}
   body[data-card-style="original"] .mid.court{line-height:1;transform:translateY(.05em)}
-  /* Club-rail buttons: emoji icons retired; Cinzel small caps on a dark pill
+  /* Club-rail buttons: emoji icons retired; Marcellus capitals on a dark pill
      with the same brass hairline as the stat chips. */
   body[data-card-style="original"] #controls button{
     display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:50px;
@@ -472,8 +490,10 @@
     animation:panelIn .45s cubic-bezier(.2,1.1,.3,1.1);
   }
   @keyframes panelIn{from{transform:translateY(24px) scale(.94);opacity:0}to{transform:none;opacity:1}}
+  /* A dialog heading is popup text, not the marquee, so it reads --face-title.
+     Vintage is unaffected: it sets both roles to the same face. */
   .panel h2{
-    font-family:var(--face-display);font-size:var(--type-panel-title);font-weight:600;
+    font-family:var(--face-title);font-size:var(--type-panel-title);font-weight:600;
     letter-spacing:.01em;margin-bottom:2px;
     text-wrap:balance;
   }

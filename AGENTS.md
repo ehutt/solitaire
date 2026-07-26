@@ -27,6 +27,13 @@ stray selector to out-rank.
   component-specific ones (`--chip-ink`, `--control-ink`, `--seg-on-*`,
   `--confirm-*`, `--focus-ring`). Colour literals live only in these
   declarations.
+- Classic runs on exactly two bundled faces: Limelight for the marquee title
+  (`--face-display`) and Marcellus for every other role — cards, rail, chips,
+  sheet, stats, dialogs. Adding a third is a design decision, not a detail: a
+  face is only legible enough for the card index if it holds up through the
+  ~24px sliver a fanned tableau pile reveals, which is where Limelight failed
+  and Cinzel's small-caps lowercase ruled it out of popup text. Neither bundled
+  face carries pip or chess glyphs, so suits and courts fall back to `--serif`.
 - Why: theme selectors like `body[data-card-style="…"] #sheet h3` (1,1,2)
   silently out-rank a responsive block's `#sheet h3` (1,0,1). That shipped —
   the iPad rendered phone-sized sheet titles for months and nothing flagged it.

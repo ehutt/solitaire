@@ -5,7 +5,7 @@ commercial use, embedding, and app distribution):
   https://fonts.google.com/specimen/IM+Fell+English
 - Limelight — Ryan Martinson (Yellow Design Studio)
   https://fonts.google.com/specimen/Limelight
-- Cinzel — Natanael Gama
-  https://fonts.google.com/specimen/Cinzel
+- Marcellus — Brian J. Bonislawsky (Astigmatic)
+  https://fonts.google.com/specimen/Marcellus
 
 Full license text: https://openfontlicense.org
