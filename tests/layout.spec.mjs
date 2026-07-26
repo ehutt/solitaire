@@ -211,6 +211,31 @@ for (const cardStyle of STYLES) {
         });
         expect(offenders).toEqual([]);
       });
+
+      // The landscape arrangement puts the foundations and the stock in side
+      // rails flanking the seven tableau columns. If a rail sits one plain
+      // `gap` away it reads as an eighth and ninth column, which is what
+      // happened on tablets: the nine columns filled the width exactly, so the
+      // outward nudge had no slack to use and silently collapsed to zero.
+      test("side rails stand clear of the tableau in landscape", async ({ page }) => {
+        const lanes = await page.evaluate(() => {
+          if (!G.landscape) return null;
+          const { cw, gap, slotPos, xs } = G;
+          return {
+            gap,
+            left: xs(0) - (slotPos.f0[0] + cw),          // foundations -> tableau
+            right: slotPos.stock[0] - (xs(6) + cw)        // tableau -> stock
+          };
+        });
+        test.skip(lanes === null, "portrait arrangement has no side rails");
+
+        // Comfortably wider than the gap between two tableau columns, and
+        // symmetric. 2.5x is below what every device produces (phones ~2.9x,
+        // tablets ~3.7x) so this pins the intent without pinning the ratio.
+        expect(lanes.left).toBeGreaterThan(lanes.gap * 2.5);
+        expect(lanes.right).toBeGreaterThan(lanes.gap * 2.5);
+        expect(Math.abs(lanes.left - lanes.right)).toBeLessThan(1);
+      });
     });
   }
 }
