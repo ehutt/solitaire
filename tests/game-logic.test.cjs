@@ -325,8 +325,10 @@ test("classic portrait header and controls are enlarged with balanced icons", ()
   assert.ok(portraitHud, "classic portrait HUD rule exists");
   assert.match(portraitHud, /display:flex;flex-wrap:wrap/);
   assert.match(html, /body\[data-card-style="original"\]\{--type-display:clamp\(1\.68rem,6\.72vw,2\.28rem\)\}/);
-  // Labelled club-rail pills take their own centered row on portrait phones
-  assert.match(html, /body\[data-card-style="original"\] \.chips\{flex:0 0 100%;justify-content:center;gap:6px\}/);
+  // The labelled club rail takes its own centered row on portrait phones. It is
+  // a rule bar, not pills, so the container gap is 0 — the hairline between two
+  // chips is what separates them.
+  assert.match(html, /body\[data-card-style="original"\] \.chips\{\s*flex:0 0 100%;justify-content:center;gap:0;/);
   // Emoji control icons are retired; only the menu ellipsis glyph remains
   assert.match(html, /#btnNew \.classic-icon,\s*[^{]*#btnHint \.classic-icon,\s*[^{]*#btnUndo \.classic-icon\{display:none\}/);
   assert.match(html, /body\[data-card-style="original"\]\{[^}]*--type-menu-glyph:1\.7rem/);

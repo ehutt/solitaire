@@ -169,9 +169,15 @@
   }
   .brand{
     font-family:var(--face-display);
-    font-size:var(--type-display);letter-spacing:.02em;color:var(--text);
+    font-size:calc(var(--hud-fit, 1) * var(--type-display));
+    letter-spacing:.02em;color:var(--text);
     display:flex;align-items:baseline;gap:.4rem;
   }
+  /* The marquee is a single line by contract — the pips only read as a matched
+     pair when they flank one line of type. Left to wrap, the title box keeps
+     the full width the flex line offered it and the trailing pip strands itself
+     far to the right of the shorter second line. */
+  .brand-title{white-space:nowrap}
   .brand .pip{color:var(--brass);font-size:1.05em}
   /* Classic's type sizes. Everything the theme changes about size lives here;
      the components themselves never learn which theme is on. */
@@ -206,15 +212,20 @@
   /* Limelight has no pip glyphs, so Classic's spades drop back to the serif.
      Vintage hides its pips entirely and needs no such escape. */
   body[data-card-style="original"] .brand .pip{font-family:var(--serif)}
-  .chips{display:flex;gap:6px;align-items:center}
+  .chips{display:flex;gap:0;align-items:center}
+  /* A stat *line*, not a row of pills. The pill chrome — padding, border and
+     the gap that kept the capsules apart — cost about a fifth of the width of a
+     phone's portrait row, which is what held the figures down; a hairline
+     between neighbours separates them for free. Padding is in em so the rule
+     spacing tracks the figures at any size. Themes skin the hairline through
+     --chip-rule and add their own ornament; the component stays theme-blind. */
   .chip{
     display:inline-flex;align-items:center;gap:4px;font-family:var(--face-label);
-    background:rgba(255,255,255,.06);
-    border:1px solid rgba(255,255,255,.08);
-    border-radius:999px;padding:4px 10px;
-    font-size:var(--type-chip);font-variant-numeric:tabular-nums;
+    padding:0 .55em;
+    font-size:calc(var(--stat-fit, 1) * var(--type-chip));font-variant-numeric:tabular-nums;
     color:var(--chip-ink,var(--chrome-ink-strong));white-space:nowrap;
   }
+  .chip + .chip{border-left:1px solid var(--chip-rule,rgba(255,255,255,.18))}
   /* Figures are reserved their widest plausible value (the `ch` min-widths
      below) so a ticking clock or a rolling move count never resizes the pills
      or shifts their neighbours. Note that tabular-nums does nothing here: none
@@ -223,19 +234,17 @@
      shifts slightly *inside* its reserved, right-aligned box. It is declared
      for the default theme's system face, which does have tabular figures. */
   .chip b{
-    font-weight:600;display:inline-block;text-align:right;
+    font-weight:600;display:inline-block;text-align:center;
     font-variant-numeric:tabular-nums;
   }
   #vTime{min-width:5ch}
   #vMoves{min-width:4ch}
   #vStreak{min-width:3ch}
-  .chip small{color:var(--chip-label-ink,var(--chrome-ink-muted));font-size:var(--type-chip-label);margin-left:1px}
-  /* J2-b "club rail": darker pills, brass hairline, Marcellus figures. */
+  .chip small{color:var(--chip-label-ink,var(--chrome-ink-muted));font-size:calc(var(--stat-fit, 1) * var(--type-chip-label));margin-left:1px}
+  /* J2-b "club rail": brass hairlines and Marcellus figures. */
+  body[data-card-style="original"]{--chip-rule:rgba(217,166,72,.38)}
   body[data-card-style="original"] .chip{
-    align-items:baseline;gap:6px;
-    background:rgba(0,0,0,.28);
-    border:1px solid rgba(217,166,72,.38);
-    font-weight:500;padding:4px 13px;
+    align-items:baseline;gap:6px;font-weight:500;
   }
   body[data-card-style="original"] .chip small{
     display:inline;letter-spacing:.12em;text-transform:uppercase;
@@ -740,7 +749,7 @@
     /* Classic's club-rail pills keep their engraved labels even on phones */
     body[data-card-style="original"]{--type-chip:.86rem;--type-chip-label:.6rem}
     body[data-card-style="original"] .chip small{display:inline;letter-spacing:.1em}
-    body[data-card-style="original"] .chip{padding:3px 11px;gap:5px}
+    body[data-card-style="original"] .chip{padding:0 .5em;gap:5px}
     body{--type-display:1.25rem}
   }
   @media (orientation:portrait){
@@ -751,23 +760,35 @@
     body[data-card-style="original"]{--type-display:clamp(1.68rem,6.72vw,2.28rem)}
     body[data-card-style="original"] .brand{justify-content:flex-start}
     body[data-card-style="original"] .chips{
-      flex:1;justify-content:flex-end;gap:6px;flex-wrap:wrap;
+      flex:1;justify-content:flex-end;gap:0;flex-wrap:wrap;
     }
-    body[data-card-style="original"] .chip:nth-child(3){margin-left:6px}
     body[data-card-style="original"] #controls{
       gap:9px;padding:12px 12px calc(env(safe-area-inset-bottom, 0px) + 15px);
     }
     body[data-card-style="original"]{--type-control:.9rem}
     body[data-card-style="original"] #controls button{padding:12px 13px}
   }
-  @media (orientation:portrait) and (max-width:599px){
+  /* Was phone-only (max-width:599px). A tablet held upright has to seat the
+     marquee and the stat line on one row otherwise, and one row cannot serve
+     both: every point given to the figures came off the title, which left an
+     iPad's marquee barely larger than an iPhone's. Stacking gives each a row of
+     its own, which is what Vintage has always done on a portrait tablet. */
+  @media (orientation:portrait){
     /* Marquee header: centered title between twin spades, with the labelled
-       club-rail pills on their own centered row beneath. */
+       club rail on its own centered row beneath, under a brass hairline —
+       the same stat-bar structure Vintage uses, in Classic's palette.
+       --hud-fit sizes both rows; see fitHudType(). */
     body[data-card-style="original"] #hud{justify-content:center}
-    body[data-card-style="original"]{--type-display:clamp(1.8rem,7.2vw,2.28rem)}
+    body[data-card-style="original"]{
+      --type-display:clamp(1.8rem,7.2vw,2.28rem);
+      --type-chip:.86rem;
+      --type-chip-label:.6rem;
+    }
     body[data-card-style="original"] .brand{width:100%;justify-content:center}
-    body[data-card-style="original"] .chips{flex:0 0 100%;justify-content:center;gap:6px}
-    body[data-card-style="original"] .chip:nth-child(3){margin-left:0}
+    body[data-card-style="original"] .chips{
+      flex:0 0 100%;justify-content:center;gap:0;
+      border-top:1px solid rgba(217,166,72,.3);margin-top:2px;padding-top:5px;
+    }
   }
   @media (orientation:landscape){
     #sheet{
@@ -785,10 +806,20 @@
               10px 4px 10px;
     }
     body[data-card-style="original"] #hud{display:flex;gap:10px}
-    body[data-card-style="original"]{--type-display:1.5rem}
+    /* Scales with the viewport rather than sitting at a flat 1.5rem: the HUD
+       row is marquee + chips, and on a notched phone the safe-area insets take
+       ~64pt out of it, which was just enough to squeeze the title into two
+       lines. vw is not inset-aware, so the ramp is set below what the widest
+       phone could technically afford — and then --hud-fit, measured in JS
+       against the row the insets actually left, spends the rest. */
+    body[data-card-style="original"]{
+      --type-display:clamp(1.05rem,2.35vw,1.5rem);
+      --type-chip:.92rem;
+      --type-chip-label:.62rem;
+    }
     body[data-card-style="original"] .chips{width:auto;justify-content:flex-end}
     body{--type-display:1.25rem;--type-chip:.72rem}
-    .chip{padding:3px 7px}
+    .chip{padding:0 .45em}
     #controls{
       position:fixed;z-index:300;left:auto;right:env(safe-area-inset-right,0px);
       top:calc(env(safe-area-inset-top, 0px) + 38px);bottom:env(safe-area-inset-bottom, 0px);
@@ -911,7 +942,12 @@
     background:var(--vintage-accent);
     clip-path:polygon(50% 0,100% 50%,50% 100%,0 50%);
     transform:none;
-    margin:0 clamp(5px,2vw,14px);
+    /* Trimmed from clamp(5px,2vw,14px). The lozenges and their margins were
+       spending 45pt of a portrait phone's 365pt bar, and because the bar was
+       already flush the stat line could not take any of the fit at all — it sat
+       at 1.0 while Classic's grew 23%, which read as Vintage being the smaller
+       theme. */
+    margin:0 clamp(3px,1.1vw,9px);
   }
   body[data-card-style="crehore"] .chips::after{transform:none}
   /* H6 stat line: figures larger than their labels, one quiet row that stays
@@ -919,7 +955,9 @@
   body[data-card-style="crehore"] .chip{
     min-height:0;justify-content:center;gap:5px;align-items:baseline;
     background:transparent;border:0;border-radius:0;
-    padding:0 clamp(8px,3vw,17px);
+    /* em, so the space around the rules tracks the figures as the fit grows
+       them, and so the bar's fixed chrome stops crowding out the type. */
+    padding:0 .58em;
     font-weight:400;
     font-variant-numeric:tabular-nums;letter-spacing:.02em;
   }
@@ -1045,7 +1083,13 @@
   }
 
   @media (max-width:599px){
-    body[data-card-style="crehore"]{--type-display:clamp(1.82rem,8vw,2.35rem)}
+    /* --hud-fit sizes the marquee and the stat bar together against the row
+       they actually got; see fitHudType(). Landscape restates these below. */
+    body[data-card-style="crehore"]{
+      --type-display:clamp(1.82rem,8vw,2.35rem);
+      --type-chip:1.05rem;
+      --type-chip-label:.68rem;
+    }
     body[data-card-style="crehore"]{--type-control:.72rem}
     body[data-card-style="crehore"] #controls button{
       gap:4px;padding-inline:6px;letter-spacing:.055em;
@@ -1058,7 +1102,18 @@
         8px 0 8px;
       padding:4px 0;border-width:2px;
     }
-    body[data-card-style="crehore"]{--type-display:1.45rem;--type-chip:.92rem;--type-chip-label:.6rem}
+    body[data-card-style="crehore"]{
+      /* Optically matched to Classic, not numerically. IM Fell English carries a
+         far smaller x-height than Limelight (11.6 vs 13.7 at a nominal 25px), so
+         at equal font-size the Vintage marquee reads visibly smaller. The 1.18x
+         here is the x-height ratio. Vintage's portrait base already had this
+         correction baked in — 8vw against Classic's 7.2vw — and landscape was
+         the orientation that never got it. Costs the stat line nothing: the
+         landscape fit is ceiling-bound, not width-bound, with ~120pt spare. */
+      --type-display:clamp(1.2rem,2.69vw,1.71rem);
+      --type-chip:.92rem;
+      --type-chip-label:.6rem;
+    }
     body[data-card-style="crehore"] .brand{
       width:auto;flex:1;justify-content:flex-start;gap:8px;
     }
@@ -1068,7 +1123,7 @@
     }
     body[data-card-style="crehore"] .chips::before,
     body[data-card-style="crehore"] .chips::after{display:none}
-    body[data-card-style="crehore"] .chip{min-height:0;padding:0 8px}
+    body[data-card-style="crehore"] .chip{min-height:0;padding:0 .55em}
     body[data-card-style="crehore"] #controls{
       position:fixed;left:auto;right:env(safe-area-inset-right,0px);
       top:calc(env(safe-area-inset-top, 0px) + 38px);bottom:env(safe-area-inset-bottom, 0px);
@@ -1098,11 +1153,13 @@
     #app{max-width:1100px}
     #hud{padding:calc(env(safe-area-inset-top, 0px) + 20px) 28px 16px}
     body{--type-display:2.45rem;--type-chip:1.7rem;--type-chip-label:1.15rem}
-    .chips{gap:12px}
-    .chip{padding:12px 18px;gap:8px}
+    /* Classic's theme root is (0,1,1) and this block's `body` is (0,0,1), so the
+       tablet's chip sizes never reached Classic at all — the same specificity
+       trap the marquee fell into, one variable over. Restated at the theme's own
+       specificity; the landscape block refines it further down. */
+    body[data-card-style="original"]{--type-chip:1.15rem;--type-chip-label:.8rem}
+    .chip{padding:0 .65em;gap:8px}
     .chip small{display:inline}
-    body[data-card-style="original"] .chips{gap:9px}
-    body[data-card-style="original"] .chip:nth-child(3){margin-left:5px}
     #controls{gap:15px;padding:18px 26px calc(env(safe-area-inset-bottom, 0px) + 24px)}
     body{--type-control:1.28rem}
     #controls button{min-height:64px;padding:18px 28px}
@@ -1223,7 +1280,7 @@
     body[data-card-style="original"]{
       --type-display:2.3rem;--type-chip:1.15rem;--type-chip-label:.8rem;
     }
-    .chip{padding:9px 14px}
+    .chip{padding:0 .6em}
     #controls{
       top:calc(env(safe-area-inset-top, 0px) + 54px);padding:10px 12px;gap:12px;
     }
@@ -1701,16 +1758,40 @@ function computeGeometry(){
     if(foundationCardHeight > 0) cw = Math.min(cw, foundationCardHeight/1.45);
   }
   const ch = cw*1.45;
-  const left = (bw - (columnCount*cw + (columnCount-1)*gap))/2;
-  const xs = i => left + (i + (landscape ? 1 : 0))*(cw+gap);
+  // Landscape almost never spends its width budget: on a phone the card size is
+  // capped by the eleven-card face-up run, so the nine columns come out far
+  // narrower than the board. Centring them as one tight block pooled every
+  // spare pixel into two dead margins — the right-hand one sitting between the
+  // stock and the control rail, which is what made the board look shoved into a
+  // corner. Instead, anchor the rails to the board edges and spend the slack on
+  // the tableau's own column step, capped so the columns stay a hand of cards
+  // rather than drifting apart; whatever the cap leaves over widens the two
+  // lanes that separate the rails from the tableau, symmetrically.
+  let step = cw + gap;
+  let left = (bw - (columnCount*cw + (columnCount-1)*gap))/2;
+  let sideLeft = left, sideRight = left + 8*(cw+gap);
+  if(landscape){
+    // Spend the slack in priority order — the tableau's own column step first,
+    // then a margin outside the rails so they are anchored to the edges rather
+    // than jammed against them, and only what is still left over goes to the
+    // two lanes. Both lanes take the same share, so the rails stay symmetric.
+    const laneMin = Math.max(gap*2, cw*sideLaneRatio);
+    // Slack left once every column, both lanes and a minimum edge pad are paid
+    // for. Width-limited screens (tablets) leave almost none, so they keep the
+    // arrangement they already had.
+    let spare = Math.max(0, bw - (pad*2 + cw*9 + gap*6 + laneMin*2));
+    const take = want => { const t = Math.max(0, Math.min(want, spare)); spare -= t; return t };
+    step = cw + gap + take(Math.max(0, cw*.28 - gap)*6)/6;
+    const margin = pad + take(Math.max(0, cw*.35 - pad)*2)/2;
+    const lane = laneMin + spare/2;
+    sideLeft = margin;
+    sideRight = bw - margin - cw;
+    left = sideLeft + cw + lane;
+  }
+  const xs = i => left + i*step;
   const tabY = landscape ? topY : topY + ch + gap*1.8;
   let slotPos;
   if(landscape){
-    // Nudge both side rails outward to visually separate them from the seven
-    // active tableau columns while keeping them inside the board bounds.
-    const sideLaneNudge = Math.min(cw*sideLaneRatio, Math.max(0,left-pad));
-    const sideLeft = left-sideLaneNudge;
-    const sideRight = left + 8*(cw+gap) + sideLaneNudge;
     const stockY = Math.max(topY, (bh-ch)/2);
     // Drawn cards open directly above the right-side stock. Reserve the full
     // 24% draw-three fan so the exposed card never hides behind the stock.
@@ -1743,7 +1824,69 @@ function place(card, x, y, z){
   el.style.zIndex = z;
   el.classList.toggle("down", !card.faceUp);
 }
+/* The HUD's type is sized against the row it actually got, not against a width
+   CSS can name: the safe-area insets are invisible to `vw` math and the control
+   rail is a clamp() of its own. So the sizes ship small enough to always fit and
+   this measures what is really left over, then spends it.
+
+   Landscape puts the marquee and the chips on one row, so one scale sizes both
+   and their designed proportion is preserved. Portrait stacks them and each row
+   gets the full width, so the title takes its own row's measure — but the stat
+   line is never allowed to outgrow it. That asymmetry is the whole point: the
+   marquee leads, and the stats stay subordinate rather than ballooning to fill
+   a row they happen to have to themselves.
+
+   Width is linear in the scale — glyphs scale, the em-based padding scales, the
+   flex gap does not — so two probes solve it exactly rather than iterating. */
+function fitHudType(){
+  const hud = $("hud"), brand = hud.querySelector(".brand"), chips = hud.querySelector(".chips");
+  const cs = getComputedStyle(hud);
+  // Natural width, not the width flex handed out: both marquees are stretched
+  // by their layout (flex:1 in Vintage, width:100% in Classic's portrait), so
+  // measuring them as laid out would be circular.
+  const naturalAt = scale => {
+    document.body.style.setProperty("--hud-fit", scale);
+    document.body.style.setProperty("--stat-fit", scale);
+    const probe = el => {
+      const inline = el.style.cssText;
+      el.style.cssText = inline + ";flex:0 0 auto;width:max-content";
+      const w = el.getBoundingClientRect().width;
+      el.style.cssText = inline;
+      return w;
+    };
+    return { brand: probe(brand), chips: probe(chips) };
+  };
+  // Overlapping vertical ranges, not equal tops: the chips are baseline-aligned
+  // and shorter than the marquee, so on a shared row their box tops differ by
+  // more than any sane epsilon. Reading that as "stacked" hands each of them the
+  // full width and the fit overshoots — on a tablet far enough that the stat
+  // line ran under the control rail.
+  const brandBox = brand.getBoundingClientRect(), chipsBox = chips.getBoundingClientRect();
+  const shareRow = brandBox.bottom > chipsBox.top + 1 && chipsBox.bottom > brandBox.top + 1;
+  const inner = hud.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight);
+  const a = naturalAt(1), b = naturalAt(2);
+  // width(s) = perScale*s + fixed, solved per element from the two probes.
+  const solve = (w1, w2, room) => {
+    const perScale = w2 - w1, fixed = w1 - perScale;
+    return perScale > 0 ? (room - fixed) / perScale : Infinity;
+  };
+  // The ceiling keeps the marquee from overpowering a wide phone, and matters
+  // more than it looks in landscape: every point the HUD grows is a point off
+  // the board, whose cards are already height-capped there.
+  const cap = f => Math.max(.8, Math.min(1.3, f));
+  const title = shareRow
+    // 6px so the marquee and the chips never quite touch.
+    ? cap(solve(a.brand + a.chips, b.brand + b.chips,
+                inner - (parseFloat(cs.columnGap) || 0) - 6))
+    : cap(solve(a.brand, b.brand, inner));
+  // Sharing a row means sharing a scale. Stacked, the stat line takes its own
+  // row's measure but never more than the title's, so it cannot lead.
+  const stat = shareRow ? title : Math.min(title, cap(solve(a.chips, b.chips, inner)));
+  document.body.style.setProperty("--hud-fit", title.toFixed(3));
+  document.body.style.setProperty("--stat-fit", stat.toFixed(3));
+}
 function layout(){
+  fitHudType();
   computeGeometry();
   const {
     xs, topY, tabY, ch, gap, bw, bh, cw, landscape, slotPos,
@@ -1805,6 +1948,18 @@ function layout(){
       offUp = Math.max(offUp*scale, ch*minFaceUpReveal);
       const remaining = Math.max(0, maxTotal-upGaps*offUp);
       offDown = downGaps ? Math.min(offDown, remaining/downGaps) : offDown;
+    }
+    // The reveal floor above can still overrun the table, because the card size
+    // is budgeted for eleven face-up reveals — a K-to-2 run — while a completed
+    // suit puts thirteen face-up cards in one column, a gap more than was paid
+    // for. Buying that gap in the card size costs ~7% of every card face in
+    // every game, to serve a pile most games never build. So the one pile that
+    // overruns pays for itself instead: it gives up the bottom margin and trims
+    // its own reveal by the few percent needed, which no index misses.
+    const hardTotal = bh - tabY - ch - 4;
+    if(upGaps*offUp + downGaps*offDown > hardTotal){
+      offDown = 0;                    // backs carry nothing; stack them flat
+      offUp = Math.max(hardTotal/upGaps, ch*minFaceUpReveal*.9);
     }
     let y = tabY;
     pile.forEach((card,i)=>{
@@ -2646,7 +2801,7 @@ function showWin(r){
   if(r.milestone) badges.push(`${r.milestone}-win milestone`);
   $("wBadges").innerHTML = badges.map(b=>`<span class="badge">${b}</span>`).join("");
   let note = "";
-  if(r.usedFreeze) note = `${r.usedFreeze} streak freeze${r.usedFreeze>1?"s":""} quietly covered your missed day${r.usedFreeze>1?"s":""}.`;
+  if(r.usedFreeze) note = `${r.usedFreeze} streak freeze${r.usedFreeze>1?"s":""} covered your missed day${r.usedFreeze>1?"s":""}.`;
   else if(stats.streak>1) note = `Day ${stats.streak} of your streak — keep the wins coming.`;
   else note = "A streak begins with a single win.";
   if(!r.earned && stats.freezes<3) note += ` (${10-stats.winsToward} more win${10-stats.winsToward>1?"s":""} to a streak freeze)`;
@@ -3000,6 +3155,9 @@ function relayoutBoard(){
   });
 }
 window.addEventListener("resize",relayoutBoard);
+// The display faces load with font-display:swap, so the first fit is measured
+// against fallback metrics. Re-run it once the real faces are in.
+if(document.fonts && document.fonts.ready) document.fonts.ready.then(relayoutBoard);
 // On iOS the landscape media query can update a beat before 100dvh settles.
 // Observing the board catches that second size change; the delayed fallback
 // also covers older WebViews without ResizeObserver.

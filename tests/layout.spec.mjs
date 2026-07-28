@@ -103,18 +103,26 @@ for (const cardStyle of STYLES) {
 // tablet-landscape block's plain `body` — so a tablet held horizontally drew
 // the marquee at the phone's size, and the HUD chips at the theme block's own
 // default. Vintage restates its values and escaped it, so this is Classic's.
-const TABLET_LANDSCAPE = VIEWPORTS[3];
+//
+// Compared within an orientation, and at a slimmer margin than the 1.2x this
+// once asserted. Both are consequences of the HUD now being sized by measuring
+// the row it got: phone portrait gives the marquee a row to itself, while an
+// iPad portrait is wide enough to seat the marquee and the stat line together —
+// so the phone's title legitimately closes much of the gap. Comparing across
+// orientations was only meaningful while the sizes were fixed per breakpoint.
+// The bug itself produces a ratio of 1.0, so 1.1 still catches it.
 for (const [what, selector] of [["marquee", ".brand"], ["HUD chips", ".chip b"]]) {
-  test(`original — the ${what} is larger on a landscape tablet than on a phone`, async ({ page }) => {
-    const size = async (viewport) => {
-      await load(page, "original", viewport);
-      return page.evaluate(
-        sel => parseFloat(getComputedStyle(document.querySelector(sel)).fontSize), selector);
-    };
-    const phone = await size(PHONE);
-    const tablet = await size(TABLET_LANDSCAPE);
-    expect(tablet).toBeGreaterThan(phone * 1.2);
-  });
+  for (const [orientation, phone, tablet] of
+       [["portrait", VIEWPORTS[0], VIEWPORTS[2]], ["landscape", VIEWPORTS[1], VIEWPORTS[3]]]) {
+    test(`original — the ${what} is larger on a ${orientation} tablet than on a phone`, async ({ page }) => {
+      const size = async (viewport) => {
+        await load(page, "original", viewport);
+        return page.evaluate(
+          sel => parseFloat(getComputedStyle(document.querySelector(sel)).fontSize), selector);
+      };
+      expect(await size(tablet)).toBeGreaterThan(await size(phone) * 1.1);
+    });
+  }
 }
 
 // Sizing the marquee up fails *quietly*: the HUD is nowrap, so the title does
@@ -131,6 +139,39 @@ for (const cardStyle of STYLES) {
       });
       // One line box is ~1.2x the font size; two would be ~2.4x.
       expect(brand.height).toBeLessThan(brand.fontSize * 1.7);
+    });
+  }
+}
+
+// Phone landscape sizes the HUD type by measuring the row it actually got —
+// the safe-area insets and the control rail eat a width no CSS length can name,
+// so the type ships small enough to always fit and --hud-fit spends the rest.
+// The failure to guard against is spending too much: the marquee and the chips
+// are one nowrap row, and if the fit overshoots they collide.
+for (const cardStyle of STYLES) {
+  for (const viewport of VIEWPORTS) {
+    test(`${cardStyle} — ${viewport.name} — the HUD fills its row without colliding`, async ({ page }) => {
+      await load(page, cardStyle, viewport);
+      const hud = await page.evaluate(() => {
+        const el = document.querySelector("#hud"), cs = getComputedStyle(el);
+        const brand = el.querySelector(".brand").getBoundingClientRect();
+        const chips = el.querySelector(".chips").getBoundingClientRect();
+        return {
+          fit: document.body.style.getPropertyValue("--hud-fit"),
+          clearance: chips.left - brand.right,
+          gap: parseFloat(cs.columnGap) || 0,
+          used: (brand.width + chips.width) /
+            (el.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight))
+        };
+      });
+      // Every screen is fitted — measuring each against its own row is what
+      // keeps a tablet ahead of a phone without hand-tuned sizes per breakpoint.
+      expect(hud.fit).not.toBe("");
+      test.skip(viewport.width <= viewport.height,
+        "portrait stacks the marquee and the chips, so there is no shared row");
+      expect(hud.clearance).toBeGreaterThanOrEqual(hud.gap - 0.5);
+      // A shared row that uses half its width is type left on the table.
+      expect(hud.used).toBeGreaterThan(0.8);
     });
   }
 }
@@ -179,6 +220,47 @@ for (const cardStyle of STYLES) {
         for (let i = 0; i < zeros.length; i++) {
           expect(Math.abs(large[i] - zeros[i])).toBeLessThanOrEqual(8);
         }
+      });
+
+      // The longest column Klondike can build: six face-down under a complete
+      // K-to-A run. That is thirteen face-up cards where the card size budgets
+      // eleven reveals, so it is the one pile that can run off the bottom of a
+      // landscape table — it used to clip the last card by ~5pt. It now trims
+      // its own reveal to fit rather than every card in every game shrinking.
+      test("a full 19-card column stays on the table", async ({ page }) => {
+        const pile = await page.evaluate(() => {
+          const all = [...P.stock, ...P.waste, ...P.t.flat(), ...P.f.flat()];
+          const run = [];
+          for (let r = 13; r >= 1; r--) run.push(all.find(c => c.suit === 0 && c.rank === r));
+          const rest = all.filter(c => !run.includes(c));
+          const down = rest.slice(0, 6);
+          down.forEach(c => c.faceUp = false);
+          run.forEach(c => c.faceUp = true);
+          P.t = [[...down, ...run], [], [], [], [], [], []];
+          P.f = [[], [], [], []];
+          P.waste = [];
+          P.stock = rest.slice(6);
+          P.stock.forEach(c => c.faceUp = false);
+          layout();
+
+          const gaps = [];
+          for (let i = 1; i < P.t[0].length; i++) {
+            if (P.t[0][i - 1].faceUp) gaps.push(P.t[0][i].y - P.t[0][i - 1].y);
+          }
+          const last = P.t[0][P.t[0].length - 1];
+          return {
+            cards: P.t[0].length,
+            bottom: last.y + G.ch,
+            boardHeight: document.getElementById("board").getBoundingClientRect().height,
+            reveal: Math.min(...gaps) / G.ch,
+            floor: G.minFaceUpReveal
+          };
+        });
+        expect(pile.cards).toBe(19);
+        expect(pile.bottom).toBeLessThanOrEqual(pile.boardHeight);
+        // Compressing is only allowed to borrow a few percent of the reveal —
+        // below that the rank indices of covered cards start to disappear.
+        expect(pile.reveal).toBeGreaterThanOrEqual(pile.floor * 0.9);
       });
 
       test("nothing overflows horizontally", async ({ page }) => {
