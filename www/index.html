@@ -15,10 +15,9 @@
 <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
 <style>
   /* Bundled display faces (SIL OFL — see assets/fonts/LICENSES.txt).
-     IM Fell English carries the Vintage table. Classic runs on two: Limelight
-     for the marquee title only, and Marcellus for everything else — cards,
-     rail, chips, sheet, stats and dialogs. Neither carries pip or chess
-     glyphs, so suits and courts fall back to --serif, as they always have. */
+     IM Fell English carries the Vintage table. Classic uses Limelight for the
+     marquee and Marcellus for its interface; card ranks use iOS's native
+     Charter face. Suits and courts fall back to --serif. */
   @font-face{
     font-family:"IM Fell English";
     src:url("assets/fonts/imfell-english.woff2") format("woff2");
@@ -40,7 +39,7 @@
        felt      #0F2E25   felt-deep #08201A   line #2C5A49
        paper     #FAF5E9   shade     #EDE4D0
        carmine   #BF3B33   ink       #26282E   brass #D9A648
-     Type: Classic runs on Limelight (marquee) + Marcellus (everything else);
+     Type: Classic runs on Limelight (marquee), Charter (cards), and Marcellus;
            Vintage on IM Fell English; the default theme on Palatino/system UI
      ============================================================ */
   :root{
@@ -186,14 +185,12 @@
        the control buttons share that brightness, nothing else does. */
     --chip-ink:#f0e8d2;
     --control-ink:#f0e8d2;
-    /* Two faces, and only two: Limelight is reserved for the marquee title,
-       Marcellus carries every other role. Marcellus replaced Cinzel (whose
-       lowercase is drawn as small caps, so it could never hold the sheet or
-       popup text) and Limelight on the cards, where a marquee face's hairline
-       joints gave out at the 20px index. */
+    /* Limelight is reserved for the marquee, native Charter gives the card
+       indices compact, sturdy capitals, and Marcellus carries every interface
+       role. Keeping Charter card-only avoids changing sheets and popup text. */
     --face-display:"Limelight",var(--serif);
-    --face-card:"Marcellus",var(--serif);
-    --card-rank-stroke:.03em;
+    --face-card:Charter,Georgia,var(--serif);
+    --card-rank-stroke:.045em;
     --face-label:"Marcellus",var(--serif);
     --face-title:"Marcellus",var(--serif);
     --face-sheet:"Marcellus",var(--serif);
@@ -314,8 +311,8 @@
      theme choices, so they live here as one declaration each rather than inside
      the Classic block — nothing overrides them and nothing needs to. */
   .ix,.mid,.bk{display:none}
-  .ix{font-size:2.7em}
-  .ix.ten{font-size:2.4em}
+  .ix{font-size:3em}
+  .ix.q i{transform:translateY(-.05em)}
   .ix i,.ix.court i{font-size:1em}
   .ix b{font-size:.94em}
   .mid{font-size:5.7em}
@@ -326,9 +323,8 @@
     background:linear-gradient(160deg,var(--paper) 65%,var(--paper-shade));
     border:1px solid rgba(70,60,40,.25);
     color:var(--ink);
-    /* Marcellus ranks: Roman capitals that hold their strokes at the 20px
-       index, including through the ~24px sliver a fanned pile reveals. Suits
-       and the chess courts fall back to the serif, as under Limelight. */
+    /* Charter's compact capitals stay sturdy at the 20px index. Suits and the
+       chess courts continue to fall back to the serif. */
     font-family:var(--face-card);
   }
   body[data-card-style="original"] .card.red .front{color:var(--red)}
@@ -355,20 +351,15 @@
   body[data-card-style="original"] .ix{
     position:absolute;left:calc(var(--cw)*.03);right:calc(var(--cw)*.03);
     display:flex;align-items:center;justify-content:space-between;
-    line-height:.9;font-weight:400;letter-spacing:0;
+    line-height:.82;font-weight:400;letter-spacing:0;
   }
-  /* Marcellus ships a single weight, so `font-weight:800` only ever bought the
-     browser's synthetic emboldening — about 4% of extra width and very little
-     extra ink. The rank carries the card, so it gets a real stroke on top.
-     Stroke is a paint operation: it adds no advance width, so the index band's
-     layout and the `ch` reservations are untouched. Only the rank is stroked —
-     the suit pip comes from the serif fallback as a filled glyph and turns
-     blobby if it is thickened too. */
+  /* Charter provides the compact advance widths; a restrained paint-only
+     stroke keeps its rank sturdy without changing the index band's layout.
+     The serif fallback supplies the suit and stays unstroked. */
   body[data-card-style="original"] .ix i{
     display:inline-block;font-style:normal;font-weight:800;
     -webkit-text-stroke:var(--card-rank-stroke) currentColor;
   }
-  body[data-card-style="original"] .ix.j i{transform:translateX(calc(var(--cw)*.018))}
   body[data-card-style="original"] .ix b{
     flex:none;font-weight:700;text-align:right;
   }
@@ -1527,10 +1518,9 @@ let G = null;              // geometry
 let undoStack = [];
 let initialDeal = null;    // shuffle order for "restart"
 let moves = 0, elapsed = 0, started = false, won = false, autoRunning = false;
-// autoRunning covers both kinds of automation and gates board input. Only the
-// end-game cascade also *looks* unavailable: a safe auto-move is a couple of
-// cards long, and dimming the controls and undimming them again reads as a
-// flicker. The handlers ignore input during either kind regardless.
+// autoRunning covers both kinds of automation. It never gates the board: the
+// player can keep moving while automatic cards travel. Only the end-game
+// cascade makes the control rail look unavailable.
 let autoCascading = false;
 let undos = 0; // first undo each game is free; the rest count as a move
 let hintUsed = false, gameVariant = null;
@@ -1561,10 +1551,11 @@ function setSound(enabled){
 }
 
 /* Haptics — real taps inside the native Capacitor shell, a silent no-op on the
-   web. Suppressed while auto-finishing so the cascade doesn't machine-gun. */
+   web. Automatic moves do not call this; player moves remain tactile even when
+   they overlap an automatic run. */
 const Haptics = window.Capacitor && window.Capacitor.Plugins && window.Capacitor.Plugins.Haptics;
 function haptic(style){
-  if(!Haptics || autoRunning || settings.haptics === false) return;
+  if(!Haptics || settings.haptics === false) return;
   try{ Haptics.impact({ style }); }catch(e){}
 }
 function hapticWin(){
@@ -1758,30 +1749,22 @@ function computeGeometry(){
     if(foundationCardHeight > 0) cw = Math.min(cw, foundationCardHeight/1.45);
   }
   const ch = cw*1.45;
-  // Landscape almost never spends its width budget: on a phone the card size is
-  // capped by the eleven-card face-up run, so the nine columns come out far
-  // narrower than the board. Centring them as one tight block pooled every
-  // spare pixel into two dead margins — the right-hand one sitting between the
-  // stock and the control rail, which is what made the board look shoved into a
-  // corner. Instead, anchor the rails to the board edges and spend the slack on
-  // the tableau's own column step, capped so the columns stay a hand of cards
-  // rather than drifting apart; whatever the cap leaves over widens the two
-  // lanes that separate the rails from the tableau, symmetrically.
+  // In landscape the tableau stays a tight hand: spare width belongs in the
+  // two lanes that distinguish the foundation/stock rails, never between the
+  // seven playing piles themselves.
   let step = cw + gap;
   let left = (bw - (columnCount*cw + (columnCount-1)*gap))/2;
   let sideLeft = left, sideRight = left + 8*(cw+gap);
   if(landscape){
-    // Spend the slack in priority order — the tableau's own column step first,
-    // then a margin outside the rails so they are anchored to the edges rather
-    // than jammed against them, and only what is still left over goes to the
-    // two lanes. Both lanes take the same share, so the rails stay symmetric.
+    // Give the outer rails a modest edge margin, then split every remaining
+    // pixel between the two rail/tableau lanes. Both lanes take the same share,
+    // so the board remains symmetric.
     const laneMin = Math.max(gap*2, cw*sideLaneRatio);
     // Slack left once every column, both lanes and a minimum edge pad are paid
     // for. Width-limited screens (tablets) leave almost none, so they keep the
     // arrangement they already had.
     let spare = Math.max(0, bw - (pad*2 + cw*9 + gap*6 + laneMin*2));
     const take = want => { const t = Math.max(0, Math.min(want, spare)); spare -= t; return t };
-    step = cw + gap + take(Math.max(0, cw*.28 - gap)*6)/6;
     const margin = pad + take(Math.max(0, cw*.35 - pad)*2)/2;
     const lane = laneMin + spare/2;
     sideLeft = margin;
@@ -1790,12 +1773,16 @@ function computeGeometry(){
   }
   const xs = i => left + i*step;
   const tabY = landscape ? topY : topY + ch + gap*1.8;
-  let slotPos;
+  let slotPos, wasteFanReveal = 0;
   if(landscape){
     const stockY = Math.max(topY, (bh-ch)/2);
-    // Drawn cards open directly above the right-side stock. Reserve the full
-    // 24% draw-three fan so the exposed card never hides behind the stock.
-    const wasteY = Math.max(topY, stockY-ch*1.24-gap);
+    // Drawn cards open directly above the right-side stock. Classic spends the
+    // available height on a larger three-card fan so each enlarged rank remains
+    // exposed; Vintage keeps its compact artwork fan.
+    const wantedWasteReveal = settings.cardStyle === "original" ? .28 : .12;
+    const availableWasteReveal = (stockY-topY-gap-ch)/(2*ch);
+    wasteFanReveal = Math.max(.12,Math.min(wantedWasteReveal,availableWasteReveal));
+    const wasteY = Math.max(topY,stockY-ch*(1+2*wasteFanReveal)-gap);
     const foundationStart = topY;
     const foundationStep = ch+foundationGap;
     slotPos = {
@@ -1812,7 +1799,8 @@ function computeGeometry(){
   for(let c=0;c<7;c++) slotPos["t"+c] = [xs(c),tabY];
   G = {
     bw, bh, gap, cw, ch, xs, topY, tabY, landscape, slotPos,
-    minFaceUpReveal, preferredFaceUpReveal, foundationGap
+    minFaceUpReveal, preferredFaceUpReveal, foundationGap,
+    wasteFanReveal
   };
   board.style.setProperty("--cw", cw+"px");
   board.style.setProperty("--ch", ch+"px");
@@ -1911,14 +1899,14 @@ function layout(){
   // landscape right rail. Older draw-three cards keep a readable fan.
   const fanN = settings.draw3 ? 3 : 1;
   const n = P.waste.length;
-  const fanOff = cw*0.3;
+  const fanOff = cw*.3;
   const [wasteX,wasteY] = slotPos.waste;
   P.waste.forEach((card,i)=>{
     const fromTop = n-1-i;                       // 0 = top card
     if(landscape){
       const firstVisible = Math.max(0,n-fanN);
       const visibleOrder = Math.max(0,i-firstVisible);
-      place(card,wasteX,wasteY+visibleOrder*ch*.12,60+i);
+      place(card,wasteX,wasteY+visibleOrder*ch*G.wasteFanReveal,60+i);
     } else {
       place(card,wasteX-Math.min(fromTop,fanN-1)*fanOff,wasteY,60+i);
     }
@@ -2079,7 +2067,7 @@ function moveStack(stack, destKind, destIdx){
   afterMove();
 }
 function draw(){
-  if(autoRunning || won) return;
+  if(won) return;
   if(P.stock.length===0 && P.waste.length===0) return;
   pushUndo();
   if(P.stock.length===0){
@@ -2119,7 +2107,7 @@ function smartMove(card){
 /* ================= drag & tap ================= */
 let drag = null;
 board.addEventListener("pointerdown", e=>{
-  if(autoRunning || won || $("overlay").classList.contains("show")) return;
+  if(won || $("overlay").classList.contains("show")) return;
   const cardEl = e.target.closest(".card");
   if(!cardEl){
     const ph = e.target.closest(".ph");
@@ -2583,6 +2571,9 @@ function autoMoveSafeCards(){
     if(settings.autoComplete === false || won){
       autoRunning=false; saveGame(); updateButtons(); return;
     }
+    // A pointer gesture owns its cards until pointerup. Let the player finish
+    // before choosing the next automatic candidate from the newly settled table.
+    if(drag){ autoPlayTimer=setTimeout(step,50); return; }
     if(finishable()){
       autoRunning=false;
       autoFinish();
@@ -2607,6 +2598,7 @@ function autoFinish(){
     if(settings.autoComplete === false){
       autoRunning=false; autoCascading=false; saveGame(); updateButtons(); return;
     }
+    if(drag){ autoPlayTimer=setTimeout(step,50); return; }
     let moved = false;
     for(let c=0;c<7;c++){
       const t = topOf(P.t[c]);
@@ -2633,19 +2625,59 @@ function autoFinish(){
 /* ================= timer / HUD ================= */
 function startTimer(){
   stopTimer();
-  timerId = setInterval(()=>{ elapsed++; $("vTime").textContent = fmtTime(elapsed); if(elapsed%15===0) saveGame() }, 1000);
+  const id = setInterval(()=>timerTick(id),1000);
+  timerId = id;
 }
 function stopTimer(){ if(timerId){ clearInterval(timerId); timerId=null } }
+function advanceTimer(){
+  elapsed++;
+  $("vTime").textContent = fmtTime(elapsed);
+  if(elapsed%15===0) saveGame();
+}
+function timerTick(id){
+  // Query native state as a backstop for iOS lifecycle delivery. This also
+  // makes the timer correct in Simulator, where a background WKWebView can
+  // continue running JavaScript intervals instead of being suspended.
+  if(NativeApp && NativeApp.getState){
+    NativeApp.getState().then(({isActive})=>{
+      if(timerId!==id) return; // a sheet/pause stopped or replaced this timer
+      if(isActive) advanceTimer(); else stopTimer();
+    }).catch(()=>{ if(timerId===id) advanceTimer() });
+  } else if(timerId===id) advanceTimer();
+}
 document.addEventListener("visibilitychange", ()=>{
   if(document.hidden) stopTimer();
-  else {
-    updateHUD();
-    scheduleMidnightRefresh();
-    // A shown dialog (win or stuck) owns the paused timer — don't restart
-    // behind it when the app returns to the foreground.
-    if(started && !won && !$("overlay").classList.contains("show")) startTimer();
-  }
+  else resumeAfterAppForeground();
 });
+// Capacitor's iOS bridge emits pause/resume even when WKWebView leaves
+// document.hidden unchanged. Listen to both lifecycle APIs: visibility covers
+// browsers/PWAs, while these events cover switching native apps and locking.
+document.addEventListener("pause",stopTimer);
+document.addEventListener("resume",resumeAfterAppForeground);
+// The first-party App plugin observes willResignActive, which fires early enough
+// to stop the interval before iOS suspends WKWebView. The bridge's document
+// `pause` event is later (didEnterBackground) and remains as a fallback.
+const NativeApp = window.Capacitor && window.Capacitor.Plugins && window.Capacitor.Plugins.App;
+if(NativeApp && NativeApp.addListener){
+  try{
+    const listener = NativeApp.addListener("appStateChange",({isActive})=>{
+      if(isActive) resumeAfterAppForeground(); else stopTimer();
+    });
+    if(listener && listener.catch) listener.catch(()=>{});
+  }catch(e){}
+}
+function resumeAfterAppForeground(){
+  updateHUD();
+  scheduleMidnightRefresh();
+  // A shown dialog or sheet owns the paused timer — don't restart behind it.
+  resumeTimerIfPlaying();
+}
+function resumeTimerIfPlaying(){
+  if(started && !won && !document.hidden &&
+     !$("overlay").classList.contains("show") &&
+     !$("sheet").classList.contains("open") &&
+     !$("statsPage").classList.contains("open")) startTimer();
+}
 function fmtTime(s){ return Math.floor(s/60)+":"+String(s%60).padStart(2,"0") }
 // Date.UTC over local calendar fields gives a DST-safe ordinal that flips at
 // the player's local midnight, regardless of their current time zone.
@@ -2973,8 +3005,10 @@ const sheet = $("sheet"), sheetBack = $("sheetBack");
 function closeSheet(){
   sheet.classList.remove("open");
   sheetBack.classList.remove("show");
+  resumeTimerIfPlaying();
 }
 $("btnMenu").onclick = ()=>{
+  stopTimer();
   refreshSheet();
   sheet.classList.add("open");
   sheetBack.classList.add("show");
@@ -3087,10 +3121,12 @@ function openStats(){
   renderStats();
   $("statsPage").classList.add("open");
   $("statsPage").setAttribute("aria-hidden","false");
+  stopTimer();
 }
 function closeStats(){
   $("statsPage").classList.remove("open");
   $("statsPage").setAttribute("aria-hidden","true");
+  resumeTimerIfPlaying();
 }
 $("btnStats").onclick = openStats;
 $("btnStatsClose").onclick = closeStats;

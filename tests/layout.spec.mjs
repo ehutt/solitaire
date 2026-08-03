@@ -355,6 +355,87 @@ for (const cardStyle of STYLES) {
         expect(lanes.right).toBeGreaterThan(lanes.gap * 2.5);
         expect(Math.abs(lanes.left - lanes.right)).toBeLessThan(1);
       });
+
+      test("landscape tableau columns keep only a minimal gap", async ({ page }) => {
+        const spacing = await page.evaluate(() => {
+          if (!G.landscape) return null;
+          return { card: G.cw, gap: G.xs(1) - G.xs(0) - G.cw, baseGap: G.gap };
+        });
+        test.skip(spacing === null, "portrait uses the conventional seven-column layout");
+
+        expect(spacing.gap).toBeLessThanOrEqual(spacing.baseGap + 0.5);
+        expect(spacing.gap).toBeLessThanOrEqual(spacing.card * 0.1);
+      });
+
+      test("Classic indices keep natural proportions in compact card fans", async ({ page }) => {
+        test.skip(cardStyle !== "original", "Vintage card faces are artwork");
+        const fit = await page.evaluate(() => {
+          settings.draw3 = true;
+          for (const el of els.values()) el.style.transition = "none";
+          const wideRanks = [
+            cards.find(c => c.rank === 10),
+            cards.find(c => c.rank === 12)
+          ];
+          const top = cards.find(c => !wideRanks.includes(c));
+          for (const q of [P.stock, P.waste, ...P.t, ...P.f]) {
+            for (const card of [...wideRanks, top]) {
+              const at = q.indexOf(card);
+              if (at >= 0) q.splice(at, 1);
+            }
+          }
+          P.waste.push(...wideRanks, top);
+          for (const card of P.waste) card.faceUp = true;
+          layout();
+
+          const measurements = wideRanks.map(card => {
+            const cardBox = els.get(card.id).getBoundingClientRect();
+            const rank = els.get(card.id).querySelector(".ix i");
+            const rankBox = rank.getBoundingClientRect();
+            const transform = getComputedStyle(rank).transform;
+            return { cardBox, rankBox, scaleX: transform === "none" ? 1 : new DOMMatrix(transform).a };
+          });
+          const nextCards = P.waste.slice(1).map(card => els.get(card.id).getBoundingClientRect());
+          const fontSize = parseFloat(getComputedStyle(els.get(wideRanks[0].id).querySelector(".ix")).fontSize);
+          const result = {
+            ratio: fontSize / G.cw,
+            cardWidth: G.cw,
+            fanFloor: G.landscape ? null : G.cw * 0.295,
+            fanCeiling: G.landscape ? null : G.cw * 0.305,
+            rankWidths: measurements.map(({ rankBox }) => rankBox.width),
+            rankScales: measurements.map(({ scaleX }) => scaleX),
+            fanSteps: nextCards.map((box, i) => G.landscape
+              ? box.top - measurements[i].cardBox.top
+              : box.left - measurements[i].cardBox.left)
+          };
+
+          const run = [];
+          for (let rank = 13; rank >= 1; rank--) run.push(cards.find(c => c.suit === 0 && c.rank === rank));
+          const rest = cards.filter(c => !run.includes(c));
+          const down = rest.slice(0, 6);
+          down.forEach(card => card.faceUp = false);
+          run.forEach(card => card.faceUp = true);
+          P.t = [[...down, ...run], [], [], [], [], [], []];
+          P.f = [[], [], [], []];
+          P.waste = [];
+          P.stock = rest.slice(6);
+          layout();
+          const queen = run.find(card => card.rank === 12);
+          const belowQueen = run[run.indexOf(queen) + 1];
+          const queenRank = els.get(queen.id).querySelector(".ix i").getBoundingClientRect();
+          const belowQueenBox = els.get(belowQueen.id).getBoundingClientRect();
+          result.tableauQueenClearance = belowQueenBox.top - queenRank.bottom;
+          result.tableauClearanceFloor = G.cw * 0.025;
+          return result;
+        });
+
+        expect(fit.ratio).toBeGreaterThanOrEqual(0.415);
+        expect(Math.min(...fit.rankScales), JSON.stringify(fit)).toBeGreaterThanOrEqual(0.99);
+        if (fit.fanCeiling !== null) {
+          expect(Math.min(...fit.fanSteps), JSON.stringify(fit)).toBeGreaterThanOrEqual(fit.fanFloor);
+          expect(Math.max(...fit.fanSteps), JSON.stringify(fit)).toBeLessThanOrEqual(fit.fanCeiling);
+        }
+        expect(fit.tableauQueenClearance, JSON.stringify(fit)).toBeGreaterThanOrEqual(fit.tableauClearanceFloor);
+      });
     });
   }
 }

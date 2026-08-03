@@ -1,7 +1,7 @@
 // Control-rail behaviour during automatic play.
 //
-// The rail is gated by two different things and they are not the same: every
-// kind of automation blocks input, but only the end-game cascade should *look*
+// Automatic cards and the player's cards can move concurrently. The control
+// rail has a separate visual contract: only the end-game cascade should look
 // unavailable. A safe auto-move is a card or two long, and dimming Hint and
 // Undo and undimming them again a moment later reads as a flicker.
 
@@ -69,6 +69,161 @@ test("a safe auto-move never dims the control rail", async ({ page }) => {
   const before = samples[0];
   expect(samples.filter((s) => s.hint !== before.hint || s.undo !== before.undo)).toEqual([]);
   expect(Math.min(...samples.map((s) => s.hintOpacity))).toBe(before.hintOpacity);
+});
+
+test("a stock tap still draws while safe auto-move is running", async ({ page }) => {
+  await boot(page);
+
+  const before = await page.evaluate(() => {
+    started = true; moves = 5;
+    for (let i = 0; i < 2; i++) {
+      const ace = cards.find((c) => c.rank === 1 && c.suit === i);
+      for (const q of [P.stock, P.waste, ...P.t, ...P.f]) {
+        const at = q.indexOf(ace);
+        if (at >= 0) q.splice(at, 1);
+      }
+      ace.faceUp = true;
+      P.t[i].push(ace);
+    }
+    layout();
+    autoMoveSafeCards();
+    return {
+      stock: P.stock.length,
+      waste: P.waste.length,
+      running: autoRunning,
+      topStock: P.stock[P.stock.length - 1].id
+    };
+  });
+  expect(before.running).toBe(true);
+  expect(before.stock).toBeGreaterThan(0);
+
+  await page.locator(`.card[data-id="${before.topStock}"]`).click();
+  await page.waitForTimeout(50);
+
+  const after = await page.evaluate(() => ({ stock: P.stock.length, waste: P.waste.length }));
+  expect(after.stock).toBe(before.stock - 1);
+  expect(after.waste).toBe(before.waste + 1);
+});
+
+test("a tableau tap still moves a card while safe auto-move is running", async ({ page }) => {
+  await boot(page);
+
+  const queenId = await page.evaluate(() => {
+    started = true; moves = 5;
+    const planted = [
+      cards.find(c => c.rank === 1 && c.suit === 0),
+      cards.find(c => c.rank === 1 && c.suit === 1),
+      cards.find(c => c.rank === 13 && !isRed(c.suit)),
+      cards.find(c => c.rank === 12 && isRed(c.suit))
+    ];
+    for (const card of planted) {
+      for (const q of [P.stock, P.waste, ...P.t, ...P.f]) {
+        const at = q.indexOf(card);
+        if (at >= 0) q.splice(at, 1);
+      }
+      card.faceUp = true;
+      els.get(card.id).style.transition = "none";
+    }
+    P.t[0].push(planted[0]);
+    P.t[1].push(planted[1]);
+    P.t[2].push(planted[2]);
+    P.t[3].push(planted[3]);
+    layout();
+    autoMoveSafeCards();
+    return planted[3].id;
+  });
+  expect(await page.evaluate(() => autoRunning)).toBe(true);
+
+  await page.locator(`.card[data-id="${queenId}"]`).click({ force: true });
+
+  expect(await page.evaluate(id => locate(cards.find(c => c.id === id)).t, queenId)).toBe(2);
+});
+
+test("the game timer pauses in settings and resumes after closing", async ({ page }) => {
+  await boot(page);
+  await page.evaluate(() => {
+    started = true; won = false; elapsed = 10;
+    updateHUD(); startTimer();
+  });
+
+  await page.click("#btnMenu");
+  const pausedAt = await page.evaluate(() => elapsed);
+  await page.waitForTimeout(1150);
+  expect(await page.evaluate(() => elapsed)).toBe(pausedAt);
+
+  await page.click("#btnSheetClose");
+  await page.waitForTimeout(1150);
+  expect(await page.evaluate(() => elapsed)).toBeGreaterThan(pausedAt);
+});
+
+test("the game timer pauses while the app is hidden", async ({ page }) => {
+  await boot(page);
+  await page.evaluate(() => {
+    started = true; won = false; elapsed = 10;
+    updateHUD(); startTimer();
+    Object.defineProperty(document, "hidden", { configurable: true, value: true });
+    document.dispatchEvent(new Event("visibilitychange"));
+  });
+
+  const pausedAt = await page.evaluate(() => elapsed);
+  await page.waitForTimeout(1150);
+  expect(await page.evaluate(() => elapsed)).toBe(pausedAt);
+
+  await page.evaluate(() => {
+    Object.defineProperty(document, "hidden", { configurable: true, value: false });
+    document.dispatchEvent(new Event("visibilitychange"));
+  });
+  await page.waitForTimeout(1150);
+  expect(await page.evaluate(() => elapsed)).toBeGreaterThan(pausedAt);
+});
+
+test("the game timer follows Capacitor pause and resume events", async ({ page }) => {
+  await boot(page);
+  await page.evaluate(() => {
+    started = true; won = false; elapsed = 10;
+    updateHUD(); startTimer();
+    document.dispatchEvent(new Event("pause"));
+  });
+
+  const pausedAt = await page.evaluate(() => elapsed);
+  await page.waitForTimeout(1150);
+  expect(await page.evaluate(() => elapsed)).toBe(pausedAt);
+
+  await page.evaluate(() => document.dispatchEvent(new Event("resume")));
+  await page.waitForTimeout(1150);
+  expect(await page.evaluate(() => elapsed)).toBeGreaterThan(pausedAt);
+});
+
+test("the game timer follows the native Capacitor app state", async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.addInitScript(() => {
+    window.nativeAppStateListeners = [];
+    Object.defineProperty(window, "Capacitor", { value: { Plugins: {
+      App: { addListener: (_name, listener) => {
+        window.nativeAppStateListeners.push(listener);
+        return Promise.resolve({ remove() {} });
+      }, getState: () => Promise.resolve({ isActive: window.nativeAppIsActive }) }
+    } } });
+  });
+  await page.goto("/index.html");
+  await page.waitForFunction(() => window.nativeAppStateListeners.length === 1);
+  await page.evaluate(() => {
+    window.nativeAppIsActive = true;
+    started = true; won = false; elapsed = 10;
+    updateHUD(); startTimer();
+    window.nativeAppIsActive = false;
+  });
+
+  const pausedAt = await page.evaluate(() => elapsed);
+  await page.waitForTimeout(1150);
+  expect(await page.evaluate(() => elapsed)).toBe(pausedAt);
+
+  await page.evaluate(() => {
+    window.nativeAppIsActive = true;
+    window.nativeAppStateListeners[0]({ isActive: true });
+  });
+  await page.waitForTimeout(1150);
+  expect(await page.evaluate(() => elapsed)).toBeGreaterThan(pausedAt);
 });
 
 test("the end-game cascade does disable the rail, and releases it after", async ({ page }) => {

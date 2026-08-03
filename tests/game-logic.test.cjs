@@ -295,15 +295,23 @@ test("vintage table uses bright burgundy felt with high-contrast parchment rules
 
 test("classic cards use one simple fan-safe index with a right-aligned suit", () => {
   const indexRule = html.match(/body\[data-card-style="original"\] \.ix\{([^}]*)\}/)?.[1];
+  const theme = html.match(/body\[data-card-style="original"\]\{([^]*?)\n  \}/)?.[1];
   assert.ok(indexRule, "classic index rule exists");
+  assert.ok(theme, "classic theme exists");
+  assert.match(theme, /--face-card:Charter,Georgia,var\(--serif\)/);
+  assert.match(theme, /--face-label:"Marcellus",var\(--serif\)/);
   assert.match(indexRule, /justify-content:space-between/);
   // Face composition is sized in card-relative ems outside the theme block.
-  assert.match(html, /\.ix\{font-size:2\.7em\}/);
+  assert.match(html, /\.ix\{font-size:3em\}/);
+  assert.doesNotMatch(html, /\.ix\.ten\{font-size:/);
+  assert.doesNotMatch(html, /\.ix\.ten i\{[^}]*transform:scaleX/);
+  assert.match(html, /\.ix\.q i\{transform:translateY\(-\.05em\)\}/);
   assert.match(html, /\.ix b\{font-size:\.94em\}/);
   assert.match(html, /\.ix b\{\s*flex:none;font-weight:700;text-align:right/);
   assert.doesNotMatch(html, /\.ix\.br|class="ix br/);
   assert.match(html, /const minFaceUpReveal = settings\.cardStyle === "original" \? \.30 : \.24/);
   assert.match(html, /const preferredFaceUpReveal = settings\.cardStyle === "original" \? \.32 : 142\/522/);
+  assert.match(html, /const fanOff = cw\*\.3/);
 });
 
 test("classic court ranks align with number ranks and clear the tableau fan", () => {
@@ -315,7 +323,7 @@ test("classic court ranks align with number ranks and clear the tableau fan", ()
   assert.ok(courtRule, "classic court-symbol rule exists");
   assert.match(courtRule, /line-height:1;transform:translateY\(\.05em\)/);
   assert.match(html, /\.ix\.court i\{font-size:1em\}/);
-  assert.match(html, /\.ix\.j i\{transform:translateX\(calc\(var\(--cw\)\*\.018\)\)\}/);
+  assert.doesNotMatch(html, /\.ix\.j i\{[^}]*transform/);
   assert.match(html, /const court = card\.rank>=11 \? \["j","q","k"\]\[card\.rank-11\] : ""/);
   assert.match(html, /` court \$\{court\}`/);
 });
