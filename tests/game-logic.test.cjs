@@ -306,7 +306,9 @@ test("classic cards use one simple fan-safe index with a right-aligned suit", ()
   assert.doesNotMatch(html, /\.ix\.ten\{font-size:/);
   assert.doesNotMatch(html, /\.ix\.ten i\{[^}]*transform:scaleX/);
   assert.match(html, /\.ix\.q i\{transform:translateY\(-\.05em\)\}/);
-  assert.match(html, /\.ix b\{font-size:\.94em\}/);
+  assert.match(html, /\.ix b\{font-size:1\.1em\}/);
+  assert.match(html, /\.mid\{font-size:6\.4em;transform:translateY\(\.1em\)\}/);
+  assert.match(html, /\.mid\.ace\{font-size:7\.2em\}/);
   assert.match(html, /\.ix b\{\s*flex:none;font-weight:700;text-align:right/);
   assert.doesNotMatch(html, /\.ix\.br|class="ix br/);
   assert.match(html, /const minFaceUpReveal = settings\.cardStyle === "original" \? \.30 : \.24/);
