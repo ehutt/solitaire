@@ -260,6 +260,51 @@ test("the end-game cascade does disable the rail, and releases it after", async 
   expect(hintDisabled).toBe(hasWon);
 });
 
+test("Classic cascade cards match their foundation faces in both orientations", async ({ page }) => {
+  await boot(page);
+
+  for (const viewport of [{ width: 390, height: 844 }, { width: 844, height: 390 }]) {
+    await page.setViewportSize(viewport);
+    await page.evaluate(() => {
+      stopCascadeLoop();
+      settings.cardStyle = "original";
+      document.body.dataset.cardStyle = "original";
+      P.stock = []; P.waste = []; P.t = Array.from({ length: 7 }, () => []);
+      P.f = Array.from({ length: 4 }, (_, suit) =>
+        cards.filter((card) => card.suit === suit).sort((a, b) => a.rank - b.rank));
+      for (const card of cards) card.faceUp = true;
+      layout();
+      cascade();
+    });
+    const kingId = await page.evaluate(() => P.f[0][12].id);
+    await page.waitForSelector(`.fx-cards .card[data-cascade-id="${kingId}"]`, { state: "attached" });
+
+    const match = await page.evaluate(() => {
+      const source = els.get(P.f[0][12].id);
+      const clone = document.querySelector(`.fx-cards .card[data-cascade-id="${source.dataset.id}"]`);
+      const faceStyle = (card) => {
+        const style = getComputedStyle(card.querySelector(".front"));
+        return {
+          fontFamily: style.fontFamily,
+          color: style.color,
+          backgroundImage: style.backgroundImage,
+          border: style.border,
+        };
+      };
+      return {
+        sameMarkup: clone.innerHTML === source.innerHTML,
+        sourceStyle: faceStyle(source),
+        cloneStyle: faceStyle(clone),
+        sourceSize: [source.offsetWidth, source.offsetHeight],
+        cloneSize: [clone.offsetWidth, clone.offsetHeight],
+      };
+    });
+    expect(match.sameMarkup).toBe(true);
+    expect(match.cloneStyle).toEqual(match.sourceStyle);
+    expect(match.cloneSize).toEqual(match.sourceSize);
+  }
+});
+
 // A theme swap must land in one step. The failure it guards is subtle and only
 // visible for ~150ms: the outgoing theme's colour crossfading on a control while
 // every other surface has already changed — a Vintage-red segment sitting in an

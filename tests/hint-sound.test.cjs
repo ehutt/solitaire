@@ -528,6 +528,12 @@ test("a new cascade cancels the previous run instead of racing it", () => {
   assert.match(functionSource("endCascade"), /fxClearTimer = setTimeout/);
 });
 
+test("the win cascade reuses the rendered card faces", () => {
+  const cascadeSource = functionSource("cascade");
+  assert.match(cascadeSource, /els\.get\(q\.card\.id\)\.cloneNode\(true\)/);
+  assert.doesNotMatch(cascadeSource, /Iowan Old Style|fillText\(/);
+});
+
 test("the settings sheet has its own close control", () => {
   assert.match(html, /<button id="btnSheetClose" class="icon-button" aria-label="Close settings">/);
   assert.match(html, /\$\("btnSheetClose"\)\.onclick = closeSheet;/);
