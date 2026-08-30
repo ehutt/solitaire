@@ -93,6 +93,104 @@ test("recordWin updates a daily streak immediately and marks each fifth win", ()
   assert.equal(secondResult.milestone, 0);
 });
 
+test("a new player earns their first freeze on their tenth win", () => {
+  global.KEY_STATS = "stats";
+  global.saveJSON = () => {};
+  global.elapsed = 45;
+  global.moves = 80;
+  global.stats = {
+    wins: 0,
+    streak: 0,
+    longest: 0,
+    lastWin: null,
+    freezes: 0,
+    winsToward: 0,
+    bestTime: null,
+    bestMoves: null,
+  };
+  global.localDayNum = localDayNum;
+  global.recordVariantWin = () => {};
+  const recordWin = loadFunction("recordWin");
+
+  for(let win = 1; win < 10; win++){
+    const result = recordWin();
+    assert.equal(result.earned, false, `win ${win} does not earn a freeze`);
+    assert.equal(stats.freezes, 0);
+  }
+
+  const tenthWin = recordWin();
+  assert.equal(tenthWin.earned, true);
+  assert.equal(stats.freezes, 1);
+  assert.equal(stats.winsToward, 0);
+});
+
+test("new player stats start with no freezes or banked wins", () => {
+  const defaults = html.match(/let stats = loadJSON\(KEY_STATS\) \|\| \{([^]*?)\n\};/)?.[1];
+  assert.ok(defaults, "found the default stats");
+  assert.match(defaults, /freezes:0, winsToward:0/);
+});
+
+test("using a freeze resets progress before a veteran can earn it back", () => {
+  global.KEY_STATS = "stats";
+  global.saveJSON = () => {};
+  global.elapsed = 45;
+  global.moves = 80;
+  global.stats = {
+    wins: 137,
+    streak: 40,
+    longest: 40,
+    lastWin: localDayNum() - 2,
+    freezes: 1,
+    winsToward: 10,
+    bestTime: 30,
+    bestMoves: 70,
+  };
+  global.localDayNum = localDayNum;
+  global.recordVariantWin = () => {};
+  const recordWin = loadFunction("recordWin");
+
+  const protectedWin = recordWin();
+  assert.equal(protectedWin.usedFreeze, 1);
+  assert.equal(protectedWin.earned, false, "the used freeze is not immediately replenished");
+  assert.equal(stats.freezes, 0);
+  assert.equal(stats.winsToward, 0, "earning progress restarts after freeze use");
+
+  for(let newWin = 1; newWin < 10; newWin++){
+    recordWin();
+    assert.equal(stats.freezes, 0, `new win ${newWin} does not replenish the freeze`);
+  }
+
+  const tenthNewWin = recordWin();
+  assert.equal(tenthNewWin.earned, true);
+  assert.equal(stats.freezes, 1);
+  assert.equal(stats.winsToward, 0);
+});
+
+test("wins at the freeze cap do not bank progress", () => {
+  global.KEY_STATS = "stats";
+  global.saveJSON = () => {};
+  global.elapsed = 45;
+  global.moves = 80;
+  global.stats = {
+    wins: 100,
+    streak: 20,
+    longest: 20,
+    lastWin: localDayNum(),
+    freezes: 3,
+    winsToward: 0,
+    bestTime: 30,
+    bestMoves: 70,
+  };
+  global.localDayNum = localDayNum;
+  global.recordVariantWin = () => {};
+  const recordWin = loadFunction("recordWin");
+
+  for(let win = 0; win < 25; win++) recordWin();
+
+  assert.equal(stats.freezes, 3);
+  assert.equal(stats.winsToward, 0);
+});
+
 test("variant records capture winning ranges, averages, clean wins, and streaks", () => {
   global.emptyVariantRecord = loadFunction("emptyVariantRecord");
   global.normalizeVariantRecord = loadFunction("normalizeVariantRecord");

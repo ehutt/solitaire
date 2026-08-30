@@ -1598,8 +1598,13 @@ if(settings.cardStyle !== "original" && settings.cardStyle !== "crehore") settin
 applyCardStyleTheme(settings.cardStyle);
 let stats = loadJSON(KEY_STATS) || {
   wins:0, streak:0, longest:0, lastWin:null,
-  freezes:1, winsToward:0, bestTime:null, bestMoves:null
+  freezes:0, winsToward:0, bestTime:null, bestMoves:null
 };
+if(!Number.isFinite(stats.freezes)) stats.freezes = 0;
+if(!Number.isFinite(stats.winsToward)) stats.winsToward = 0;
+stats.freezes = Math.max(0,Math.min(3,Math.floor(stats.freezes)));
+stats.winsToward = Math.max(0,Math.min(9,Math.floor(stats.winsToward)));
+if(stats.freezes===3) stats.winsToward = 0;
 function emptyVariantRecord(){
   return {
     games:0, wins:0, winningMovesTotal:0, winningTimeTotal:0,
@@ -2790,8 +2795,14 @@ function recordWin(){
   stats.wins++;
   recordVariantWin();
   let earned = false;
-  if(stats.winsToward < 10) stats.winsToward++;
-  if(stats.winsToward>=10 && stats.freezes<3){ stats.freezes++; stats.winsToward=0; earned=true }
+  if(usedFreeze){
+    stats.winsToward = 0;
+  }else if(stats.freezes<3){
+    stats.winsToward++;
+    if(stats.winsToward>=10){ stats.freezes++; stats.winsToward=0; earned=true }
+  }else{
+    stats.winsToward = 0;
+  }
   const bestT = stats.bestTime==null || elapsed<stats.bestTime;
   const bestM = stats.bestMoves==null || moves<stats.bestMoves;
   if(bestT) stats.bestTime = elapsed;
