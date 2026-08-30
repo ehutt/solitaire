@@ -56,6 +56,10 @@ export async function loadCase(page, cardStyle, viewport) {
 
 const SHOW = {
   board: async () => {},
+  deal: async (page) => {
+    await page.click("#btnDeal");
+    await page.waitForTimeout(150);
+  },
   sheet: async (page) => {
     await page.click("#btnMenu");
     await page.waitForTimeout(150);

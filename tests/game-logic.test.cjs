@@ -297,20 +297,20 @@ test("card style switches immediately and persists without replacing the deal", 
   assert.deepEqual(swapClasses, [["add", "theme-swap"], ["remove", "theme-swap"]]);
 });
 
-test("persistent controls stay limited to new, hint, undo, and settings", () => {
+test("persistent controls stay limited to deal, hint, undo, and settings", () => {
   const controls = html.match(/<div id="controls">([^]*?)<\/div>\s*<\/div>/)?.[1];
   assert.ok(controls, "found the persistent controls");
   const ids = [...controls.matchAll(/<button id="([^"]+)"/g)].map((match) => match[1]);
-  assert.deepEqual(ids, ["btnNew", "btnHint", "btnUndo", "btnMenu"]);
+  assert.deepEqual(ids, ["btnDeal", "btnHint", "btnUndo", "btnMenu"]);
   assert.doesNotMatch(html, /id="btnFinish"/);
 });
 
-test("landscape confirmation label fits by yielding its decorative icon", () => {
-  // Size comes from the type token; the rule itself only handles the squeeze.
-  assert.match(html, /body\[data-card-style="crehore"\]\{[^}]*--type-control-confirm:\.66rem/);
-  assert.match(html, /body\[data-card-style="crehore"\] #btnNew\.confirm\{\s*padding-inline:2px;letter-spacing:\.045em/);
-  assert.match(html, /body\[data-card-style="crehore"\] #btnNew\.confirm \.vintage-icon\{display:none\}/);
-  assert.match(html, /#btnNew\.confirm \.classic-icon\{display:none\}/);
+test("deal menu provides new and restart as a deliberate two-step choice", () => {
+  assert.match(html, /id="btnDeal"[^>]*aria-controls="dealSheet"/);
+  assert.match(html, /id="btnNewDeal"[^]*?<strong>New deal<\/strong>/);
+  assert.match(html, /id="btnRestartDeal"[^]*?<strong>Restart deal<\/strong>/);
+  assert.match(html, /\$\("btnRestartDeal"\)\.onclick = \(\)=>beginDeal\(initialDeal\)/);
+  assert.doesNotMatch(html, /newConfirm|Tap Confirm|btnDeal\.confirm/);
 });
 
 test("auto-move setting describes automatic foundation play", () => {
@@ -364,7 +364,7 @@ test("win dialog leaves a little more time to watch the cascade", () => {
 });
 
 test("vintage settings copy and stock treatment preserve the intended hierarchy", () => {
-  assert.match(html, /<h3>Game Settings<\/h3>/);
+  assert.match(html, /<h3 id="settingsTitle">Game Settings<\/h3>/);
   assert.match(html, /Win daily to grow your streak\.<br>\s*Every 10 wins earns/);
   assert.match(html, /\.card\.stock-card \.face\{box-shadow:none\}/);
   assert.match(html, /classList\.add\("stock-card"\)/);
@@ -443,6 +443,6 @@ test("classic portrait header and controls are enlarged with balanced icons", ()
   // chips is what separates them.
   assert.match(html, /body\[data-card-style="original"\] \.chips\{\s*flex:0 0 100%;justify-content:center;gap:0;/);
   // Emoji control icons are retired; only the menu ellipsis glyph remains
-  assert.match(html, /#btnNew \.classic-icon,\s*[^{]*#btnHint \.classic-icon,\s*[^{]*#btnUndo \.classic-icon\{display:none\}/);
+  assert.match(html, /#btnDeal \.classic-icon,\s*[^{]*#btnHint \.classic-icon,\s*[^{]*#btnUndo \.classic-icon\{display:none\}/);
   assert.match(html, /body\[data-card-style="original"\]\{[^}]*--type-menu-glyph:1\.7rem/);
 });

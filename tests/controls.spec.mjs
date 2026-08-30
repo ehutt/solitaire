@@ -156,6 +156,34 @@ test("the game timer pauses in settings and resumes after closing", async ({ pag
   expect(await page.evaluate(() => elapsed)).toBeGreaterThan(pausedAt);
 });
 
+test("Deal opens a two-action sheet and restart preserves the shuffle", async ({ page }) => {
+  await boot(page);
+  const firstDeal = await page.evaluate(() => initialDeal.join(","));
+
+  await page.click("#btnDeal");
+  await expect(page.locator("#dealSheet")).toHaveAttribute("aria-hidden", "false");
+  await expect(page.locator("#btnNewDeal")).toBeFocused();
+
+  await page.click("#btnRestartDeal");
+  expect(await page.evaluate(() => initialDeal.join(","))).toBe(firstDeal);
+  await expect(page.locator("#dealSheet")).toHaveAttribute("aria-hidden", "true");
+  await expect(page.locator("#btnDeal")).toBeFocused();
+
+  await page.click("#btnDeal");
+  await page.click("#btnNewDeal");
+  expect(await page.evaluate(() => initialDeal.join(","))).not.toBe(firstDeal);
+});
+
+test("Escape closes Deal and returns keyboard focus to its control", async ({ page }) => {
+  await boot(page);
+  await page.locator("#btnDeal").focus();
+  await page.keyboard.press("Enter");
+  await expect(page.locator("#btnNewDeal")).toBeFocused();
+  await page.keyboard.press("Escape");
+  await expect(page.locator("#dealSheet")).toHaveAttribute("aria-hidden", "true");
+  await expect(page.locator("#btnDeal")).toBeFocused();
+});
+
 test("the game timer pauses while the app is hidden", async ({ page }) => {
   await boot(page);
   await page.evaluate(() => {
@@ -330,7 +358,7 @@ for (const [from, to, deselected] of [
       const seen = [];
       const read = () => [
         getComputedStyle(document.querySelector(dropped)).backgroundColor,
-        getComputedStyle(document.getElementById("btnNew")).backgroundColor
+        getComputedStyle(document.getElementById("btnDeal")).backgroundColor
       ];
       document.querySelector(tapped).click();
       // Sample across the window the old transition covered.

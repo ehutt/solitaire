@@ -67,12 +67,10 @@
     --type-chip:.8rem;          /* HUD figures */
     --type-chip-label:.68rem;   /* HUD engraved labels */
     --type-button:.95rem;       /* any button, unless a component says otherwise */
-    --type-control:var(--type-button);      /* the New/Hint/Undo/Menu rail */
-    /* --type-control-menu / --type-control-confirm are deliberately NOT declared
-       here: a custom property resolves where it is declared, so a :root default
-       of var(--type-control) would freeze the rail's default size and ignore
-       later breakpoints. They are read with a fallback at the use site instead,
-       and only set where the menu button or the confirm state must differ. */
+    --type-control:var(--type-button);      /* the Deal/Hint/Undo/Settings rail */
+    /* --type-control-menu is deliberately NOT declared here: a custom property
+       resolves where it is declared, so a :root default of var(--type-control)
+       would freeze the rail's default size and ignore later breakpoints. */
     --type-menu-glyph:1em;      /* Classic's ⋯ glyph inside the menu button */
     --type-close:1.2rem;        /* the ✕ actions on the sheet and stats page */
     --type-sheet-title:1.1rem;  /* "Game Settings" */
@@ -135,9 +133,6 @@
     --badge-ink:#7c5d16;
     --seg-on-ink:#241a05;                /* the selected segment */
     --seg-on-surface:var(--brass);
-    --confirm-ink:#fff2c8;               /* New's "are you sure" state */
-    --confirm-surface:rgba(217,166,72,.28);
-    --confirm-border:rgba(217,166,72,.72);
     --focus-ring:var(--brass);
     /* Type faces by role. A theme swaps faces by restating these six. The
        roles stay separate because the themes do not move them together:
@@ -387,7 +382,7 @@
     letter-spacing:.1em;text-transform:uppercase;
   }
   body[data-card-style="original"] #controls button:disabled{color:rgba(240,232,210,.9)}
-  body[data-card-style="original"] #btnNew .classic-icon,
+  body[data-card-style="original"] #btnDeal .classic-icon,
   body[data-card-style="original"] #btnHint .classic-icon,
   body[data-card-style="original"] #btnUndo .classic-icon{display:none}
   body[data-card-style="original"] #btnMenu .classic-icon{
@@ -457,16 +452,11 @@
   button:disabled{opacity:.35;cursor:default}
   button:focus-visible{outline:2px solid var(--focus-ring);outline-offset:2px}
   /* The control rail sizes itself once, here. Themes and breakpoints move the
-     tokens; #btnMenu and the confirm state get their own so they can differ
-     without a second declaration on the shared rule. */
+     tokens; #btnMenu gets its own so it can differ without a second declaration
+     on the shared rule. */
   #controls button{font-size:var(--type-control);color:var(--control-ink);font-family:var(--face-label)}
   #controls #btnMenu{font-size:var(--type-control-menu,var(--type-control))}
-  #controls #btnNew.confirm{font-size:var(--type-control-confirm,var(--type-control))}
   #controls #btnMenu .classic-icon{font-size:var(--type-menu-glyph)}
-  #btnNew.confirm{
-    background:var(--confirm-surface);border-color:var(--confirm-border);
-    color:var(--confirm-ink);
-  }
 
   /* ---------- TOAST ---------- */
   #toast{
@@ -481,6 +471,35 @@
     pointer-events:none;z-index:700;
   }
   #toast.show{opacity:1;transform:translateX(-50%)}
+
+  /* ---------- DEAL SHEET ---------- */
+  #dealSheet{
+    position:fixed;left:50%;bottom:0;z-index:650;
+    width:min(440px,calc(100vw - 20px));
+    padding:18px 20px calc(env(safe-area-inset-bottom,0px) + 18px);
+    color:var(--chrome-ink);background:var(--surface-sheet);font-family:var(--face-sheet);
+    border:1px solid var(--rule);border-bottom:0;border-radius:14px 14px 0 0;
+    box-shadow:0 -12px 36px rgba(0,0,0,.24);
+    transform:translate(-50%,105%);
+    transition:transform .28s cubic-bezier(.3,1,.35,1);
+  }
+  #dealSheet.open{transform:translate(-50%,0)}
+  .deal-sheet-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+  .deal-sheet-header h2{
+    font-family:var(--face-title);font-size:var(--type-sheet-title);font-weight:600;
+  }
+  .deal-actions{border-top:1px solid var(--rule)}
+  .deal-action{
+    display:block;width:100%;min-height:66px;padding:13px 2px;
+    color:var(--chrome-ink);background:none;border:0;border-bottom:1px solid var(--rule);
+    border-radius:0;text-align:left;font-family:var(--face-sheet);
+  }
+  .deal-action:last-child{border-bottom:0}
+  .deal-action strong{display:block;font-size:var(--type-row);font-weight:600}
+  .deal-action span{
+    display:block;margin-top:3px;color:var(--chrome-ink-muted);
+    font-size:var(--type-row-sub);font-weight:400;line-height:1.3;
+  }
 
   /* ---------- FX CANVAS ---------- */
   #fx{
@@ -638,11 +657,11 @@
      row. Giving it the sheet's centred treatment would be a design change. */
   .stats-header .icon-button{margin-bottom:.16em}
   #sheet.open{transform:none}
-  #sheetBack{
+  #sheetBack,#dealBack{
     position:fixed;inset:0;z-index:640;background:var(--surface-scrim);
     display:none;
   }
-  #sheetBack.show{display:block}
+  #sheetBack.show,#dealBack.show{display:block}
   #sheet h3{
     font-family:var(--face-title);font-weight:600;font-size:var(--type-sheet-title);
     margin-bottom:12px;text-align:center;
@@ -741,7 +760,7 @@
   .stats-detail-row b{color:var(--chrome-ink-strong);font-variant-numeric:tabular-nums;text-align:right}
 
   @media (prefers-reduced-motion: reduce){
-    .card,.card .in,#sheet{transition:none !important}
+    .card,.card .in,#sheet,#dealSheet{transition:none !important}
     .chip.pulse-glow,.panel.milestone{animation:none !important}
     /* keep the hint glow — it's a highlight, not motion — so hints still read */
   }
@@ -831,7 +850,6 @@
     }
     body{--type-control:.78rem}
     #controls button{width:100%;min-height:48px;padding:10px 5px;border-radius:11px}
-    #btnNew.confirm .classic-icon{display:none}
     #toast{bottom:calc(env(safe-area-inset-bottom,0px) + 12px)}
     .panel{padding:18px 26px 16px}
     .panel .sub{margin-bottom:10px}
@@ -895,9 +913,6 @@
     --face-chrome:var(--vintage-text);
     --seg-on-ink:#f3e7c9;
     --seg-on-surface:var(--vintage-deep);
-    --confirm-ink:#f5dfaa;
-    --confirm-surface:rgba(235,190,98,.2);
-    --confirm-border:#d5a34d;
     --ghost-ink:var(--vintage-paper-ink-mid);
     --focus-ring:#f0dfb4;
     position:relative;
@@ -1137,7 +1152,7 @@
     body[data-card-style="crehore"] #controls::before{display:none}
     /* The narrow rail can't fit icon + engraved label side by side without
        crowding; stack them so the label keeps the full column width. */
-    body[data-card-style="crehore"]{--type-control:.68rem;--type-control-confirm:.66rem}
+    body[data-card-style="crehore"]{--type-control:.68rem}
     body[data-card-style="crehore"] #controls button,
     body[data-card-style="crehore"] #controls button:not(#btnMenu),
     body[data-card-style="crehore"] #btnMenu{
@@ -1145,10 +1160,6 @@
       padding:7px 2px;letter-spacing:.05em;
     }
     body[data-card-style="crehore"] #controls .vintage-icon{width:21px;height:21px}
-    body[data-card-style="crehore"] #btnNew.confirm{
-      padding-inline:2px;letter-spacing:.045em;
-    }
-    body[data-card-style="crehore"] #btnNew.confirm .vintage-icon{display:none}
   }
 
   /* Final tablet overrides intentionally follow the orientation rules. iPad
@@ -1356,16 +1367,16 @@
     </div>
   </header>
 
-  <div id="board"></div>
+  <div id="board" role="group" aria-label="Solitaire game board. Card play requires visual interaction."></div>
 
   <div id="controls">
-    <button id="btnNew">
+    <button id="btnDeal" aria-haspopup="dialog" aria-controls="dealSheet">
       <span class="classic-icon" aria-hidden="true">♻︎</span>
       <svg class="vintage-icon" viewBox="0 0 32 32" aria-hidden="true">
         <path d="m15.7 2.1 2.5 9.5 7.2-5.7-4.8 7.7 9.1 2.1-9.2 2.7 5.2 7.7-7.4-5.7-2.5 9.3-2.4-9-7.2 5.7 5-8-9-2.2 9.2-2.6-5-7.6 7.2 5.8Z"/>
         <path d="M12.8 15.9c.1-2 1.4-3.2 3.3-3.1 2 .1 3.1 1.3 3 3.4-.1 1.8-1.3 2.9-3.2 2.8-1.8-.1-3.2-1.3-3.1-3.1ZM15.5 4.8l.2 5.2m8.1-1.4-3.8 3.7m6.8 3.7-5 .2m2 7.3-3.6-3.7m-4.5 7.1.2-5.1m-7.4 1.9 3.7-3.9M5.1 16.4l5.2-.3m-1.8-7.5 3.7 3.9"/>
       </svg>
-      <span class="control-label" id="btnNewLabel">New</span>
+      <span class="control-label">Deal</span>
     </button>
     <button id="btnHint">
       <span class="classic-icon" aria-hidden="true">💡</span>
@@ -1384,7 +1395,7 @@
       </svg>
       <span class="control-label">Undo</span>
     </button>
-    <button id="btnMenu" aria-label="Settings">
+    <button id="btnMenu" aria-label="Settings" aria-haspopup="dialog" aria-controls="sheet">
       <span class="classic-icon" aria-hidden="true">⋯</span>
       <svg class="vintage-icon" viewBox="0 0 32 32" aria-hidden="true">
         <path class="solid" d="M5.2 16.2c0-1.3.7-2.1 1.9-2.1 1.4 0 2.1.7 2 2.1-.1 1.2-.7 1.9-2 1.8-1.3 0-1.9-.6-1.9-1.8Zm8.8-.3c.1-1.3.8-2 2-1.9 1.4.1 2 .8 1.9 2.1-.1 1.3-.8 1.9-2.1 1.8-1.2-.1-1.9-.8-1.8-2Zm9.1.4c0-1.3.7-2 1.9-2 1.3 0 2 .7 2 1.9 0 1.3-.7 2-2 2-1.2 0-1.9-.7-1.9-1.9Z"/>
@@ -1393,11 +1404,11 @@
   </div>
 </div>
 
-<div id="toast"></div>
+<div id="toast" role="status" aria-live="polite" aria-atomic="true"></div>
 <canvas id="fx"></canvas>
 
-<div id="overlay">
-  <div class="panel" id="winPanel">
+<div id="overlay" aria-hidden="true">
+  <div class="panel" id="winPanel" role="dialog" aria-modal="true" aria-labelledby="winTitle" aria-describedby="winSub wNote">
     <h2 id="winTitle">You won!</h2>
     <div class="sub" id="winSub">Solitaire is better without ads.</div>
     <div class="statgrid">
@@ -1413,11 +1424,31 @@
   </div>
 </div>
 
+<div id="dealBack"></div>
+<section id="dealSheet" role="dialog" aria-modal="true" aria-labelledby="dealSheetTitle" aria-hidden="true">
+  <div class="deal-sheet-header">
+    <h2 id="dealSheetTitle">Deal</h2>
+    <button id="btnDealClose" class="icon-button" aria-label="Close deal menu">
+      <svg class="close-glyph" viewBox="0 0 16 16" aria-hidden="true"><path d="M3.4 3.4 12.6 12.6M12.6 3.4 3.4 12.6"/></svg>
+    </button>
+  </div>
+  <div class="deal-actions">
+    <button id="btnNewDeal" class="deal-action">
+      <strong>New deal</strong>
+      <span>Different shuffle. Ends the current game.</span>
+    </button>
+    <button id="btnRestartDeal" class="deal-action">
+      <strong>Restart deal</strong>
+      <span>Same shuffle, from the beginning.</span>
+    </button>
+  </div>
+</section>
+
 <div id="sheetBack"></div>
-<div id="sheet">
+<div id="sheet" role="dialog" aria-modal="true" aria-labelledby="settingsTitle" aria-hidden="true">
   <div class="pinned-header">
     <div class="title-row">
-      <h3>Game Settings</h3>
+      <h3 id="settingsTitle">Game Settings</h3>
       <button id="btnSheetClose" class="icon-button" aria-label="Close settings">
         <svg class="close-glyph" viewBox="0 0 16 16" aria-hidden="true"><path d="M3.4 3.4 12.6 12.6M12.6 3.4 3.4 12.6"/></svg>
       </button>
@@ -1486,10 +1517,10 @@
   </div>
 </div>
 
-<section id="statsPage" aria-hidden="true">
+<section id="statsPage" role="dialog" aria-modal="true" aria-labelledby="statsTitle" aria-hidden="true">
   <div class="stats-page-inner">
     <div class="stats-header">
-      <h2>Player Stats</h2>
+      <h2 id="statsTitle">Player Stats</h2>
       <button id="btnStatsClose" class="icon-button" aria-label="Close player stats">
         <svg class="close-glyph" viewBox="0 0 16 16" aria-hidden="true"><path d="M3.4 3.4 12.6 12.6M12.6 3.4 3.4 12.6"/></svg>
       </button>
@@ -1710,6 +1741,7 @@ function buildDOM(){
   for(const card of cards){
     const el = document.createElement("div");
     el.className = "card" + (isRed(card.suit) ? " red" : "");
+    el.setAttribute("aria-hidden","true");
     el.dataset.id = card.id;
     el.style.setProperty("--front-image", `url("${cardAssetPath(card.suit, card.rank)}")`);
     el.innerHTML = `<div class="in"><div class="face front">${originalFaceHTML(card)}</div><div class="face back"><div class="bk"></div></div></div>`;
@@ -2522,7 +2554,7 @@ function showStuck(){
   $("btnAgain").textContent = "New Game";
   $("btnReplayDeal").style.display = "";
   $("btnAdmire").textContent = "Go back & undo";
-  $("overlay").classList.add("show");
+  openOverlayDialog("btnAdmire");
 }
 function showDrawOneOffer(){
   stopTimer();
@@ -2539,7 +2571,7 @@ function showDrawOneOffer(){
   // Restarting mid-deal is not the offer being made here.
   $("btnReplayDeal").style.display = "none";
   $("btnAdmire").textContent = "Stay with draw three";
-  $("overlay").classList.add("show");
+  openOverlayDialog("btnAgain");
 }
 
 /* ================= automatic foundation play ================= */
@@ -2699,6 +2731,7 @@ function resumeTimerIfPlaying(){
   if(started && !won && !document.hidden &&
      !$("overlay").classList.contains("show") &&
      !$("sheet").classList.contains("open") &&
+     !$("dealSheet").classList.contains("open") &&
      !$("statsPage").classList.contains("open")) startTimer();
 }
 function fmtTime(s){ return Math.floor(s/60)+":"+String(s%60).padStart(2,"0") }
@@ -2871,7 +2904,7 @@ function showWin(r){
   if(r.milestone) $("winSub").textContent = "That deserves an extra celebration.";
   else if(r.firstWinToday) $("winSub").textContent = "Your daily streak is secured.";
   else $("winSub").textContent = subs[Math.floor(Math.random()*subs.length)];
-  $("overlay").classList.add("show");
+  openOverlayDialog("btnAgain");
 }
 
 /* ================= win cascade (live card faces, canvas sparkles) ================= */
@@ -2976,41 +3009,105 @@ function endCascade(){
 /* ================= controls ================= */
 $("btnUndo").onclick = undo;
 $("btnHint").onclick = hint;
-let newConfirm = null;
-const setNewButtonLabel = label => { $("btnNewLabel").textContent = label };
-$("btnNew").onclick = ()=>{
-  const b = $("btnNew");
-  if(started && moves>0 && !won && !newConfirm){
-    setNewButtonLabel("Confirm"); b.classList.add("confirm");
-    toast("Tap Confirm to start a new deal");
-    newConfirm = setTimeout(()=>{ setNewButtonLabel("New"); b.classList.remove("confirm"); newConfirm=null }, 2500);
-    return;
+
+/* Focus stays inside whichever temporary surface is open, then returns to the
+   control that opened it. The board remains a visual playing surface; these
+   semantics cover the surrounding controls and decisions without pretending
+   to provide non-visual card play. */
+const dialogOrigins = new WeakMap();
+function showDialogSurface(dialog,className,firstFocus,origin=document.activeElement){
+  if(origin instanceof HTMLElement && origin!==document.body) dialogOrigins.set(dialog,origin);
+  dialog.classList.add(className);
+  dialog.setAttribute("aria-hidden","false");
+  requestAnimationFrame(()=>$(firstFocus)?.focus());
+}
+function hideDialogSurface(dialog,className,restore=true){
+  dialog.classList.remove(className);
+  dialog.setAttribute("aria-hidden","true");
+  if(!restore) return;
+  const origin = dialogOrigins.get(dialog);
+  requestAnimationFrame(()=>{
+    if(origin && origin.isConnected) origin.focus();
+    else $("btnDeal").focus();
+  });
+}
+function openOverlayDialog(firstFocus){
+  const overlay = $("overlay"), panel = $("winPanel");
+  if(!overlay.classList.contains("show")){
+    const origin = document.activeElement instanceof HTMLElement ? document.activeElement : $("btnDeal");
+    dialogOrigins.set(panel,origin);
   }
-  if(newConfirm){ clearTimeout(newConfirm); newConfirm=null }
-  setNewButtonLabel("New"); b.classList.remove("confirm");
-  endCascade(); $("overlay").classList.remove("show");
-  newGame();
-};
+  overlay.classList.add("show");
+  overlay.setAttribute("aria-hidden","false");
+  requestAnimationFrame(()=>$(firstFocus)?.focus());
+}
+function closeOverlayDialog(restore=true){
+  const overlay = $("overlay"), panel = $("winPanel");
+  overlay.classList.remove("show");
+  overlay.setAttribute("aria-hidden","true");
+  if(!restore) return;
+  const origin = dialogOrigins.get(panel);
+  requestAnimationFrame(()=>{
+    if(origin && origin.isConnected) origin.focus();
+    else $("btnDeal").focus();
+  });
+}
+function focusableInside(dialog){
+  return [...dialog.querySelectorAll('button:not([disabled]),input:not([disabled]),[tabindex]:not([tabindex="-1"])')]
+    .filter(el=>el.getClientRects().length);
+}
+function activeDialog(){
+  if($("statsPage").classList.contains("open")) return $("statsPage");
+  if($("overlay").classList.contains("show")) return $("winPanel");
+  if($("dealSheet").classList.contains("open")) return $("dealSheet");
+  if($("sheet").classList.contains("open")) return $("sheet");
+  return null;
+}
+
+const dealSheet = $("dealSheet"), dealBack = $("dealBack");
+function openDealSheet(){
+  stopTimer();
+  showDialogSurface(dealSheet,"open","btnNewDeal",$("btnDeal"));
+  dealBack.classList.add("show");
+}
+function closeDealSheet(restore=true,resume=true){
+  if(typeof restore!=="boolean") restore=true;
+  hideDialogSurface(dealSheet,"open",restore);
+  dealBack.classList.remove("show");
+  if(resume) resumeTimerIfPlaying();
+}
+function beginDeal(seed){
+  closeDealSheet(false,false);
+  endCascade();
+  closeOverlayDialog(false);
+  newGame(seed);
+  requestAnimationFrame(()=>$("btnDeal").focus());
+}
+$("btnDeal").onclick = openDealSheet;
+$("btnDealClose").onclick = closeDealSheet;
+dealBack.onclick = closeDealSheet;
+$("btnNewDeal").onclick = ()=>beginDeal();
+$("btnRestartDeal").onclick = ()=>beginDeal(initialDeal);
 $("btnAgain").onclick = ()=>{
   if(overlayMode==="draw-one"){
     settings.draw3=false;
     saveJSON(KEY_SET,settings);
-    $("overlay").classList.remove("show");
+    closeOverlayDialog(false);
     layout(); updateButtons(); saveGame();
     if(started && !won) startTimer();
     toast("Switched to draw one");
     maybeAutoFinish();
     return;
   }
-  endCascade(); $("overlay").classList.remove("show"); newGame();
+  endCascade(); closeOverlayDialog(false); newGame();
 };
 $("btnReplayDeal").onclick = ()=>{
   // Same cards, fresh start — the "restart" the menu offers, from the overlay.
-  endCascade(); $("overlay").classList.remove("show");
+  endCascade(); closeOverlayDialog(false);
   newGame(initialDeal);
 };
 $("btnAdmire").onclick = ()=>{
-  $("overlay").classList.remove("show");
+  closeOverlayDialog();
   if(won){
     if(!reduced) cascade(!!lastWinMilestone);
     // bring the modal back after another look — tracked so a new deal started
@@ -3018,7 +3115,7 @@ $("btnAdmire").onclick = ()=>{
     cancelWinDialog();
     winDialogTimer = setTimeout(()=>{
       winDialogTimer = null;
-      if(won) $("overlay").classList.add("show");
+      if(won) openOverlayDialog("btnAgain");
     }, 6000);
   } else if(started){
     startTimer(); // stuck dialog dismissed — back to the table to undo
@@ -3026,15 +3123,16 @@ $("btnAdmire").onclick = ()=>{
 };
 /* menu sheet */
 const sheet = $("sheet"), sheetBack = $("sheetBack");
-function closeSheet(){
-  sheet.classList.remove("open");
+function closeSheet(restore=true,resume=true){
+  if(typeof restore!=="boolean") restore=true;
+  hideDialogSurface(sheet,"open",restore);
   sheetBack.classList.remove("show");
-  resumeTimerIfPlaying();
+  if(resume) resumeTimerIfPlaying();
 }
 $("btnMenu").onclick = ()=>{
   stopTimer();
   refreshSheet();
-  sheet.classList.add("open");
+  showDialogSurface(sheet,"open","btnSheetClose",$("btnMenu"));
   sheetBack.classList.add("show");
   sheet.scrollTop = 0;   // always reopen with the header (and its close) in view
 };
@@ -3092,9 +3190,10 @@ function setCardStyle(cardStyle){
 $("segCardsOriginal").onclick = ()=>setCardStyle("original");
 $("segCardsCrehore").onclick = ()=>setCardStyle("crehore");
 $("btnRestart").onclick = ()=>{
-  closeSheet();
-  endCascade(); $("overlay").classList.remove("show");
+  closeSheet(false,false);
+  endCascade(); closeOverlayDialog(false);
   newGame(initialDeal);
+  requestAnimationFrame(()=>$("btnDeal").focus());
 };
 let statsVariant = "draw1";
 function winRate(record){
@@ -3141,15 +3240,13 @@ function renderStats(){
 }
 function openStats(){
   statsVariant = settings.draw3 ? "draw3" : "draw1";
-  closeSheet();
+  closeSheet(false,false);
   renderStats();
-  $("statsPage").classList.add("open");
-  $("statsPage").setAttribute("aria-hidden","false");
+  showDialogSurface($("statsPage"),"open","btnStatsClose",$("btnMenu"));
   stopTimer();
 }
 function closeStats(){
-  $("statsPage").classList.remove("open");
-  $("statsPage").setAttribute("aria-hidden","true");
+  hideDialogSurface($("statsPage"),"open");
   resumeTimerIfPlaying();
 }
 $("btnStats").onclick = openStats;
@@ -3195,12 +3292,26 @@ function refreshSheet(){
 window.addEventListener("keydown", e=>{
   if(e.key==="Escape"){
     if($("statsPage").classList.contains("open")) closeStats();
+    else if($("overlay").classList.contains("show")) $("btnAdmire").click();
+    else if(dealSheet.classList.contains("open")) closeDealSheet();
     else if(sheet.classList.contains("open")) closeSheet();
     return;
   }
+
+  const dialog = activeDialog();
+  if(dialog && e.key==="Tab"){
+    const focusable = focusableInside(dialog);
+    if(!focusable.length){ e.preventDefault(); return }
+    const first = focusable[0], last = focusable[focusable.length-1];
+    if(e.shiftKey && (document.activeElement===first || !dialog.contains(document.activeElement))){
+      e.preventDefault(); last.focus();
+    }else if(!e.shiftKey && (document.activeElement===last || !dialog.contains(document.activeElement))){
+      e.preventDefault(); first.focus();
+    }
+  }
   // Dialogs (win, stuck, draw-one offer) own the keyboard, matching the
   // pointer handler — game keys must not move cards behind a shown overlay.
-  if($("overlay").classList.contains("show")) return;
+  if(dialog) return;
   if(e.key==="z" && (e.metaKey||e.ctrlKey)){ e.preventDefault(); undo() }
   else if(e.key==="h") hint();
   else if(e.key===" "){ e.preventDefault(); draw() }
