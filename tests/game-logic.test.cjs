@@ -412,39 +412,44 @@ test("vintage table uses bright burgundy felt with high-contrast parchment rules
   assert.match(theme, /--vintage-rule-rgb:222,184,112/);
 });
 
-test("classic cards use one simple fan-safe index with a right-aligned suit", () => {
+test("classic cards use a heavy fan-safe index with a lower suit", () => {
   const indexRule = html.match(/body\[data-card-style="original"\] \.ix\{([^}]*)\}/)?.[1];
   const theme = html.match(/body\[data-card-style="original"\]\{([^]*?)\n  \}/)?.[1];
   assert.ok(indexRule, "classic index rule exists");
   assert.ok(theme, "classic theme exists");
-  assert.match(theme, /--face-card:Charter,Georgia,var\(--serif\)/);
+  assert.match(theme, /--face-card:-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif/);
   assert.match(theme, /--face-label:"Marcellus",var\(--serif\)/);
-  assert.match(indexRule, /justify-content:space-between/);
+  assert.match(indexRule, /display:block/);
+  assert.match(indexRule, /font-weight:800/);
   // Face composition is sized in card-relative ems outside the theme block.
-  assert.match(html, /\.ix\{font-size:3em\}/);
+  assert.match(html, /\.ix\{font-size:3\.05em\}/);
   assert.doesNotMatch(html, /\.ix\.ten\{font-size:/);
   assert.doesNotMatch(html, /\.ix\.ten i\{[^}]*transform:scaleX/);
-  assert.match(html, /\.ix\.q i\{transform:translateY\(-\.05em\)\}/);
-  assert.match(html, /\.ix b\{font-size:1\.1em\}/);
-  assert.match(html, /\.mid\{font-size:6\.4em;transform:translateY\(\.1em\)\}/);
-  assert.match(html, /\.mid\.ace\{font-size:7\.2em\}/);
-  assert.match(html, /\.ix b\{\s*flex:none;font-weight:700;text-align:right/);
+  assert.match(html, /\.ix b\{font-size:1\.12em\}/);
+  assert.match(html, /\.mid\{font-size:6\.15em;transform:translateY\(\.15em\)\}/);
+  assert.match(html, /\.mid\.ace\{font-size:6\.9em\}/);
+  assert.match(html, /\.ix b\{\s*position:absolute;top:\.58em;left:\.08em/);
   assert.doesNotMatch(html, /\.ix\.br|class="ix br/);
   assert.match(html, /const minFaceUpReveal = settings\.cardStyle === "original" \? \.30 : \.24/);
   assert.match(html, /const preferredFaceUpReveal = settings\.cardStyle === "original" \? \.32 : 142\/522/);
   assert.match(html, /const fanOff = cw\*\.3/);
 });
 
-test("classic court ranks align with number ranks and clear the tableau fan", () => {
+test("classic courts use original artwork while their ranks clear the tableau fan", () => {
   const centerRule = html.match(/body\[data-card-style="original"\] \.mid\{([^}]*)\}/)?.[1];
   const courtRule = html.match(/body\[data-card-style="original"\] \.mid\.court\{([^}]*)\}/)?.[1];
   assert.ok(centerRule, "classic center-symbol rule exists");
   assert.match(centerRule, /inset:0/);
   assert.match(centerRule, /align-items:center;justify-content:center/);
   assert.ok(courtRule, "classic court-symbol rule exists");
-  assert.match(courtRule, /line-height:1;transform:translateY\(\.05em\)/);
+  assert.match(courtRule, /inset:calc\(var\(--cw\)\*\.14\)/);
+  assert.match(courtRule, /line-height:1;transform:none;opacity:1/);
   assert.match(html, /\.ix\.court i\{font-size:1em\}/);
   assert.doesNotMatch(html, /\.ix\.j i\{[^}]*transform/);
+  assert.doesNotMatch(html, /ORIGINAL_MOTIF|♞|♛|♚/);
+  assert.match(html, /const CLASSIC_COURT_ART = \{ j:"jack", q:"queen", k:"king" \}/);
+  assert.match(html, /assets\/cards\/classic\/\$\{CLASSIC_COURT_ART\[court\]\}\.webp/);
+  assert.match(html, /class="court-art"/);
   assert.match(html, /const court = card\.rank>=11 \? \["j","q","k"\]\[card\.rank-11\] : ""/);
   assert.match(html, /` court \$\{court\}`/);
 });

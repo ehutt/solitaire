@@ -51,6 +51,7 @@ export const GROUPS = {
     // are skipped — these move with whatever pile the shuffle dealt them to.
     '!.card[data-id="20"] .ix', '!.card[data-id="20"] .ix i',
     '!.card[data-id="20"] .ix b',
+    '!.card[data-id="11"] .court-art',
     "#controls", "#btnDeal", "#btnHint", "#btnUndo", "#btnMenu",
     "#btnDeal .control-label", "#btnDeal .classic-icon", "#btnDeal .vintage-icon",
     "#toast"

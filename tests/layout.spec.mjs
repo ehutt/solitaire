@@ -438,7 +438,7 @@ for (const cardStyle of STYLES) {
         expect(spacing.gap).toBeLessThanOrEqual(spacing.card * 0.1);
       });
 
-      test("Classic indices keep natural proportions in compact card fans", async ({ page }) => {
+      test("Classic indices stay bold and ordered in compact card fans", async ({ page }) => {
         test.skip(cardStyle !== "original", "Vintage card faces are artwork");
         const fit = await page.evaluate(() => {
           settings.draw3 = true;
@@ -461,9 +461,11 @@ for (const cardStyle of STYLES) {
           const measurements = wideRanks.map(card => {
             const cardBox = els.get(card.id).getBoundingClientRect();
             const rank = els.get(card.id).querySelector(".ix i");
+            const suit = els.get(card.id).querySelector(".ix b");
             const rankBox = rank.getBoundingClientRect();
+            const suitBox = suit.getBoundingClientRect();
             const transform = getComputedStyle(rank).transform;
-            return { cardBox, rankBox, scaleX: transform === "none" ? 1 : new DOMMatrix(transform).a };
+            return { cardBox, rankBox, suitBox, scaleX: transform === "none" ? 1 : new DOMMatrix(transform).a };
           });
           const nextCards = P.waste.slice(1).map(card => els.get(card.id).getBoundingClientRect());
           const fontSize = parseFloat(getComputedStyle(els.get(wideRanks[0].id).querySelector(".ix")).fontSize);
@@ -473,6 +475,7 @@ for (const cardStyle of STYLES) {
             fanFloor: G.landscape ? null : G.cw * 0.295,
             fanCeiling: G.landscape ? null : G.cw * 0.305,
             rankWidths: measurements.map(({ rankBox }) => rankBox.width),
+            suitOffsets: measurements.map(({ rankBox, suitBox }) => suitBox.top - rankBox.top),
             rankScales: measurements.map(({ scaleX }) => scaleX),
             fanSteps: nextCards.map((box, i) => G.landscape
               ? box.top - measurements[i].cardBox.top
@@ -501,11 +504,27 @@ for (const cardStyle of STYLES) {
 
         expect(fit.ratio).toBeGreaterThanOrEqual(0.415);
         expect(Math.min(...fit.rankScales), JSON.stringify(fit)).toBeGreaterThanOrEqual(0.99);
+        expect(Math.min(...fit.suitOffsets), JSON.stringify(fit)).toBeGreaterThan(fit.cardWidth * 0.2);
         if (fit.fanCeiling !== null) {
           expect(Math.min(...fit.fanSteps), JSON.stringify(fit)).toBeGreaterThanOrEqual(fit.fanFloor);
           expect(Math.max(...fit.fanSteps), JSON.stringify(fit)).toBeLessThanOrEqual(fit.fanCeiling);
         }
         expect(fit.tableauQueenClearance, JSON.stringify(fit)).toBeGreaterThanOrEqual(fit.tableauClearanceFloor);
+      });
+
+      test("Classic court artwork stays inside the card face", async ({ page }) => {
+        test.skip(cardStyle !== "original", "Vintage card faces are artwork");
+        const measurements = await page.evaluate(() => {
+          const court = cards.find(card => card.rank === 12);
+          const card = els.get(court.id).getBoundingClientRect();
+          const art = els.get(court.id).querySelector(".court-art").getBoundingClientRect();
+          return { card, art };
+        });
+        expect(measurements.art.left).toBeGreaterThanOrEqual(measurements.card.left);
+        expect(measurements.art.right).toBeLessThanOrEqual(measurements.card.right);
+        expect(measurements.art.top).toBeGreaterThan(measurements.card.top);
+        expect(measurements.art.bottom).toBeLessThanOrEqual(measurements.card.bottom);
+        expect(measurements.art.height).toBeGreaterThan(measurements.card.height * 0.65);
       });
     });
   }

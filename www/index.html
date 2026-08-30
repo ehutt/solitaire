@@ -197,12 +197,12 @@
        the control buttons share that brightness, nothing else does. */
     --chip-ink:#f0e8d2;
     --control-ink:#f0e8d2;
-    /* Limelight is reserved for the marquee, native Charter gives the card
-       indices compact, sturdy capitals, and Marcellus carries every interface
-       role. Keeping Charter card-only avoids changing sheets and popup text. */
+    /* Limelight is reserved for the marquee. The card index uses the native
+       UI face at a heavy weight: its open counters and broad figures hold up
+       better than a decorative serif in the narrow tableau reveal. */
     --face-display:"Limelight",var(--serif);
-    --face-card:Charter,Georgia,var(--serif);
-    --card-rank-stroke:.045em;
+    --face-card:-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;
+    --card-rank-stroke:0;
     --face-label:"Marcellus",var(--serif);
     --face-title:"Marcellus",var(--serif);
     --face-sheet:"Marcellus",var(--serif);
@@ -323,20 +323,22 @@
      theme choices, so they live here as one declaration each rather than inside
      the Classic block — nothing overrides them and nothing needs to. */
   .ix,.mid,.bk{display:none}
-  .ix{font-size:3em}
-  .ix.q i{transform:translateY(-.05em)}
+  .ix{font-size:3.05em}
   .ix i,.ix.court i{font-size:1em}
-  .ix b{font-size:1.1em}
-  .mid{font-size:6.4em;transform:translateY(.1em)}
-  .mid.ace{font-size:7.2em}
-  .mid.court.k,.mid.court.q,.mid.court.j{font-size:6.2em}
+  .ix b{font-size:1.12em}
+  .mid{font-size:6.15em;transform:translateY(.15em)}
+  .mid.ace{font-size:6.9em}
+  .court-art{
+    display:block;width:100%;height:100%;object-fit:contain;
+    mix-blend-mode:multiply;filter:saturate(.8) contrast(.98);
+  }
   .bk::after{font-size:calc(var(--cw)*0.3)}
   body[data-card-style="original"] .front{
     background:linear-gradient(160deg,var(--paper) 65%,var(--paper-shade));
     border:1px solid rgba(70,60,40,.25);
     color:var(--ink);
-    /* Charter's compact capitals stay sturdy at the 20px index. Suits and the
-       chess courts continue to fall back to the serif. */
+    /* The rank inherits the heavy native face. Suit glyphs fall back to the
+       serif so their familiar silhouettes stay intact. */
     font-family:var(--face-card);
   }
   body[data-card-style="original"] .card.red .front{color:var(--red)}
@@ -358,32 +360,37 @@
     color:var(--brass);opacity:.75;
     font-family:var(--serif);
   }
-  /* Classic cards use one compact, fan-safe index band: rank on the left,
-     suit on the right, with the large center motif left untouched. */
+  /* Classic cards use one compact, fan-safe index: a heavy rank with the suit
+     tucked just below it. The diagonal overlap keeps the rank visible in a
+     short tableau reveal without shrinking either mark. */
   body[data-card-style="original"] .ix{
-    position:absolute;left:calc(var(--cw)*.03);right:calc(var(--cw)*.03);
-    display:flex;align-items:center;justify-content:space-between;
-    line-height:.82;font-weight:400;letter-spacing:0;
+    position:absolute;z-index:2;left:calc(var(--cw)*.045);width:calc(var(--cw)*.58);
+    height:calc(var(--cw)*.7);display:block;
+    line-height:.76;font-weight:800;letter-spacing:-.035em;
   }
-  /* Charter provides the compact advance widths; a restrained paint-only
-     stroke keeps its rank sturdy without changing the index band's layout.
-     The serif fallback supplies the suit and stays unstroked. */
+  /* The rank is intentionally plain. Weight and width do the work, with no
+     outline or display-face ornament competing with the card art. */
   body[data-card-style="original"] .ix i{
-    display:inline-block;font-style:normal;font-weight:800;
+    position:absolute;inset:0 auto auto 0;display:block;
+    font-style:normal;font-weight:800;
     -webkit-text-stroke:var(--card-rank-stroke) currentColor;
   }
   body[data-card-style="original"] .ix b{
-    flex:none;font-weight:700;text-align:right;
+    position:absolute;top:.58em;left:.08em;display:block;
+    font-family:var(--serif);font-weight:700;line-height:.72;
   }
-  body[data-card-style="original"] .ix.tl{top:calc(var(--cw)*.035)}
-  /* Larger centre pips; royals sit optically centred in the space below the
-     index band rather than dead-centre on the card. */
+  body[data-card-style="original"] .ix.tl{top:calc(var(--cw)*.025)}
+  /* Centre pips sit a touch low, matching the index suit. The court artwork
+     gets its own inset box so the portrait never crowds the card edge. */
   body[data-card-style="original"] .mid{
     position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
     pointer-events:none;opacity:.95;
   }
   body[data-card-style="original"] .mid.ace{opacity:1}
-  body[data-card-style="original"] .mid.court{line-height:1;transform:translateY(.05em)}
+  body[data-card-style="original"] .mid.court{
+    inset:calc(var(--cw)*.14) calc(var(--cw)*.1) calc(var(--cw)*.035);
+    line-height:1;transform:none;opacity:1;
+  }
   /* Club-rail buttons: emoji icons retired; Marcellus capitals on a dark pill
      with the same brass hairline as the stat chips. */
   body[data-card-style="original"] #controls button{
@@ -1776,15 +1783,14 @@ function buildDOM(){
     els.set(card.id, el);
   }
 }
-// The full chess court: king, queen, and the knight standing in for the jack.
-const ORIGINAL_MOTIF = { 11:"♞", 12:"♛", 13:"♚" };
+const CLASSIC_COURT_ART = { j:"jack", q:"queen", k:"king" };
 function originalFaceHTML(card){
   const suit = SUITS[card.suit], rank = RANKS[card.rank];
   const court = card.rank>=11 ? ["j","q","k"][card.rank-11] : "";
   const indexClass = card.rank===10 ? " ten" : court ? ` court ${court}` : "";
   let center;
   if(card.rank === 1) center = `<div class="mid ace">${suit}</div>`;
-  else if(court) center = `<div class="mid court ${court}">${ORIGINAL_MOTIF[card.rank]}</div>`;
+  else if(court) center = `<div class="mid court ${court}"><img class="court-art" src="assets/cards/classic/${CLASSIC_COURT_ART[court]}.webp" alt="" draggable="false"></div>`;
   else center = `<div class="mid">${suit}</div>`;
   return `<div class="ix tl${indexClass}"><i>${rank}</i><b>${suit}</b></div>${center}`;
 }
