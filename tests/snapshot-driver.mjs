@@ -73,6 +73,14 @@ const SHOW = {
   panel: async (page) => {
     await page.evaluate(() => document.getElementById("overlay").classList.add("show"));
     await page.waitForTimeout(150);
+  },
+  "panel-stuck": async (page) => {
+    await page.evaluate(() => showStuck());
+    await page.waitForTimeout(150);
+  },
+  "panel-draw": async (page) => {
+    await page.evaluate(() => showDrawOneOffer());
+    await page.waitForTimeout(150);
   }
 };
 

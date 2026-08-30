@@ -77,7 +77,17 @@ export const GROUPS = {
   ],
   panel: [
     "#overlay", ".panel", ".panel h2", ".panel .sub", ".statgrid", ".stat",
-    ".stat b", ".stat span", ".panel .note", ".panel button", ".panel button.ghost"
+    ".stat b", ".stat span", "#wBadges", ".badge", ".panel .note", ".progress-note",
+    ".dialog-actions", ".dialog-action.primary", ".dialog-action.secondary", ".dialog-action.quiet"
+  ],
+  "panel-stuck": [
+    "#overlay", ".panel", ".panel h2", ".panel .sub", ".statgrid",
+    ".panel .note", ".dialog-actions", ".dialog-action.primary",
+    ".dialog-action.secondary", ".dialog-action.quiet"
+  ],
+  "panel-draw": [
+    "#overlay", ".panel", ".panel h2", ".panel .sub", ".statgrid",
+    ".panel .note", ".dialog-actions", ".dialog-action.primary", ".dialog-action.quiet"
   ]
 };
 

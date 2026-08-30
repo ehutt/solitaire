@@ -222,6 +222,36 @@ for (const cardStyle of STYLES) {
     test.describe(`${cardStyle} — ${viewport.name}`, () => {
       test.beforeEach(async ({ page }) => { await load(page, cardStyle, viewport) });
 
+      test("recovery dialogs fit the viewport and omit the win scorecard", async ({ page }) => {
+        for (const mode of ["stuck", "draw-one"]) {
+          await page.evaluate((nextMode) => {
+            closeOverlayDialog(false);
+            if (nextMode === "stuck") showStuck(); else showDrawOneOffer();
+          }, mode);
+          await page.waitForTimeout(250);
+          const dialog = await page.evaluate(() => {
+            const panel = document.getElementById("winPanel");
+            const box = panel.getBoundingClientRect();
+            return {
+              mode: panel.dataset.mode,
+              top: box.top,
+              bottom: box.bottom,
+              left: box.left,
+              right: box.right,
+              statDisplay: getComputedStyle(panel.querySelector(".statgrid")).display,
+              overflow: panel.scrollHeight - panel.clientHeight
+            };
+          });
+          expect(dialog.mode).toBe(mode);
+          expect(dialog.top).toBeGreaterThanOrEqual(0);
+          expect(dialog.left).toBeGreaterThanOrEqual(0);
+          expect(dialog.bottom).toBeLessThanOrEqual(viewport.height);
+          expect(dialog.right).toBeLessThanOrEqual(viewport.width);
+          expect(dialog.statDisplay).toBe("none");
+          expect(dialog.overflow).toBeLessThanOrEqual(1);
+        }
+      });
+
       test("close button sits on the settings title's cap band", async ({ page }) => {
         await openSheet(page);
         const band = await capBand(page, "#sheet h3");

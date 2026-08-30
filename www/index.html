@@ -130,7 +130,19 @@
     --paper-ink-muted:#6d6248;           /* dialog notes */
     --paper-ink-label:#8a7d60;           /* stat captions */
     --paper-accent:#8c641a;              /* celebratory dialog titles */
+    --paper-rule:rgba(92,73,37,.32);
+    --paper-shadow:rgba(0,0,0,.38);
     --badge-ink:#7c5d16;
+    --panel-border:1px solid var(--paper-rule);
+    --panel-radius:8px;
+    --dialog-primary-surface:var(--felt);
+    --dialog-primary-ink:var(--paper);
+    --dialog-secondary-surface:transparent;
+    --dialog-secondary-ink:var(--paper-ink);
+    --dialog-button-border:var(--paper-rule);
+    --dialog-action-direction:column;
+    --dialog-panel-padding:28px 26px 22px;
+    --dialog-action-padding:11px 13px;
     --seg-on-ink:#241a05;                /* the selected segment */
     --seg-on-surface:var(--brass);
     --focus-ring:var(--brass);
@@ -521,43 +533,39 @@
     position:fixed;inset:0;z-index:600;
     display:none;align-items:center;justify-content:center;
     background:var(--surface-overlay);
-    backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px);
   }
-  #overlay.show{display:flex;animation:fadeIn .4s ease}
+  #overlay.show{display:flex;animation:fadeIn .2s ease}
   @keyframes fadeIn{from{opacity:0}to{opacity:1}}
   .panel{
     background:var(--surface-panel);
     color:var(--paper-ink);
-    border-radius:18px;
+    border:var(--panel-border);border-radius:var(--panel-radius);
     width:min(390px, calc(100vw - 40px));
     max-height:calc(100dvh - 24px);overflow-y:auto;
-    padding:30px 28px 24px;
-    box-shadow:0 20px 60px rgba(0,0,0,.5);
-    text-align:center;
-    animation:panelIn .45s cubic-bezier(.2,1.1,.3,1.1);
+    padding:var(--dialog-panel-padding);
+    box-shadow:0 16px 36px var(--paper-shadow);
+    text-align:left;
+    animation:panelIn .24s cubic-bezier(.16,1,.3,1);
   }
-  @keyframes panelIn{from{transform:translateY(24px) scale(.94);opacity:0}to{transform:none;opacity:1}}
+  @keyframes panelIn{from{transform:translateY(12px);opacity:0}to{transform:none;opacity:1}}
   /* A dialog heading is popup text, not the marquee, so it reads --face-title.
      Vintage is unaffected: it sets both roles to the same face. */
   .panel h2{
     font-family:var(--face-title);font-size:var(--type-panel-title);font-weight:600;
-    letter-spacing:.01em;margin-bottom:2px;
+    letter-spacing:.01em;line-height:1.08;margin-bottom:6px;
     text-wrap:balance;
   }
+  .panel[data-mode="win"]{text-align:center}
   body[data-card-style="original"] .panel h2{font-weight:400}
   .panel.daily-win h2{font-size:var(--type-panel-title-daily);font-weight:700;color:var(--paper-accent)}
   .panel.milestone{
-    border:2px solid rgba(217,166,72,.72);
-    animation:panelIn .45s cubic-bezier(.2,1.1,.3,1.1), milestoneGlow 1.5s ease-in-out 2;
+    border-color:var(--paper-accent);
   }
   .panel.milestone h2{font-size:var(--type-panel-title-milestone);font-weight:700;color:var(--paper-accent)}
-  @keyframes milestoneGlow{
-    0%,100%{box-shadow:0 20px 60px rgba(0,0,0,.5),0 0 0 rgba(217,166,72,0)}
-    50%{box-shadow:0 20px 60px rgba(0,0,0,.5),0 0 34px rgba(217,166,72,.72)}
-  }
-  .panel .sub{color:var(--paper-ink-soft);font-size:var(--type-panel-sub);margin-bottom:18px}
+  .panel .sub{color:var(--paper-ink-soft);font-size:var(--type-panel-sub);line-height:1.35;margin-bottom:18px}
   .statgrid{
-    display:flex;justify-content:center;gap:18px;margin-bottom:14px;
+    display:flex;justify-content:center;gap:18px;
+    padding:14px 0;margin-bottom:10px;border-top:1px solid var(--paper-rule);border-bottom:1px solid var(--paper-rule);
   }
   .stat{min-width:70px}
   .stat b{
@@ -567,21 +575,39 @@
   .stat span{font-size:var(--type-stat-label);text-transform:uppercase;letter-spacing:.08em;color:var(--paper-ink-label)}
   .stat .flame{color:var(--brass-soft)}
   .badge{
-    display:inline-block;background:rgba(217,166,72,.18);
-    border:1px solid rgba(185,138,47,.4);color:var(--badge-ink);
-    border-radius:999px;padding:4px 13px;font-size:var(--type-badge);font-weight:600;
-    margin:2px;
+    display:inline-block;color:var(--badge-ink);
+    font-size:var(--type-badge);font-weight:600;letter-spacing:.04em;
+    margin:2px 6px;
   }
-  .panel .note{font-size:var(--type-panel-note);color:var(--paper-ink-muted);margin:8px 0 16px;min-height:1em}
-  .panel button{
-    background:var(--felt);color:var(--paper);border:none;font-family:var(--face-chrome);
-    width:100%;padding:13px;font-size:var(--type-panel-button);margin-top:4px;
+  .panel .note{
+    font-size:var(--type-panel-note);color:var(--paper-ink-muted);
+    line-height:1.4;margin:10px 0 6px;
   }
-  /* Vintage inks the ghost action differently from the note above it, so the
-     two read from separate tokens rather than one "muted paper ink". */
-  /* Scoped through #overlay so the ghost's own colours out-rank a theme's
-     styling of the panel's primary button, which is a less specific selector. */
-  #overlay .panel button.ghost{background:transparent;color:var(--ghost-ink,var(--paper-ink-muted));font-weight:500;padding:8px}
+  .panel .progress-note{
+    color:var(--paper-ink-soft);font-size:var(--type-badge);margin:0 0 16px;
+  }
+  .panel[data-mode="stuck"] .scorecard-only,
+  .panel[data-mode="draw-one"] .scorecard-only{display:none}
+  .panel[data-mode="stuck"] .sub,
+  .panel[data-mode="draw-one"] .sub{margin-bottom:4px}
+  .dialog-actions{
+    display:flex;flex-direction:var(--dialog-action-direction);gap:7px;margin-top:16px;
+  }
+  .panel .dialog-action{
+    width:100%;min-height:46px;padding:var(--dialog-action-padding);margin:0;
+    border:1px solid var(--dialog-button-border);border-radius:6px;
+    font-family:var(--face-chrome);font-size:var(--type-panel-button);
+  }
+  .panel .dialog-action.primary{
+    color:var(--dialog-primary-ink);background:var(--dialog-primary-surface);
+  }
+  .panel .dialog-action.secondary{
+    color:var(--dialog-secondary-ink);background:var(--dialog-secondary-surface);
+  }
+  .panel .dialog-action.quiet{
+    min-height:40px;padding:8px;border-color:transparent;
+    color:var(--ghost-ink,var(--paper-ink-muted));background:transparent;font-weight:500;
+  }
 
   /* ---------- MENU SHEET ---------- */
   #sheet{
@@ -814,6 +840,7 @@
     }
   }
   @media (orientation:landscape){
+    body{--dialog-panel-padding:18px 26px 16px;--dialog-action-padding:10px 12px}
     #sheet{
       padding-left:calc(env(safe-area-inset-left,0px) + 20px);
       padding-right:calc(env(safe-area-inset-right,0px) + 20px);
@@ -851,11 +878,9 @@
     body{--type-control:.78rem}
     #controls button{width:100%;min-height:48px;padding:10px 5px;border-radius:11px}
     #toast{bottom:calc(env(safe-area-inset-bottom,0px) + 12px)}
-    .panel{padding:18px 26px 16px}
     .panel .sub{margin-bottom:10px}
     .statgrid{margin-bottom:8px}
     .panel .note{margin:5px 0 9px}
-    .panel button{padding:10px}
   }
 
   /* ============================================================
@@ -913,6 +938,11 @@
     --face-chrome:var(--vintage-text);
     --seg-on-ink:#f3e7c9;
     --seg-on-surface:var(--vintage-deep);
+    --panel-border:3px double rgba(var(--vintage-paper-ink-rgb),.68);
+    --panel-radius:7px;
+    --dialog-primary-surface:var(--vintage-deep);
+    --dialog-primary-ink:var(--seg-on-ink);
+    --dialog-button-border:rgba(var(--vintage-paper-ink-rgb),.58);
     --ghost-ink:var(--vintage-paper-ink-mid);
     --focus-ring:#f0dfb4;
     position:relative;
@@ -1039,17 +1069,10 @@
     border:3px double rgba(var(--vintage-paper-ink-rgb),.72);border-radius:5px;
     letter-spacing:.02em;
   }
-  body[data-card-style="crehore"] .panel{
-    border:3px double rgba(var(--vintage-paper-ink-rgb),.68);border-radius:7px;
-  }
   body[data-card-style="crehore"] .panel h2,
   body[data-card-style="crehore"] #sheet h3{font-weight:400}
   body[data-card-style="crehore"] #sheet h3{
     color:var(--vintage-ink);line-height:1.15;
-  }
-  body[data-card-style="crehore"] .panel button{
-    color:var(--seg-on-ink);background:var(--seg-on-surface);border:1px solid rgba(var(--vintage-paper-ink-rgb),.8);
-    border-radius:4px;letter-spacing:.04em;
   }
   body[data-card-style="crehore"] #sheet{
     border-top:3px double rgba(var(--vintage-ink-rgb),.78);border-radius:8px 8px 0 0;
@@ -1179,13 +1202,12 @@
     body{--type-control:1.28rem}
     #controls button{min-height:64px;padding:18px 28px}
     #toast{bottom:calc(env(safe-area-inset-bottom,0px) + 118px);padding:14px 26px}
-    .panel{width:min(520px,calc(100vw - 80px));padding:42px 38px 32px;border-radius:22px}
+    .panel{width:min(520px,calc(100vw - 80px))}
     .panel .sub{margin-bottom:26px}
     .statgrid{gap:34px;margin-bottom:24px}
     .stat{min-width:105px}
     .badge{padding:7px 16px}
     .panel .note{margin:12px 0 22px}
-    .panel button{padding:18px}
     #sheet{padding:36px 40px calc(env(safe-area-inset-bottom,0px) + 38px)}
     /* Tablet sizes must beat the themes', so they are set on an equally
        specific selector that matches whatever theme is on, and win on order. */
@@ -1217,6 +1239,9 @@
       --type-stat:2.25rem;
       --type-stat-label:1rem;
       --type-badge:1.1rem;
+      --dialog-panel-padding:42px 38px 32px;
+      --dialog-action-padding:16px 18px;
+      --dialog-action-direction:row;
     }
     /* Matches the specificity of `#sheet .title-row h3{margin-bottom:0}`
        so the tablet gap keeps winning, as it did when this was bundled into the
@@ -1303,11 +1328,10 @@
     body[data-card-style="original"]{--type-control:1.05rem}
     #controls button{min-height:60px;padding:12px 7px}
     body[data-card-style="original"] #controls button{min-height:60px}
-    .panel{padding:30px 36px 26px}
+    body[data-card-style]{--dialog-panel-padding:30px 36px 26px;--dialog-action-padding:13px 16px}
     .panel .sub{margin-bottom:16px}
     .statgrid{margin-bottom:14px}
     .panel .note{margin:9px 0 14px}
-    .panel button{padding:14px}
     body[data-card-style="crehore"] #hud{
       gap:16px;margin:calc(env(safe-area-inset-top,0px) + 7px) 14px 0;padding:7px 0;
     }
@@ -1408,19 +1432,22 @@
 <canvas id="fx"></canvas>
 
 <div id="overlay" aria-hidden="true">
-  <div class="panel" id="winPanel" role="dialog" aria-modal="true" aria-labelledby="winTitle" aria-describedby="winSub wNote">
-    <h2 id="winTitle">You won!</h2>
-    <div class="sub" id="winSub">Solitaire is better without ads.</div>
-    <div class="statgrid">
+  <div class="panel" id="winPanel" data-mode="win" role="dialog" aria-modal="true" aria-labelledby="winTitle" aria-describedby="winSub wNote wProgress">
+    <h2 id="winTitle">You won</h2>
+    <div class="sub" id="winSub">The deal is complete.</div>
+    <div class="statgrid scorecard-only">
       <div class="stat"><b id="wTime">0:00</b><span>time</span></div>
       <div class="stat"><b id="wMoves">0</b><span>moves</span></div>
       <div class="stat"><b class="flame" id="wStreak">1</b><span>streak</span></div>
     </div>
-    <div id="wBadges"></div>
+    <div id="wBadges" class="scorecard-only"></div>
     <div class="note" id="wNote"></div>
-    <button id="btnAgain">New Game</button>
-    <button class="ghost" id="btnReplayDeal">Restart this deal</button>
-    <button class="ghost" id="btnAdmire">Admire the cascade</button>
+    <div class="progress-note scorecard-only" id="wProgress"></div>
+    <div class="dialog-actions" id="dialogActions">
+      <button class="dialog-action primary" id="btnAgain">New deal</button>
+      <button class="dialog-action secondary" id="btnReplayDeal">Restart deal</button>
+      <button class="dialog-action quiet" id="btnAdmire">Watch cascade</button>
+    </div>
   </div>
 </div>
 
@@ -2535,6 +2562,22 @@ function hint(){
   }
   showStuck();
 }
+function configureDialog(mode,actions){
+  const panel = $("winPanel"), container = $("dialogActions");
+  panel.dataset.mode = mode;
+  const buttons = [$("btnAgain"),$("btnReplayDeal"),$("btnAdmire")];
+  for(const button of buttons){
+    button.style.display = "none";
+    button.className = "dialog-action";
+  }
+  for(const action of actions){
+    const button = $(action.id);
+    button.textContent = action.label;
+    button.classList.add(action.tone);
+    button.style.display = "";
+    container.appendChild(button);
+  }
+}
 function showStuck(){
   stopTimer();
   overlayMode = "stuck";
@@ -2542,35 +2585,35 @@ function showStuck(){
   // Shuffles may still be legal here; they just lead nowhere. Say which it is
   // rather than claiming the table is frozen when cards can still be dragged.
   const onlyShuffles = !!findAnyMove();
-  $("winTitle").textContent = "Out of moves";
+  $("winTitle").textContent = onlyShuffles ? "No useful moves left" : "No moves left";
   $("winSub").textContent = onlyShuffles
-    ? "Only moves that lead nowhere remain."
-    : "No plays remain — this deal is stuck.";
-  $("wTime").textContent = fmtTime(elapsed);
-  $("wMoves").textContent = moves;
-  $("wStreak").textContent = displayStreak();
+    ? "The remaining legal moves only rearrange cards."
+    : "This deal has no legal plays remaining.";
   $("wBadges").innerHTML = "";
-  $("wNote").textContent = "Undo a few moves to try a different path, or start a new game.";
-  $("btnAgain").textContent = "New Game";
-  $("btnReplayDeal").style.display = "";
-  $("btnAdmire").textContent = "Go back & undo";
+  $("wNote").textContent = undoStack.length
+    ? "Try another path from your last move."
+    : "Restart this deal or begin a new one.";
+  $("wProgress").textContent = "";
+  configureDialog("stuck",[
+    {id:"btnAdmire",label:undoStack.length ? "Undo a move" : "Back to table",tone:"primary"},
+    {id:"btnReplayDeal",label:"Restart deal",tone:"secondary"},
+    {id:"btnAgain",label:"New deal",tone:"quiet"}
+  ]);
   openOverlayDialog("btnAdmire");
 }
 function showDrawOneOffer(){
   stopTimer();
   overlayMode = "draw-one";
   $("winPanel").classList.remove("daily-win","milestone");
-  $("winTitle").textContent = "A card is out of reach";
-  $("winSub").textContent = "Draw three has no reachable plays left.";
-  $("wTime").textContent = fmtTime(elapsed);
-  $("wMoves").textContent = moves;
-  $("wStreak").textContent = displayStreak();
-  $("wBadges").innerHTML = '<span class="badge">Draw three</span>';
-  $("wNote").textContent = "A playable card is buried in the stock. Switch to draw one to keep this deal going.";
-  $("btnAgain").textContent = "Switch to draw one";
-  // Restarting mid-deal is not the offer being made here.
-  $("btnReplayDeal").style.display = "none";
-  $("btnAdmire").textContent = "Stay with draw three";
+  $("winTitle").textContent = "A playable card is buried";
+  $("winSub").textContent = "Draw three cannot reach the next useful card.";
+  $("wBadges").innerHTML = "";
+  $("wNote").textContent = "Switching to draw one keeps this deal and your progress.";
+  $("wProgress").textContent = "";
+  configureDialog("draw-one",[
+    {id:"btnAgain",label:"Switch to draw one",tone:"primary"},
+    {id:"btnAdmire",label:"Keep draw three",tone:"quiet"}
+  ]);
   openOverlayDialog("btnAgain");
 }
 
@@ -2879,12 +2922,14 @@ function showWin(r){
   overlayMode = "win";
   $("winPanel").classList.toggle("daily-win", r.firstWinToday && !r.milestone);
   $("winPanel").classList.toggle("milestone", !!r.milestone);
-  if(r.milestone) $("winTitle").textContent = `${r.milestone} wins!`;
-  else if(r.firstWinToday) $("winTitle").textContent = "First win of the day!";
-  else $("winTitle").textContent = "You won!";
-  $("btnAgain").textContent = "Deal again";
-  $("btnReplayDeal").style.display = "";
-  $("btnAdmire").textContent = "Admire the cascade";
+  if(r.milestone) $("winTitle").textContent = `${r.milestone} wins`;
+  else if(r.firstWinToday) $("winTitle").textContent = "First win today";
+  else $("winTitle").textContent = "You won";
+  configureDialog("win",[
+    {id:"btnAgain",label:"New deal",tone:"primary"},
+    {id:"btnReplayDeal",label:"Restart deal",tone:"secondary"},
+    {id:"btnAdmire",label:"Watch cascade",tone:"quiet"}
+  ]);
   $("wTime").textContent = fmtTime(elapsed);
   $("wMoves").textContent = moves;
   $("wStreak").textContent = stats.streak;
@@ -2896,21 +2941,24 @@ function showWin(r){
   $("wBadges").innerHTML = badges.map(b=>`<span class="badge">${b}</span>`).join("");
   let note = "";
   if(r.usedFreeze) note = `${r.usedFreeze} streak freeze${r.usedFreeze>1?"s":""} covered your missed day${r.usedFreeze>1?"s":""}.`;
-  else if(stats.streak>1) note = `Day ${stats.streak} of your streak — keep the wins coming.`;
-  else note = "A streak begins with a single win.";
-  if(!r.earned && stats.freezes<3) note += ` (${10-stats.winsToward} more win${10-stats.winsToward>1?"s":""} to a streak freeze)`;
+  else if(stats.streak>1) note = `Day ${stats.streak} of your streak.`;
+  else note = "Your streak starts today.";
   $("wNote").textContent = note;
-  const subs = ["Solitaire, but better.","The cards fell your way.","Order from chaos, one card at a time.","Beautifully played.","The table is yours."];
-  if(r.milestone) $("winSub").textContent = "That deserves an extra celebration.";
-  else if(r.firstWinToday) $("winSub").textContent = "Your daily streak is secured.";
-  else $("winSub").textContent = subs[Math.floor(Math.random()*subs.length)];
+  if(!r.earned && stats.freezes<3){
+    const remaining = 10-stats.winsToward;
+    $("wProgress").textContent = `${remaining} more win${remaining>1?"s":""} until your next streak freeze.`;
+  }else if(stats.freezes>=3){
+    $("wProgress").textContent = "All three streak freezes are ready.";
+  }else $("wProgress").textContent = "";
+  if(r.firstWinToday) $("winSub").textContent = "Today's streak is secured.";
+  else $("winSub").textContent = "The deal is complete.";
   openOverlayDialog("btnAgain");
 }
 
 /* ================= win cascade (live card faces, canvas sparkles) ================= */
 let fxTimer = null, fxClearTimer = null, fxCardLayer = null, fxRun = 0;
 // Drop any frame loop and pending canvas clear left behind by an earlier
-// cascade. "Admire the cascade" is usually tapped while the win cascade is
+// cascade. "Watch cascade" is usually tapped while the win cascade is
 // still flying: without this both loops share fxTimer and their card layers,
 // and whichever finishes first cancels the other mid-flight — leaving the new
 // run's cards frozen where they launched, on the foundations.

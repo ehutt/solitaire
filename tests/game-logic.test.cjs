@@ -317,10 +317,26 @@ test("auto-move setting describes automatic foundation play", () => {
   assert.match(html, /Auto-move<span class="sub2">Send exposed cards to the foundation automatically<\/span>/);
 });
 
-test("out-of-moves dialog offers a new game", () => {
-  assert.match(html, /\$\("winTitle"\)\.textContent = "Out of moves"/);
-  assert.match(html, /\$\("btnAgain"\)\.textContent = "New Game"/);
-  assert.match(html, /or start a new game\./);
+test("out-of-moves dialog prioritizes recovery and keeps stats out of the decision", () => {
+  assert.match(html, /"No useful moves left" : "No moves left"/);
+  assert.match(html, /\{id:"btnAdmire",label:undoStack\.length \? "Undo a move" : "Back to table",tone:"primary"\}/);
+  assert.match(html, /\{id:"btnReplayDeal",label:"Restart deal",tone:"secondary"\}/);
+  assert.match(html, /\{id:"btnAgain",label:"New deal",tone:"quiet"\}/);
+  assert.match(html, /\.panel\[data-mode="stuck"\] \.scorecard-only,[^]*display:none/);
+});
+
+test("draw recovery explains the rule change without showing game statistics", () => {
+  assert.match(html, /Draw three cannot reach the next useful card\./);
+  assert.match(html, /Switching to draw one keeps this deal and your progress\./);
+  assert.match(html, /configureDialog\("draw-one",\[/);
+  assert.match(html, /\.panel\[data-mode="draw-one"\] \.scorecard-only\{display:none\}/);
+});
+
+test("win dialog uses fixed scorecard copy and separates freeze progress", () => {
+  assert.doesNotMatch(html, /The cards fell your way|Order from chaos|Beautifully played/);
+  assert.match(html, /\$\("winSub"\)\.textContent = "The deal is complete\."/);
+  assert.match(html, /until your next streak freeze\./);
+  assert.match(html, /id="wProgress"/);
 });
 
 test("streak and freeze counts use style-appropriate labels in the header", () => {
