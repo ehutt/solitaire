@@ -327,11 +327,11 @@
      theme choices, so they live here as one declaration each rather than inside
      the Classic block — nothing overrides them and nothing needs to. */
   .ix,.mid,.bk{display:none}
-  .ix{font-size:3.05em}
+  .ix{font-size:2.75em}
   .ix i,.ix.court i{font-size:1em}
-  .ix b{font-size:1.12em}
-  .mid{font-size:6.15em;transform:translateY(.15em)}
-  .mid.ace{font-size:6.9em}
+  .ix b{font-size:.88em}
+  .mid{font-size:5.45em;transform:translateY(.15em)}
+  .mid.ace{font-size:6.05em}
   .court-art{
     display:block;width:100%;height:100%;object-fit:contain;
     mix-blend-mode:multiply;filter:saturate(.8) contrast(.98);
@@ -364,24 +364,22 @@
     color:var(--brass);opacity:.75;
     font-family:var(--serif);
   }
-  /* Classic cards use one compact, fan-safe index: a heavy rank with the suit
-     tucked just below it. The diagonal overlap keeps the rank visible in a
-     short tableau reveal without shrinking either mark. */
+  /* Classic cards use one compact, fan-safe index band: rank on the left and
+     suit on the right. Keeping both marks on one line preserves the familiar
+     playing-card scan and prevents fanned piles becoming a wall of glyphs. */
   body[data-card-style="original"] .ix{
-    position:absolute;z-index:2;left:calc(var(--cw)*.045);width:calc(var(--cw)*.58);
-    height:calc(var(--cw)*.7);display:block;
-    line-height:.76;font-weight:800;letter-spacing:-.035em;
+    position:absolute;left:calc(var(--cw)*.045);right:calc(var(--cw)*.045);
+    display:flex;align-items:center;justify-content:space-between;
+    line-height:.82;font-weight:700;letter-spacing:-.025em;
   }
   /* The rank is intentionally plain. Weight and width do the work, with no
      outline or display-face ornament competing with the card art. */
   body[data-card-style="original"] .ix i{
-    position:absolute;inset:0 auto auto 0;display:block;
-    font-style:normal;font-weight:800;
+    display:inline-block;font-style:normal;font-weight:700;
     -webkit-text-stroke:var(--card-rank-stroke) currentColor;
   }
   body[data-card-style="original"] .ix b{
-    position:absolute;top:.58em;left:.08em;display:block;
-    font-family:var(--serif);font-weight:700;line-height:.72;
+    flex:none;font-family:var(--serif);font-weight:700;line-height:.82;
   }
   body[data-card-style="original"] .ix.tl{top:calc(var(--cw)*.025)}
   /* Centre pips sit a touch low, matching the index suit. The court artwork
@@ -1812,7 +1810,10 @@ function originalFaceHTML(card){
   if(card.rank === 1) center = `<div class="mid ace">${suit}</div>`;
   else if(court) center = `<div class="mid court ${court}"><img class="court-art" src="assets/cards/classic/${CLASSIC_COURT_ART[court]}.webp" alt="" draggable="false"></div>`;
   else center = `<div class="mid">${suit}</div>`;
-  return `<div class="ix tl${indexClass}"><i>${rank}</i><b>${suit}</b></div>${center}`;
+  /* Paint the index after the centre art instead of promoting it with z-index.
+     WKWebView can composite a promoted child through its parent's hidden back
+     face, leaking a face-down card's value onto the card back. */
+  return `${center}<div class="ix tl${indexClass}"><i>${rank}</i><b>${suit}</b></div>`;
 }
 
 /* ================= layout ================= */

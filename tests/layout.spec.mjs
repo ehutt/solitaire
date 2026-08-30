@@ -438,11 +438,14 @@ for (const cardStyle of STYLES) {
         expect(spacing.gap).toBeLessThanOrEqual(spacing.card * 0.1);
       });
 
-      test("Classic indices stay bold and ordered in compact card fans", async ({ page }) => {
+      test("Classic indices stay legible and horizontal in compact card fans", async ({ page }) => {
         test.skip(cardStyle !== "original", "Vintage card faces are artwork");
         const fit = await page.evaluate(() => {
           settings.draw3 = true;
-          for (const el of els.values()) el.style.transition = "none";
+          for (const el of els.values()) {
+            el.style.transition = "none";
+            el.querySelector(".in").style.transition = "none";
+          }
           const wideRanks = [
             cards.find(c => c.rank === 10),
             cards.find(c => c.rank === 12)
@@ -475,7 +478,9 @@ for (const cardStyle of STYLES) {
             fanFloor: G.landscape ? null : G.cw * 0.295,
             fanCeiling: G.landscape ? null : G.cw * 0.305,
             rankWidths: measurements.map(({ rankBox }) => rankBox.width),
-            suitOffsets: measurements.map(({ rankBox, suitBox }) => suitBox.top - rankBox.top),
+            suitCentreOffsets: measurements.map(({ rankBox, suitBox }) =>
+              Math.abs((suitBox.top + suitBox.height / 2) - (rankBox.top + rankBox.height / 2))),
+            suitLeftClearances: measurements.map(({ rankBox, suitBox }) => suitBox.left - rankBox.right),
             rankScales: measurements.map(({ scaleX }) => scaleX),
             fanSteps: nextCards.map((box, i) => G.landscape
               ? box.top - measurements[i].cardBox.top
@@ -502,9 +507,10 @@ for (const cardStyle of STYLES) {
           return result;
         });
 
-        expect(fit.ratio).toBeGreaterThanOrEqual(0.415);
+        expect(fit.ratio).toBeGreaterThanOrEqual(0.36);
         expect(Math.min(...fit.rankScales), JSON.stringify(fit)).toBeGreaterThanOrEqual(0.99);
-        expect(Math.min(...fit.suitOffsets), JSON.stringify(fit)).toBeGreaterThan(fit.cardWidth * 0.2);
+        expect(Math.max(...fit.suitCentreOffsets), JSON.stringify(fit)).toBeLessThan(fit.cardWidth * 0.08);
+        expect(Math.min(...fit.suitLeftClearances), JSON.stringify(fit)).toBeGreaterThan(fit.cardWidth * 0.04);
         if (fit.fanCeiling !== null) {
           expect(Math.min(...fit.fanSteps), JSON.stringify(fit)).toBeGreaterThanOrEqual(fit.fanFloor);
           expect(Math.max(...fit.fanSteps), JSON.stringify(fit)).toBeLessThanOrEqual(fit.fanCeiling);

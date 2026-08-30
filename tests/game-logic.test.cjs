@@ -426,23 +426,26 @@ test("vintage table uses bright burgundy felt with high-contrast parchment rules
   assert.match(theme, /--vintage-rule-rgb:222,184,112/);
 });
 
-test("classic cards use a heavy fan-safe index with a lower suit", () => {
+test("classic cards use a compact fan-safe horizontal index", () => {
   const indexRule = html.match(/body\[data-card-style="original"\] \.ix\{([^}]*)\}/)?.[1];
   const theme = html.match(/body\[data-card-style="original"\]\{([^]*?)\n  \}/)?.[1];
   assert.ok(indexRule, "classic index rule exists");
   assert.ok(theme, "classic theme exists");
   assert.match(theme, /--face-card:-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif/);
   assert.match(theme, /--face-label:"Marcellus",var\(--serif\)/);
-  assert.match(indexRule, /display:block/);
-  assert.match(indexRule, /font-weight:800/);
+  assert.match(indexRule, /display:flex/);
+  assert.match(indexRule, /justify-content:space-between/);
+  assert.match(indexRule, /font-weight:700/);
+  assert.doesNotMatch(indexRule, /z-index/);
   // Face composition is sized in card-relative ems outside the theme block.
-  assert.match(html, /\.ix\{font-size:3\.05em\}/);
+  assert.match(html, /\.ix\{font-size:2\.75em\}/);
   assert.doesNotMatch(html, /\.ix\.ten\{font-size:/);
   assert.doesNotMatch(html, /\.ix\.ten i\{[^}]*transform:scaleX/);
-  assert.match(html, /\.ix b\{font-size:1\.12em\}/);
-  assert.match(html, /\.mid\{font-size:6\.15em;transform:translateY\(\.15em\)\}/);
-  assert.match(html, /\.mid\.ace\{font-size:6\.9em\}/);
-  assert.match(html, /\.ix b\{\s*position:absolute;top:\.58em;left:\.08em/);
+  assert.match(html, /\.ix b\{font-size:\.88em\}/);
+  assert.match(html, /\.mid\{font-size:5\.45em;transform:translateY\(\.15em\)\}/);
+  assert.match(html, /\.mid\.ace\{font-size:6\.05em\}/);
+  assert.match(html, /\.ix b\{\s*flex:none;font-family:var\(--serif\)/);
+  assert.match(html, /return `\$\{center\}<div class="ix tl\$\{indexClass\}">/);
   assert.doesNotMatch(html, /\.ix\.br|class="ix br/);
   assert.match(html, /const minFaceUpReveal = settings\.cardStyle === "original" \? \.30 : \.24/);
   assert.match(html, /const preferredFaceUpReveal = settings\.cardStyle === "original" \? \.32 : 142\/522/);
