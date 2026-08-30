@@ -103,6 +103,11 @@
   }
   *{box-sizing:border-box;margin:0;padding:0}
   html,body{height:100%}
+  /* WKWebView resizes the root canvas before the body's 100dvh paint has
+     always settled during rotation. An explicit opaque backing prevents that
+     frame from exposing WebKit's cached canvas colour from the previous card
+     style. applyCardStyleTheme keeps it matched to the active felt. */
+  html{background-color:var(--felt-deep)}
   /* ---- Ink and rule tokens ---------------------------------------------
      These live on `body`, not `:root`, because they resolve *from* the palette
      variables a theme swaps — a custom property is substituted where it is
@@ -1627,6 +1632,11 @@ function loadJSON(k){ try{ const v=localStorage.getItem(k); return v?JSON.parse(
 function saveJSON(k,v){ try{ localStorage.setItem(k, JSON.stringify(v)) }catch(e){} }
 function applyCardStyleTheme(cardStyle){
   document.body.dataset.cardStyle = cardStyle;
+  // The root canvas sits behind body during WKWebView's orientation resize.
+  // Set its backing in the same task as the theme so no intermediate frame can
+  // expose the previously selected table colour.
+  document.documentElement.style.backgroundColor = getComputedStyle(document.body)
+    .getPropertyValue("--felt-deep").trim();
   const themeColor = document.querySelector?.('meta[name="theme-color"]');
   if(themeColor) themeColor.content = cardStyle === "crehore" ? "#570b13" : "#0f2e25";
   const statusBar = globalThis.window?.Capacitor?.Plugins?.StatusBar;

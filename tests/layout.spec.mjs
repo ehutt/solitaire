@@ -80,6 +80,47 @@ async function centreY(page, selector) {
 
 const PHONE = VIEWPORTS[0], TABLET = VIEWPORTS[2];
 
+// WKWebView resizes its root canvas before the body's 100dvh paint has always
+// settled. If the root stays transparent, iOS can fill that brief gap with a
+// cached canvas colour from the previously selected card style. Keep the root
+// opaque in the active theme through both directions of an orientation change.
+for (const cardStyle of STYLES) {
+  test(`${cardStyle} — the viewport backing stays themed while rotating`, async ({ page }) => {
+    await load(page, cardStyle, PHONE);
+
+    const sampleBacking = () => page.evaluate(() => {
+      const probe = document.createElement("i");
+      probe.style.backgroundColor = "var(--felt-deep)";
+      document.body.appendChild(probe);
+      const expected = getComputedStyle(probe).backgroundColor;
+      probe.remove();
+      return {
+        root: getComputedStyle(document.documentElement).backgroundColor,
+        expected,
+        cardStyle: document.body.dataset.cardStyle
+      };
+    });
+    const samples = [await sampleBacking()];
+
+    await page.setViewportSize({ width: VIEWPORTS[1].width, height: VIEWPORTS[1].height });
+    for (let frame = 0; frame < 4; frame++) {
+      await page.evaluate(() => new Promise(requestAnimationFrame));
+      samples.push(await sampleBacking());
+    }
+
+    await page.setViewportSize({ width: PHONE.width, height: PHONE.height });
+    for (let frame = 0; frame < 4; frame++) {
+      await page.evaluate(() => new Promise(requestAnimationFrame));
+      samples.push(await sampleBacking());
+    }
+
+    for (const sample of samples) {
+      expect(sample.cardStyle).toBe(cardStyle);
+      expect(sample.root).toBe(sample.expected);
+    }
+  });
+}
+
 // The bug this suite exists to prevent: a theme-scoped rule out-ranks the tablet
 // media block by selector shape alone, so the iPad silently renders phone-sized
 // titles. Assert the *intent* — tablets get bigger titles — in both themes.

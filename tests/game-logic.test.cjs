@@ -253,6 +253,7 @@ test("card style switches immediately and persists without replacing the deal", 
   global.settings = { draw3: false, cardStyle: "crehore" };
   const swapClasses = [];
   global.document = {
+    documentElement: { style: {} },
     body: {
       dataset: {},
       classList: {
@@ -263,6 +264,9 @@ test("card style switches immediately and persists without replacing the deal", 
     querySelector: (selector) =>
       selector === 'meta[name="theme-color"]' ? themeColor : null,
   };
+  global.getComputedStyle = () => ({
+    getPropertyValue: (name) => name === "--felt-deep" ? "#071d17" : "",
+  });
   global.requestAnimationFrame = (fn) => fn();
   global.KEY_SET = "settings";
   global.window = {
@@ -284,6 +288,7 @@ test("card style switches immediately and persists without replacing the deal", 
 
   assert.equal(settings.cardStyle, "original");
   assert.equal(document.body.dataset.cardStyle, "original");
+  assert.equal(document.documentElement.style.backgroundColor, "#071d17");
   assert.equal(themeColor.content, "#0f2e25");
   assert.deepEqual(statusStyles, ["DARK"]);
   assert.deepEqual(persisted, [["settings", { draw3: false, cardStyle: "original" }]]);
