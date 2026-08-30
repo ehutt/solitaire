@@ -555,6 +555,6 @@ test("the settings sheet has its own close control", () => {
 test("header figures reserve a fixed width so the pills never jitter", () => {
   assert.match(html, /#vTime\{min-width:5ch\}/);
   assert.match(html, /#vMoves\{min-width:4ch\}/);
-  assert.match(html, /#vStreak\{min-width:3ch\}/);
+  assert.match(html, /#vStreak\{min-width:4ch\}/);
   assert.match(html, /\.chip b\{[^}]*font-variant-numeric:tabular-nums/);
 });

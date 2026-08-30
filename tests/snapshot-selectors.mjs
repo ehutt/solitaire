@@ -62,7 +62,8 @@ export const GROUPS = {
   ],
   sheet: [
     "#sheet", ".pinned-header", ".title-row", "#sheet h3", ".title-row .icon-button",
-    ".close-glyph", ".row", ".row .sub2", ".seg", ".seg button", "#segCardsOriginal",
+    ".close-glyph", ".row", ".row .sub2", ".settings-section-label",
+    ".record-row", ".settings-note", ".seg", ".seg button", "#segCardsOriginal",
     // Both halves of a pair, not just the selected one: a bug that lights both
     // is invisible if you only ever sample the half that is meant to be lit.
     "#segCardsCrehore", "#segD1", "#segD3",

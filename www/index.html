@@ -74,6 +74,7 @@
     --type-menu-glyph:1em;      /* Classic's ⋯ glyph inside the menu button */
     --type-close:1.2rem;        /* the ✕ actions on the sheet and stats page */
     --type-sheet-title:1.1rem;  /* "Game Settings" */
+    --type-section-label:.72rem;/* settings group labels */
     --type-row:1.08rem;         /* settings row labels */
     --type-row-sub:.86rem;      /* their explanatory second line */
     --type-seg:.96rem;          /* segmented-control options */
@@ -159,6 +160,7 @@
     --card-rank-stroke:0;
     --face-title:var(--serif);     /* sheet, stats, and group headings */
     --face-label:var(--ui);        /* chips and control-rail labels */
+    --face-figures:ui-monospace,"SFMono-Regular",Menlo,Monaco,Consolas,monospace;
     --face-sheet:var(--ui);        /* everything inside the settings sheet */
     --face-chrome:var(--ui);       /* stats page, toast, dialog buttons */
     font-family:var(--ui);
@@ -243,12 +245,14 @@
      shifts slightly *inside* its reserved, right-aligned box. It is declared
      for the default theme's system face, which does have tabular figures. */
   .chip b{
-    font-weight:600;display:inline-block;text-align:center;
-    font-variant-numeric:tabular-nums;
+    font-family:var(--face-figures);font-weight:600;display:inline-block;text-align:center;
+    font-variant-numeric:tabular-nums slashed-zero;
+    font-feature-settings:"tnum" 1,"zero" 1;
+    letter-spacing:0;
   }
   #vTime{min-width:5ch}
   #vMoves{min-width:4ch}
-  #vStreak{min-width:3ch}
+  #vStreak{min-width:4ch}
   .chip small{color:var(--chip-label-ink,var(--chrome-ink-muted));font-size:calc(var(--stat-fit, 1) * var(--type-chip-label));margin-left:1px}
   /* J2-b "club rail": brass hairlines and Marcellus figures. */
   body[data-card-style="original"]{--chip-rule:rgba(217,166,72,.38)}
@@ -576,8 +580,9 @@
   }
   .stat{min-width:70px}
   .stat b{
-    display:block;font-family:var(--serif);font-size:var(--type-stat);
-    font-variant-numeric:tabular-nums;line-height:1.1;
+    display:block;font-family:var(--face-figures);font-size:var(--type-stat);
+    font-variant-numeric:tabular-nums slashed-zero;
+    font-feature-settings:"tnum" 1,"zero" 1;line-height:1.1;
   }
   .stat span{font-size:var(--type-stat-label);text-transform:uppercase;letter-spacing:.08em;color:var(--paper-ink-label)}
   .stat .flame{color:var(--brass-soft)}
@@ -700,21 +705,32 @@
     margin-bottom:12px;text-align:center;
   }
   /* Restart reads the shared button size unless the sheet says otherwise. */
-  #sheet #btnRestart{font-size:var(--type-restart,var(--type-button))}
+  #sheet #btnRestart{font-size:var(--type-restart,var(--type-button));border-radius:4px}
   /* Buttons do not inherit a face, so the sheet's controls ask for it by name.
      The record link is deliberately absent: Vintage leaves it on the UI face. */
   #sheet .seg button,#sheet #btnRestart{font-family:var(--face-sheet)}
   .row{
     display:flex;align-items:center;justify-content:space-between;
-    gap:16px;padding:12px 0;border-bottom:1px solid var(--rule);
+    gap:16px;padding:10px 0;border-bottom:0;
     font-size:var(--type-row);
   }
   .row>div:first-child{flex:1;min-width:0}
   .row:last-of-type{border-bottom:none}
   .row .sub2{display:block;color:var(--chrome-ink-muted);font-size:var(--type-row-sub);line-height:1.3;margin-top:3px}
+  .settings-section-label{
+    margin:18px 0 2px;padding:0;
+    color:var(--brass-soft);font-family:var(--face-sheet);
+    font-size:var(--type-section-label);font-weight:600;
+    letter-spacing:.14em;text-transform:uppercase;
+  }
+  .settings-section-label:first-of-type{margin-top:2px}
   .seg{display:flex;flex:none;background:rgba(0,0,0,.3);border-radius:10px;padding:3px;gap:2px}
   .seg button{min-height:36px;padding:7px 15px;border:none;border-radius:8px;background:transparent;font-size:var(--type-seg)}
   .seg button.on{background:var(--seg-on-surface);color:var(--seg-on-ink)}
+  #sheet .seg{
+    background:transparent;border:1px solid var(--rule);border-radius:4px;padding:2px;gap:1px;
+  }
+  #sheet .seg button{border-radius:2px}
   .deal-mix{width:min(220px,46vw)}
   .deal-mix-labels{
     display:flex;justify-content:space-between;align-items:center;
@@ -730,15 +746,24 @@
     color:var(--chrome-ink-muted);font-size:var(--type-mix-stop);line-height:1
   }
   .statline{display:flex;gap:16px;flex-wrap:wrap;font-size:var(--type-statline);color:var(--chrome-ink-muted);padding:9px 0 2px}
-  .statline b{color:var(--chrome-ink);font-variant-numeric:tabular-nums}
+  .statline b{
+    color:var(--chrome-ink);font-family:var(--face-figures);
+    font-variant-numeric:tabular-nums slashed-zero;
+    font-feature-settings:"tnum" 1,"zero" 1;
+  }
   .record-preview{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
   .record-card{
     background:rgba(0,0,0,.18);border:1px solid rgba(255,255,255,.09);
     border-radius:12px;padding:12px 13px;
   }
+  #sheet .record-card{background:transparent;border-color:var(--rule);border-radius:4px}
   .record-card strong{display:block;font-family:var(--serif);font-size:var(--type-record-title);margin-bottom:6px}
   .record-card span{display:block;color:var(--muted);font-size:var(--type-record-body);line-height:1.5}
-  .record-card b{color:var(--text);font-variant-numeric:tabular-nums}
+  .record-card b{
+    color:var(--text);font-family:var(--face-figures);
+    font-variant-numeric:tabular-nums slashed-zero;
+    font-feature-settings:"tnum" 1,"zero" 1;
+  }
   .record-card-combined{
     grid-column:1/-1;display:grid;grid-template-columns:repeat(3,1fr);gap:8px;
     text-align:center;
@@ -747,8 +772,13 @@
   .record-preview>.statline{grid-column:1/-1}
   .record-link{
     width:100%;min-height:42px;margin-top:10px;padding:11px 13px;font-size:var(--type-record-link);
-    border:1px solid rgba(217,166,72,.48);background:rgba(217,166,72,.12);
+    border:1px solid rgba(217,166,72,.48);border-radius:4px;background:rgba(217,166,72,.12);
     color:var(--text);
+  }
+  .record-row{display:block}
+  .settings-note{
+    display:block;padding:18px 0 4px;text-align:center;
+    color:var(--chrome-ink-muted);font-size:var(--type-row-sub);line-height:1.45;
   }
   /* Classic settings use a restrained card-room serif: related to the
      marquee's period character, but mixed-case and quiet enough for body UI. */
@@ -777,7 +807,11 @@
     background:rgba(0,0,0,.2);border:1px solid rgba(255,255,255,.09);border-radius:14px;
   }
   .stats-hero div{text-align:center;padding:13px 5px}
-  .stats-hero b{display:block;font-family:var(--face-title);font-size:var(--type-stats-hero);font-variant-numeric:tabular-nums;color:var(--chrome-ink-strong)}
+  .stats-hero b{
+    display:block;font-family:var(--face-figures);font-size:var(--type-stats-hero);
+    font-variant-numeric:tabular-nums slashed-zero;
+    font-feature-settings:"tnum" 1,"zero" 1;color:var(--chrome-ink-strong);
+  }
   .stats-hero span{color:var(--chrome-ink-muted);font-size:var(--type-stats-hero-label);text-transform:uppercase;letter-spacing:.07em}
   .stats-group{padding:4px 15px;margin-bottom:12px}
   .stats-group h3{
@@ -790,7 +824,11 @@
     border-bottom:1px solid var(--rule);color:var(--chrome-ink-muted);
   }
   .stats-detail-row:last-child{border-bottom:0}
-  .stats-detail-row b{color:var(--chrome-ink-strong);font-variant-numeric:tabular-nums;text-align:right}
+  .stats-detail-row b{
+    color:var(--chrome-ink-strong);font-family:var(--face-figures);
+    font-variant-numeric:tabular-nums slashed-zero;
+    font-feature-settings:"tnum" 1,"zero" 1;text-align:right;
+  }
 
   @media (prefers-reduced-motion: reduce){
     .card,.card .in,#sheet,#dealSheet{transition:none !important}
@@ -971,7 +1009,7 @@
     display:grid;grid-template-columns:1fr;gap:4px;
     margin:calc(env(safe-area-inset-top,0px) + 6px) 14px 0;
     padding:7px 0 4px;
-    border-top:4px double rgba(var(--vintage-rule-rgb),.92);
+    border-top:0;
     border-bottom:4px double rgba(var(--vintage-rule-rgb),.92);
   }
   body[data-card-style="crehore"] .brand{
@@ -982,30 +1020,16 @@
   }
   body[data-card-style="crehore"] .brand .pip{display:none}
   body[data-card-style="crehore"] .brand-rosette{
-    display:block;flex:none;width:.82em;height:.82em;overflow:visible;
+    display:block;flex:none;width:.62em;height:.62em;overflow:visible;opacity:.68;
     filter:drop-shadow(.35px .55px 0 rgba(var(--vintage-shadow-rgb),.22));
   }
   body[data-card-style="crehore"] .brand-rosette:first-child{transform:rotate(-3deg)}
   body[data-card-style="crehore"] .brand-rosette:last-child{transform:rotate(5deg) scale(.96)}
   body[data-card-style="crehore"] .chips{
     position:relative;width:100%;justify-content:center;gap:0;
-    border-top:1.5px solid rgba(var(--vintage-rule-rgb),.72);padding-top:2px;
+    border-top:0;padding-top:1px;
     align-items:baseline;
   }
-  body[data-card-style="crehore"] .chips::before,
-  body[data-card-style="crehore"] .chips::after{
-    content:"";align-self:center;width:7px;height:7px;flex:none;
-    background:var(--vintage-accent);
-    clip-path:polygon(50% 0,100% 50%,50% 100%,0 50%);
-    transform:none;
-    /* Trimmed from clamp(5px,2vw,14px). The lozenges and their margins were
-       spending 45pt of a portrait phone's 365pt bar, and because the bar was
-       already flush the stat line could not take any of the fit at all — it sat
-       at 1.0 while Classic's grew 23%, which read as Vintage being the smaller
-       theme. */
-    margin:0 clamp(3px,1.1vw,9px);
-  }
-  body[data-card-style="crehore"] .chips::after{transform:none}
   /* H6 stat line: figures larger than their labels, one quiet row that stays
      visually subordinate to the title above it. */
   body[data-card-style="crehore"] .chip{
@@ -1088,15 +1112,10 @@
   body[data-card-style="crehore"] .record-card-combined span+span{
     border-left-color:var(--rule);
   }
-  body[data-card-style="crehore"] .seg{
-    background:rgba(238,225,194,.18);border:1px solid rgba(var(--vintage-ink-rgb),.28);
-    border-radius:10px;padding:2px;gap:1px;
-  }
   /* Ink only for the segments — the radius is set below, and excluding .on here
      must not make this rule out-rank it. */
   body[data-card-style="crehore"] .seg button:not(.on){color:var(--vintage-ink)}
   body[data-card-style="crehore"] #btnRestart{color:var(--vintage-ink);border-radius:3px}
-  body[data-card-style="crehore"] .seg button{border-radius:8px}
   body[data-card-style="crehore"] .stats-page-inner{
     border-top:4px double rgba(var(--vintage-rule-rgb),.9);
     border-bottom:4px double rgba(var(--vintage-rule-rgb),.72);
@@ -1170,8 +1189,6 @@
     body[data-card-style="crehore"] .chips{
       width:auto;border:0;padding:0;
     }
-    body[data-card-style="crehore"] .chips::before,
-    body[data-card-style="crehore"] .chips::after{display:none}
     body[data-card-style="crehore"] .chip{min-height:0;padding:0 .55em}
     body[data-card-style="crehore"] #controls{
       position:fixed;left:auto;right:env(safe-area-inset-right,0px);
@@ -1220,6 +1237,7 @@
        specific selector that matches whatever theme is on, and win on order. */
     body[data-card-style]{
       --type-sheet-title:2.7rem;
+      --type-section-label:1rem;
       --type-close:2rem;
       --type-row:1.65rem;
       --type-row-sub:1.3rem;
@@ -1488,6 +1506,7 @@
       </button>
     </div>
   </div>
+  <h4 class="settings-section-label">Table</h4>
   <div class="row">
     <div>Card style<span class="sub2">Change the theme without restarting your deal</span></div>
     <div class="seg">
@@ -1502,6 +1521,7 @@
       <button id="segD3">Three</button>
     </div>
   </div>
+  <h4 class="settings-section-label">Play</h4>
   <div class="row">
     <div>Auto-move<span class="sub2">Send exposed cards to the foundation automatically</span></div>
     <div class="seg">
@@ -1523,6 +1543,7 @@
       <button id="segHapticsOff">Off</button>
     </div>
   </div>
+  <h4 class="settings-section-label">Deal</h4>
   <div class="row">
     <div>Deal mix<span class="sub2" id="dealMixSummary">Every deal has a verified solution</span></div>
     <div class="deal-mix">
@@ -1538,17 +1559,16 @@
     <div>Restart this deal<span class="sub2">Same shuffle, from the top</span></div>
     <button id="btnRestart">Restart</button>
   </div>
-  <div class="row" style="display:block">
+  <h4 class="settings-section-label">Record</h4>
+  <div class="row record-row">
     <div>Your record</div>
     <div class="record-preview" id="recordPreview"></div>
     <button class="record-link" id="btnStats">View detailed stats</button>
   </div>
-  <div class="row" style="border:none;justify-content:center">
-    <div class="sub2" style="text-align:center">Better Solitaire — no ads, ever. ♠︎ ♥︎ ♦︎ ♣︎<br>
+  <div class="settings-note">Better Solitaire — no ads, ever. ♠︎ ♥︎ ♦︎ ♣︎<br>
     Win daily to grow your streak.<br>
     Every 10 wins earns a streak freeze (maximum 3).<br>
     Your first undo each game is free; after that, undos count as a move.</div>
-  </div>
 </div>
 
 <section id="statsPage" role="dialog" aria-modal="true" aria-labelledby="statsTitle" aria-hidden="true">

@@ -381,16 +381,30 @@ test("win dialog leaves a little more time to watch the cascade", () => {
 
 test("vintage settings copy and stock treatment preserve the intended hierarchy", () => {
   assert.match(html, /<h3 id="settingsTitle">Game Settings<\/h3>/);
+  assert.match(html, /settings-section-label">Table<\/h4>[^]*settings-section-label">Play<\/h4>[^]*settings-section-label">Deal<\/h4>[^]*settings-section-label">Record<\/h4>/);
   assert.match(html, /Win daily to grow your streak\.<br>\s*Every 10 wins earns/);
   assert.match(html, /\.card\.stock-card \.face\{box-shadow:none\}/);
   assert.match(html, /classList\.add\("stock-card"\)/);
   assert.doesNotMatch(html, /#controls::before\{\s*content:"◆"/);
 });
 
-test("vintage header diamonds are straight and symmetrical", () => {
-  assert.match(html, /\.chips::after\{\s*content:"";align-self:center;width:7px;height:7px/);
-  assert.match(html, /clip-path:polygon\(50% 0,100% 50%,50% 100%,0 50%\)/);
-  assert.match(html, /\.chips::after\{transform:none\}/);
+test("vintage header keeps one rule and quiet title ornaments", () => {
+  const hud = html.match(/body\[data-card-style="crehore"\] #hud\{([^}]*)\}/)?.[1];
+  const chips = html.match(/body\[data-card-style="crehore"\] \.chips\{([^}]*)\}/)?.[1];
+  const rosette = html.match(/body\[data-card-style="crehore"\] \.brand-rosette\{([^}]*)\}/)?.[1];
+  assert.match(hud, /border-top:0/);
+  assert.match(hud, /border-bottom:4px double/);
+  assert.match(chips, /border-top:0/);
+  assert.match(rosette, /width:\.62em;height:\.62em/);
+  assert.match(rosette, /opacity:\.68/);
+  assert.doesNotMatch(html, /\.chips::before|\.chips::after/);
+});
+
+test("header figures use a numeric face with a distinct zero", () => {
+  assert.match(html, /--face-figures:ui-monospace,"SFMono-Regular",Menlo,Monaco,Consolas,monospace/);
+  assert.match(html, /font-family:var\(--face-figures\)/);
+  assert.match(html, /font-variant-numeric:tabular-nums slashed-zero/);
+  assert.match(html, /font-feature-settings:"tnum" 1,"zero" 1/);
 });
 
 test("vintage table has wool grain and a soft edge falloff, no heavy vignette", () => {
