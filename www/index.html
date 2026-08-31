@@ -68,6 +68,7 @@
     --type-chip-label:.68rem;   /* HUD engraved labels */
     --type-button:.95rem;       /* any button, unless a component says otherwise */
     --type-control:var(--type-button);      /* the Deal/Hint/Undo/Settings rail */
+    --type-card-index-suit:.88em; /* suit glyph relative to the card index */
     /* --type-control-menu is deliberately NOT declared here: a custom property
        resolves where it is declared, so a :root default of var(--type-control)
        would freeze the rail's default size and ignore later breakpoints. */
@@ -205,6 +206,7 @@
     --face-display:"Limelight",var(--serif);
     --face-card:-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;
     --card-rank-stroke:0;
+    --type-card-index-suit:1.15em;
     --face-label:"Marcellus",var(--serif);
     --face-title:"Marcellus",var(--serif);
     --face-sheet:"Marcellus",var(--serif);
@@ -329,7 +331,7 @@
   .ix,.mid,.bk{display:none}
   .ix{font-size:2.75em}
   .ix i,.ix.court i{font-size:1em}
-  .ix b{font-size:.88em}
+  .ix b{font-size:var(--type-card-index-suit)}
   .mid{font-size:5.45em;transform:translateY(.15em)}
   .mid.ace{font-size:6.05em}
   .court-art{

@@ -433,6 +433,7 @@ test("classic cards use a compact fan-safe horizontal index", () => {
   assert.ok(theme, "classic theme exists");
   assert.match(theme, /--face-card:-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif/);
   assert.match(theme, /--face-label:"Marcellus",var\(--serif\)/);
+  assert.match(theme, /--type-card-index-suit:1\.15em/);
   assert.match(indexRule, /display:flex/);
   assert.match(indexRule, /justify-content:space-between/);
   assert.match(indexRule, /font-weight:700/);
@@ -441,7 +442,7 @@ test("classic cards use a compact fan-safe horizontal index", () => {
   assert.match(html, /\.ix\{font-size:2\.75em\}/);
   assert.doesNotMatch(html, /\.ix\.ten\{font-size:/);
   assert.doesNotMatch(html, /\.ix\.ten i\{[^}]*transform:scaleX/);
-  assert.match(html, /\.ix b\{font-size:\.88em\}/);
+  assert.match(html, /\.ix b\{font-size:var\(--type-card-index-suit\)\}/);
   assert.match(html, /\.mid\{font-size:5\.45em;transform:translateY\(\.15em\)\}/);
   assert.match(html, /\.mid\.ace\{font-size:6\.05em\}/);
   assert.match(html, /\.ix b\{\s*flex:none;font-family:var\(--serif\)/);
