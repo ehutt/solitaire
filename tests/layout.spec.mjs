@@ -524,13 +524,17 @@ for (const cardStyle of STYLES) {
           const court = cards.find(card => card.rank === 12);
           const card = els.get(court.id).getBoundingClientRect();
           const art = els.get(court.id).querySelector(".court-art").getBoundingClientRect();
-          return { card, art };
+          const index = els.get(court.id).querySelector(".ix").getBoundingClientRect();
+          const artBox = els.get(court.id).querySelector(".mid.court").getBoundingClientRect();
+          return { card, art, index, artBox };
         });
         expect(measurements.art.left).toBeGreaterThanOrEqual(measurements.card.left);
         expect(measurements.art.right).toBeLessThanOrEqual(measurements.card.right);
         expect(measurements.art.top).toBeGreaterThan(measurements.card.top);
         expect(measurements.art.bottom).toBeLessThanOrEqual(measurements.card.bottom);
         expect(measurements.art.height).toBeGreaterThan(measurements.card.height * 0.65);
+        expect(measurements.artBox.top - measurements.index.bottom)
+          .toBeGreaterThanOrEqual(measurements.card.width * 0.04);
       });
     });
   }
