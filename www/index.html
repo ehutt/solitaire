@@ -17,7 +17,8 @@
   /* Bundled display faces (SIL OFL — see assets/fonts/LICENSES.txt).
      IM Fell English carries the Vintage table. Classic uses Limelight for the
      marquee and Marcellus for its interface; card ranks use iOS's native
-     Charter face. Suits and courts fall back to --serif. */
+     Charter face, and game figures use Georgia. Suits and courts fall back to
+     --serif. */
   @font-face{
     font-family:"IM Fell English";
     src:url("assets/fonts/imfell-english.woff2") format("woff2");
@@ -40,7 +41,7 @@
        paper     #FAF5E9   shade     #EDE4D0
        carmine   #BF3B33   ink       #26282E   brass #D9A648
      Type: Classic runs on Limelight (marquee), Charter (cards), and Marcellus;
-           Vintage on IM Fell English; the default theme on Palatino/system UI
+           Vintage on IM Fell English; both use Georgia for game figures
      ============================================================ */
   :root{
     --felt:#0f2e25; --felt-deep:#071d17; --line:#2c5a49; --line-soft:#24493c;
@@ -161,7 +162,7 @@
     --card-rank-stroke:0;
     --face-title:var(--serif);     /* sheet, stats, and group headings */
     --face-label:var(--ui);        /* chips and control-rail labels */
-    --face-figures:ui-monospace,"SFMono-Regular",Menlo,Monaco,Consolas,monospace;
+    --face-figures:Georgia,var(--serif);
     --face-sheet:var(--ui);        /* everything inside the settings sheet */
     --face-chrome:var(--ui);       /* stats page, toast, dialog buttons */
     font-family:var(--ui);
@@ -244,12 +245,12 @@
      or shifts their neighbours. Note that tabular-nums does nothing here: none
      of the bundled display faces ships a `tnum` feature and browsers do not
      synthesise one, so the digits still have proportional widths and the value
-     shifts slightly *inside* its reserved, right-aligned box. It is declared
-     for the default theme's system face, which does have tabular figures. */
+     shifts slightly *inside* its reserved, right-aligned box. Georgia's tabular
+     figures keep each slot stable without giving the stats a mechanical look. */
   .chip b{
     font-family:var(--face-figures);font-weight:600;display:inline-block;text-align:center;
-    font-variant-numeric:tabular-nums slashed-zero;
-    font-feature-settings:"tnum" 1,"zero" 1;
+    font-variant-numeric:tabular-nums;
+    font-feature-settings:"tnum" 1;
     letter-spacing:0;
   }
   #vTime{min-width:5ch}
@@ -581,8 +582,8 @@
   .stat{min-width:70px}
   .stat b{
     display:block;font-family:var(--face-figures);font-size:var(--type-stat);
-    font-variant-numeric:tabular-nums slashed-zero;
-    font-feature-settings:"tnum" 1,"zero" 1;line-height:1.1;
+    font-variant-numeric:tabular-nums;
+    font-feature-settings:"tnum" 1;line-height:1.1;
   }
   .stat span{font-size:var(--type-stat-label);text-transform:uppercase;letter-spacing:.08em;color:var(--paper-ink-label)}
   .stat .flame{color:var(--brass-soft)}
@@ -748,8 +749,8 @@
   .statline{display:flex;gap:16px;flex-wrap:wrap;font-size:var(--type-statline);color:var(--chrome-ink-muted);padding:9px 0 2px}
   .statline b{
     color:var(--chrome-ink);font-family:var(--face-figures);
-    font-variant-numeric:tabular-nums slashed-zero;
-    font-feature-settings:"tnum" 1,"zero" 1;
+    font-variant-numeric:tabular-nums;
+    font-feature-settings:"tnum" 1;
   }
   .record-preview{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
   .record-card{
@@ -761,8 +762,8 @@
   .record-card span{display:block;color:var(--muted);font-size:var(--type-record-body);line-height:1.5}
   .record-card b{
     color:var(--text);font-family:var(--face-figures);
-    font-variant-numeric:tabular-nums slashed-zero;
-    font-feature-settings:"tnum" 1,"zero" 1;
+    font-variant-numeric:tabular-nums;
+    font-feature-settings:"tnum" 1;
   }
   .record-card-combined{
     grid-column:1/-1;display:grid;grid-template-columns:repeat(3,1fr);gap:8px;
@@ -809,8 +810,8 @@
   .stats-hero div{text-align:center;padding:13px 5px}
   .stats-hero b{
     display:block;font-family:var(--face-figures);font-size:var(--type-stats-hero);
-    font-variant-numeric:tabular-nums slashed-zero;
-    font-feature-settings:"tnum" 1,"zero" 1;color:var(--chrome-ink-strong);
+    font-variant-numeric:tabular-nums;
+    font-feature-settings:"tnum" 1;color:var(--chrome-ink-strong);
   }
   .stats-hero span{color:var(--chrome-ink-muted);font-size:var(--type-stats-hero-label);text-transform:uppercase;letter-spacing:.07em}
   .stats-group{padding:4px 15px;margin-bottom:12px}
@@ -826,8 +827,8 @@
   .stats-detail-row:last-child{border-bottom:0}
   .stats-detail-row b{
     color:var(--chrome-ink-strong);font-family:var(--face-figures);
-    font-variant-numeric:tabular-nums slashed-zero;
-    font-feature-settings:"tnum" 1,"zero" 1;text-align:right;
+    font-variant-numeric:tabular-nums;
+    font-feature-settings:"tnum" 1;text-align:right;
   }
 
   @media (prefers-reduced-motion: reduce){

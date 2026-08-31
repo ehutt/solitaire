@@ -400,11 +400,12 @@ test("vintage header keeps one rule and quiet title ornaments", () => {
   assert.doesNotMatch(html, /\.chips::before|\.chips::after/);
 });
 
-test("header figures use a numeric face with a distinct zero", () => {
-  assert.match(html, /--face-figures:ui-monospace,"SFMono-Regular",Menlo,Monaco,Consolas,monospace/);
+test("game figures use a traditional serif with stable, readable numerals", () => {
+  assert.match(html, /--face-figures:Georgia,var\(--serif\)/);
   assert.match(html, /font-family:var\(--face-figures\)/);
-  assert.match(html, /font-variant-numeric:tabular-nums slashed-zero/);
-  assert.match(html, /font-feature-settings:"tnum" 1,"zero" 1/);
+  assert.match(html, /font-variant-numeric:tabular-nums/);
+  assert.match(html, /font-feature-settings:"tnum" 1/);
+  assert.doesNotMatch(html, /slashed-zero|"zero" 1/);
 });
 
 test("vintage table has wool grain and a soft edge falloff, no heavy vignette", () => {
