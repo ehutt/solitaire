@@ -465,7 +465,7 @@ test("classic courts use original artwork while their ranks clear the tableau fa
   assert.doesNotMatch(html, /\.ix\.j i\{[^}]*transform/);
   assert.doesNotMatch(html, /ORIGINAL_MOTIF|♞|♛|♚/);
   assert.match(html, /const CLASSIC_COURT_ART = \{ j:"jack", q:"queen", k:"king" \}/);
-  assert.match(html, /assets\/cards\/classic\/\$\{CLASSIC_COURT_ART\[court\]\}\.webp/);
+  assert.match(html, /assets\/cards\/classic\/\$\{CLASSIC_COURT_ART\[court\]\}\.png/);
   assert.match(html, /class="court-art"/);
   assert.match(html, /const court = card\.rank>=11 \? \["j","q","k"\]\[card\.rank-11\] : ""/);
   assert.match(html, /` court \$\{court\}`/);

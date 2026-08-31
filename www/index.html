@@ -1808,7 +1808,7 @@ function originalFaceHTML(card){
   const indexClass = card.rank===10 ? " ten" : court ? ` court ${court}` : "";
   let center;
   if(card.rank === 1) center = `<div class="mid ace">${suit}</div>`;
-  else if(court) center = `<div class="mid court ${court}"><img class="court-art" src="assets/cards/classic/${CLASSIC_COURT_ART[court]}.webp" alt="" draggable="false"></div>`;
+  else if(court) center = `<div class="mid court ${court}"><img class="court-art" src="assets/cards/classic/${CLASSIC_COURT_ART[court]}.png" alt="" draggable="false"></div>`;
   else center = `<div class="mid">${suit}</div>`;
   /* Paint the index after the centre art instead of promoting it with z-index.
      WKWebView can composite a promoted child through its parent's hidden back
