@@ -464,20 +464,21 @@ test("classic cards use a compact fan-safe horizontal index", () => {
   assert.match(html, /const fanOff = cw\*\.3/);
 });
 
-test("classic courts use original artwork while their ranks clear the tableau fan", () => {
+test("classic courts use vector artwork while their ranks clear the tableau fan", () => {
   const centerRule = html.match(/body\[data-card-style="original"\] \.mid\{([^}]*)\}/)?.[1];
   const courtRule = html.match(/body\[data-card-style="original"\] \.mid\.court\{([^}]*)\}/)?.[1];
   assert.ok(centerRule, "classic center-symbol rule exists");
   assert.match(centerRule, /inset:0/);
   assert.match(centerRule, /align-items:center;justify-content:center/);
   assert.ok(courtRule, "classic court-symbol rule exists");
-  assert.match(courtRule, /inset:calc\(var\(--cw\)\*\.45\) calc\(var\(--cw\)\*\.12\) calc\(var\(--cw\)\*\.015\)/);
+  assert.match(courtRule, /inset:calc\(var\(--cw\)\*\.45\) calc\(var\(--cw\)\*\.08\) calc\(var\(--cw\)\*\.015\)/);
   assert.match(courtRule, /line-height:1;transform:none;opacity:1/);
   assert.match(html, /\.ix\.court i\{font-size:1em\}/);
   assert.doesNotMatch(html, /\.ix\.j i\{[^}]*transform/);
   assert.doesNotMatch(html, /ORIGINAL_MOTIF|♞|♛|♚/);
   assert.match(html, /const CLASSIC_COURT_ART = \{ j:"jack", q:"queen", k:"king" \}/);
-  assert.match(html, /assets\/cards\/classic\/\$\{CLASSIC_COURT_ART\[court\]\}\.png/);
+  assert.match(html, /const CLASSIC_COURT_SUITS = \["clubs","diamonds","hearts","spades"\]/);
+  assert.match(html, /assets\/cards\/classic\/courts\/\$\{CLASSIC_COURT_SUITS\[card\.suit\]\}-\$\{CLASSIC_COURT_ART\[court\]\}\.svg/);
   assert.match(html, /class="court-art"/);
   assert.match(html, /const court = card\.rank>=11 \? \["j","q","k"\]\[card\.rank-11\] : ""/);
   assert.match(html, /` court \$\{court\}`/);

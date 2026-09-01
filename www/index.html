@@ -336,8 +336,7 @@
   .mid{font-size:5.45em;transform:translateY(.15em)}
   .mid.ace{font-size:6.05em}
   .court-art{
-    display:block;width:100%;height:100%;object-fit:contain;
-    mix-blend-mode:multiply;filter:saturate(.8) contrast(.98);
+    display:block;width:100%;height:100%;object-fit:contain;object-position:center bottom;
   }
   .bk::after{font-size:calc(var(--cw)*0.3)}
   body[data-card-style="original"] .front{
@@ -393,7 +392,7 @@
   }
   body[data-card-style="original"] .mid.ace{opacity:1}
   body[data-card-style="original"] .mid.court{
-    inset:calc(var(--cw)*.45) calc(var(--cw)*.12) calc(var(--cw)*.015);
+    inset:calc(var(--cw)*.45) calc(var(--cw)*.08) calc(var(--cw)*.015);
     line-height:1;transform:none;opacity:1;
   }
   /* Club-rail buttons: emoji icons retired; Marcellus capitals on a dark pill
@@ -1809,13 +1808,14 @@ function buildDOM(){
   }
 }
 const CLASSIC_COURT_ART = { j:"jack", q:"queen", k:"king" };
+const CLASSIC_COURT_SUITS = ["clubs","diamonds","hearts","spades"];
 function originalFaceHTML(card){
   const suit = SUITS[card.suit], rank = RANKS[card.rank];
   const court = card.rank>=11 ? ["j","q","k"][card.rank-11] : "";
   const indexClass = card.rank===10 ? " ten" : court ? ` court ${court}` : "";
   let center;
   if(card.rank === 1) center = `<div class="mid ace">${suit}</div>`;
-  else if(court) center = `<div class="mid court ${court}"><img class="court-art" src="assets/cards/classic/${CLASSIC_COURT_ART[court]}.png" alt="" draggable="false"></div>`;
+  else if(court) center = `<div class="mid court ${court}"><img class="court-art" src="assets/cards/classic/courts/${CLASSIC_COURT_SUITS[card.suit]}-${CLASSIC_COURT_ART[court]}.svg" alt="" draggable="false"></div>`;
   else center = `<div class="mid">${suit}</div>`;
   /* Paint the index after the centre art instead of promoting it with z-index.
      WKWebView can composite a promoted child through its parent's hidden back
