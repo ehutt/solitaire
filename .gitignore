@@ -20,6 +20,15 @@ ios/App/CapApp-SPM/.swiftpm/
 *.log
 .env
 
+# Local court-source research
+/assets/court-candidates/byron-knoll-vector/README.md
+/assets/court-candidates/byron-knoll-vector/contact-sheet.html
+/assets/court-candidates/classic-anglo-american/contact-sheet.html
+/assets/court-candidates/goodall-vector/README.md
+/assets/court-candidates/goodall-vector/contact-sheet.html
+/docs/court-svg-source-audit-fresh.md
+/docs/court-svg-source-research.md
+
 # Playwright
 test-results/
 playwright-report/
