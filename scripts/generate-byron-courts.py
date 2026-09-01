@@ -85,7 +85,9 @@ def generate(source: Path, output: Path, rank: str, suit: str) -> None:
 
     svg = "\n".join(
         [
-            '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 772 628" preserveAspectRatio="xMidYMax meet" role="img" aria-labelledby="title desc">',
+            # This trims only the empty/edge bleed the approved card proof hid
+            # outside its rounded card. No illustrated path is changed.
+            '<svg xmlns="http://www.w3.org/2000/svg" viewBox="56 0 660 628" preserveAspectRatio="xMidYMax meet" role="img" aria-labelledby="title desc">',
             f'  <title id="title">{label}</title>',
             f'  <desc id="desc">Single-ended {label.lower()} court illustration derived from Byron Knoll\'s public-domain vector card set.</desc>',
             *paths,
