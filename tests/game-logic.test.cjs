@@ -3,6 +3,7 @@ const fs = require("node:fs");
 const test = require("node:test");
 
 const html = fs.readFileSync(new URL("../www/index.html", `file://${__filename}`), "utf8");
+const splash = fs.readFileSync(new URL("../scripts/assets/classic-splash.svg", `file://${__filename}`), "utf8");
 
 function loadFunction(name) {
   const pattern = new RegExp(`function ${name}\\([^]*?^}`, "m");
@@ -398,6 +399,15 @@ test("vintage header keeps one rule and quiet title ornaments", () => {
   assert.match(rosette, /width:\.62em;height:\.62em/);
   assert.match(rosette, /opacity:\.68/);
   assert.doesNotMatch(html, /\.chips::before|\.chips::after/);
+});
+
+test("classic branding uses clubs in the marquee and launch screen", () => {
+  assert.match(html, /id="clubArt"/);
+  assert.match(html, /<use href="#clubArt"\/>/);
+  assert.doesNotMatch(html, /class="pip"[^>]*>♠/);
+  assert.match(splash, /fill="#d9a648"/);
+  assert.match(splash, /stroke="#b98a2f"/);
+  assert.match(splash, /M50 5C37 5 27 15 27 28/);
 });
 
 test("game figures use a traditional serif with stable, readable numerals", () => {

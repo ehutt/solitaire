@@ -188,12 +188,15 @@
     letter-spacing:.02em;color:var(--text);
     display:flex;align-items:baseline;gap:.4rem;
   }
-  /* The marquee is a single line by contract — the pips only read as a matched
+  /* The marquee is a single line by contract — the suit marks only read as a matched
      pair when they flank one line of type. Left to wrap, the title box keeps
      the full width the flex line offered it and the trailing pip strands itself
      far to the right of the shorter second line. */
   .brand-title{white-space:nowrap}
-  .brand .pip{color:var(--brass);font-size:1.05em}
+  .brand .pip{
+    width:.82em;height:.82em;flex:none;align-self:center;overflow:visible;
+    color:var(--brass);fill:currentColor;
+  }
   /* Classic's type sizes. Everything the theme changes about size lives here;
      the components themselves never learn which theme is on. */
   body[data-card-style="original"]{
@@ -223,9 +226,6 @@
   }
   /* Classic marquee: Limelight for the title, over the deco-era casino sign */
   body[data-card-style="original"] .brand{letter-spacing:.01em;font-weight:400}
-  /* Limelight has no pip glyphs, so Classic's spades drop back to the serif.
-     Vintage hides its pips entirely and needs no such escape. */
-  body[data-card-style="original"] .brand .pip{font-family:var(--serif)}
   .chips{display:flex;gap:0;align-items:center}
   /* A stat *line*, not a row of pills. The pill chrome — padding, border and
      the gap that kept the capsules apart — cost about a fifth of the width of a
@@ -869,7 +869,7 @@
      iPad's marquee barely larger than an iPhone's. Stacking gives each a row of
      its own, which is what Vintage has always done on a portrait tablet. */
   @media (orientation:portrait){
-    /* Marquee header: centered title between twin spades, with the labelled
+    /* Marquee header: centered title between twin clubs, with the labelled
        club rail on its own centered row beneath, under a brass hairline —
        the same stat-bar structure Vintage uses, in Classic's palette.
        --hud-fit sizes both rows; see fitHudType(). */
@@ -1401,9 +1401,13 @@
           <path d="m16 3.8-.2 6m7.5-1.5-3.8 4.4m7.8 3.5-5.8.1m1.7 7.2-4-3.8m-3.8 7.8.2-5.8m-7.5 1.7 4.1-4M4.5 15.1l5.9.5M8.6 8.4l3.8 4.1" opacity=".36"/>
         </g>
       </svg>
-      <span class="pip" aria-hidden="true">♠</span>
+      <svg class="pip" viewBox="0 0 100 100" aria-hidden="true">
+        <path id="clubArt" d="M50 5C37 5 27 15 27 28c0 4 1 8 3 11-3-1-7-2-11-2C8 37 0 46 0 57c0 12 9 21 21 21 9 0 17-5 21-13 0 12-4 21-13 27v4h42v-4c-9-6-13-15-13-27 4 8 12 13 21 13 12 0 21-9 21-21 0-11-8-20-19-20-4 0-8 1-11 2 2-3 3-7 3-11C73 15 63 5 50 5Z"/>
+      </svg>
       <span class="brand-title">Better Solitaire</span>
-      <span class="pip pip-right" aria-hidden="true">♠</span>
+      <svg class="pip pip-right" viewBox="0 0 100 100" aria-hidden="true">
+        <use href="#clubArt"/>
+      </svg>
       <svg class="brand-rosette" viewBox="0 0 32 32" aria-hidden="true">
         <use href="#rosetteArt"/>
       </svg>
@@ -1566,7 +1570,7 @@
     <div class="record-preview" id="recordPreview"></div>
     <button class="record-link" id="btnStats">View detailed stats</button>
   </div>
-  <div class="settings-note">Better Solitaire — no ads, ever. ♠︎ ♥︎ ♦︎ ♣︎<br>
+  <div class="settings-note">Better Solitaire — no ads, ever. ♣︎<br>
     Win daily to grow your streak.<br>
     Every 10 wins earns a streak freeze (maximum 3).<br>
     Your first undo each game is free; after that, undos count as a move.</div>
