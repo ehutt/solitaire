@@ -146,8 +146,16 @@
     --dialog-secondary-ink:var(--paper-ink);
     --dialog-button-border:var(--paper-rule);
     --dialog-action-direction:column;
+    --dialog-panel-width:390px;
     --dialog-panel-padding:28px 26px 22px;
     --dialog-action-padding:11px 13px;
+    --dialog-action-gap:8px;
+    --dialog-action-margin:14px;
+    --dialog-score-padding:14px;
+    --dialog-score-margin:10px;
+    --dialog-sub-margin:18px;
+    --dialog-progress-margin:16px;
+    --settings-pill-radius:999px;
     --seg-on-ink:#241a05;                /* the selected segment */
     --seg-on-surface:var(--brass);
     --focus-ring:var(--brass);
@@ -559,11 +567,11 @@
     background:var(--surface-panel);
     color:var(--paper-ink);
     border:var(--panel-border);border-radius:var(--panel-radius);
-    width:min(390px, calc(100vw - 40px));
+    width:min(var(--dialog-panel-width), calc(100vw - 40px));
     max-height:calc(100dvh - 24px);overflow-y:auto;
     padding:var(--dialog-panel-padding);
     box-shadow:0 16px 36px var(--paper-shadow);
-    text-align:left;
+    text-align:center;
     animation:panelIn .24s cubic-bezier(.16,1,.3,1);
   }
   @keyframes panelIn{from{transform:translateY(12px);opacity:0}to{transform:none;opacity:1}}
@@ -574,17 +582,21 @@
     letter-spacing:.01em;line-height:1.08;margin-bottom:6px;
     text-wrap:balance;
   }
-  .panel[data-mode="win"]{text-align:center}
   body[data-card-style="original"] .panel h2{font-weight:400}
   .panel.daily-win h2{font-size:var(--type-panel-title-daily);font-weight:700;color:var(--paper-accent)}
+  .panel.daily-win #wStreak{color:var(--paper-accent)}
   .panel.milestone{
     border-color:var(--paper-accent);
   }
   .panel.milestone h2{font-size:var(--type-panel-title-milestone);font-weight:700;color:var(--paper-accent)}
-  .panel .sub{color:var(--paper-ink-soft);font-size:var(--type-panel-sub);line-height:1.35;margin-bottom:18px}
+  .panel .sub{
+    color:var(--paper-ink-soft);font-size:var(--type-panel-sub);line-height:1.35;
+    margin-bottom:var(--dialog-sub-margin);
+  }
   .statgrid{
     display:flex;justify-content:center;gap:18px;
-    padding:14px 0;margin-bottom:10px;border-top:1px solid var(--paper-rule);border-bottom:1px solid var(--paper-rule);
+    padding:var(--dialog-score-padding) 0;margin-bottom:var(--dialog-score-margin);
+    border-top:1px solid var(--paper-rule);border-bottom:1px solid var(--paper-rule);
   }
   .stat{min-width:70px}
   .stat b{
@@ -593,7 +605,6 @@
     font-feature-settings:"tnum" 1;line-height:1.1;
   }
   .stat span{font-size:var(--type-stat-label);text-transform:uppercase;letter-spacing:.08em;color:var(--paper-ink-label)}
-  .stat .flame{color:var(--brass-soft)}
   .badge{
     display:inline-block;color:var(--badge-ink);
     font-size:var(--type-badge);font-weight:600;letter-spacing:.04em;
@@ -604,18 +615,20 @@
     line-height:1.4;margin:10px 0 6px;
   }
   .panel .progress-note{
-    color:var(--paper-ink-soft);font-size:var(--type-badge);margin:0 0 16px;
+    color:var(--paper-ink-soft);font-size:var(--type-badge);margin:0 0 var(--dialog-progress-margin);
   }
   .panel[data-mode="stuck"] .scorecard-only,
   .panel[data-mode="draw-one"] .scorecard-only{display:none}
   .panel[data-mode="stuck"] .sub,
-  .panel[data-mode="draw-one"] .sub{margin-bottom:4px}
+  .panel[data-mode="draw-one"] .sub{margin-bottom:8px}
+  .panel .sub:empty,.panel .note:empty,.panel .progress-note:empty{display:none}
   .dialog-actions{
-    display:flex;flex-direction:var(--dialog-action-direction);gap:7px;margin-top:16px;
+    display:flex;flex-direction:var(--dialog-action-direction);align-items:center;
+    justify-content:center;gap:var(--dialog-action-gap);margin-top:var(--dialog-action-margin);
   }
   .panel .dialog-action{
-    width:100%;min-height:46px;padding:var(--dialog-action-padding);margin:0;
-    border:1px solid var(--dialog-button-border);border-radius:6px;
+    width:100%;max-width:270px;min-height:46px;padding:var(--dialog-action-padding);margin:0;
+    border:1px solid var(--dialog-button-border);border-radius:999px;
     font-family:var(--face-chrome);font-size:var(--type-panel-button);
   }
   .panel .dialog-action.primary{
@@ -625,7 +638,7 @@
     color:var(--dialog-secondary-ink);background:var(--dialog-secondary-surface);
   }
   .panel .dialog-action.quiet{
-    min-height:40px;padding:8px;border-color:transparent;
+    min-height:44px;padding:8px;
     color:var(--ghost-ink,var(--paper-ink-muted));background:transparent;font-weight:500;
   }
 
@@ -713,7 +726,7 @@
     margin-bottom:12px;text-align:center;
   }
   /* Restart reads the shared button size unless the sheet says otherwise. */
-  #sheet #btnRestart{font-size:var(--type-restart,var(--type-button));border-radius:4px}
+  #sheet #btnRestart{font-size:var(--type-restart,var(--type-button));border-radius:var(--settings-pill-radius)}
   /* Buttons do not inherit a face, so the sheet's controls ask for it by name.
      The record link is deliberately absent: Vintage leaves it on the UI face. */
   #sheet .seg button,#sheet #btnRestart{font-family:var(--face-sheet)}
@@ -736,9 +749,9 @@
   .seg button{min-height:36px;padding:7px 15px;border:none;border-radius:8px;background:transparent;font-size:var(--type-seg)}
   .seg button.on{background:var(--seg-on-surface);color:var(--seg-on-ink)}
   #sheet .seg{
-    background:transparent;border:1px solid var(--rule);border-radius:4px;padding:2px;gap:1px;
+    background:transparent;border:1px solid var(--rule);border-radius:var(--settings-pill-radius);padding:2px;gap:1px;
   }
-  #sheet .seg button{border-radius:2px}
+  #sheet .seg button{border-radius:var(--settings-pill-radius)}
   .deal-mix{width:min(220px,46vw)}
   .deal-mix-labels{
     display:flex;justify-content:space-between;align-items:center;
@@ -780,7 +793,7 @@
   .record-preview>.statline{grid-column:1/-1}
   .record-link{
     width:100%;min-height:42px;margin-top:10px;padding:11px 13px;font-size:var(--type-record-link);
-    border:1px solid rgba(217,166,72,.48);border-radius:4px;background:rgba(217,166,72,.12);
+    border:1px solid rgba(217,166,72,.48);border-radius:var(--settings-pill-radius);background:rgba(217,166,72,.12);
     color:var(--text);
   }
   .record-row{display:block}
@@ -893,7 +906,17 @@
     }
   }
   @media (orientation:landscape){
-    body{--dialog-panel-padding:18px 26px 16px;--dialog-action-padding:10px 12px}
+    body{
+      --dialog-panel-padding:14px 26px 12px;
+      --dialog-panel-width:620px;
+      --dialog-action-padding:10px 12px;
+      --dialog-action-gap:4px;
+      --dialog-action-margin:6px;
+      --dialog-score-padding:8px;
+      --dialog-score-margin:5px;
+      --dialog-sub-margin:5px;
+      --dialog-progress-margin:6px;
+    }
     #sheet{
       padding-left:calc(env(safe-area-inset-left,0px) + 20px);
       padding-right:calc(env(safe-area-inset-right,0px) + 20px);
@@ -931,8 +954,6 @@
     body{--type-control:.78rem}
     #controls button{width:100%;min-height:48px;padding:10px 5px;border-radius:11px}
     #toast{bottom:calc(env(safe-area-inset-bottom,0px) + 12px)}
-    .panel .sub{margin-bottom:10px}
-    .statgrid{margin-bottom:8px}
     .panel .note{margin:5px 0 9px}
   }
 
@@ -1124,7 +1145,7 @@
   /* Ink only for the segments — the radius is set below, and excluding .on here
      must not make this rule out-rank it. */
   body[data-card-style="crehore"] .seg button:not(.on){color:var(--vintage-ink)}
-  body[data-card-style="crehore"] #btnRestart{color:var(--vintage-ink);border-radius:3px}
+  body[data-card-style="crehore"] #btnRestart{color:var(--vintage-ink)}
   body[data-card-style="crehore"] .stats-page-inner{
     border-top:4px double rgba(var(--vintage-rule-rgb),.9);
     border-bottom:4px double rgba(var(--vintage-rule-rgb),.72);
@@ -1236,9 +1257,7 @@
     body{--type-control:1.28rem}
     #controls button{min-height:64px;padding:18px 28px}
     #toast{bottom:calc(env(safe-area-inset-bottom,0px) + 118px);padding:14px 26px}
-    .panel{width:min(520px,calc(100vw - 80px))}
-    .panel .sub{margin-bottom:26px}
-    .statgrid{gap:34px;margin-bottom:24px}
+    .statgrid{gap:34px}
     .stat{min-width:105px}
     .badge{padding:7px 16px}
     .panel .note{margin:12px 0 22px}
@@ -1275,8 +1294,13 @@
       --type-stat-label:1rem;
       --type-badge:1.1rem;
       --dialog-panel-padding:42px 38px 32px;
+      --dialog-panel-width:520px;
       --dialog-action-padding:16px 18px;
       --dialog-action-direction:row;
+      --dialog-score-padding:14px;
+      --dialog-score-margin:24px;
+      --dialog-sub-margin:26px;
+      --dialog-progress-margin:16px;
     }
     /* Matches the specificity of `#sheet .title-row h3{margin-bottom:0}`
        so the tablet gap keeps winning, as it did when this was bundled into the
@@ -1363,9 +1387,13 @@
     body[data-card-style="original"]{--type-control:1.05rem}
     #controls button{min-height:60px;padding:12px 7px}
     body[data-card-style="original"] #controls button{min-height:60px}
-    body[data-card-style]{--dialog-panel-padding:30px 36px 26px;--dialog-action-padding:13px 16px}
-    .panel .sub{margin-bottom:16px}
-    .statgrid{margin-bottom:14px}
+    body[data-card-style]{
+      --dialog-panel-padding:30px 36px 26px;
+      --dialog-action-padding:13px 16px;
+      --dialog-score-padding:14px;
+      --dialog-score-margin:14px;
+      --dialog-sub-margin:16px;
+    }
     .panel .note{margin:9px 0 14px}
     body[data-card-style="crehore"] #hud{
       gap:16px;margin:calc(env(safe-area-inset-top,0px) + 7px) 14px 0;padding:7px 0;
@@ -1473,12 +1501,12 @@
 
 <div id="overlay" aria-hidden="true">
   <div class="panel" id="winPanel" data-mode="win" role="dialog" aria-modal="true" aria-labelledby="winTitle" aria-describedby="winSub wNote wProgress">
-    <h2 id="winTitle">You won</h2>
-    <div class="sub" id="winSub">The deal is complete.</div>
+    <h2 id="winTitle">You won!</h2>
+    <div class="sub" id="winSub">Beautifully played.</div>
     <div class="statgrid scorecard-only">
       <div class="stat"><b id="wTime">0:00</b><span>time</span></div>
       <div class="stat"><b id="wMoves">0</b><span>moves</span></div>
-      <div class="stat"><b class="flame" id="wStreak">1</b><span>streak</span></div>
+      <div class="stat"><b id="wStreak">1</b><span>streak</span></div>
     </div>
     <div id="wBadges" class="scorecard-only"></div>
     <div class="note" id="wNote"></div>
@@ -1486,7 +1514,7 @@
     <div class="dialog-actions" id="dialogActions">
       <button class="dialog-action primary" id="btnAgain">New deal</button>
       <button class="dialog-action secondary" id="btnReplayDeal">Restart deal</button>
-      <button class="dialog-action quiet" id="btnAdmire">Watch cascade</button>
+      <button class="dialog-action quiet" id="btnAdmire">Admire the cascade.</button>
     </div>
   </div>
 </div>
@@ -1545,7 +1573,7 @@
     </div>
   </div>
   <div class="row">
-    <div>Sound<span class="sub2">Card shuffle when a new game is dealt</span></div>
+    <div>Shuffle sound<span class="sub2">Plays when a new deal starts.</span></div>
     <div class="seg">
       <button id="segSoundOn">On</button>
       <button id="segSoundOff">Muted</button>
@@ -1703,13 +1731,15 @@ if(settings.cardStyle !== "original" && settings.cardStyle !== "crehore") settin
 applyCardStyleTheme(settings.cardStyle);
 let stats = loadJSON(KEY_STATS) || {
   wins:0, streak:0, longest:0, lastWin:null,
-  freezes:0, winsToward:0, bestTime:null, bestMoves:null
+  freezes:0, winsToward:0, bestTime:null, bestMoves:null,
+  dailyWinDay:null, dailyWins:0
 };
 if(!Number.isFinite(stats.freezes)) stats.freezes = 0;
 if(!Number.isFinite(stats.winsToward)) stats.winsToward = 0;
 stats.freezes = Math.max(0,Math.min(3,Math.floor(stats.freezes)));
 stats.winsToward = Math.max(0,Math.min(9,Math.floor(stats.winsToward)));
 if(stats.freezes===3) stats.winsToward = 0;
+normalizeDailyWins(stats,localDayNum());
 function emptyVariantRecord(){
   return {
     games:0, wins:0, winningMovesTotal:0, winningTimeTotal:0,
@@ -2602,7 +2632,7 @@ function hint(){
   const path = findProgressPath();
   if(path){
     ghostMove(path);
-    if(path.depth>1) toast("Sets up a play a couple of moves out");
+    if(path.depth>1) toast("Try this first. It opens another move.");
     return;
   }
   showStuck();
@@ -2631,16 +2661,12 @@ function showStuck(){
   // rather than claiming the table is frozen when cards can still be dragged.
   const onlyShuffles = !!findAnyMove();
   $("winTitle").textContent = onlyShuffles ? "No useful moves left" : "No moves left";
-  $("winSub").textContent = onlyShuffles
-    ? "The remaining legal moves only rearrange cards."
-    : "This deal has no legal plays remaining.";
+  $("winSub").textContent = "";
   $("wBadges").innerHTML = "";
-  $("wNote").textContent = undoStack.length
-    ? "Try another path from your last move."
-    : "Restart this deal or begin a new one.";
+  $("wNote").textContent = "";
   $("wProgress").textContent = "";
   configureDialog("stuck",[
-    {id:"btnAdmire",label:undoStack.length ? "Undo a move" : "Back to table",tone:"primary"},
+    {id:"btnAdmire",label:"Go back and undo",tone:"primary"},
     {id:"btnReplayDeal",label:"Restart deal",tone:"secondary"},
     {id:"btnAgain",label:"New deal",tone:"quiet"}
   ]);
@@ -2651,9 +2677,9 @@ function showDrawOneOffer(){
   overlayMode = "draw-one";
   $("winPanel").classList.remove("daily-win","milestone");
   $("winTitle").textContent = "A playable card is buried";
-  $("winSub").textContent = "Draw three cannot reach the next useful card.";
+  $("winSub").textContent = "Switch to draw one to reach the card without restarting this deal.";
   $("wBadges").innerHTML = "";
-  $("wNote").textContent = "Switching to draw one keeps this deal and your progress.";
+  $("wNote").textContent = "";
   $("wProgress").textContent = "";
   configureDialog("draw-one",[
     {id:"btnAgain",label:"Switch to draw one",tone:"primary"},
@@ -2828,6 +2854,17 @@ function fmtTime(s){ return Math.floor(s/60)+":"+String(s%60).padStart(2,"0") }
 function localDayNum(d=new Date()){
   return Math.floor(Date.UTC(d.getFullYear(),d.getMonth(),d.getDate())/86400000);
 }
+function normalizeDailyWins(record,today){
+  const hasCounter = Number.isFinite(record.dailyWinDay) && Number.isFinite(record.dailyWins);
+  if(!hasCounter || Math.floor(record.dailyWinDay)!==today){
+    record.dailyWinDay = today;
+    record.dailyWins = 0;
+  }else{
+    record.dailyWinDay = Math.floor(record.dailyWinDay);
+    record.dailyWins = Math.max(0,Math.floor(record.dailyWins));
+  }
+  return record;
+}
 function displayStreak(){
   if(stats.lastWin==null) return 0;
   const gap = localDayNum() - stats.lastWin;
@@ -2910,6 +2947,7 @@ function recordVariantWin(){
 }
 function recordWin(){
   const today = localDayNum();
+  normalizeDailyWins(stats,today);
   const firstWinToday = stats.lastWin !== today;
   let usedFreeze = 0;
   if(stats.lastWin==null) stats.streak = 1;
@@ -2924,6 +2962,7 @@ function recordWin(){
   stats.lastWin = today;
   stats.longest = Math.max(stats.longest, stats.streak);
   stats.wins++;
+  stats.dailyWins++;
   recordVariantWin();
   let earned = false;
   if(usedFreeze){
@@ -2938,10 +2977,34 @@ function recordWin(){
   const bestM = stats.bestMoves==null || moves<stats.bestMoves;
   if(bestT) stats.bestTime = elapsed;
   if(bestM) stats.bestMoves = moves;
-  const milestone = stats.wins%5===0 ? stats.wins : 0;
+  const dailyMilestone = stats.dailyWins%10===0 ? stats.dailyWins : 0;
+  const lifetimeMilestone = stats.wins%100===0 ? stats.wins : 0;
   saveJSON(KEY_STATS, stats);
-  return { usedFreeze, earned, bestT, bestM, firstWinToday, milestone };
+  return {
+    usedFreeze, earned, bestT, bestM, firstWinToday,
+    dailyWins:stats.dailyWins, dailyMilestone, lifetimeMilestone
+  };
 }
+function winTitleFor(result){
+  if(result.dailyMilestone) return `${result.dailyMilestone}th win of the day!`;
+  if(result.firstWinToday) return "First win of the day!";
+  return "You won!";
+}
+const WIN_PHRASES = [
+  "Beautifully played.",
+  "Nicely done.",
+  "Every card in its place.",
+  "Solitaire, but better.",
+  "The cards fell your way.",
+  "Well played.",
+  "Not a card out of place.",
+  "That one came together.",
+  "All cards accounted for.",
+  "You played your cards right.",
+  "No cards left behind.",
+  "No card left unturned.",
+  "Aces in their places."
+];
 let lastWinMilestone = 0;
 function cancelWinDialog(){
   if(winDialogTimer){ clearTimeout(winDialogTimer); winDialogTimer=null; }
@@ -2953,10 +3016,10 @@ function checkWin(){
   hapticWin();
   localStorage.removeItem(KEY_GAME);
   const r = recordWin();
-  lastWinMilestone = r.milestone;
+  lastWinMilestone = r.dailyMilestone;
   updateHUD();
   updateButtons();
-  if(!reduced) cascade(!!r.milestone);
+  if(!reduced) cascade(!!r.dailyMilestone);
   cancelWinDialog();
   winDialogTimer = setTimeout(()=>{
     winDialogTimer = null;
@@ -2965,15 +3028,13 @@ function checkWin(){
 }
 function showWin(r){
   overlayMode = "win";
-  $("winPanel").classList.toggle("daily-win", r.firstWinToday && !r.milestone);
-  $("winPanel").classList.toggle("milestone", !!r.milestone);
-  if(r.milestone) $("winTitle").textContent = `${r.milestone} wins`;
-  else if(r.firstWinToday) $("winTitle").textContent = "First win today";
-  else $("winTitle").textContent = "You won";
+  $("winPanel").classList.toggle("daily-win", r.firstWinToday);
+  $("winPanel").classList.toggle("milestone", !!r.dailyMilestone);
+  $("winTitle").textContent = winTitleFor(r);
   configureDialog("win",[
     {id:"btnAgain",label:"New deal",tone:"primary"},
     {id:"btnReplayDeal",label:"Restart deal",tone:"secondary"},
-    {id:"btnAdmire",label:"Watch cascade",tone:"quiet"}
+    {id:"btnAdmire",label:"Admire the cascade.",tone:"quiet"}
   ]);
   $("wTime").textContent = fmtTime(elapsed);
   $("wMoves").textContent = moves;
@@ -2982,28 +3043,28 @@ function showWin(r){
   if(r.bestT && stats.wins>1) badges.push("Best time");
   if(r.bestM && stats.wins>1) badges.push("Fewest moves");
   if(r.earned) badges.push("Streak freeze earned");
-  if(r.milestone) badges.push(`${r.milestone}-win milestone`);
+  if(r.lifetimeMilestone) badges.push(`${r.lifetimeMilestone} wins`);
   $("wBadges").innerHTML = badges.map(b=>`<span class="badge">${b}</span>`).join("");
   let note = "";
-  if(r.usedFreeze) note = `${r.usedFreeze} streak freeze${r.usedFreeze>1?"s":""} covered your missed day${r.usedFreeze>1?"s":""}.`;
-  else if(stats.streak>1) note = `Day ${stats.streak} of your streak.`;
-  else note = "Your streak starts today.";
+  if(r.usedFreeze) note = `${r.usedFreeze} freeze${r.usedFreeze>1?"s":""} protected your streak.`;
   $("wNote").textContent = note;
-  if(!r.earned && stats.freezes<3){
+  if(r.usedFreeze){
+    $("wProgress").textContent = "";
+  }else if(stats.freezes<3){
     const remaining = 10-stats.winsToward;
-    $("wProgress").textContent = `${remaining} more win${remaining>1?"s":""} until your next streak freeze.`;
+    $("wProgress").textContent = `${stats.freezes} freeze${stats.freezes===1?"":"s"} • next in ${remaining} win${remaining===1?"":"s"}.`;
   }else if(stats.freezes>=3){
-    $("wProgress").textContent = "All three streak freezes are ready.";
+    $("wProgress").textContent = "3 freezes.";
   }else $("wProgress").textContent = "";
-  if(r.firstWinToday) $("winSub").textContent = "Today's streak is secured.";
-  else $("winSub").textContent = "The deal is complete.";
+  if(r.firstWinToday) $("winSub").textContent = "Your streak is secured.";
+  else $("winSub").textContent = WIN_PHRASES[Math.floor(Math.random()*WIN_PHRASES.length)];
   openOverlayDialog("btnAgain");
 }
 
 /* ================= win cascade (live card faces, canvas sparkles) ================= */
 let fxTimer = null, fxClearTimer = null, fxCardLayer = null, fxRun = 0;
 // Drop any frame loop and pending canvas clear left behind by an earlier
-// cascade. "Watch cascade" is usually tapped while the win cascade is
+// cascade. "Admire the cascade." is usually tapped while the win cascade is
 // still flying: without this both loops share fxTimer and their card layers,
 // and whichever finishes first cancels the other mid-flight — leaving the new
 // run's cards frozen where they launched, on the foundations.
@@ -3276,7 +3337,7 @@ $("dealMix").oninput = event=>{
 $("dealMix").onchange = ()=>{
   saveJSON(KEY_SET,settings);
   updateDealMix();
-  toast(`${dealMixText(settings.winnablePercent).label} mix — applies to your next deal`);
+  toast(`Next deal: ${dealMixText(settings.winnablePercent).label.toLowerCase()}.`);
 };
 $("segAutoOn").onclick = ()=>{ settings.autoComplete=true; saveJSON(KEY_SET,settings); refreshSheet(); updateButtons(); maybeAutoFinish() };
 $("segAutoOff").onclick = ()=>{
@@ -3348,7 +3409,7 @@ function renderStats(){
       `<div class="stats-detail-row"><span>Without undo</span><b>${record.winsWithoutUndo}</b></div>`+
       `<div class="stats-detail-row"><span>Without hints</span><b>${record.winsWithoutHints}</b></div>`+
     `</div>`+
-    `<div class="stats-group"><h3>Winning streaks</h3>`+
+    `<div class="stats-group"><h3>Consecutive wins</h3>`+
       `<div class="stats-detail-row"><span>Current</span><b>${record.currentWinStreak}</b></div>`+
       `<div class="stats-detail-row"><span>Longest</span><b>${record.longestWinStreak}</b></div>`+
     `</div>`;

@@ -15,8 +15,10 @@ function loadFunction(name) {
 const topOf = (cards) => cards[cards.length - 1];
 const reachableDrawThreeCards = loadFunction("reachableDrawThreeCards");
 const localDayNum = loadFunction("localDayNum");
+const normalizeDailyWins = loadFunction("normalizeDailyWins");
 const displayStreak = loadFunction("displayStreak");
 const canSafelyAutoFound = loadFunction("canSafelyAutoFound");
+const winTitleFor = loadFunction("winTitleFor");
 
 test("draw-three reachability excludes cards permanently buried in each packet", () => {
   global.P = {
@@ -64,7 +66,7 @@ test("a missed daily streak expires at midnight unless a freeze protects it", ()
   assert.equal(displayStreak(), 7);
 });
 
-test("recordWin updates a daily streak immediately and marks each fifth win", () => {
+test("recordWin updates the daily streak and the persisted local-day count", () => {
   global.KEY_STATS = "stats";
   global.saveJSON = () => {};
   global.elapsed = 45;
@@ -85,13 +87,74 @@ test("recordWin updates a daily streak immediately and marks each fifth win", ()
   const result = recordWin();
   assert.equal(stats.streak, 5);
   assert.equal(stats.wins, 5);
+  assert.equal(stats.dailyWins, 1);
   assert.equal(result.firstWinToday, true);
-  assert.equal(result.milestone, 5);
+  assert.equal(result.dailyMilestone, 0);
+  assert.equal(result.lifetimeMilestone, 0);
 
   const secondResult = recordWin();
   assert.equal(stats.streak, 5, "same-day wins do not inflate a daily streak");
+  assert.equal(stats.dailyWins, 2);
   assert.equal(secondResult.firstWinToday, false);
-  assert.equal(secondResult.milestone, 0);
+  assert.equal(secondResult.dailyMilestone, 0);
+});
+
+test("daily-win migration starts safely and resets at the next local day", () => {
+  const today = localDayNum();
+  const legacy = { wins: 42, lastWin: today };
+
+  normalizeDailyWins(legacy,today);
+  assert.equal(legacy.dailyWinDay,today);
+  assert.equal(legacy.dailyWins,0,"earlier wins today cannot be reconstructed");
+
+  legacy.dailyWins = 7;
+  normalizeDailyWins(legacy,today+1);
+  assert.equal(legacy.dailyWinDay,today+1);
+  assert.equal(legacy.dailyWins,0);
+});
+
+test("daily and lifetime win milestones stay independent", () => {
+  global.KEY_STATS = "stats";
+  global.saveJSON = () => {};
+  global.elapsed = 45;
+  global.moves = 80;
+  global.localDayNum = localDayNum;
+  global.normalizeDailyWins = normalizeDailyWins;
+  global.recordVariantWin = () => {};
+  const today = localDayNum();
+  const recordWin = loadFunction("recordWin");
+  const base = {
+    streak: 4,
+    longest: 4,
+    lastWin: today,
+    freezes: 3,
+    winsToward: 0,
+    bestTime: 60,
+    bestMoves: 90,
+    dailyWinDay: today,
+  };
+
+  global.stats = { ...base, wins:40, dailyWins:9 };
+  const daily = recordWin();
+  assert.equal(daily.dailyMilestone,10);
+  assert.equal(daily.lifetimeMilestone,0);
+  assert.equal(winTitleFor(daily),"10th win of the day!");
+
+  global.stats = { ...base, wins:99, dailyWins:4 };
+  const lifetime = recordWin();
+  assert.equal(lifetime.dailyMilestone,0);
+  assert.equal(lifetime.lifetimeMilestone,100);
+  assert.equal(winTitleFor(lifetime),"You won!");
+
+  global.stats = { ...base, wins:199, dailyWins:9 };
+  const both = recordWin();
+  assert.equal(both.dailyMilestone,10);
+  assert.equal(both.lifetimeMilestone,200);
+  assert.equal(winTitleFor(both),"10th win of the day!");
+  assert.equal(
+    winTitleFor({ dailyMilestone:0, firstWinToday:true }),
+    "First win of the day!"
+  );
 });
 
 test("a new player earns their first freeze on their tenth win", () => {
@@ -129,6 +192,7 @@ test("new player stats start with no freezes or banked wins", () => {
   const defaults = html.match(/let stats = loadJSON\(KEY_STATS\) \|\| \{([^]*?)\n\};/)?.[1];
   assert.ok(defaults, "found the default stats");
   assert.match(defaults, /freezes:0, winsToward:0/);
+  assert.match(defaults, /dailyWinDay:null, dailyWins:0/);
 });
 
 test("using a freeze resets progress before a veteran can earn it back", () => {
@@ -320,24 +384,44 @@ test("auto-move setting describes automatic foundation play", () => {
 
 test("out-of-moves dialog prioritizes recovery and keeps stats out of the decision", () => {
   assert.match(html, /"No useful moves left" : "No moves left"/);
-  assert.match(html, /\{id:"btnAdmire",label:undoStack\.length \? "Undo a move" : "Back to table",tone:"primary"\}/);
+  assert.match(html, /\$\("winSub"\)\.textContent = ""/);
+  assert.match(html, /\{id:"btnAdmire",label:"Go back and undo",tone:"primary"\}/);
   assert.match(html, /\{id:"btnReplayDeal",label:"Restart deal",tone:"secondary"\}/);
   assert.match(html, /\{id:"btnAgain",label:"New deal",tone:"quiet"\}/);
   assert.match(html, /\.panel\[data-mode="stuck"\] \.scorecard-only,[^]*display:none/);
+  const admireHandler = html.match(/\$\("btnAdmire"\)\.onclick = \(\)=>\{([^]*?)\n\};/)?.[1];
+  assert.ok(admireHandler,"found the shared return-to-table handler");
+  assert.doesNotMatch(admireHandler,/\bundo\s*\(/,"the action must not perform an undo");
 });
 
 test("draw recovery explains the rule change without showing game statistics", () => {
-  assert.match(html, /Draw three cannot reach the next useful card\./);
-  assert.match(html, /Switching to draw one keeps this deal and your progress\./);
+  assert.match(html, /Switch to draw one to reach the card without restarting this deal\./);
   assert.match(html, /configureDialog\("draw-one",\[/);
   assert.match(html, /\.panel\[data-mode="draw-one"\] \.scorecard-only\{display:none\}/);
 });
 
-test("win dialog uses fixed scorecard copy and separates freeze progress", () => {
-  assert.doesNotMatch(html, /The cards fell your way|Order from chaos|Beautifully played/);
-  assert.match(html, /\$\("winSub"\)\.textContent = "The deal is complete\."/);
-  assert.match(html, /until your next streak freeze\./);
+test("win dialog uses the locked rotating copy and compact freeze status", () => {
+  const phraseBlock = html.match(/const WIN_PHRASES = \[([^]*?)\n\];/)?.[1];
+  assert.ok(phraseBlock,"found the win phrase pool");
+  assert.equal([...phraseBlock.matchAll(/"[^"\n]+"/g)].length,13);
+  assert.doesNotMatch(phraseBlock,/Order from chaos|The table is yours/);
+  assert.match(html, /"Your streak is secured\."/);
+  assert.match(html, /• next in/);
+  assert.match(html, /"3 freezes\."/);
+  assert.match(html, /label:"Admire the cascade\."/);
+  assert.match(html, /if\(r\.lifetimeMilestone\) badges\.push\(`\$\{r\.lifetimeMilestone\} wins`\)/);
+  assert.doesNotMatch(html,/stats\.wins%5/);
   assert.match(html, /id="wProgress"/);
+});
+
+test("settings and player stats use the locked labels and pill actions", () => {
+  assert.match(html, /Shuffle sound<span class="sub2">Plays when a new deal starts\.<\/span>/);
+  assert.match(html, /<h3>Consecutive wins<\/h3>/);
+  assert.match(html, /Next deal: \$\{dealMixText\(settings\.winnablePercent\)\.label\.toLowerCase\(\)\}\./);
+  assert.match(html, /Try this first\. It opens another move\./);
+  assert.match(html, /--settings-pill-radius:999px/);
+  assert.match(html, /#sheet \.seg button\{border-radius:var\(--settings-pill-radius\)\}/);
+  assert.match(html, /\.record-link\{[^}]*border-radius:var\(--settings-pill-radius\)/);
 });
 
 test("streak and freeze counts use style-appropriate labels in the header", () => {

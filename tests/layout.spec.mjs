@@ -252,6 +252,88 @@ for (const cardStyle of STYLES) {
         }
       });
 
+      test("win dialog and every action fit without scrolling", async ({ page }) => {
+        await page.evaluate(() => {
+          Object.assign(stats,{ wins:100, streak:10, freezes:1, winsToward:0 });
+          showWin({
+            firstWinToday:false,
+            dailyMilestone:10,
+            lifetimeMilestone:100,
+            bestT:true,
+            bestM:true,
+            earned:true,
+            usedFreeze:0
+          });
+        });
+        await page.waitForTimeout(250);
+        const dialog = await page.evaluate(() => {
+          const panel = document.getElementById("winPanel");
+          const box = panel.getBoundingClientRect();
+          const actions = [...panel.querySelectorAll(".dialog-action")];
+          return {
+            top:box.top,
+            bottom:box.bottom,
+            overflow:panel.scrollHeight-panel.clientHeight,
+            actions:actions.map((action) => {
+              const actionBox = action.getBoundingClientRect();
+              return {
+                label:action.textContent,
+                top:actionBox.top,
+                bottom:actionBox.bottom,
+                radius:parseFloat(getComputedStyle(action).borderRadius)
+              };
+            })
+          };
+        });
+        expect(dialog.top).toBeGreaterThanOrEqual(0);
+        expect(dialog.bottom).toBeLessThanOrEqual(viewport.height);
+        expect(dialog.overflow).toBeLessThanOrEqual(1);
+        expect(dialog.actions.map(({ label }) => label)).toEqual([
+          "New deal","Restart deal","Admire the cascade."
+        ]);
+        for(const action of dialog.actions){
+          expect(action.top).toBeGreaterThanOrEqual(0);
+          expect(action.bottom).toBeLessThanOrEqual(viewport.height);
+          expect(action.radius).toBeGreaterThan(action.bottom-action.top);
+        }
+      });
+
+      test("outcome and recovery dialogs use centered pill actions", async ({ page }) => {
+        for (const mode of ["win","stuck","draw-one"]) {
+          await page.evaluate((nextMode) => {
+            closeOverlayDialog(false);
+            if(nextMode==="stuck") showStuck();
+            else if(nextMode==="draw-one") showDrawOneOffer();
+            else showWin({
+              firstWinToday:false,
+              dailyMilestone:0,
+              lifetimeMilestone:0,
+              bestT:false,
+              bestM:false,
+              earned:false,
+              usedFreeze:0
+            });
+          },mode);
+          await page.waitForTimeout(100);
+          const styles = await page.evaluate(() => {
+            const panel = document.getElementById("winPanel");
+            const actions = panel.querySelector(".dialog-actions");
+            return {
+              textAlign:getComputedStyle(panel).textAlign,
+              alignItems:getComputedStyle(actions).alignItems,
+              justifyContent:getComputedStyle(actions).justifyContent,
+              radii:[...actions.children]
+                .filter((button) => getComputedStyle(button).display!=="none")
+                .map((button) => parseFloat(getComputedStyle(button).borderRadius))
+            };
+          });
+          expect(styles.textAlign).toBe("center");
+          expect(styles.alignItems).toBe("center");
+          expect(styles.justifyContent).toBe("center");
+          expect(styles.radii.every((radius) => radius > 100)).toBe(true);
+        }
+      });
+
       test("close button sits on the settings title's cap band", async ({ page }) => {
         await openSheet(page);
         const band = await capBand(page, "#sheet h3");
