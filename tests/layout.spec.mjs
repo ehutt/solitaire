@@ -531,7 +531,9 @@ for (const cardStyle of STYLES) {
         expect(measurements.art.left).toBeGreaterThanOrEqual(measurements.card.left);
         expect(measurements.art.right).toBeLessThanOrEqual(measurements.card.right);
         expect(measurements.art.top).toBeGreaterThan(measurements.card.top);
-        expect(measurements.art.bottom).toBeLessThanOrEqual(measurements.card.bottom);
+        // WebKit and Chromium can report the same clipped edge a few
+        // thousandths of a pixel apart after device-scale rounding.
+        expect(measurements.art.bottom).toBeLessThanOrEqual(measurements.card.bottom + 0.01);
         expect(measurements.art.height).toBeGreaterThan(measurements.card.height * 0.65);
         expect(measurements.artBox.top - measurements.index.bottom)
           .toBeGreaterThanOrEqual(measurements.card.width * 0.04);

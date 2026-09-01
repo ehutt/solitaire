@@ -307,9 +307,16 @@ test("Classic cascade cards match their foundation faces in both orientations", 
     const kingId = await page.evaluate(() => P.f[0][12].id);
     await page.waitForSelector(`.fx-cards .card[data-cascade-id="${kingId}"]`, { state: "attached" });
 
+    await page.waitForFunction((id) => {
+      const clones = [...document.querySelectorAll(`.fx-cards .card[data-cascade-id="${id}"]`)]
+        .filter((clone) => !clone.hidden);
+      return clones.length >= 3 && new Set(clones.map((clone) => clone.style.transform)).size >= 3;
+    }, kingId, { timeout: 1500 });
+
     const match = await page.evaluate(() => {
       const source = els.get(P.f[0][12].id);
-      const clone = document.querySelector(`.fx-cards .card[data-cascade-id="${source.dataset.id}"]`);
+      const clones = [...document.querySelectorAll(`.fx-cards .card[data-cascade-id="${source.dataset.id}"]`)]
+        .filter((clone) => !clone.hidden);
       const faceStyle = (card) => {
         const style = getComputedStyle(card.querySelector(".front"));
         return {
@@ -320,16 +327,51 @@ test("Classic cascade cards match their foundation faces in both orientations", 
         };
       };
       return {
-        sameMarkup: clone.innerHTML === source.innerHTML,
+        cloneCount: clones.length,
+        distinctPositions: new Set(clones.map((clone) => clone.style.transform)).size,
+        sameFaceMarkup: clones.every((clone) =>
+          clone.querySelector(".front").innerHTML === source.querySelector(".front").innerHTML),
+        backCount: clones.filter((clone) => clone.querySelector(".back")).length,
         sourceStyle: faceStyle(source),
-        cloneStyle: faceStyle(clone),
+        cloneStyles: clones.map(faceStyle),
         sourceSize: [source.offsetWidth, source.offsetHeight],
-        cloneSize: [clone.offsetWidth, clone.offsetHeight],
+        cloneSizes: clones.map((clone) => [clone.offsetWidth, clone.offsetHeight]),
       };
     });
-    expect(match.sameMarkup).toBe(true);
-    expect(match.cloneStyle).toEqual(match.sourceStyle);
-    expect(match.cloneSize).toEqual(match.sourceSize);
+    expect(match.cloneCount).toBeGreaterThanOrEqual(3);
+    expect(match.distinctPositions).toBeGreaterThanOrEqual(3);
+    expect(match.sameFaceMarkup).toBe(true);
+    expect(match.backCount).toBe(0);
+    for (const cloneStyle of match.cloneStyles) expect(cloneStyle).toEqual(match.sourceStyle);
+    for (const cloneSize of match.cloneSizes) expect(cloneSize).toEqual(match.sourceSize);
+  }
+});
+
+test("Classic court faces clip their artwork to every rounded corner", async ({ page }) => {
+  await boot(page);
+  const faces = await page.evaluate(() => {
+    settings.cardStyle = "original";
+    document.body.dataset.cardStyle = "original";
+    layout();
+    return cards.filter((card) => card.rank >= 11).map((card) => {
+      const style = getComputedStyle(els.get(card.id).querySelector(".front"));
+      return {
+        overflow: style.overflow,
+        topLeft: style.borderTopLeftRadius,
+        topRight: style.borderTopRightRadius,
+        bottomLeft: style.borderBottomLeftRadius,
+        bottomRight: style.borderBottomRightRadius,
+      };
+    });
+  });
+
+  expect(faces).toHaveLength(12);
+  for (const face of faces) {
+    expect(face.overflow).toBe("hidden");
+    expect(face.bottomLeft).toBe(face.topLeft);
+    expect(face.bottomRight).toBe(face.topRight);
+    expect(parseFloat(face.bottomLeft)).toBeGreaterThan(0);
+    expect(parseFloat(face.bottomRight)).toBeGreaterThan(0);
   }
 });
 
