@@ -471,7 +471,7 @@ test("classic courts use vector artwork while their ranks clear the tableau fan"
   assert.match(centerRule, /inset:0/);
   assert.match(centerRule, /align-items:center;justify-content:center/);
   assert.ok(courtRule, "classic court-symbol rule exists");
-  assert.match(courtRule, /inset:calc\(var\(--cw\)\*\.45\) calc\(var\(--cw\)\*\.08\) calc\(var\(--cw\)\*\.015\)/);
+  assert.match(courtRule, /inset:calc\(var\(--cw\)\*\.5 - 1px\) -1px -1px/);
   assert.match(courtRule, /line-height:1;transform:none;opacity:1/);
   assert.match(html, /\.ix\.court i\{font-size:1em\}/);
   assert.doesNotMatch(html, /\.ix\.j i\{[^}]*transform/);

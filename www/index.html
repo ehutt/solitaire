@@ -384,15 +384,16 @@
     flex:none;font-family:var(--serif);font-weight:700;line-height:.82;
   }
   body[data-card-style="original"] .ix.tl{top:calc(var(--cw)*.025)}
-  /* Centre pips sit a touch low, matching the index suit. The court artwork
-     gets its own inset box so the portrait never crowds the card edge. */
+  /* Centre pips sit a touch low, matching the index suit. Court artwork starts
+     below the index band and uses the full card width; each SVG owns the same
+     approved side-edge crop, so every rank and suit keeps one scale. */
   body[data-card-style="original"] .mid{
     position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
     pointer-events:none;opacity:.95;
   }
   body[data-card-style="original"] .mid.ace{opacity:1}
   body[data-card-style="original"] .mid.court{
-    inset:calc(var(--cw)*.45) calc(var(--cw)*.08) calc(var(--cw)*.015);
+    inset:calc(var(--cw)*.5 - 1px) -1px -1px;
     line-height:1;transform:none;opacity:1;
   }
   /* Club-rail buttons: emoji icons retired; Marcellus capitals on a dark pill
