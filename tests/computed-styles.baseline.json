@@ -24549,12 +24549,12 @@
     "opacity": "1",
     "borderTopWidth": "0px",
     "borderRightWidth": "0px",
-    "borderBottomWidth": "4px",
+    "borderBottomWidth": "0px",
     "borderLeftWidth": "0px",
     "borderTopStyle": "none",
     "borderTopColor": "rgb(240, 217, 163)",
     "borderRightColor": "rgb(240, 217, 163)",
-    "borderBottomColor": "rgba(222, 184, 112, 0.92)",
+    "borderBottomColor": "rgb(240, 217, 163)",
     "borderLeftColor": "rgb(240, 217, 163)",
     "borderRadius": "0px",
     "paddingTop": "7px",
@@ -24565,11 +24565,11 @@
     "flexDirection": "row",
     "justifyContent": "space-between",
     "alignItems": "center",
-    "gap": "4px",
+    "gap": "0px",
     "minHeight": "auto",
     "minWidth": "auto",
     "width": "362px",
-    "height": "80.5625px",
+    "height": "81.5625px",
     "position": "static",
     "boxShadow": "none",
     "textShadow": "none",
@@ -24580,7 +24580,7 @@
      14,
      6,
      362,
-     80.5
+     81.5
     ]
    },
    ".brand": {
@@ -24707,7 +24707,7 @@
     "borderBottomColor": "rgb(240, 217, 163)",
     "borderLeftColor": "rgb(240, 217, 163)",
     "borderRadius": "0px",
-    "paddingTop": "1px",
+    "paddingTop": "2px",
     "paddingRight": "0px",
     "paddingBottom": "0px",
     "paddingLeft": "0px",
@@ -24719,7 +24719,7 @@
     "minHeight": "auto",
     "minWidth": "auto",
     "width": "362px",
-    "height": "21px",
+    "height": "22px",
     "position": "relative",
     "boxShadow": "none",
     "textShadow": "none",
@@ -24728,9 +24728,9 @@
     "webkitTextStrokeColor": "rgb(240, 217, 163)",
     "_rect": [
      14,
-     57.5,
+     61.5,
      362,
-     21
+     22
     ]
    },
    ".chip": {
@@ -24778,7 +24778,7 @@
     "webkitTextStrokeColor": "rgb(246, 227, 178)",
     "_rect": [
      14,
-     58.5,
+     63.5,
      118,
      20
     ]
@@ -24828,7 +24828,7 @@
     "webkitTextStrokeColor": "rgb(206, 176, 119)",
     "_rect": [
      25.5,
-     64.5,
+     69.5,
      37,
      14
     ]
@@ -24878,7 +24878,7 @@
     "webkitTextStrokeColor": "rgb(246, 227, 178)",
     "_rect": [
      67,
-     58.5,
+     63.5,
      54.5,
      20
     ]
@@ -24928,7 +24928,7 @@
     "webkitTextStrokeColor": "rgb(246, 227, 178)",
     "_rect": [
      67,
-     58.5,
+     63.5,
      54.5,
      20
     ]
@@ -24978,7 +24978,7 @@
     "webkitTextStrokeColor": "rgb(246, 227, 178)",
     "_rect": [
      196.5,
-     58.5,
+     63.5,
      43.5,
      20
     ]
@@ -25028,7 +25028,7 @@
     "webkitTextStrokeColor": "rgb(246, 227, 178)",
     "_rect": [
      322,
-     58.5,
+     63.5,
      43.5,
      20
     ]
@@ -25069,7 +25069,7 @@
     "minHeight": "0px",
     "minWidth": "auto",
     "width": "390px",
-    "height": "691.438px",
+    "height": "694.438px",
     "position": "relative",
     "boxShadow": "none",
     "textShadow": "none",
@@ -25078,9 +25078,9 @@
     "webkitTextStrokeColor": "rgb(240, 217, 163)",
     "_rect": [
      0,
-     86.5,
+     87.5,
      390,
-     691.5
+     694.5
     ]
    },
    ".ph": {
@@ -25128,7 +25128,7 @@
     "webkitTextStrokeColor": "rgba(239, 217, 164, 0.36)",
     "_rect": [
      334.5,
-     94.5,
+     95.5,
      53,
      77
     ]
@@ -25178,7 +25178,7 @@
     "webkitTextStrokeColor": "rgba(239, 217, 164, 0.36)",
     "_rect": [
      2.5,
-     94.5,
+     95.5,
      53,
      77
     ]
@@ -25228,7 +25228,7 @@
     "webkitTextStrokeColor": "rgb(240, 217, 163)",
     "_rect": [
      334.5,
-     245,
+     246,
      53,
      77
     ]
@@ -25278,7 +25278,7 @@
     "webkitTextStrokeColor": "rgb(240, 217, 163)",
     "_rect": [
      334.5,
-     245,
+     246,
      53,
      77
     ]
@@ -25328,7 +25328,7 @@
     "webkitTextStrokeColor": "rgb(240, 217, 163)",
     "_rect": [
      334.5,
-     94.5,
+     95.5,
      53,
      77
     ]
@@ -25378,7 +25378,7 @@
     "webkitTextStrokeColor": "rgb(240, 217, 163)",
     "_rect": [
      334.5,
-     94.5,
+     95.5,
      53,
      77
     ]
@@ -25573,12 +25573,12 @@
     "backgroundColor": "rgba(0, 0, 0, 0)",
     "backgroundImage": "none",
     "opacity": "1",
-    "borderTopWidth": "4px",
+    "borderTopWidth": "0px",
     "borderRightWidth": "0px",
     "borderBottomWidth": "0px",
     "borderLeftWidth": "0px",
-    "borderTopStyle": "double",
-    "borderTopColor": "rgba(222, 184, 112, 0.9)",
+    "borderTopStyle": "none",
+    "borderTopColor": "rgb(240, 217, 163)",
     "borderRightColor": "rgb(240, 217, 163)",
     "borderBottomColor": "rgb(240, 217, 163)",
     "borderLeftColor": "rgb(240, 217, 163)",
@@ -25595,7 +25595,7 @@
     "minHeight": "auto",
     "minWidth": "auto",
     "width": "362px",
-    "height": "66px",
+    "height": "62px",
     "position": "relative",
     "boxShadow": "none",
     "textShadow": "none",
@@ -25604,9 +25604,9 @@
     "webkitTextStrokeColor": "rgb(240, 217, 163)",
     "_rect": [
      14,
-     778,
+     782,
      362,
-     66
+     62
     ]
    },
    "#btnDeal": {
@@ -30657,12 +30657,12 @@
     "opacity": "1",
     "borderTopWidth": "0px",
     "borderRightWidth": "0px",
-    "borderBottomWidth": "2px",
+    "borderBottomWidth": "0px",
     "borderLeftWidth": "0px",
     "borderTopStyle": "none",
     "borderTopColor": "rgb(240, 217, 163)",
     "borderRightColor": "rgb(240, 217, 163)",
-    "borderBottomColor": "rgba(222, 184, 112, 0.92)",
+    "borderBottomColor": "rgb(240, 217, 163)",
     "borderLeftColor": "rgb(240, 217, 163)",
     "borderRadius": "0px",
     "paddingTop": "4px",
@@ -30677,7 +30677,7 @@
     "minHeight": "auto",
     "minWidth": "auto",
     "width": "735.172px",
-    "height": "39.5156px",
+    "height": "37.5156px",
     "position": "static",
     "boxShadow": "none",
     "textShadow": "none",
@@ -30688,7 +30688,7 @@
      8,
      4,
      735,
-     39.5
+     37.5
     ]
    },
    ".brand": {
@@ -31177,7 +31177,7 @@
     "minHeight": "0px",
     "minWidth": "auto",
     "width": "751.172px",
-    "height": "346.484px",
+    "height": "348.484px",
     "position": "relative",
     "boxShadow": "none",
     "textShadow": "none",
@@ -31186,14 +31186,14 @@
     "webkitTextStrokeColor": "rgb(240, 217, 163)",
     "_rect": [
      0,
-     43.5,
+     41.5,
      751,
-     346.5
+     348.5
     ]
    },
    ".ph": {
     "fontFamily": "\"IM Fell English\", Baskerville, \"Iowan Old Style\", Georgia, serif",
-    "fontSize": "23.7417px",
+    "fontSize": "23.8865px",
     "fontWeight": "400",
     "fontStyle": "normal",
     "lineHeight": "normal",
@@ -31214,7 +31214,7 @@
     "borderRightColor": "rgba(215, 174, 99, 0.42)",
     "borderBottomColor": "rgba(215, 174, 99, 0.42)",
     "borderLeftColor": "rgba(215, 174, 99, 0.42)",
-    "borderRadius": "4.80487px",
+    "borderRadius": "4.83418px",
     "paddingTop": "0px",
     "paddingRight": "0px",
     "paddingBottom": "0px",
@@ -31226,24 +31226,24 @@
     "gap": "normal",
     "minHeight": "0px",
     "minWidth": "0px",
-    "width": "56.5156px",
-    "height": "81.9531px",
+    "width": "56.8594px",
+    "height": "82.4531px",
     "position": "absolute",
     "boxShadow": "none",
     "textShadow": "none",
-    "transform": "matrix(1, 0, 0, 1, 674.687, 132.017)",
+    "transform": "matrix(1, 0, 0, 1, 674.222, 132.767)",
     "webkitTextStrokeWidth": "0px",
     "webkitTextStrokeColor": "rgba(239, 217, 164, 0.36)",
     "_rect": [
-     674.5,
-     175.5,
-     56.5,
-     82
+     674,
+     174.5,
+     57,
+     82.5
     ]
    },
    ".ph[data-slot=\"f0\"]": {
     "fontFamily": "\"IM Fell English\", Baskerville, \"Iowan Old Style\", Georgia, serif",
-    "fontSize": "23.7417px",
+    "fontSize": "23.8865px",
     "fontWeight": "400",
     "fontStyle": "normal",
     "lineHeight": "normal",
@@ -31264,7 +31264,7 @@
     "borderRightColor": "rgba(215, 174, 99, 0.3)",
     "borderBottomColor": "rgba(215, 174, 99, 0.3)",
     "borderLeftColor": "rgba(215, 174, 99, 0.3)",
-    "borderRadius": "4.80487px",
+    "borderRadius": "4.83418px",
     "paddingTop": "0px",
     "paddingRight": "0px",
     "paddingBottom": "0px",
@@ -31276,24 +31276,24 @@
     "gap": "normal",
     "minHeight": "0px",
     "minWidth": "0px",
-    "width": "56.5156px",
-    "height": "81.9531px",
+    "width": "56.8594px",
+    "height": "82.4531px",
     "position": "absolute",
     "boxShadow": "none",
     "textShadow": "none",
-    "transform": "matrix(1, 0, 0, 1, 19.7847, 4)",
+    "transform": "matrix(1, 0, 0, 1, 19.9054, 4)",
     "webkitTextStrokeWidth": "0px",
     "webkitTextStrokeColor": "rgba(239, 217, 164, 0.36)",
     "_rect": [
      20,
-     47.5,
-     56.5,
-     82
+     45.5,
+     57,
+     82.5
     ]
    },
    ".card[data-id=\"0\"]": {
     "fontFamily": "\"IM Fell English\", Baskerville, \"Iowan Old Style\", Palatino, Georgia, serif",
-    "fontSize": "7.9139px",
+    "fontSize": "7.96217px",
     "fontWeight": "400",
     "fontStyle": "normal",
     "lineHeight": "normal",
@@ -31326,24 +31326,24 @@
     "gap": "normal",
     "minHeight": "0px",
     "minWidth": "0px",
-    "width": "56.5156px",
-    "height": "81.9531px",
+    "width": "56.8594px",
+    "height": "82.4531px",
     "position": "absolute",
     "boxShadow": "none",
     "textShadow": "none",
-    "transform": "matrix(1, 0, 0, 1, 530.338, 63.0151)",
+    "transform": "matrix(1, 0, 0, 1, 531.2, 63.3751)",
     "webkitTextStrokeWidth": "0px",
     "webkitTextStrokeColor": "rgb(240, 217, 163)",
     "_rect": [
-     530.5,
-     106.5,
-     56.5,
-     82
+     531,
+     105,
+     57,
+     82.5
     ]
    },
    ".card[data-id=\"0\"] .face": {
     "fontFamily": "\"IM Fell English\", Baskerville, \"Iowan Old Style\", Palatino, Georgia, serif",
-    "fontSize": "7.9139px",
+    "fontSize": "7.96217px",
     "fontWeight": "400",
     "fontStyle": "normal",
     "lineHeight": "normal",
@@ -31364,7 +31364,7 @@
     "borderRightColor": "rgb(240, 217, 163)",
     "borderBottomColor": "rgb(240, 217, 163)",
     "borderLeftColor": "rgb(240, 217, 163)",
-    "borderRadius": "4.80487px",
+    "borderRadius": "4.83418px",
     "paddingTop": "0px",
     "paddingRight": "0px",
     "paddingBottom": "0px",
@@ -31376,8 +31376,8 @@
     "gap": "normal",
     "minHeight": "0px",
     "minWidth": "0px",
-    "width": "56.5156px",
-    "height": "81.9531px",
+    "width": "56.8594px",
+    "height": "82.4531px",
     "position": "absolute",
     "boxShadow": "rgba(38, 4, 8, 0.2) 0px 1px 1.25px 0px, rgba(38, 4, 8, 0.07) 0px 2px 2.5px 0px",
     "textShadow": "none",
@@ -31385,15 +31385,15 @@
     "webkitTextStrokeWidth": "0px",
     "webkitTextStrokeColor": "rgb(240, 217, 163)",
     "_rect": [
-     530.5,
-     106.5,
-     56.5,
-     82
+     531,
+     105,
+     57,
+     82.5
     ]
    },
    ".card[data-id=\"20\"]": {
     "fontFamily": "\"IM Fell English\", Baskerville, \"Iowan Old Style\", Palatino, Georgia, serif",
-    "fontSize": "7.9139px",
+    "fontSize": "7.96217px",
     "fontWeight": "400",
     "fontStyle": "normal",
     "lineHeight": "normal",
@@ -31426,24 +31426,24 @@
     "gap": "normal",
     "minHeight": "0px",
     "minWidth": "0px",
-    "width": "56.5156px",
-    "height": "81.9531px",
+    "width": "56.8594px",
+    "height": "82.4531px",
     "position": "absolute",
     "boxShadow": "none",
     "textShadow": "none",
-    "transform": "matrix(1, 0, 0, 1, 674.687, 132.017)",
+    "transform": "matrix(1, 0, 0, 1, 674.222, 132.767)",
     "webkitTextStrokeWidth": "0px",
     "webkitTextStrokeColor": "rgb(240, 217, 163)",
     "_rect": [
-     674.5,
-     175.5,
-     56.5,
-     82
+     674,
+     174.5,
+     57,
+     82.5
     ]
    },
    ".card[data-id=\"20\"] .front": {
     "fontFamily": "\"IM Fell English\", Baskerville, \"Iowan Old Style\", Palatino, Georgia, serif",
-    "fontSize": "7.9139px",
+    "fontSize": "7.96217px",
     "fontWeight": "400",
     "fontStyle": "normal",
     "lineHeight": "normal",
@@ -31464,7 +31464,7 @@
     "borderRightColor": "rgb(240, 217, 163)",
     "borderBottomColor": "rgb(240, 217, 163)",
     "borderLeftColor": "rgb(240, 217, 163)",
-    "borderRadius": "4.80487px",
+    "borderRadius": "4.83418px",
     "paddingTop": "0px",
     "paddingRight": "0px",
     "paddingBottom": "0px",
@@ -31476,8 +31476,8 @@
     "gap": "normal",
     "minHeight": "0px",
     "minWidth": "0px",
-    "width": "56.5156px",
-    "height": "81.9531px",
+    "width": "56.8594px",
+    "height": "82.4531px",
     "position": "absolute",
     "boxShadow": "none",
     "textShadow": "none",
@@ -31485,15 +31485,15 @@
     "webkitTextStrokeWidth": "0px",
     "webkitTextStrokeColor": "rgb(240, 217, 163)",
     "_rect": [
-     674.5,
-     175.5,
-     56.5,
-     82
+     674,
+     174.5,
+     57,
+     82.5
     ]
    },
    "!.card[data-id=\"20\"] .ix": {
     "fontFamily": "\"IM Fell English\", Baskerville, \"Iowan Old Style\", Palatino, Georgia, serif",
-    "fontSize": "21.7632px",
+    "fontSize": "21.896px",
     "fontWeight": "400",
     "fontStyle": "normal",
     "lineHeight": "normal",
@@ -31537,7 +31537,7 @@
    },
    "!.card[data-id=\"20\"] .ix i": {
     "fontFamily": "\"IM Fell English\", Baskerville, \"Iowan Old Style\", Palatino, Georgia, serif",
-    "fontSize": "21.7632px",
+    "fontSize": "21.896px",
     "fontWeight": "400",
     "fontStyle": "italic",
     "lineHeight": "normal",
@@ -31581,7 +31581,7 @@
    },
    "!.card[data-id=\"20\"] .ix b": {
     "fontFamily": "\"IM Fell English\", Baskerville, \"Iowan Old Style\", Palatino, Georgia, serif",
-    "fontSize": "19.1516px",
+    "fontSize": "19.2685px",
     "fontWeight": "700",
     "fontStyle": "normal",
     "lineHeight": "normal",
@@ -31625,7 +31625,7 @@
    },
    "!.card[data-id=\"11\"] .court-art": {
     "fontFamily": "\"IM Fell English\", Baskerville, \"Iowan Old Style\", Palatino, Georgia, serif",
-    "fontSize": "43.1307px",
+    "fontSize": "43.3938px",
     "fontWeight": "400",
     "fontStyle": "normal",
     "lineHeight": "normal",
@@ -31684,12 +31684,12 @@
     "borderTopWidth": "0px",
     "borderRightWidth": "0px",
     "borderBottomWidth": "0px",
-    "borderLeftWidth": "4px",
+    "borderLeftWidth": "0px",
     "borderTopStyle": "none",
     "borderTopColor": "rgb(240, 217, 163)",
     "borderRightColor": "rgb(240, 217, 163)",
     "borderBottomColor": "rgb(240, 217, 163)",
-    "borderLeftColor": "rgba(222, 184, 112, 0.9)",
+    "borderLeftColor": "rgb(240, 217, 163)",
     "borderRadius": "0px",
     "paddingTop": "6px",
     "paddingRight": "8px",
@@ -31752,7 +31752,7 @@
     "gap": "3px",
     "minHeight": "54px",
     "minWidth": "0px",
-    "width": "70.8281px",
+    "width": "74.8281px",
     "height": "56px",
     "position": "static",
     "boxShadow": "rgba(239, 226, 193, 0.2) 0px 0px 0px 1px inset, rgba(245, 232, 197, 0.12) 0px 1px 0px 0px",
@@ -31761,9 +31761,9 @@
     "webkitTextStrokeWidth": "0px",
     "webkitTextStrokeColor": "rgb(239, 217, 164)",
     "_rect": [
-     765,
+     761,
      91,
-     71,
+     75,
      56
     ]
    },
@@ -31802,7 +31802,7 @@
     "gap": "3px",
     "minHeight": "54px",
     "minWidth": "0px",
-    "width": "70.8281px",
+    "width": "74.8281px",
     "height": "56px",
     "position": "static",
     "boxShadow": "rgba(239, 226, 193, 0.2) 0px 0px 0px 1px inset, rgba(245, 232, 197, 0.12) 0px 1px 0px 0px",
@@ -31811,9 +31811,9 @@
     "webkitTextStrokeWidth": "0px",
     "webkitTextStrokeColor": "rgb(239, 217, 164)",
     "_rect": [
-     765,
+     761,
      155,
-     71,
+     75,
      56
     ]
    },
@@ -31852,7 +31852,7 @@
     "gap": "3px",
     "minHeight": "54px",
     "minWidth": "0px",
-    "width": "70.8281px",
+    "width": "74.8281px",
     "height": "56px",
     "position": "static",
     "boxShadow": "rgba(239, 226, 193, 0.2) 0px 0px 0px 1px inset, rgba(245, 232, 197, 0.12) 0px 1px 0px 0px",
@@ -31861,9 +31861,9 @@
     "webkitTextStrokeWidth": "0px",
     "webkitTextStrokeColor": "rgb(239, 217, 164)",
     "_rect": [
-     765,
+     761,
      219,
-     71,
+     75,
      56
     ]
    },
@@ -31902,7 +31902,7 @@
     "gap": "3px",
     "minHeight": "54px",
     "minWidth": "0px",
-    "width": "70.8281px",
+    "width": "74.8281px",
     "height": "54px",
     "position": "static",
     "boxShadow": "rgba(239, 226, 193, 0.2) 0px 0px 0px 1px inset, rgba(245, 232, 197, 0.12) 0px 1px 0px 0px",
@@ -31911,9 +31911,9 @@
     "webkitTextStrokeWidth": "0px",
     "webkitTextStrokeColor": "rgb(239, 217, 164)",
     "_rect": [
-     765,
+     761,
      283,
-     71,
+     75,
      54
     ]
    },
@@ -31961,7 +31961,7 @@
     "webkitTextStrokeWidth": "0px",
     "webkitTextStrokeColor": "rgb(239, 217, 164)",
     "_rect": [
-     784,
+     782,
      124,
      33.5,
      14
@@ -32061,7 +32061,7 @@
     "webkitTextStrokeWidth": "0px",
     "webkitTextStrokeColor": "rgb(239, 217, 164)",
     "_rect": [
-     790,
+     788,
      100,
      21,
      21
@@ -36765,12 +36765,12 @@
     "opacity": "1",
     "borderTopWidth": "0px",
     "borderRightWidth": "0px",
-    "borderBottomWidth": "4px",
+    "borderBottomWidth": "0px",
     "borderLeftWidth": "0px",
     "borderTopStyle": "none",
     "borderTopColor": "rgb(240, 217, 163)",
     "borderRightColor": "rgb(240, 217, 163)",
-    "borderBottomColor": "rgba(222, 184, 112, 0.92)",
+    "borderBottomColor": "rgb(240, 217, 163)",
     "borderLeftColor": "rgb(240, 217, 163)",
     "borderRadius": "0px",
     "paddingTop": "12px",
@@ -36781,11 +36781,11 @@
     "flexDirection": "row",
     "justifyContent": "space-between",
     "alignItems": "center",
-    "gap": "4px",
+    "gap": "0px",
     "minHeight": "auto",
     "minWidth": "auto",
     "width": "792px",
-    "height": "147.922px",
+    "height": "148.922px",
     "position": "static",
     "boxShadow": "none",
     "textShadow": "none",
@@ -36796,7 +36796,7 @@
      14,
      12,
      792,
-     148
+     149
     ]
    },
    ".brand": {
@@ -36923,7 +36923,7 @@
     "borderBottomColor": "rgb(240, 217, 163)",
     "borderLeftColor": "rgb(240, 217, 163)",
     "borderRadius": "0px",
-    "paddingTop": "1px",
+    "paddingTop": "2px",
     "paddingRight": "0px",
     "paddingBottom": "0px",
     "paddingLeft": "0px",
@@ -36935,7 +36935,7 @@
     "minHeight": "auto",
     "minWidth": "auto",
     "width": "792px",
-    "height": "42px",
+    "height": "43px",
     "position": "relative",
     "boxShadow": "none",
     "textShadow": "none",
@@ -36944,9 +36944,9 @@
     "webkitTextStrokeColor": "rgb(240, 217, 163)",
     "_rect": [
      14,
-     104,
+     108,
      792,
-     42
+     43
     ]
    },
    ".chip": {
@@ -36994,7 +36994,7 @@
     "webkitTextStrokeColor": "rgb(246, 227, 178)",
     "_rect": [
      64,
-     105,
+     110,
      228,
      41
     ]
@@ -37044,7 +37044,7 @@
     "webkitTextStrokeColor": "rgb(206, 176, 119)",
     "_rect": [
      87,
-     119,
+     124,
      66.5,
      27
     ]
@@ -37094,7 +37094,7 @@
     "webkitTextStrokeColor": "rgb(246, 227, 178)",
     "_rect": [
      158.5,
-     105,
+     110,
      111.5,
      41
     ]
@@ -37144,7 +37144,7 @@
     "webkitTextStrokeColor": "rgb(246, 227, 178)",
     "_rect": [
      158.5,
-     105,
+     110,
      111.5,
      41
     ]
@@ -37194,7 +37194,7 @@
     "webkitTextStrokeColor": "rgb(246, 227, 178)",
     "_rect": [
      406.5,
-     105,
+     110,
      89.5,
      41
     ]
@@ -37244,7 +37244,7 @@
     "webkitTextStrokeColor": "rgb(246, 227, 178)",
     "_rect": [
      644.5,
-     105,
+     110,
      89.5,
      41
     ]
@@ -37285,7 +37285,7 @@
     "minHeight": "0px",
     "minWidth": "auto",
     "width": "820px",
-    "height": "925.078px",
+    "height": "928.078px",
     "position": "relative",
     "boxShadow": "none",
     "textShadow": "none",
@@ -37294,9 +37294,9 @@
     "webkitTextStrokeColor": "rgb(240, 217, 163)",
     "_rect": [
      0,
-     160,
+     161,
      820,
-     925
+     928
     ]
    },
    ".ph": {
@@ -37344,7 +37344,7 @@
     "webkitTextStrokeColor": "rgba(239, 217, 164, 0.36)",
     "_rect": [
      703.5,
-     168,
+     169,
      111.5,
      161.5
     ]
@@ -37394,7 +37394,7 @@
     "webkitTextStrokeColor": "rgba(239, 217, 164, 0.36)",
     "_rect": [
      5,
-     168,
+     169,
      111.5,
      161.5
     ]
@@ -37444,7 +37444,7 @@
     "webkitTextStrokeColor": "rgb(240, 217, 163)",
     "_rect": [
      703.5,
-     484,
+     485,
      111.5,
      161.5
     ]
@@ -37494,7 +37494,7 @@
     "webkitTextStrokeColor": "rgb(240, 217, 163)",
     "_rect": [
      703.5,
-     484,
+     485,
      111.5,
      161.5
     ]
@@ -37544,7 +37544,7 @@
     "webkitTextStrokeColor": "rgb(240, 217, 163)",
     "_rect": [
      703.5,
-     168,
+     169,
      111.5,
      161.5
     ]
@@ -37594,7 +37594,7 @@
     "webkitTextStrokeColor": "rgb(240, 217, 163)",
     "_rect": [
      703.5,
-     168,
+     169,
      111.5,
      161.5
     ]
@@ -37789,12 +37789,12 @@
     "backgroundColor": "rgba(0, 0, 0, 0)",
     "backgroundImage": "none",
     "opacity": "1",
-    "borderTopWidth": "4px",
+    "borderTopWidth": "0px",
     "borderRightWidth": "0px",
     "borderBottomWidth": "0px",
     "borderLeftWidth": "0px",
-    "borderTopStyle": "double",
-    "borderTopColor": "rgba(222, 184, 112, 0.9)",
+    "borderTopStyle": "none",
+    "borderTopColor": "rgb(240, 217, 163)",
     "borderRightColor": "rgb(240, 217, 163)",
     "borderBottomColor": "rgb(240, 217, 163)",
     "borderLeftColor": "rgb(240, 217, 163)",
@@ -37811,7 +37811,7 @@
     "minHeight": "auto",
     "minWidth": "auto",
     "width": "792px",
-    "height": "95px",
+    "height": "91px",
     "position": "relative",
     "boxShadow": "none",
     "textShadow": "none",
@@ -37820,9 +37820,9 @@
     "webkitTextStrokeColor": "rgb(240, 217, 163)",
     "_rect": [
      14,
-     1085,
+     1089,
      792,
-     95
+     91
     ]
    },
    "#btnDeal": {
@@ -42873,12 +42873,12 @@
     "opacity": "1",
     "borderTopWidth": "0px",
     "borderRightWidth": "0px",
-    "borderBottomWidth": "2px",
+    "borderBottomWidth": "0px",
     "borderLeftWidth": "0px",
     "borderTopStyle": "none",
     "borderTopColor": "rgb(240, 217, 163)",
     "borderRightColor": "rgb(240, 217, 163)",
-    "borderBottomColor": "rgba(222, 184, 112, 0.92)",
+    "borderBottomColor": "rgb(240, 217, 163)",
     "borderLeftColor": "rgb(240, 217, 163)",
     "borderRadius": "0px",
     "paddingTop": "7px",
@@ -42893,7 +42893,7 @@
     "minHeight": "auto",
     "minWidth": "auto",
     "width": "918.609px",
-    "height": "61.75px",
+    "height": "59.75px",
     "position": "static",
     "boxShadow": "none",
     "textShadow": "none",
@@ -42904,7 +42904,7 @@
      54,
      7,
      918.5,
-     62
+     60
     ]
    },
    ".brand": {
@@ -43393,7 +43393,7 @@
     "minHeight": "0px",
     "minWidth": "auto",
     "width": "946.609px",
-    "height": "751.25px",
+    "height": "753.25px",
     "position": "relative",
     "boxShadow": "none",
     "textShadow": "none",
@@ -43402,9 +43402,9 @@
     "webkitTextStrokeColor": "rgb(240, 217, 163)",
     "_rect": [
      40,
-     69,
+     67,
      946.5,
-     751.5
+     753.5
     ]
    },
    ".ph": {
@@ -43447,12 +43447,12 @@
     "position": "absolute",
     "boxShadow": "none",
     "textShadow": "none",
-    "transform": "matrix(1, 0, 0, 1, 840.123, 306.253)",
+    "transform": "matrix(1, 0, 0, 1, 840.123, 307.253)",
     "webkitTextStrokeWidth": "0px",
     "webkitTextStrokeColor": "rgba(239, 217, 164, 0.36)",
     "_rect": [
      880,
-     375,
+     374,
      95.5,
      138.5
     ]
@@ -43502,7 +43502,7 @@
     "webkitTextStrokeColor": "rgba(239, 217, 164, 0.36)",
     "_rect": [
      51.5,
-     73,
+     71,
      95.5,
      138.5
     ]
@@ -43552,7 +43552,7 @@
     "webkitTextStrokeColor": "rgb(240, 217, 163)",
     "_rect": [
      769.5,
-     172.5,
+     170.5,
      95.5,
      138.5
     ]
@@ -43602,7 +43602,7 @@
     "webkitTextStrokeColor": "rgb(240, 217, 163)",
     "_rect": [
      769.5,
-     172.5,
+     170.5,
      95.5,
      138.5
     ]
@@ -43647,12 +43647,12 @@
     "position": "absolute",
     "boxShadow": "none",
     "textShadow": "none",
-    "transform": "matrix(1, 0, 0, 1, 840.123, 306.253)",
+    "transform": "matrix(1, 0, 0, 1, 840.123, 307.253)",
     "webkitTextStrokeWidth": "0px",
     "webkitTextStrokeColor": "rgb(240, 217, 163)",
     "_rect": [
      880,
-     375,
+     374,
      95.5,
      138.5
     ]
@@ -43702,7 +43702,7 @@
     "webkitTextStrokeColor": "rgb(240, 217, 163)",
     "_rect": [
      880,
-     375,
+     374,
      95.5,
      138.5
     ]
@@ -43900,12 +43900,12 @@
     "borderTopWidth": "0px",
     "borderRightWidth": "0px",
     "borderBottomWidth": "0px",
-    "borderLeftWidth": "4px",
+    "borderLeftWidth": "0px",
     "borderTopStyle": "none",
     "borderTopColor": "rgb(240, 217, 163)",
     "borderRightColor": "rgb(240, 217, 163)",
     "borderBottomColor": "rgb(240, 217, 163)",
-    "borderLeftColor": "rgba(222, 184, 112, 0.9)",
+    "borderLeftColor": "rgb(240, 217, 163)",
     "borderRadius": "0px",
     "paddingTop": "10px",
     "paddingRight": "12px",
@@ -43968,7 +43968,7 @@
     "gap": "3px",
     "minHeight": "60px",
     "minWidth": "0px",
-    "width": "125.391px",
+    "width": "129.391px",
     "height": "74px",
     "position": "static",
     "boxShadow": "rgba(239, 226, 193, 0.2) 0px 0px 0px 1px inset, rgba(245, 232, 197, 0.12) 0px 1px 0px 0px",
@@ -43977,9 +43977,9 @@
     "webkitTextStrokeWidth": "0px",
     "webkitTextStrokeColor": "rgb(239, 217, 164)",
     "_rect": [
-     1042.5,
+     1038.5,
      278,
-     125.5,
+     129.5,
      74
     ]
    },
@@ -44018,7 +44018,7 @@
     "gap": "3px",
     "minHeight": "60px",
     "minWidth": "0px",
-    "width": "125.391px",
+    "width": "129.391px",
     "height": "74px",
     "position": "static",
     "boxShadow": "rgba(239, 226, 193, 0.2) 0px 0px 0px 1px inset, rgba(245, 232, 197, 0.12) 0px 1px 0px 0px",
@@ -44027,9 +44027,9 @@
     "webkitTextStrokeWidth": "0px",
     "webkitTextStrokeColor": "rgb(239, 217, 164)",
     "_rect": [
-     1042.5,
+     1038.5,
      364,
-     125.5,
+     129.5,
      74
     ]
    },
@@ -44068,7 +44068,7 @@
     "gap": "3px",
     "minHeight": "60px",
     "minWidth": "0px",
-    "width": "125.391px",
+    "width": "129.391px",
     "height": "74px",
     "position": "static",
     "boxShadow": "rgba(239, 226, 193, 0.2) 0px 0px 0px 1px inset, rgba(245, 232, 197, 0.12) 0px 1px 0px 0px",
@@ -44077,9 +44077,9 @@
     "webkitTextStrokeWidth": "0px",
     "webkitTextStrokeColor": "rgb(239, 217, 164)",
     "_rect": [
-     1042.5,
+     1038.5,
      450,
-     125.5,
+     129.5,
      74
     ]
    },
@@ -44118,7 +44118,7 @@
     "gap": "3px",
     "minHeight": "60px",
     "minWidth": "0px",
-    "width": "125.391px",
+    "width": "129.391px",
     "height": "60px",
     "position": "static",
     "boxShadow": "rgba(239, 226, 193, 0.2) 0px 0px 0px 1px inset, rgba(245, 232, 197, 0.12) 0px 1px 0px 0px",
@@ -44127,9 +44127,9 @@
     "webkitTextStrokeWidth": "0px",
     "webkitTextStrokeColor": "rgb(239, 217, 164)",
     "_rect": [
-     1042.5,
+     1038.5,
      536,
-     125.5,
+     129.5,
      60
     ]
    },
@@ -44177,7 +44177,7 @@
     "webkitTextStrokeWidth": "0px",
     "webkitTextStrokeColor": "rgb(239, 217, 164)",
     "_rect": [
-     1080.5,
+     1078.5,
      320,
      49,
      20
@@ -44277,7 +44277,7 @@
     "webkitTextStrokeWidth": "0px",
     "webkitTextStrokeColor": "rgb(239, 217, 164)",
     "_rect": [
-     1092,
+     1090,
      290,
      27,
      27

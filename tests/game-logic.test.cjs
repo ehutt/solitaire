@@ -389,15 +389,21 @@ test("vintage settings copy and stock treatment preserve the intended hierarchy"
   assert.doesNotMatch(html, /#controls::before\{\s*content:"◆"/);
 });
 
-test("vintage header keeps one rule and quiet title ornaments", () => {
+test("vintage header uses one simple printer's rule between the title and stats", () => {
   const hud = html.match(/body\[data-card-style="crehore"\] #hud\{([^}]*)\}/)?.[1];
   const chips = html.match(/body\[data-card-style="crehore"\] \.chips\{([^}]*)\}/)?.[1];
   const rosette = html.match(/body\[data-card-style="crehore"\] \.brand-rosette\{([^}]*)\}/)?.[1];
-  assert.match(hud, /border-top:0/);
-  assert.match(hud, /border-bottom:4px double/);
-  assert.match(chips, /border-top:0/);
+  const controls = html.match(/body\[data-card-style="crehore"\] #controls\{([^}]*)\}/)?.[1];
+  assert.match(hud, /border:0/);
+  assert.doesNotMatch(hud, /double/);
+  assert.match(chips, /border:0;margin:0;padding-top:2px/);
+  assert.match(html, /--vintage-divider-display:block/);
+  assert.match(html, /<div class="vintage-divider" aria-hidden="true"><\/div>/);
+  assert.doesNotMatch(html, /M34 6C26 6 25 2 19 2|M414 6c22 0 27-5 43-5/);
   assert.match(rosette, /width:\.62em;height:\.62em/);
   assert.match(rosette, /opacity:\.68/);
+  assert.match(controls, /border:0/);
+  assert.doesNotMatch(controls, /double/);
   assert.doesNotMatch(html, /\.chips::before|\.chips::after/);
 });
 

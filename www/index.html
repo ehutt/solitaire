@@ -120,6 +120,8 @@
     --chrome-ink-muted:var(--muted);   /* captions and secondary rows */
     --control-ink:var(--text);  /* the control rail's label colour */
     --rule:rgba(255,255,255,.07);        /* hairlines between rows */
+    --vintage-divider-display:none;
+    --vintage-divider-ink:currentColor;
     /* Surfaces. A theme swaps the whole paint — gradient, grain and all — by
        restating these, so no component ever names a colour. */
     --surface-sheet:linear-gradient(180deg,#123b2e,#0c2a20);
@@ -196,6 +198,10 @@
   .brand .pip{
     width:.82em;height:.82em;flex:none;align-self:center;overflow:visible;
     color:var(--brass);fill:currentColor;
+  }
+  .vintage-divider{
+    display:var(--vintage-divider-display);width:100%;height:1px;
+    margin:3.5px 0;background:var(--vintage-divider-ink);
   }
   /* Classic's type sizes. Everything the theme changes about size lives here;
      the components themselves never learn which theme is on. */
@@ -964,6 +970,8 @@
     --chrome-ink-muted:var(--vintage-ink-mid);
     --control-ink:var(--vintage-ink);
     --rule:rgba(var(--vintage-ink-rgb),.2);
+    --vintage-divider-display:block;
+    --vintage-divider-ink:rgba(var(--vintage-rule-rgb),.52);
     --slider-accent:var(--vintage-ink);
     --surface-sheet:
       repeating-linear-gradient(0deg,rgba(255,255,255,.025) 0 1px,transparent 1px 3px),
@@ -1007,11 +1015,10 @@
   body[data-card-style="crehore"] #app{position:relative;z-index:1}
 
   body[data-card-style="crehore"] #hud{
-    display:grid;grid-template-columns:1fr;gap:4px;
+    display:grid;grid-template-columns:1fr;gap:0;
     margin:calc(env(safe-area-inset-top,0px) + 6px) 14px 0;
     padding:7px 0 4px;
-    border-top:0;
-    border-bottom:4px double rgba(var(--vintage-rule-rgb),.92);
+    border:0;
   }
   body[data-card-style="crehore"] .brand{
     width:100%;justify-content:center;align-items:center;gap:clamp(9px,3vw,22px);
@@ -1028,7 +1035,7 @@
   body[data-card-style="crehore"] .brand-rosette:last-child{transform:rotate(5deg) scale(.96)}
   body[data-card-style="crehore"] .chips{
     position:relative;width:100%;justify-content:center;gap:0;
-    border-top:0;padding-top:1px;
+    border:0;margin:0;padding-top:2px;
     align-items:baseline;
   }
   /* H6 stat line: figures larger than their labels, one quiet row that stays
@@ -1069,7 +1076,7 @@
 
   body[data-card-style="crehore"] #controls{
     position:relative;margin:0 14px;padding:9px 0 calc(env(safe-area-inset-bottom,0px) + 11px);
-    gap:8px;border-top:4px double rgba(var(--vintage-rule-rgb),.9);
+    gap:8px;border:0;
   }
   body[data-card-style="crehore"] #controls button{
     display:inline-flex;align-items:center;justify-content:center;gap:6px;
@@ -1166,10 +1173,11 @@
     body[data-card-style="crehore"] #controls .vintage-icon{width:18px;height:18px}
   }
   @media (orientation:landscape){
+    body[data-card-style="crehore"]{--vintage-divider-display:none}
     body[data-card-style="crehore"] #hud{
       display:flex;gap:10px;margin:calc(env(safe-area-inset-top,0px) + 4px)
         8px 0 8px;
-      padding:4px 0;border-width:2px;
+      padding:4px 0;
     }
     body[data-card-style="crehore"]{
       /* Optically matched to Classic, not numerically. IM Fell English carries a
@@ -1188,13 +1196,13 @@
     }
     body[data-card-style="crehore"] .brand-rosette{width:.55em;height:.55em}
     body[data-card-style="crehore"] .chips{
-      width:auto;border:0;padding:0;
+      width:auto;border:0;margin:0;padding:0;
     }
     body[data-card-style="crehore"] .chip{min-height:0;padding:0 .55em}
     body[data-card-style="crehore"] #controls{
       position:fixed;left:auto;right:env(safe-area-inset-right,0px);
       top:calc(env(safe-area-inset-top, 0px) + 38px);bottom:env(safe-area-inset-bottom, 0px);
-      width:var(--control-rail);margin:0;border-top:0;border-left:4px double rgba(var(--vintage-rule-rgb),.9);
+      width:var(--control-rail);margin:0;border:0;
       padding:6px 8px 6px 10px;gap:8px;
     }
     body[data-card-style="crehore"] #controls::before{display:none}
@@ -1412,6 +1420,7 @@
         <use href="#rosetteArt"/>
       </svg>
     </div>
+    <div class="vintage-divider" aria-hidden="true"></div>
     <div class="chips">
       <span class="chip" title="Time"><small>Time</small><b id="vTime">0:00</b></span>
       <span class="chip" title="Moves"><small>Moves</small><b id="vMoves">0</b></span>
