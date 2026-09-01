@@ -273,7 +273,15 @@ for (const cardStyle of STYLES) {
           return {
             top:box.top,
             bottom:box.bottom,
+            height:box.height,
             overflow:panel.scrollHeight-panel.clientHeight,
+            scoreBorders:[
+              getComputedStyle(panel.querySelector(".statgrid")).borderTopWidth,
+              getComputedStyle(panel.querySelector(".statgrid")).borderBottomWidth
+            ],
+            badgePunctuation:[...panel.querySelectorAll(".badge")].map((badge) =>
+              getComputedStyle(badge,"::after").content
+            ),
             actions:actions.map((action) => {
               const actionBox = action.getBoundingClientRect();
               return {
@@ -288,6 +296,10 @@ for (const cardStyle of STYLES) {
         expect(dialog.top).toBeGreaterThanOrEqual(0);
         expect(dialog.bottom).toBeLessThanOrEqual(viewport.height);
         expect(dialog.overflow).toBeLessThanOrEqual(1);
+        const compactHeightRatio = viewport.width > viewport.height ? 0.87 : 0.5;
+        expect(dialog.height).toBeLessThanOrEqual(viewport.height * compactHeightRatio);
+        expect(dialog.scoreBorders).toEqual(["0px","0px"]);
+        expect(dialog.badgePunctuation).toEqual(['","','","','","',"none"]);
         expect(dialog.actions.map(({ label }) => label)).toEqual([
           "New deal","Restart deal","Admire the cascade."
         ]);

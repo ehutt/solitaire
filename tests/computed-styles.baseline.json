@@ -4474,10 +4474,10 @@
     "borderBottomColor": "rgba(92, 73, 37, 0.32)",
     "borderLeftColor": "rgba(92, 73, 37, 0.32)",
     "borderRadius": "8px",
-    "paddingTop": "28px",
-    "paddingRight": "26px",
-    "paddingBottom": "22px",
-    "paddingLeft": "26px",
+    "paddingTop": "22px",
+    "paddingRight": "22px",
+    "paddingBottom": "18px",
+    "paddingLeft": "22px",
     "display": "block",
     "flexDirection": "row",
     "justifyContent": "normal",
@@ -4486,7 +4486,7 @@
     "minHeight": "auto",
     "minWidth": "auto",
     "width": "350px",
-    "height": "377.141px",
+    "height": "326.547px",
     "position": "static",
     "boxShadow": "rgba(0, 0, 0, 0.38) 0px 16px 36px 0px",
     "textShadow": "none",
@@ -4495,18 +4495,18 @@
     "webkitTextStrokeColor": "rgb(38, 40, 46)",
     "_rect": [
      20,
-     233.5,
+     258.5,
      350,
-     377
+     326.5
     ]
    },
    ".panel h2": {
     "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
-    "fontSize": "32px",
+    "fontSize": "29.6px",
     "fontWeight": "400",
     "fontStyle": "normal",
-    "lineHeight": "34.56px",
-    "letterSpacing": "0.32px",
+    "lineHeight": "31.968px",
+    "letterSpacing": "0.296px",
     "textTransform": "none",
     "fontVariantNumeric": "normal",
     "textAlign": "center",
@@ -4535,8 +4535,8 @@
     "gap": "normal",
     "minHeight": "0px",
     "minWidth": "0px",
-    "width": "296px",
-    "height": "34.5469px",
+    "width": "304px",
+    "height": "31.9531px",
     "position": "static",
     "boxShadow": "none",
     "textShadow": "none",
@@ -4544,10 +4544,10 @@
     "webkitTextStrokeWidth": "0px",
     "webkitTextStrokeColor": "rgb(38, 40, 46)",
     "_rect": [
-     47,
-     262.5,
-     296,
-     34.5
+     43,
+     281.5,
+     304,
+     32
     ]
    },
    ".panel .sub": {
@@ -4585,7 +4585,7 @@
     "gap": "normal",
     "minHeight": "0px",
     "minWidth": "0px",
-    "width": "296px",
+    "width": "304px",
     "height": "22.6719px",
     "position": "static",
     "boxShadow": "none",
@@ -4594,9 +4594,9 @@
     "webkitTextStrokeWidth": "0px",
     "webkitTextStrokeColor": "rgb(122, 111, 86)",
     "_rect": [
-     47,
-     303,
-     296,
+     43,
+     319.5,
+     304,
      22.5
     ]
    },
@@ -4614,9 +4614,9 @@
     "backgroundColor": "rgba(0, 0, 0, 0)",
     "backgroundImage": "none",
     "opacity": "1",
-    "borderTopWidth": "1px",
+    "borderTopWidth": "0px",
     "borderRightWidth": "0px",
-    "borderBottomWidth": "1px",
+    "borderBottomWidth": "0px",
     "borderLeftWidth": "0px",
     "borderTopStyle": "solid",
     "borderTopColor": "rgba(92, 73, 37, 0.32)",
@@ -4624,9 +4624,9 @@
     "borderBottomColor": "rgba(92, 73, 37, 0.32)",
     "borderLeftColor": "rgb(38, 40, 46)",
     "borderRadius": "0px",
-    "paddingTop": "14px",
+    "paddingTop": "7px",
     "paddingRight": "0px",
-    "paddingBottom": "14px",
+    "paddingBottom": "7px",
     "paddingLeft": "0px",
     "display": "flex",
     "flexDirection": "row",
@@ -4635,8 +4635,8 @@
     "gap": "18px",
     "minHeight": "0px",
     "minWidth": "0px",
-    "width": "296px",
-    "height": "77.9219px",
+    "width": "304px",
+    "height": "61.9219px",
     "position": "static",
     "boxShadow": "none",
     "textShadow": "none",
@@ -4644,10 +4644,10 @@
     "webkitTextStrokeWidth": "0px",
     "webkitTextStrokeColor": "rgb(38, 40, 46)",
     "_rect": [
-     47,
-     343.5,
-     296,
-     78
+     43,
+     352.5,
+     304,
+     62
     ]
    },
    ".stat": {
@@ -4695,7 +4695,7 @@
     "webkitTextStrokeColor": "rgb(38, 40, 46)",
     "_rect": [
      72,
-     358.5,
+     359.5,
      70,
      48
     ]
@@ -4745,7 +4745,7 @@
     "webkitTextStrokeColor": "rgb(38, 40, 46)",
     "_rect": [
      72,
-     358.5,
+     359.5,
      70,
      30
     ]
@@ -4795,7 +4795,7 @@
     "webkitTextStrokeColor": "rgb(138, 125, 96)",
     "_rect": [
      90.5,
-     391.5,
+     392.5,
      32.5,
      15
     ]
@@ -4835,7 +4835,7 @@
     "gap": "normal",
     "minHeight": "0px",
     "minWidth": "0px",
-    "width": "296px",
+    "width": "304px",
     "height": "0px",
     "position": "static",
     "boxShadow": "none",
@@ -4844,9 +4844,9 @@
     "webkitTextStrokeWidth": "0px",
     "webkitTextStrokeColor": "rgb(38, 40, 46)",
     "_rect": [
-     47,
-     431.5,
-     296,
+     43,
+     418.5,
+     304,
      0
     ]
    },
@@ -4983,11 +4983,11 @@
     "flexDirection": "column",
     "justifyContent": "center",
     "alignItems": "center",
-    "gap": "8px",
+    "gap": "6px",
     "minHeight": "0px",
     "minWidth": "0px",
-    "width": "296px",
-    "height": "152px",
+    "width": "304px",
+    "height": "144px",
     "position": "static",
     "boxShadow": "none",
     "textShadow": "none",
@@ -4995,10 +4995,10 @@
     "webkitTextStrokeWidth": "0px",
     "webkitTextStrokeColor": "rgb(38, 40, 46)",
     "_rect": [
-     47,
-     435.5,
-     296,
-     152
+     43,
+     422.5,
+     304,
+     144
     ]
    },
    ".dialog-action.primary": {
@@ -5025,19 +5025,19 @@
     "borderBottomColor": "rgba(92, 73, 37, 0.32)",
     "borderLeftColor": "rgba(92, 73, 37, 0.32)",
     "borderRadius": "999px",
-    "paddingTop": "11px",
-    "paddingRight": "13px",
-    "paddingBottom": "11px",
-    "paddingLeft": "13px",
+    "paddingTop": "10px",
+    "paddingRight": "12px",
+    "paddingBottom": "10px",
+    "paddingLeft": "12px",
     "display": "block",
     "flexDirection": "row",
     "justifyContent": "normal",
     "alignItems": "normal",
     "gap": "normal",
-    "minHeight": "46px",
+    "minHeight": "44px",
     "minWidth": "auto",
     "width": "270px",
-    "height": "46px",
+    "height": "44px",
     "position": "static",
     "boxShadow": "none",
     "textShadow": "none",
@@ -5046,9 +5046,9 @@
     "webkitTextStrokeColor": "rgb(250, 245, 233)",
     "_rect": [
      60,
-     435.5,
+     422.5,
      270,
-     46
+     44
     ]
    },
    ".dialog-action.secondary": {
@@ -5075,19 +5075,19 @@
     "borderBottomColor": "rgba(92, 73, 37, 0.32)",
     "borderLeftColor": "rgba(92, 73, 37, 0.32)",
     "borderRadius": "999px",
-    "paddingTop": "11px",
-    "paddingRight": "13px",
-    "paddingBottom": "11px",
-    "paddingLeft": "13px",
+    "paddingTop": "10px",
+    "paddingRight": "12px",
+    "paddingBottom": "10px",
+    "paddingLeft": "12px",
     "display": "block",
     "flexDirection": "row",
     "justifyContent": "normal",
     "alignItems": "normal",
     "gap": "normal",
-    "minHeight": "46px",
+    "minHeight": "44px",
     "minWidth": "auto",
     "width": "270px",
-    "height": "46px",
+    "height": "44px",
     "position": "static",
     "boxShadow": "none",
     "textShadow": "none",
@@ -5096,9 +5096,9 @@
     "webkitTextStrokeColor": "rgb(38, 40, 46)",
     "_rect": [
      60,
-     489.5,
+     472.5,
      270,
-     46
+     44
     ]
    },
    ".dialog-action.quiet": {
@@ -5146,7 +5146,7 @@
     "webkitTextStrokeColor": "rgb(109, 98, 72)",
     "_rect": [
      60,
-     543.5,
+     522.5,
      270,
      44
     ]
@@ -10582,10 +10582,10 @@
     "borderBottomColor": "rgba(92, 73, 37, 0.32)",
     "borderLeftColor": "rgba(92, 73, 37, 0.32)",
     "borderRadius": "8px",
-    "paddingTop": "14px",
-    "paddingRight": "26px",
-    "paddingBottom": "12px",
-    "paddingLeft": "26px",
+    "paddingTop": "10px",
+    "paddingRight": "24px",
+    "paddingBottom": "10px",
+    "paddingLeft": "24px",
     "display": "block",
     "flexDirection": "row",
     "justifyContent": "normal",
@@ -10594,7 +10594,7 @@
     "minHeight": "auto",
     "minWidth": "auto",
     "width": "620px",
-    "height": "312.141px",
+    "height": "285.547px",
     "position": "static",
     "boxShadow": "rgba(0, 0, 0, 0.38) 0px 16px 36px 0px",
     "textShadow": "none",
@@ -10603,18 +10603,18 @@
     "webkitTextStrokeColor": "rgb(38, 40, 46)",
     "_rect": [
      112,
-     39,
+     52,
      620,
-     312
+     285.5
     ]
    },
    ".panel h2": {
     "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
-    "fontSize": "32px",
+    "fontSize": "29.6px",
     "fontWeight": "400",
     "fontStyle": "normal",
-    "lineHeight": "34.56px",
-    "letterSpacing": "0.32px",
+    "lineHeight": "31.968px",
+    "letterSpacing": "0.296px",
     "textTransform": "none",
     "fontVariantNumeric": "normal",
     "textAlign": "center",
@@ -10643,8 +10643,8 @@
     "gap": "normal",
     "minHeight": "0px",
     "minWidth": "0px",
-    "width": "566px",
-    "height": "34.5469px",
+    "width": "570px",
+    "height": "31.9531px",
     "position": "static",
     "boxShadow": "none",
     "textShadow": "none",
@@ -10652,10 +10652,10 @@
     "webkitTextStrokeWidth": "0px",
     "webkitTextStrokeColor": "rgb(38, 40, 46)",
     "_rect": [
-     139,
-     54,
-     566,
-     34.5
+     137,
+     63,
+     570,
+     32
     ]
    },
    ".panel .sub": {
@@ -10693,7 +10693,7 @@
     "gap": "normal",
     "minHeight": "0px",
     "minWidth": "0px",
-    "width": "566px",
+    "width": "570px",
     "height": "22.6719px",
     "position": "static",
     "boxShadow": "none",
@@ -10702,9 +10702,9 @@
     "webkitTextStrokeWidth": "0px",
     "webkitTextStrokeColor": "rgb(122, 111, 86)",
     "_rect": [
-     139,
-     94.5,
-     566,
+     137,
+     101,
+     570,
      22.5
     ]
    },
@@ -10722,9 +10722,9 @@
     "backgroundColor": "rgba(0, 0, 0, 0)",
     "backgroundImage": "none",
     "opacity": "1",
-    "borderTopWidth": "1px",
+    "borderTopWidth": "0px",
     "borderRightWidth": "0px",
-    "borderBottomWidth": "1px",
+    "borderBottomWidth": "0px",
     "borderLeftWidth": "0px",
     "borderTopStyle": "solid",
     "borderTopColor": "rgba(92, 73, 37, 0.32)",
@@ -10732,9 +10732,9 @@
     "borderBottomColor": "rgba(92, 73, 37, 0.32)",
     "borderLeftColor": "rgb(38, 40, 46)",
     "borderRadius": "0px",
-    "paddingTop": "8px",
+    "paddingTop": "4px",
     "paddingRight": "0px",
-    "paddingBottom": "8px",
+    "paddingBottom": "4px",
     "paddingLeft": "0px",
     "display": "flex",
     "flexDirection": "row",
@@ -10743,8 +10743,8 @@
     "gap": "18px",
     "minHeight": "0px",
     "minWidth": "0px",
-    "width": "566px",
-    "height": "65.9219px",
+    "width": "570px",
+    "height": "55.9219px",
     "position": "static",
     "boxShadow": "none",
     "textShadow": "none",
@@ -10752,10 +10752,10 @@
     "webkitTextStrokeWidth": "0px",
     "webkitTextStrokeColor": "rgb(38, 40, 46)",
     "_rect": [
-     139,
-     122,
-     566,
-     66
+     137,
+     127,
+     570,
+     56
     ]
    },
    ".stat": {
@@ -10943,7 +10943,7 @@
     "gap": "normal",
     "minHeight": "0px",
     "minWidth": "0px",
-    "width": "566px",
+    "width": "570px",
     "height": "0px",
     "position": "static",
     "boxShadow": "none",
@@ -10952,9 +10952,9 @@
     "webkitTextStrokeWidth": "0px",
     "webkitTextStrokeColor": "rgb(38, 40, 46)",
     "_rect": [
-     139,
-     193,
-     566,
+     137,
+     185,
+     570,
      0
     ]
    },
@@ -11094,8 +11094,8 @@
     "gap": "4px",
     "minHeight": "0px",
     "minWidth": "0px",
-    "width": "566px",
-    "height": "144px",
+    "width": "570px",
+    "height": "140px",
     "position": "static",
     "boxShadow": "none",
     "textShadow": "none",
@@ -11103,10 +11103,10 @@
     "webkitTextStrokeWidth": "0px",
     "webkitTextStrokeColor": "rgb(38, 40, 46)",
     "_rect": [
-     139,
-     194,
-     566,
-     144
+     137,
+     187,
+     570,
+     140
     ]
    },
    ".dialog-action.primary": {
@@ -11133,19 +11133,19 @@
     "borderBottomColor": "rgba(92, 73, 37, 0.32)",
     "borderLeftColor": "rgba(92, 73, 37, 0.32)",
     "borderRadius": "999px",
-    "paddingTop": "10px",
+    "paddingTop": "9px",
     "paddingRight": "12px",
-    "paddingBottom": "10px",
+    "paddingBottom": "9px",
     "paddingLeft": "12px",
     "display": "block",
     "flexDirection": "row",
     "justifyContent": "normal",
     "alignItems": "normal",
     "gap": "normal",
-    "minHeight": "46px",
+    "minHeight": "44px",
     "minWidth": "auto",
     "width": "270px",
-    "height": "46px",
+    "height": "44px",
     "position": "static",
     "boxShadow": "none",
     "textShadow": "none",
@@ -11154,9 +11154,9 @@
     "webkitTextStrokeColor": "rgb(250, 245, 233)",
     "_rect": [
      287,
-     194,
+     187,
      270,
-     46
+     44
     ]
    },
    ".dialog-action.secondary": {
@@ -11183,19 +11183,19 @@
     "borderBottomColor": "rgba(92, 73, 37, 0.32)",
     "borderLeftColor": "rgba(92, 73, 37, 0.32)",
     "borderRadius": "999px",
-    "paddingTop": "10px",
+    "paddingTop": "9px",
     "paddingRight": "12px",
-    "paddingBottom": "10px",
+    "paddingBottom": "9px",
     "paddingLeft": "12px",
     "display": "block",
     "flexDirection": "row",
     "justifyContent": "normal",
     "alignItems": "normal",
     "gap": "normal",
-    "minHeight": "46px",
+    "minHeight": "44px",
     "minWidth": "auto",
     "width": "270px",
-    "height": "46px",
+    "height": "44px",
     "position": "static",
     "boxShadow": "none",
     "textShadow": "none",
@@ -11204,9 +11204,9 @@
     "webkitTextStrokeColor": "rgb(38, 40, 46)",
     "_rect": [
      287,
-     244,
+     235,
      270,
-     46
+     44
     ]
    },
    ".dialog-action.quiet": {
@@ -11254,7 +11254,7 @@
     "webkitTextStrokeColor": "rgb(109, 98, 72)",
     "_rect": [
      287,
-     294,
+     283,
      270,
      44
     ]
@@ -16690,9 +16690,9 @@
     "borderBottomColor": "rgba(92, 73, 37, 0.32)",
     "borderLeftColor": "rgba(92, 73, 37, 0.32)",
     "borderRadius": "8px",
-    "paddingTop": "42px",
+    "paddingTop": "34px",
     "paddingRight": "38px",
-    "paddingBottom": "32px",
+    "paddingBottom": "26px",
     "paddingLeft": "38px",
     "display": "block",
     "flexDirection": "row",
@@ -16702,7 +16702,7 @@
     "minHeight": "auto",
     "minWidth": "auto",
     "width": "520px",
-    "height": "380.109px",
+    "height": "313.188px",
     "position": "static",
     "boxShadow": "rgba(0, 0, 0, 0.38) 0px 16px 36px 0px",
     "textShadow": "none",
@@ -16711,18 +16711,18 @@
     "webkitTextStrokeColor": "rgb(38, 40, 46)",
     "_rect": [
      150,
-     400,
+     433.5,
      520,
-     380
+     313
     ]
    },
    ".panel h2": {
     "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
-    "fontSize": "44px",
+    "fontSize": "37.6px",
     "fontWeight": "400",
     "fontStyle": "normal",
-    "lineHeight": "47.52px",
-    "letterSpacing": "0.44px",
+    "lineHeight": "40.608px",
+    "letterSpacing": "0.376px",
     "textTransform": "none",
     "fontVariantNumeric": "normal",
     "textAlign": "center",
@@ -16752,7 +16752,7 @@
     "minHeight": "0px",
     "minWidth": "0px",
     "width": "442px",
-    "height": "47.5156px",
+    "height": "40.5938px",
     "position": "static",
     "boxShadow": "none",
     "textShadow": "none",
@@ -16761,9 +16761,9 @@
     "webkitTextStrokeColor": "rgb(38, 40, 46)",
     "_rect": [
      189,
-     443,
+     468.5,
      442,
-     47.5
+     40.5
     ]
    },
    ".panel .sub": {
@@ -16811,7 +16811,7 @@
     "webkitTextStrokeColor": "rgb(122, 111, 86)",
     "_rect": [
      189,
-     496.5,
+     515,
      442,
      27
     ]
@@ -16830,9 +16830,9 @@
     "backgroundColor": "rgba(0, 0, 0, 0)",
     "backgroundImage": "none",
     "opacity": "1",
-    "borderTopWidth": "1px",
+    "borderTopWidth": "0px",
     "borderRightWidth": "0px",
-    "borderBottomWidth": "1px",
+    "borderBottomWidth": "0px",
     "borderLeftWidth": "0px",
     "borderTopStyle": "solid",
     "borderTopColor": "rgba(92, 73, 37, 0.32)",
@@ -16840,9 +16840,9 @@
     "borderBottomColor": "rgba(92, 73, 37, 0.32)",
     "borderLeftColor": "rgb(38, 40, 46)",
     "borderRadius": "0px",
-    "paddingTop": "14px",
+    "paddingTop": "10px",
     "paddingRight": "0px",
-    "paddingBottom": "14px",
+    "paddingBottom": "10px",
     "paddingLeft": "0px",
     "display": "flex",
     "flexDirection": "row",
@@ -16852,7 +16852,7 @@
     "minHeight": "0px",
     "minWidth": "0px",
     "width": "442px",
-    "height": "87.5938px",
+    "height": "77.5938px",
     "position": "static",
     "boxShadow": "none",
     "textShadow": "none",
@@ -16861,9 +16861,9 @@
     "webkitTextStrokeColor": "rgb(38, 40, 46)",
     "_rect": [
      189,
-     549.5,
+     560,
      442,
-     87.5
+     77.5
     ]
    },
    ".stat": {
@@ -16911,7 +16911,7 @@
     "webkitTextStrokeColor": "rgb(38, 40, 46)",
     "_rect": [
      218.5,
-     564.5,
+     570,
      105,
      57.5
     ]
@@ -16961,7 +16961,7 @@
     "webkitTextStrokeColor": "rgb(38, 40, 46)",
     "_rect": [
      218.5,
-     564.5,
+     570,
      105,
      39.5
     ]
@@ -17011,7 +17011,7 @@
     "webkitTextStrokeColor": "rgb(138, 125, 96)",
     "_rect": [
      250,
-     604,
+     609.5,
      42,
      18
     ]
@@ -17061,7 +17061,7 @@
     "webkitTextStrokeColor": "rgb(38, 40, 46)",
     "_rect": [
      189,
-     661,
+     649.5,
      442,
      0
     ]
@@ -17199,11 +17199,11 @@
     "flexDirection": "row",
     "justifyContent": "center",
     "alignItems": "center",
-    "gap": "8px",
+    "gap": "6px",
     "minHeight": "0px",
     "minWidth": "0px",
     "width": "442px",
-    "height": "86px",
+    "height": "70px",
     "position": "static",
     "boxShadow": "none",
     "textShadow": "none",
@@ -17212,9 +17212,9 @@
     "webkitTextStrokeColor": "rgb(38, 40, 46)",
     "_rect": [
      189,
-     661,
+     649.5,
      442,
-     86
+     70
     ]
    },
    ".dialog-action.primary": {
@@ -17241,19 +17241,19 @@
     "borderBottomColor": "rgba(92, 73, 37, 0.32)",
     "borderLeftColor": "rgba(92, 73, 37, 0.32)",
     "borderRadius": "999px",
-    "paddingTop": "16px",
+    "paddingTop": "14px",
     "paddingRight": "18px",
-    "paddingBottom": "16px",
+    "paddingBottom": "14px",
     "paddingLeft": "18px",
     "display": "block",
     "flexDirection": "row",
     "justifyContent": "normal",
     "alignItems": "normal",
     "gap": "normal",
-    "minHeight": "46px",
+    "minHeight": "44px",
     "minWidth": "auto",
-    "width": "146.875px",
-    "height": "60px",
+    "width": "148.188px",
+    "height": "56px",
     "position": "static",
     "boxShadow": "none",
     "textShadow": "none",
@@ -17262,9 +17262,9 @@
     "webkitTextStrokeColor": "rgb(250, 245, 233)",
     "_rect": [
      189,
-     674,
-     147,
-     60
+     656.5,
+     148,
+     56
     ]
    },
    ".dialog-action.secondary": {
@@ -17291,19 +17291,19 @@
     "borderBottomColor": "rgba(92, 73, 37, 0.32)",
     "borderLeftColor": "rgba(92, 73, 37, 0.32)",
     "borderRadius": "999px",
-    "paddingTop": "16px",
+    "paddingTop": "14px",
     "paddingRight": "18px",
-    "paddingBottom": "16px",
+    "paddingBottom": "14px",
     "paddingLeft": "18px",
     "display": "block",
     "flexDirection": "row",
     "justifyContent": "normal",
     "alignItems": "normal",
     "gap": "normal",
-    "minHeight": "46px",
+    "minHeight": "44px",
     "minWidth": "auto",
-    "width": "146.859px",
-    "height": "86px",
+    "width": "148.172px",
+    "height": "56px",
     "position": "static",
     "boxShadow": "none",
     "textShadow": "none",
@@ -17311,10 +17311,10 @@
     "webkitTextStrokeWidth": "0px",
     "webkitTextStrokeColor": "rgb(38, 40, 46)",
     "_rect": [
-     344,
-     661,
-     147,
-     86
+     343,
+     656.5,
+     148,
+     56
     ]
    },
    ".dialog-action.quiet": {
@@ -17352,7 +17352,7 @@
     "gap": "normal",
     "minHeight": "44px",
     "minWidth": "auto",
-    "width": "132.266px",
+    "width": "133.641px",
     "height": "70px",
     "position": "static",
     "boxShadow": "none",
@@ -17361,9 +17361,9 @@
     "webkitTextStrokeWidth": "0px",
     "webkitTextStrokeColor": "rgb(109, 98, 72)",
     "_rect": [
-     498.5,
-     669,
-     132.5,
+     497.5,
+     649.5,
+     133.5,
      70
     ]
    }
@@ -22798,9 +22798,9 @@
     "borderBottomColor": "rgba(92, 73, 37, 0.32)",
     "borderLeftColor": "rgba(92, 73, 37, 0.32)",
     "borderRadius": "8px",
-    "paddingTop": "30px",
+    "paddingTop": "26px",
     "paddingRight": "36px",
-    "paddingBottom": "26px",
+    "paddingBottom": "22px",
     "paddingLeft": "36px",
     "display": "block",
     "flexDirection": "row",
@@ -22810,7 +22810,7 @@
     "minHeight": "auto",
     "minWidth": "auto",
     "width": "520px",
-    "height": "326.109px",
+    "height": "287.188px",
     "position": "static",
     "boxShadow": "rgba(0, 0, 0, 0.38) 0px 16px 36px 0px",
     "textShadow": "none",
@@ -22819,18 +22819,18 @@
     "webkitTextStrokeColor": "rgb(38, 40, 46)",
     "_rect": [
      330,
-     247,
+     266.5,
      520,
-     326
+     287
     ]
    },
    ".panel h2": {
     "fontFamily": "Marcellus, \"Iowan Old Style\", \"Palatino Nova\", Palatino, \"Book Antiqua\", Georgia, serif",
-    "fontSize": "44px",
+    "fontSize": "37.6px",
     "fontWeight": "400",
     "fontStyle": "normal",
-    "lineHeight": "47.52px",
-    "letterSpacing": "0.44px",
+    "lineHeight": "40.608px",
+    "letterSpacing": "0.376px",
     "textTransform": "none",
     "fontVariantNumeric": "normal",
     "textAlign": "center",
@@ -22860,7 +22860,7 @@
     "minHeight": "0px",
     "minWidth": "0px",
     "width": "446px",
-    "height": "47.5156px",
+    "height": "40.5938px",
     "position": "static",
     "boxShadow": "none",
     "textShadow": "none",
@@ -22869,9 +22869,9 @@
     "webkitTextStrokeColor": "rgb(38, 40, 46)",
     "_rect": [
      367,
-     278,
+     293.5,
      446,
-     47.5
+     40.5
     ]
    },
    ".panel .sub": {
@@ -22919,7 +22919,7 @@
     "webkitTextStrokeColor": "rgb(122, 111, 86)",
     "_rect": [
      367,
-     331.5,
+     340,
      446,
      27
     ]
@@ -22938,9 +22938,9 @@
     "backgroundColor": "rgba(0, 0, 0, 0)",
     "backgroundImage": "none",
     "opacity": "1",
-    "borderTopWidth": "1px",
+    "borderTopWidth": "0px",
     "borderRightWidth": "0px",
-    "borderBottomWidth": "1px",
+    "borderBottomWidth": "0px",
     "borderLeftWidth": "0px",
     "borderTopStyle": "solid",
     "borderTopColor": "rgba(92, 73, 37, 0.32)",
@@ -22948,9 +22948,9 @@
     "borderBottomColor": "rgba(92, 73, 37, 0.32)",
     "borderLeftColor": "rgb(38, 40, 46)",
     "borderRadius": "0px",
-    "paddingTop": "14px",
+    "paddingTop": "8px",
     "paddingRight": "0px",
-    "paddingBottom": "14px",
+    "paddingBottom": "8px",
     "paddingLeft": "0px",
     "display": "flex",
     "flexDirection": "row",
@@ -22960,7 +22960,7 @@
     "minHeight": "0px",
     "minWidth": "0px",
     "width": "446px",
-    "height": "87.5938px",
+    "height": "73.5938px",
     "position": "static",
     "boxShadow": "none",
     "textShadow": "none",
@@ -22969,9 +22969,9 @@
     "webkitTextStrokeColor": "rgb(38, 40, 46)",
     "_rect": [
      367,
-     374.5,
+     379,
      446,
-     87.5
+     73.5
     ]
    },
    ".stat": {
@@ -23019,7 +23019,7 @@
     "webkitTextStrokeColor": "rgb(38, 40, 46)",
     "_rect": [
      398.5,
-     389.5,
+     387,
      105,
      57.5
     ]
@@ -23069,7 +23069,7 @@
     "webkitTextStrokeColor": "rgb(38, 40, 46)",
     "_rect": [
      398.5,
-     389.5,
+     387,
      105,
      39.5
     ]
@@ -23119,7 +23119,7 @@
     "webkitTextStrokeColor": "rgb(138, 125, 96)",
     "_rect": [
      430,
-     429,
+     426.5,
      42,
      18
     ]
@@ -23169,7 +23169,7 @@
     "webkitTextStrokeColor": "rgb(38, 40, 46)",
     "_rect": [
      367,
-     476,
+     460.5,
      446,
      0
     ]
@@ -23320,7 +23320,7 @@
     "webkitTextStrokeColor": "rgb(38, 40, 46)",
     "_rect": [
      367,
-     476,
+     460.5,
      446,
      70
     ]
@@ -23349,19 +23349,19 @@
     "borderBottomColor": "rgba(92, 73, 37, 0.32)",
     "borderLeftColor": "rgba(92, 73, 37, 0.32)",
     "borderRadius": "999px",
-    "paddingTop": "13px",
+    "paddingTop": "12px",
     "paddingRight": "16px",
-    "paddingBottom": "13px",
+    "paddingBottom": "12px",
     "paddingLeft": "16px",
     "display": "block",
     "flexDirection": "row",
     "justifyContent": "normal",
     "alignItems": "normal",
     "gap": "normal",
-    "minHeight": "46px",
+    "minHeight": "44px",
     "minWidth": "auto",
     "width": "149.844px",
-    "height": "54px",
+    "height": "52px",
     "position": "static",
     "boxShadow": "none",
     "textShadow": "none",
@@ -23370,9 +23370,9 @@
     "webkitTextStrokeColor": "rgb(250, 245, 233)",
     "_rect": [
      367,
-     484,
+     469.5,
      150,
-     54
+     52
     ]
    },
    ".dialog-action.secondary": {
@@ -23399,19 +23399,19 @@
     "borderBottomColor": "rgba(92, 73, 37, 0.32)",
     "borderLeftColor": "rgba(92, 73, 37, 0.32)",
     "borderRadius": "999px",
-    "paddingTop": "13px",
+    "paddingTop": "12px",
     "paddingRight": "16px",
-    "paddingBottom": "13px",
+    "paddingBottom": "12px",
     "paddingLeft": "16px",
     "display": "block",
     "flexDirection": "row",
     "justifyContent": "normal",
     "alignItems": "normal",
     "gap": "normal",
-    "minHeight": "46px",
+    "minHeight": "44px",
     "minWidth": "auto",
     "width": "149.828px",
-    "height": "54px",
+    "height": "52px",
     "position": "static",
     "boxShadow": "none",
     "textShadow": "none",
@@ -23420,9 +23420,9 @@
     "webkitTextStrokeColor": "rgb(38, 40, 46)",
     "_rect": [
      521,
-     484,
+     469.5,
      150,
-     54
+     52
     ]
    },
    ".dialog-action.quiet": {
@@ -23470,7 +23470,7 @@
     "webkitTextStrokeColor": "rgb(109, 98, 72)",
     "_rect": [
      674.5,
-     476,
+     460.5,
      138.5,
      70
     ]
@@ -28906,10 +28906,10 @@
     "borderBottomColor": "rgba(76, 23, 24, 0.68)",
     "borderLeftColor": "rgba(76, 23, 24, 0.68)",
     "borderRadius": "7px",
-    "paddingTop": "28px",
-    "paddingRight": "26px",
-    "paddingBottom": "22px",
-    "paddingLeft": "26px",
+    "paddingTop": "22px",
+    "paddingRight": "22px",
+    "paddingBottom": "18px",
+    "paddingLeft": "22px",
     "display": "block",
     "flexDirection": "row",
     "justifyContent": "normal",
@@ -28918,7 +28918,7 @@
     "minHeight": "auto",
     "minWidth": "auto",
     "width": "350px",
-    "height": "383.141px",
+    "height": "334.062px",
     "position": "static",
     "boxShadow": "rgba(0, 0, 0, 0.38) 0px 16px 36px 0px",
     "textShadow": "none",
@@ -28927,18 +28927,18 @@
     "webkitTextStrokeColor": "rgb(76, 23, 24)",
     "_rect": [
      20,
-     230.5,
+     255,
      350,
-     383
+     334
     ]
    },
    ".panel h2": {
     "fontFamily": "\"IM Fell English\", Baskerville, \"Iowan Old Style\", Georgia, serif",
-    "fontSize": "32px",
+    "fontSize": "29.6px",
     "fontWeight": "400",
     "fontStyle": "normal",
-    "lineHeight": "34.56px",
-    "letterSpacing": "0.32px",
+    "lineHeight": "31.968px",
+    "letterSpacing": "0.296px",
     "textTransform": "none",
     "fontVariantNumeric": "normal",
     "textAlign": "center",
@@ -28967,8 +28967,8 @@
     "gap": "normal",
     "minHeight": "0px",
     "minWidth": "0px",
-    "width": "292px",
-    "height": "34.5469px",
+    "width": "300px",
+    "height": "31.9531px",
     "position": "static",
     "boxShadow": "none",
     "textShadow": "none",
@@ -28976,18 +28976,18 @@
     "webkitTextStrokeWidth": "0px",
     "webkitTextStrokeColor": "rgb(76, 23, 24)",
     "_rect": [
-     49,
-     261.5,
-     292,
-     34.5
+     45,
+     280,
+     300,
+     32
     ]
    },
    ".panel .sub": {
     "fontFamily": "\"IM Fell English\", Baskerville, \"Iowan Old Style\", Palatino, Georgia, serif",
-    "fontSize": "16.8px",
+    "fontSize": "17.92px",
     "fontWeight": "400",
     "fontStyle": "normal",
-    "lineHeight": "22.68px",
+    "lineHeight": "24.192px",
     "letterSpacing": "normal",
     "textTransform": "none",
     "fontVariantNumeric": "normal",
@@ -29017,8 +29017,8 @@
     "gap": "normal",
     "minHeight": "0px",
     "minWidth": "0px",
-    "width": "292px",
-    "height": "22.6719px",
+    "width": "300px",
+    "height": "24.1875px",
     "position": "static",
     "boxShadow": "none",
     "textShadow": "none",
@@ -29026,10 +29026,10 @@
     "webkitTextStrokeWidth": "0px",
     "webkitTextStrokeColor": "rgb(122, 111, 86)",
     "_rect": [
-     49,
-     302,
-     292,
-     22.5
+     45,
+     318,
+     300,
+     24
     ]
    },
    ".statgrid": {
@@ -29046,9 +29046,9 @@
     "backgroundColor": "rgba(0, 0, 0, 0)",
     "backgroundImage": "none",
     "opacity": "1",
-    "borderTopWidth": "1px",
+    "borderTopWidth": "0px",
     "borderRightWidth": "0px",
-    "borderBottomWidth": "1px",
+    "borderBottomWidth": "0px",
     "borderLeftWidth": "0px",
     "borderTopStyle": "solid",
     "borderTopColor": "rgba(92, 73, 37, 0.32)",
@@ -29056,9 +29056,9 @@
     "borderBottomColor": "rgba(92, 73, 37, 0.32)",
     "borderLeftColor": "rgb(76, 23, 24)",
     "borderRadius": "0px",
-    "paddingTop": "14px",
+    "paddingTop": "7px",
     "paddingRight": "0px",
-    "paddingBottom": "14px",
+    "paddingBottom": "7px",
     "paddingLeft": "0px",
     "display": "flex",
     "flexDirection": "row",
@@ -29067,8 +29067,8 @@
     "gap": "18px",
     "minHeight": "0px",
     "minWidth": "0px",
-    "width": "292px",
-    "height": "79.9219px",
+    "width": "300px",
+    "height": "63.9219px",
     "position": "static",
     "boxShadow": "none",
     "textShadow": "none",
@@ -29076,10 +29076,10 @@
     "webkitTextStrokeWidth": "0px",
     "webkitTextStrokeColor": "rgb(76, 23, 24)",
     "_rect": [
-     49,
-     342.5,
-     292,
-     80
+     45,
+     352,
+     300,
+     64
     ]
    },
    ".stat": {
@@ -29127,7 +29127,7 @@
     "webkitTextStrokeColor": "rgb(76, 23, 24)",
     "_rect": [
      72,
-     357.5,
+     359,
      70,
      50
     ]
@@ -29177,18 +29177,18 @@
     "webkitTextStrokeColor": "rgb(76, 23, 24)",
     "_rect": [
      72,
-     357.5,
+     359,
      70,
      30
     ]
    },
    ".stat span": {
     "fontFamily": "\"IM Fell English\", Baskerville, \"Iowan Old Style\", Palatino, Georgia, serif",
-    "fontSize": "12.16px",
+    "fontSize": "13.12px",
     "fontWeight": "400",
     "fontStyle": "normal",
     "lineHeight": "normal",
-    "letterSpacing": "0.9728px",
+    "letterSpacing": "1.0496px",
     "textTransform": "uppercase",
     "fontVariantNumeric": "normal",
     "textAlign": "center",
@@ -29226,10 +29226,10 @@
     "webkitTextStrokeWidth": "0px",
     "webkitTextStrokeColor": "rgb(138, 125, 96)",
     "_rect": [
-     88,
-     390.5,
-     38,
-     15
+     86.5,
+     391,
+     41,
+     17
     ]
    },
    "#wBadges": {
@@ -29267,7 +29267,7 @@
     "gap": "normal",
     "minHeight": "0px",
     "minWidth": "0px",
-    "width": "292px",
+    "width": "300px",
     "height": "0px",
     "position": "static",
     "boxShadow": "none",
@@ -29276,19 +29276,19 @@
     "webkitTextStrokeWidth": "0px",
     "webkitTextStrokeColor": "rgb(76, 23, 24)",
     "_rect": [
-     49,
-     432.5,
-     292,
+     45,
+     420,
+     300,
      0
     ]
    },
    ".badge": "ABSENT",
    ".panel .note": {
     "fontFamily": "\"IM Fell English\", Baskerville, \"Iowan Old Style\", Palatino, Georgia, serif",
-    "fontSize": "16px",
+    "fontSize": "17.12px",
     "fontWeight": "400",
     "fontStyle": "normal",
-    "lineHeight": "22.4px",
+    "lineHeight": "23.968px",
     "letterSpacing": "normal",
     "textTransform": "none",
     "fontVariantNumeric": "normal",
@@ -29335,7 +29335,7 @@
    },
    ".progress-note": {
     "fontFamily": "\"IM Fell English\", Baskerville, \"Iowan Old Style\", Palatino, Georgia, serif",
-    "fontSize": "13.44px",
+    "fontSize": "14.72px",
     "fontWeight": "400",
     "fontStyle": "normal",
     "lineHeight": "normal",
@@ -29415,11 +29415,11 @@
     "flexDirection": "column",
     "justifyContent": "center",
     "alignItems": "center",
-    "gap": "8px",
+    "gap": "6px",
     "minHeight": "0px",
     "minWidth": "0px",
-    "width": "292px",
-    "height": "152px",
+    "width": "300px",
+    "height": "144px",
     "position": "static",
     "boxShadow": "none",
     "textShadow": "none",
@@ -29427,15 +29427,15 @@
     "webkitTextStrokeWidth": "0px",
     "webkitTextStrokeColor": "rgb(76, 23, 24)",
     "_rect": [
-     49,
-     436.5,
-     292,
-     152
+     45,
+     424,
+     300,
+     144
     ]
    },
    ".dialog-action.primary": {
     "fontFamily": "\"IM Fell English\", Baskerville, \"Iowan Old Style\", Palatino, Georgia, serif",
-    "fontSize": "16.32px",
+    "fontSize": "17.28px",
     "fontWeight": "600",
     "fontStyle": "normal",
     "lineHeight": "normal",
@@ -29457,19 +29457,19 @@
     "borderBottomColor": "rgba(76, 23, 24, 0.58)",
     "borderLeftColor": "rgba(76, 23, 24, 0.58)",
     "borderRadius": "999px",
-    "paddingTop": "11px",
-    "paddingRight": "13px",
-    "paddingBottom": "11px",
-    "paddingLeft": "13px",
+    "paddingTop": "10px",
+    "paddingRight": "12px",
+    "paddingBottom": "10px",
+    "paddingLeft": "12px",
     "display": "block",
     "flexDirection": "row",
     "justifyContent": "normal",
     "alignItems": "normal",
     "gap": "normal",
-    "minHeight": "46px",
+    "minHeight": "44px",
     "minWidth": "auto",
     "width": "270px",
-    "height": "46px",
+    "height": "44px",
     "position": "static",
     "boxShadow": "none",
     "textShadow": "none",
@@ -29478,14 +29478,14 @@
     "webkitTextStrokeColor": "rgb(243, 231, 201)",
     "_rect": [
      60,
-     436.5,
+     424,
      270,
-     46
+     44
     ]
    },
    ".dialog-action.secondary": {
     "fontFamily": "\"IM Fell English\", Baskerville, \"Iowan Old Style\", Palatino, Georgia, serif",
-    "fontSize": "16.32px",
+    "fontSize": "17.28px",
     "fontWeight": "600",
     "fontStyle": "normal",
     "lineHeight": "normal",
@@ -29507,19 +29507,19 @@
     "borderBottomColor": "rgba(76, 23, 24, 0.58)",
     "borderLeftColor": "rgba(76, 23, 24, 0.58)",
     "borderRadius": "999px",
-    "paddingTop": "11px",
-    "paddingRight": "13px",
-    "paddingBottom": "11px",
-    "paddingLeft": "13px",
+    "paddingTop": "10px",
+    "paddingRight": "12px",
+    "paddingBottom": "10px",
+    "paddingLeft": "12px",
     "display": "block",
     "flexDirection": "row",
     "justifyContent": "normal",
     "alignItems": "normal",
     "gap": "normal",
-    "minHeight": "46px",
+    "minHeight": "44px",
     "minWidth": "auto",
     "width": "270px",
-    "height": "46px",
+    "height": "44px",
     "position": "static",
     "boxShadow": "none",
     "textShadow": "none",
@@ -29528,14 +29528,14 @@
     "webkitTextStrokeColor": "rgb(76, 23, 24)",
     "_rect": [
      60,
-     490.5,
+     474,
      270,
-     46
+     44
     ]
    },
    ".dialog-action.quiet": {
     "fontFamily": "\"IM Fell English\", Baskerville, \"Iowan Old Style\", Palatino, Georgia, serif",
-    "fontSize": "16.32px",
+    "fontSize": "17.28px",
     "fontWeight": "500",
     "fontStyle": "normal",
     "lineHeight": "normal",
@@ -29578,7 +29578,7 @@
     "webkitTextStrokeColor": "rgb(118, 83, 74)",
     "_rect": [
      60,
-     544.5,
+     524,
      270,
      44
     ]
@@ -29737,10 +29737,10 @@
    },
    ".panel .sub": {
     "fontFamily": "\"IM Fell English\", Baskerville, \"Iowan Old Style\", Palatino, Georgia, serif",
-    "fontSize": "16.8px",
+    "fontSize": "17.92px",
     "fontWeight": "400",
     "fontStyle": "normal",
-    "lineHeight": "22.68px",
+    "lineHeight": "24.192px",
     "letterSpacing": "normal",
     "textTransform": "none",
     "fontVariantNumeric": "normal",
@@ -29837,10 +29837,10 @@
    },
    ".panel .note": {
     "fontFamily": "\"IM Fell English\", Baskerville, \"Iowan Old Style\", Palatino, Georgia, serif",
-    "fontSize": "16px",
+    "fontSize": "17.12px",
     "fontWeight": "400",
     "fontStyle": "normal",
-    "lineHeight": "22.4px",
+    "lineHeight": "23.968px",
     "letterSpacing": "normal",
     "textTransform": "none",
     "fontVariantNumeric": "normal",
@@ -29937,7 +29937,7 @@
    },
    ".dialog-action.primary": {
     "fontFamily": "\"IM Fell English\", Baskerville, \"Iowan Old Style\", Palatino, Georgia, serif",
-    "fontSize": "16.32px",
+    "fontSize": "17.28px",
     "fontWeight": "600",
     "fontStyle": "normal",
     "lineHeight": "normal",
@@ -29987,7 +29987,7 @@
    },
    ".dialog-action.secondary": {
     "fontFamily": "\"IM Fell English\", Baskerville, \"Iowan Old Style\", Palatino, Georgia, serif",
-    "fontSize": "16.32px",
+    "fontSize": "17.28px",
     "fontWeight": "600",
     "fontStyle": "normal",
     "lineHeight": "normal",
@@ -30037,7 +30037,7 @@
    },
    ".dialog-action.quiet": {
     "fontFamily": "\"IM Fell English\", Baskerville, \"Iowan Old Style\", Palatino, Georgia, serif",
-    "fontSize": "16.32px",
+    "fontSize": "17.28px",
     "fontWeight": "500",
     "fontStyle": "normal",
     "lineHeight": "normal",
@@ -30173,7 +30173,7 @@
     "minHeight": "auto",
     "minWidth": "auto",
     "width": "350px",
-    "height": "288.438px",
+    "height": "291.469px",
     "position": "static",
     "boxShadow": "rgba(0, 0, 0, 0.38) 0px 16px 36px 0px",
     "textShadow": "none",
@@ -30182,9 +30182,9 @@
     "webkitTextStrokeColor": "rgb(76, 23, 24)",
     "_rect": [
      20,
-     278,
+     276.5,
      350,
-     288.5
+     291.5
     ]
    },
    ".panel h2": {
@@ -30232,17 +30232,17 @@
     "webkitTextStrokeColor": "rgb(76, 23, 24)",
     "_rect": [
      49,
-     309,
+     307.5,
      292,
      69
     ]
    },
    ".panel .sub": {
     "fontFamily": "\"IM Fell English\", Baskerville, \"Iowan Old Style\", Palatino, Georgia, serif",
-    "fontSize": "16.8px",
+    "fontSize": "17.92px",
     "fontWeight": "400",
     "fontStyle": "normal",
-    "lineHeight": "22.68px",
+    "lineHeight": "24.192px",
     "letterSpacing": "normal",
     "textTransform": "none",
     "fontVariantNumeric": "normal",
@@ -30273,7 +30273,7 @@
     "minHeight": "0px",
     "minWidth": "0px",
     "width": "292px",
-    "height": "45.3438px",
+    "height": "48.375px",
     "position": "static",
     "boxShadow": "none",
     "textShadow": "none",
@@ -30282,9 +30282,9 @@
     "webkitTextStrokeColor": "rgb(122, 111, 86)",
     "_rect": [
      49,
-     384,
+     382.5,
      292,
-     45.5
+     48.5
     ]
    },
    ".statgrid": {
@@ -30339,10 +30339,10 @@
    },
    ".panel .note": {
     "fontFamily": "\"IM Fell English\", Baskerville, \"Iowan Old Style\", Palatino, Georgia, serif",
-    "fontSize": "16px",
+    "fontSize": "17.12px",
     "fontWeight": "400",
     "fontStyle": "normal",
-    "lineHeight": "22.4px",
+    "lineHeight": "23.968px",
     "letterSpacing": "normal",
     "textTransform": "none",
     "fontVariantNumeric": "normal",
@@ -30432,14 +30432,14 @@
     "webkitTextStrokeColor": "rgb(76, 23, 24)",
     "_rect": [
      49,
-     443,
+     444.5,
      292,
      98
     ]
    },
    ".dialog-action.primary": {
     "fontFamily": "\"IM Fell English\", Baskerville, \"Iowan Old Style\", Palatino, Georgia, serif",
-    "fontSize": "16.32px",
+    "fontSize": "17.28px",
     "fontWeight": "600",
     "fontStyle": "normal",
     "lineHeight": "normal",
@@ -30482,14 +30482,14 @@
     "webkitTextStrokeColor": "rgb(243, 231, 201)",
     "_rect": [
      60,
-     443,
+     444.5,
      270,
      46
     ]
    },
    ".dialog-action.quiet": {
     "fontFamily": "\"IM Fell English\", Baskerville, \"Iowan Old Style\", Palatino, Georgia, serif",
-    "fontSize": "16.32px",
+    "fontSize": "17.28px",
     "fontWeight": "500",
     "fontStyle": "normal",
     "lineHeight": "normal",
@@ -30532,7 +30532,7 @@
     "webkitTextStrokeColor": "rgb(118, 83, 74)",
     "_rect": [
      60,
-     497,
+     498.5,
      270,
      44
     ]
@@ -35014,10 +35014,10 @@
     "borderBottomColor": "rgba(76, 23, 24, 0.68)",
     "borderLeftColor": "rgba(76, 23, 24, 0.68)",
     "borderRadius": "7px",
-    "paddingTop": "14px",
-    "paddingRight": "26px",
-    "paddingBottom": "12px",
-    "paddingLeft": "26px",
+    "paddingTop": "10px",
+    "paddingRight": "24px",
+    "paddingBottom": "10px",
+    "paddingLeft": "24px",
     "display": "block",
     "flexDirection": "row",
     "justifyContent": "normal",
@@ -35026,7 +35026,7 @@
     "minHeight": "auto",
     "minWidth": "auto",
     "width": "620px",
-    "height": "318.141px",
+    "height": "293.062px",
     "position": "static",
     "boxShadow": "rgba(0, 0, 0, 0.38) 0px 16px 36px 0px",
     "textShadow": "none",
@@ -35035,18 +35035,18 @@
     "webkitTextStrokeColor": "rgb(76, 23, 24)",
     "_rect": [
      112,
-     36,
+     48.5,
      620,
-     318
+     293
     ]
    },
    ".panel h2": {
     "fontFamily": "\"IM Fell English\", Baskerville, \"Iowan Old Style\", Georgia, serif",
-    "fontSize": "32px",
+    "fontSize": "29.6px",
     "fontWeight": "400",
     "fontStyle": "normal",
-    "lineHeight": "34.56px",
-    "letterSpacing": "0.32px",
+    "lineHeight": "31.968px",
+    "letterSpacing": "0.296px",
     "textTransform": "none",
     "fontVariantNumeric": "normal",
     "textAlign": "center",
@@ -35075,8 +35075,8 @@
     "gap": "normal",
     "minHeight": "0px",
     "minWidth": "0px",
-    "width": "562px",
-    "height": "34.5469px",
+    "width": "566px",
+    "height": "31.9531px",
     "position": "static",
     "boxShadow": "none",
     "textShadow": "none",
@@ -35084,18 +35084,18 @@
     "webkitTextStrokeWidth": "0px",
     "webkitTextStrokeColor": "rgb(76, 23, 24)",
     "_rect": [
-     141,
-     53,
-     562,
-     34.5
+     139,
+     61.5,
+     566,
+     32
     ]
    },
    ".panel .sub": {
     "fontFamily": "\"IM Fell English\", Baskerville, \"Iowan Old Style\", Palatino, Georgia, serif",
-    "fontSize": "16.8px",
+    "fontSize": "17.92px",
     "fontWeight": "400",
     "fontStyle": "normal",
-    "lineHeight": "22.68px",
+    "lineHeight": "24.192px",
     "letterSpacing": "normal",
     "textTransform": "none",
     "fontVariantNumeric": "normal",
@@ -35125,8 +35125,8 @@
     "gap": "normal",
     "minHeight": "0px",
     "minWidth": "0px",
-    "width": "562px",
-    "height": "22.6719px",
+    "width": "566px",
+    "height": "24.1875px",
     "position": "static",
     "boxShadow": "none",
     "textShadow": "none",
@@ -35134,10 +35134,10 @@
     "webkitTextStrokeWidth": "0px",
     "webkitTextStrokeColor": "rgb(122, 111, 86)",
     "_rect": [
-     141,
-     93.5,
-     562,
-     22.5
+     139,
+     99.5,
+     566,
+     24
     ]
    },
    ".statgrid": {
@@ -35154,9 +35154,9 @@
     "backgroundColor": "rgba(0, 0, 0, 0)",
     "backgroundImage": "none",
     "opacity": "1",
-    "borderTopWidth": "1px",
+    "borderTopWidth": "0px",
     "borderRightWidth": "0px",
-    "borderBottomWidth": "1px",
+    "borderBottomWidth": "0px",
     "borderLeftWidth": "0px",
     "borderTopStyle": "solid",
     "borderTopColor": "rgba(92, 73, 37, 0.32)",
@@ -35164,9 +35164,9 @@
     "borderBottomColor": "rgba(92, 73, 37, 0.32)",
     "borderLeftColor": "rgb(76, 23, 24)",
     "borderRadius": "0px",
-    "paddingTop": "8px",
+    "paddingTop": "4px",
     "paddingRight": "0px",
-    "paddingBottom": "8px",
+    "paddingBottom": "4px",
     "paddingLeft": "0px",
     "display": "flex",
     "flexDirection": "row",
@@ -35175,8 +35175,8 @@
     "gap": "18px",
     "minHeight": "0px",
     "minWidth": "0px",
-    "width": "562px",
-    "height": "67.9219px",
+    "width": "566px",
+    "height": "57.9219px",
     "position": "static",
     "boxShadow": "none",
     "textShadow": "none",
@@ -35184,10 +35184,10 @@
     "webkitTextStrokeWidth": "0px",
     "webkitTextStrokeColor": "rgb(76, 23, 24)",
     "_rect": [
-     141,
-     121,
-     562,
-     68
+     139,
+     126.5,
+     566,
+     58
     ]
    },
    ".stat": {
@@ -35235,7 +35235,7 @@
     "webkitTextStrokeColor": "rgb(76, 23, 24)",
     "_rect": [
      299,
-     130,
+     130.5,
      70,
      50
     ]
@@ -35285,18 +35285,18 @@
     "webkitTextStrokeColor": "rgb(76, 23, 24)",
     "_rect": [
      299,
-     130,
+     130.5,
      70,
      30
     ]
    },
    ".stat span": {
     "fontFamily": "\"IM Fell English\", Baskerville, \"Iowan Old Style\", Palatino, Georgia, serif",
-    "fontSize": "12.16px",
+    "fontSize": "13.12px",
     "fontWeight": "400",
     "fontStyle": "normal",
     "lineHeight": "normal",
-    "letterSpacing": "0.9728px",
+    "letterSpacing": "1.0496px",
     "textTransform": "uppercase",
     "fontVariantNumeric": "normal",
     "textAlign": "center",
@@ -35334,10 +35334,10 @@
     "webkitTextStrokeWidth": "0px",
     "webkitTextStrokeColor": "rgb(138, 125, 96)",
     "_rect": [
-     315,
-     163,
-     38,
-     15
+     313.5,
+     162.5,
+     41,
+     17
     ]
    },
    "#wBadges": {
@@ -35375,7 +35375,7 @@
     "gap": "normal",
     "minHeight": "0px",
     "minWidth": "0px",
-    "width": "562px",
+    "width": "566px",
     "height": "0px",
     "position": "static",
     "boxShadow": "none",
@@ -35384,19 +35384,19 @@
     "webkitTextStrokeWidth": "0px",
     "webkitTextStrokeColor": "rgb(76, 23, 24)",
     "_rect": [
-     141,
-     194,
-     562,
+     139,
+     186.5,
+     566,
      0
     ]
    },
    ".badge": "ABSENT",
    ".panel .note": {
     "fontFamily": "\"IM Fell English\", Baskerville, \"Iowan Old Style\", Palatino, Georgia, serif",
-    "fontSize": "16px",
+    "fontSize": "17.12px",
     "fontWeight": "400",
     "fontStyle": "normal",
-    "lineHeight": "22.4px",
+    "lineHeight": "23.968px",
     "letterSpacing": "normal",
     "textTransform": "none",
     "fontVariantNumeric": "normal",
@@ -35443,7 +35443,7 @@
    },
    ".progress-note": {
     "fontFamily": "\"IM Fell English\", Baskerville, \"Iowan Old Style\", Palatino, Georgia, serif",
-    "fontSize": "13.44px",
+    "fontSize": "14.72px",
     "fontWeight": "400",
     "fontStyle": "normal",
     "lineHeight": "normal",
@@ -35526,8 +35526,8 @@
     "gap": "4px",
     "minHeight": "0px",
     "minWidth": "0px",
-    "width": "562px",
-    "height": "144px",
+    "width": "566px",
+    "height": "140px",
     "position": "static",
     "boxShadow": "none",
     "textShadow": "none",
@@ -35535,15 +35535,15 @@
     "webkitTextStrokeWidth": "0px",
     "webkitTextStrokeColor": "rgb(76, 23, 24)",
     "_rect": [
-     141,
-     195,
-     562,
-     144
+     139,
+     188.5,
+     566,
+     140
     ]
    },
    ".dialog-action.primary": {
     "fontFamily": "\"IM Fell English\", Baskerville, \"Iowan Old Style\", Palatino, Georgia, serif",
-    "fontSize": "16.32px",
+    "fontSize": "17.28px",
     "fontWeight": "600",
     "fontStyle": "normal",
     "lineHeight": "normal",
@@ -35565,19 +35565,19 @@
     "borderBottomColor": "rgba(76, 23, 24, 0.58)",
     "borderLeftColor": "rgba(76, 23, 24, 0.58)",
     "borderRadius": "999px",
-    "paddingTop": "10px",
+    "paddingTop": "9px",
     "paddingRight": "12px",
-    "paddingBottom": "10px",
+    "paddingBottom": "9px",
     "paddingLeft": "12px",
     "display": "block",
     "flexDirection": "row",
     "justifyContent": "normal",
     "alignItems": "normal",
     "gap": "normal",
-    "minHeight": "46px",
+    "minHeight": "44px",
     "minWidth": "auto",
     "width": "270px",
-    "height": "46px",
+    "height": "44px",
     "position": "static",
     "boxShadow": "none",
     "textShadow": "none",
@@ -35586,14 +35586,14 @@
     "webkitTextStrokeColor": "rgb(243, 231, 201)",
     "_rect": [
      287,
-     195,
+     188.5,
      270,
-     46
+     44
     ]
    },
    ".dialog-action.secondary": {
     "fontFamily": "\"IM Fell English\", Baskerville, \"Iowan Old Style\", Palatino, Georgia, serif",
-    "fontSize": "16.32px",
+    "fontSize": "17.28px",
     "fontWeight": "600",
     "fontStyle": "normal",
     "lineHeight": "normal",
@@ -35615,19 +35615,19 @@
     "borderBottomColor": "rgba(76, 23, 24, 0.58)",
     "borderLeftColor": "rgba(76, 23, 24, 0.58)",
     "borderRadius": "999px",
-    "paddingTop": "10px",
+    "paddingTop": "9px",
     "paddingRight": "12px",
-    "paddingBottom": "10px",
+    "paddingBottom": "9px",
     "paddingLeft": "12px",
     "display": "block",
     "flexDirection": "row",
     "justifyContent": "normal",
     "alignItems": "normal",
     "gap": "normal",
-    "minHeight": "46px",
+    "minHeight": "44px",
     "minWidth": "auto",
     "width": "270px",
-    "height": "46px",
+    "height": "44px",
     "position": "static",
     "boxShadow": "none",
     "textShadow": "none",
@@ -35636,14 +35636,14 @@
     "webkitTextStrokeColor": "rgb(76, 23, 24)",
     "_rect": [
      287,
-     245,
+     236.5,
      270,
-     46
+     44
     ]
    },
    ".dialog-action.quiet": {
     "fontFamily": "\"IM Fell English\", Baskerville, \"Iowan Old Style\", Palatino, Georgia, serif",
-    "fontSize": "16.32px",
+    "fontSize": "17.28px",
     "fontWeight": "500",
     "fontStyle": "normal",
     "lineHeight": "normal",
@@ -35686,7 +35686,7 @@
     "webkitTextStrokeColor": "rgb(118, 83, 74)",
     "_rect": [
      287,
-     295,
+     284.5,
      270,
      44
     ]
@@ -35845,10 +35845,10 @@
    },
    ".panel .sub": {
     "fontFamily": "\"IM Fell English\", Baskerville, \"Iowan Old Style\", Palatino, Georgia, serif",
-    "fontSize": "16.8px",
+    "fontSize": "17.92px",
     "fontWeight": "400",
     "fontStyle": "normal",
-    "lineHeight": "22.68px",
+    "lineHeight": "24.192px",
     "letterSpacing": "normal",
     "textTransform": "none",
     "fontVariantNumeric": "normal",
@@ -35945,10 +35945,10 @@
    },
    ".panel .note": {
     "fontFamily": "\"IM Fell English\", Baskerville, \"Iowan Old Style\", Palatino, Georgia, serif",
-    "fontSize": "16px",
+    "fontSize": "17.12px",
     "fontWeight": "400",
     "fontStyle": "normal",
-    "lineHeight": "22.4px",
+    "lineHeight": "23.968px",
     "letterSpacing": "normal",
     "textTransform": "none",
     "fontVariantNumeric": "normal",
@@ -36045,7 +36045,7 @@
    },
    ".dialog-action.primary": {
     "fontFamily": "\"IM Fell English\", Baskerville, \"Iowan Old Style\", Palatino, Georgia, serif",
-    "fontSize": "16.32px",
+    "fontSize": "17.28px",
     "fontWeight": "600",
     "fontStyle": "normal",
     "lineHeight": "normal",
@@ -36095,7 +36095,7 @@
    },
    ".dialog-action.secondary": {
     "fontFamily": "\"IM Fell English\", Baskerville, \"Iowan Old Style\", Palatino, Georgia, serif",
-    "fontSize": "16.32px",
+    "fontSize": "17.28px",
     "fontWeight": "600",
     "fontStyle": "normal",
     "lineHeight": "normal",
@@ -36145,7 +36145,7 @@
    },
    ".dialog-action.quiet": {
     "fontFamily": "\"IM Fell English\", Baskerville, \"Iowan Old Style\", Palatino, Georgia, serif",
-    "fontSize": "16.32px",
+    "fontSize": "17.28px",
     "fontWeight": "500",
     "fontStyle": "normal",
     "lineHeight": "normal",
@@ -36281,7 +36281,7 @@
     "minHeight": "auto",
     "minWidth": "auto",
     "width": "620px",
-    "height": "197.219px",
+    "height": "198.734px",
     "position": "static",
     "boxShadow": "rgba(0, 0, 0, 0.38) 0px 16px 36px 0px",
     "textShadow": "none",
@@ -36290,9 +36290,9 @@
     "webkitTextStrokeColor": "rgb(76, 23, 24)",
     "_rect": [
      112,
-     96.5,
+     95.5,
      620,
-     197
+     198.5
     ]
    },
    ".panel h2": {
@@ -36340,17 +36340,17 @@
     "webkitTextStrokeColor": "rgb(76, 23, 24)",
     "_rect": [
      141,
-     113.5,
+     112.5,
      562,
      34.5
     ]
    },
    ".panel .sub": {
     "fontFamily": "\"IM Fell English\", Baskerville, \"Iowan Old Style\", Palatino, Georgia, serif",
-    "fontSize": "16.8px",
+    "fontSize": "17.92px",
     "fontWeight": "400",
     "fontStyle": "normal",
-    "lineHeight": "22.68px",
+    "lineHeight": "24.192px",
     "letterSpacing": "normal",
     "textTransform": "none",
     "fontVariantNumeric": "normal",
@@ -36381,7 +36381,7 @@
     "minHeight": "0px",
     "minWidth": "0px",
     "width": "562px",
-    "height": "22.6719px",
+    "height": "24.1875px",
     "position": "static",
     "boxShadow": "none",
     "textShadow": "none",
@@ -36390,9 +36390,9 @@
     "webkitTextStrokeColor": "rgb(122, 111, 86)",
     "_rect": [
      141,
-     154,
+     153,
      562,
-     22.5
+     24
     ]
    },
    ".statgrid": {
@@ -36447,10 +36447,10 @@
    },
    ".panel .note": {
     "fontFamily": "\"IM Fell English\", Baskerville, \"Iowan Old Style\", Palatino, Georgia, serif",
-    "fontSize": "16px",
+    "fontSize": "17.12px",
     "fontWeight": "400",
     "fontStyle": "normal",
-    "lineHeight": "22.4px",
+    "lineHeight": "23.968px",
     "letterSpacing": "normal",
     "textTransform": "none",
     "fontVariantNumeric": "normal",
@@ -36540,14 +36540,14 @@
     "webkitTextStrokeColor": "rgb(76, 23, 24)",
     "_rect": [
      141,
-     184.5,
+     185.5,
      562,
      94
     ]
    },
    ".dialog-action.primary": {
     "fontFamily": "\"IM Fell English\", Baskerville, \"Iowan Old Style\", Palatino, Georgia, serif",
-    "fontSize": "16.32px",
+    "fontSize": "17.28px",
     "fontWeight": "600",
     "fontStyle": "normal",
     "lineHeight": "normal",
@@ -36590,14 +36590,14 @@
     "webkitTextStrokeColor": "rgb(243, 231, 201)",
     "_rect": [
      287,
-     184.5,
+     185.5,
      270,
      46
     ]
    },
    ".dialog-action.quiet": {
     "fontFamily": "\"IM Fell English\", Baskerville, \"Iowan Old Style\", Palatino, Georgia, serif",
-    "fontSize": "16.32px",
+    "fontSize": "17.28px",
     "fontWeight": "500",
     "fontStyle": "normal",
     "lineHeight": "normal",
@@ -36640,7 +36640,7 @@
     "webkitTextStrokeColor": "rgb(118, 83, 74)",
     "_rect": [
      287,
-     234.5,
+     235.5,
      270,
      44
     ]
@@ -41122,9 +41122,9 @@
     "borderBottomColor": "rgba(76, 23, 24, 0.68)",
     "borderLeftColor": "rgba(76, 23, 24, 0.68)",
     "borderRadius": "7px",
-    "paddingTop": "42px",
+    "paddingTop": "34px",
     "paddingRight": "38px",
-    "paddingBottom": "32px",
+    "paddingBottom": "26px",
     "paddingLeft": "38px",
     "display": "block",
     "flexDirection": "row",
@@ -41134,7 +41134,7 @@
     "minHeight": "auto",
     "minWidth": "auto",
     "width": "520px",
-    "height": "370.109px",
+    "height": "319.188px",
     "position": "static",
     "boxShadow": "rgba(0, 0, 0, 0.38) 0px 16px 36px 0px",
     "textShadow": "none",
@@ -41143,18 +41143,18 @@
     "webkitTextStrokeColor": "rgb(76, 23, 24)",
     "_rect": [
      150,
-     405,
+     430.5,
      520,
-     370
+     319
     ]
    },
    ".panel h2": {
     "fontFamily": "\"IM Fell English\", Baskerville, \"Iowan Old Style\", Georgia, serif",
-    "fontSize": "44px",
+    "fontSize": "37.6px",
     "fontWeight": "400",
     "fontStyle": "normal",
-    "lineHeight": "47.52px",
-    "letterSpacing": "0.44px",
+    "lineHeight": "40.608px",
+    "letterSpacing": "0.376px",
     "textTransform": "none",
     "fontVariantNumeric": "normal",
     "textAlign": "center",
@@ -41184,7 +41184,7 @@
     "minHeight": "0px",
     "minWidth": "0px",
     "width": "438px",
-    "height": "47.5156px",
+    "height": "40.5938px",
     "position": "static",
     "boxShadow": "none",
     "textShadow": "none",
@@ -41193,9 +41193,9 @@
     "webkitTextStrokeColor": "rgb(76, 23, 24)",
     "_rect": [
      191,
-     450,
+     467.5,
      438,
-     47.5
+     40.5
     ]
    },
    ".panel .sub": {
@@ -41243,7 +41243,7 @@
     "webkitTextStrokeColor": "rgb(122, 111, 86)",
     "_rect": [
      191,
-     503.5,
+     514,
      438,
      27
     ]
@@ -41262,9 +41262,9 @@
     "backgroundColor": "rgba(0, 0, 0, 0)",
     "backgroundImage": "none",
     "opacity": "1",
-    "borderTopWidth": "1px",
+    "borderTopWidth": "0px",
     "borderRightWidth": "0px",
-    "borderBottomWidth": "1px",
+    "borderBottomWidth": "0px",
     "borderLeftWidth": "0px",
     "borderTopStyle": "solid",
     "borderTopColor": "rgba(92, 73, 37, 0.32)",
@@ -41272,9 +41272,9 @@
     "borderBottomColor": "rgba(92, 73, 37, 0.32)",
     "borderLeftColor": "rgb(76, 23, 24)",
     "borderRadius": "0px",
-    "paddingTop": "14px",
+    "paddingTop": "10px",
     "paddingRight": "0px",
-    "paddingBottom": "14px",
+    "paddingBottom": "10px",
     "paddingLeft": "0px",
     "display": "flex",
     "flexDirection": "row",
@@ -41284,7 +41284,7 @@
     "minHeight": "0px",
     "minWidth": "0px",
     "width": "438px",
-    "height": "89.5938px",
+    "height": "79.5938px",
     "position": "static",
     "boxShadow": "none",
     "textShadow": "none",
@@ -41293,9 +41293,9 @@
     "webkitTextStrokeColor": "rgb(76, 23, 24)",
     "_rect": [
      191,
-     556.5,
+     559,
      438,
-     89.5
+     79.5
     ]
    },
    ".stat": {
@@ -41343,7 +41343,7 @@
     "webkitTextStrokeColor": "rgb(76, 23, 24)",
     "_rect": [
      218.5,
-     571.5,
+     569,
      105,
      59.5
     ]
@@ -41393,7 +41393,7 @@
     "webkitTextStrokeColor": "rgb(76, 23, 24)",
     "_rect": [
      218.5,
-     571.5,
+     569,
      105,
      39.5
     ]
@@ -41443,7 +41443,7 @@
     "webkitTextStrokeColor": "rgb(138, 125, 96)",
     "_rect": [
      246,
-     611,
+     608.5,
      50,
      20
     ]
@@ -41493,7 +41493,7 @@
     "webkitTextStrokeColor": "rgb(76, 23, 24)",
     "_rect": [
      191,
-     670,
+     650.5,
      438,
      0
     ]
@@ -41631,7 +41631,7 @@
     "flexDirection": "row",
     "justifyContent": "center",
     "alignItems": "center",
-    "gap": "8px",
+    "gap": "6px",
     "minHeight": "0px",
     "minWidth": "0px",
     "width": "438px",
@@ -41644,7 +41644,7 @@
     "webkitTextStrokeColor": "rgb(76, 23, 24)",
     "_rect": [
      191,
-     670,
+     650.5,
      438,
      70
     ]
@@ -41673,19 +41673,19 @@
     "borderBottomColor": "rgba(76, 23, 24, 0.58)",
     "borderLeftColor": "rgba(76, 23, 24, 0.58)",
     "borderRadius": "999px",
-    "paddingTop": "16px",
+    "paddingTop": "14px",
     "paddingRight": "18px",
-    "paddingBottom": "16px",
+    "paddingBottom": "14px",
     "paddingLeft": "18px",
     "display": "block",
     "flexDirection": "row",
     "justifyContent": "normal",
     "alignItems": "normal",
     "gap": "normal",
-    "minHeight": "46px",
+    "minHeight": "44px",
     "minWidth": "auto",
-    "width": "145.547px",
-    "height": "60px",
+    "width": "146.859px",
+    "height": "56px",
     "position": "static",
     "boxShadow": "none",
     "textShadow": "none",
@@ -41694,9 +41694,9 @@
     "webkitTextStrokeColor": "rgb(243, 231, 201)",
     "_rect": [
      191,
-     675,
-     145.5,
-     60
+     657.5,
+     147,
+     56
     ]
    },
    ".dialog-action.secondary": {
@@ -41723,19 +41723,19 @@
     "borderBottomColor": "rgba(76, 23, 24, 0.58)",
     "borderLeftColor": "rgba(76, 23, 24, 0.58)",
     "borderRadius": "999px",
-    "paddingTop": "16px",
+    "paddingTop": "14px",
     "paddingRight": "18px",
-    "paddingBottom": "16px",
+    "paddingBottom": "14px",
     "paddingLeft": "18px",
     "display": "block",
     "flexDirection": "row",
     "justifyContent": "normal",
     "alignItems": "normal",
     "gap": "normal",
-    "minHeight": "46px",
+    "minHeight": "44px",
     "minWidth": "auto",
-    "width": "145.531px",
-    "height": "60px",
+    "width": "146.844px",
+    "height": "56px",
     "position": "static",
     "boxShadow": "none",
     "textShadow": "none",
@@ -41743,10 +41743,10 @@
     "webkitTextStrokeWidth": "0px",
     "webkitTextStrokeColor": "rgb(76, 23, 24)",
     "_rect": [
-     344.5,
-     675,
-     145.5,
-     60
+     344,
+     657.5,
+     147,
+     56
     ]
    },
    ".dialog-action.quiet": {
@@ -41784,7 +41784,7 @@
     "gap": "normal",
     "minHeight": "44px",
     "minWidth": "auto",
-    "width": "130.922px",
+    "width": "132.297px",
     "height": "70px",
     "position": "static",
     "boxShadow": "none",
@@ -41793,9 +41793,9 @@
     "webkitTextStrokeWidth": "0px",
     "webkitTextStrokeColor": "rgb(118, 83, 74)",
     "_rect": [
-     498,
-     670,
-     131,
+     496.5,
+     650.5,
+     132.5,
      70
     ]
    }
@@ -47230,9 +47230,9 @@
     "borderBottomColor": "rgba(76, 23, 24, 0.68)",
     "borderLeftColor": "rgba(76, 23, 24, 0.68)",
     "borderRadius": "7px",
-    "paddingTop": "30px",
+    "paddingTop": "26px",
     "paddingRight": "36px",
-    "paddingBottom": "26px",
+    "paddingBottom": "22px",
     "paddingLeft": "36px",
     "display": "block",
     "flexDirection": "row",
@@ -47242,7 +47242,7 @@
     "minHeight": "auto",
     "minWidth": "auto",
     "width": "520px",
-    "height": "332.109px",
+    "height": "293.188px",
     "position": "static",
     "boxShadow": "rgba(0, 0, 0, 0.38) 0px 16px 36px 0px",
     "textShadow": "none",
@@ -47251,18 +47251,18 @@
     "webkitTextStrokeColor": "rgb(76, 23, 24)",
     "_rect": [
      330,
-     244,
+     263.5,
      520,
-     332
+     293
     ]
    },
    ".panel h2": {
     "fontFamily": "\"IM Fell English\", Baskerville, \"Iowan Old Style\", Georgia, serif",
-    "fontSize": "44px",
+    "fontSize": "37.6px",
     "fontWeight": "400",
     "fontStyle": "normal",
-    "lineHeight": "47.52px",
-    "letterSpacing": "0.44px",
+    "lineHeight": "40.608px",
+    "letterSpacing": "0.376px",
     "textTransform": "none",
     "fontVariantNumeric": "normal",
     "textAlign": "center",
@@ -47292,7 +47292,7 @@
     "minHeight": "0px",
     "minWidth": "0px",
     "width": "442px",
-    "height": "47.5156px",
+    "height": "40.5938px",
     "position": "static",
     "boxShadow": "none",
     "textShadow": "none",
@@ -47301,9 +47301,9 @@
     "webkitTextStrokeColor": "rgb(76, 23, 24)",
     "_rect": [
      369,
-     277,
+     292.5,
      442,
-     47.5
+     40.5
     ]
    },
    ".panel .sub": {
@@ -47351,7 +47351,7 @@
     "webkitTextStrokeColor": "rgb(122, 111, 86)",
     "_rect": [
      369,
-     330.5,
+     339,
      442,
      27
     ]
@@ -47370,9 +47370,9 @@
     "backgroundColor": "rgba(0, 0, 0, 0)",
     "backgroundImage": "none",
     "opacity": "1",
-    "borderTopWidth": "1px",
+    "borderTopWidth": "0px",
     "borderRightWidth": "0px",
-    "borderBottomWidth": "1px",
+    "borderBottomWidth": "0px",
     "borderLeftWidth": "0px",
     "borderTopStyle": "solid",
     "borderTopColor": "rgba(92, 73, 37, 0.32)",
@@ -47380,9 +47380,9 @@
     "borderBottomColor": "rgba(92, 73, 37, 0.32)",
     "borderLeftColor": "rgb(76, 23, 24)",
     "borderRadius": "0px",
-    "paddingTop": "14px",
+    "paddingTop": "8px",
     "paddingRight": "0px",
-    "paddingBottom": "14px",
+    "paddingBottom": "8px",
     "paddingLeft": "0px",
     "display": "flex",
     "flexDirection": "row",
@@ -47392,7 +47392,7 @@
     "minHeight": "0px",
     "minWidth": "0px",
     "width": "442px",
-    "height": "89.5938px",
+    "height": "75.5938px",
     "position": "static",
     "boxShadow": "none",
     "textShadow": "none",
@@ -47401,9 +47401,9 @@
     "webkitTextStrokeColor": "rgb(76, 23, 24)",
     "_rect": [
      369,
-     373.5,
+     378,
      442,
-     89.5
+     75.5
     ]
    },
    ".stat": {
@@ -47451,7 +47451,7 @@
     "webkitTextStrokeColor": "rgb(76, 23, 24)",
     "_rect": [
      398.5,
-     388.5,
+     386,
      105,
      59.5
     ]
@@ -47501,7 +47501,7 @@
     "webkitTextStrokeColor": "rgb(76, 23, 24)",
     "_rect": [
      398.5,
-     388.5,
+     386,
      105,
      39.5
     ]
@@ -47551,7 +47551,7 @@
     "webkitTextStrokeColor": "rgb(138, 125, 96)",
     "_rect": [
      426,
-     428,
+     425.5,
      50,
      20
     ]
@@ -47601,7 +47601,7 @@
     "webkitTextStrokeColor": "rgb(76, 23, 24)",
     "_rect": [
      369,
-     477,
+     461.5,
      442,
      0
     ]
@@ -47752,7 +47752,7 @@
     "webkitTextStrokeColor": "rgb(76, 23, 24)",
     "_rect": [
      369,
-     477,
+     461.5,
      442,
      70
     ]
@@ -47781,19 +47781,19 @@
     "borderBottomColor": "rgba(76, 23, 24, 0.58)",
     "borderLeftColor": "rgba(76, 23, 24, 0.58)",
     "borderRadius": "999px",
-    "paddingTop": "13px",
+    "paddingTop": "12px",
     "paddingRight": "16px",
-    "paddingBottom": "13px",
+    "paddingBottom": "12px",
     "paddingLeft": "16px",
     "display": "block",
     "flexDirection": "row",
     "justifyContent": "normal",
     "alignItems": "normal",
     "gap": "normal",
-    "minHeight": "46px",
+    "minHeight": "44px",
     "minWidth": "auto",
     "width": "148.5px",
-    "height": "54px",
+    "height": "52px",
     "position": "static",
     "boxShadow": "none",
     "textShadow": "none",
@@ -47802,9 +47802,9 @@
     "webkitTextStrokeColor": "rgb(243, 231, 201)",
     "_rect": [
      369,
-     485,
+     470.5,
      148.5,
-     54
+     52
     ]
    },
    ".dialog-action.secondary": {
@@ -47831,19 +47831,19 @@
     "borderBottomColor": "rgba(76, 23, 24, 0.58)",
     "borderLeftColor": "rgba(76, 23, 24, 0.58)",
     "borderRadius": "999px",
-    "paddingTop": "13px",
+    "paddingTop": "12px",
     "paddingRight": "16px",
-    "paddingBottom": "13px",
+    "paddingBottom": "12px",
     "paddingLeft": "16px",
     "display": "block",
     "flexDirection": "row",
     "justifyContent": "normal",
     "alignItems": "normal",
     "gap": "normal",
-    "minHeight": "46px",
+    "minHeight": "44px",
     "minWidth": "auto",
     "width": "148.5px",
-    "height": "54px",
+    "height": "52px",
     "position": "static",
     "boxShadow": "none",
     "textShadow": "none",
@@ -47852,9 +47852,9 @@
     "webkitTextStrokeColor": "rgb(76, 23, 24)",
     "_rect": [
      521.5,
-     485,
+     470.5,
      148.5,
-     54
+     52
     ]
    },
    ".dialog-action.quiet": {
@@ -47902,7 +47902,7 @@
     "webkitTextStrokeColor": "rgb(118, 83, 74)",
     "_rect": [
      674,
-     477,
+     461.5,
      137,
      70
     ]
