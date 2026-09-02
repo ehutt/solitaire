@@ -3201,7 +3201,11 @@ function cascade(special=false){
       s.vy += 0.55*dt;
       s.x += s.vx*dt; s.y += s.vy*dt;
       if(s.y > innerHeight-ch){ s.y = innerHeight-ch; s.vy *= -0.78 }
-      if(s.x < -cw*1.5 || s.x > innerWidth+cw*0.5){ s.dead = true; s.el.remove() }
+      if(s.x < -cw*1.5 || s.x > innerWidth+cw*0.5){
+        s.dead = true;
+        s.el.remove();
+        for(const trail of s.trailEls) trail.remove();
+      }
       else{
         const transform = `translate3d(${s.x}px,${s.y}px,0)`;
         s.el.style.transform = transform;

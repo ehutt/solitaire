@@ -347,6 +347,49 @@ test("Classic cascade cards match their foundation faces in both orientations", 
   }
 });
 
+for (const [cardStyle, styleLabel] of [["original", "Classic"], ["crehore", "Vintage"]]) {
+  for (const [orientation, viewport] of [
+    ["portrait", { width: 390, height: 844 }],
+    ["landscape", { width: 844, height: 390 }],
+  ]) {
+    test(`${styleLabel} cascade trails leave with their card in ${orientation}`, async ({ page }) => {
+      await boot(page);
+      await page.setViewportSize(viewport);
+
+      const ids = await page.evaluate((style) => {
+        stopCascadeLoop();
+        settings.cardStyle = style;
+        document.body.dataset.cardStyle = style;
+        P.stock = []; P.waste = []; P.t = Array.from({ length: 7 }, () => []);
+        const fast = cards.find((card) => card.suit === 0 && card.rank === 1);
+        const slow = cards.find((card) => card.suit === 1 && card.rank === 1);
+        P.f = [[fast], [slow], [], []];
+        fast.faceUp = true; slow.faceUp = true;
+        layout();
+
+        const values = [.9, 1, 0, .9, 0, 0];
+        Math.random = () => values.shift() ?? .5;
+        cascade();
+        return { fast: fast.id, slow: slow.id };
+      }, cardStyle);
+
+      await page.waitForFunction(({ fast, slow }) => {
+        const live = (id) => document.querySelector(
+          `.fx-cards .card[data-cascade-id="${id}"]:not(.cascade-trail)`);
+        return !live(fast) && live(slow);
+      }, ids, { timeout: 5000 });
+
+      const trailState = await page.evaluate(({ fast, slow }) => ({
+        fast: document.querySelectorAll(
+          `.fx-cards .cascade-trail[data-cascade-id="${fast}"]`).length,
+        slow: document.querySelectorAll(
+          `.fx-cards .cascade-trail[data-cascade-id="${slow}"]`).length,
+      }), ids);
+      expect(trailState).toEqual({ fast: 0, slow: 6 });
+    });
+  }
+}
+
 test("Classic court faces clip their artwork to every rounded corner", async ({ page }) => {
   await boot(page);
   const faces = await page.evaluate(() => {
