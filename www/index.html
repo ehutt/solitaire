@@ -556,14 +556,6 @@
     opacity:1;transition:opacity 1.2s;
   }
   #fx.fade{opacity:0}
-  .fx-cards{
-    position:fixed;inset:0;pointer-events:none;z-index:500;
-    opacity:1;transition:opacity 1.2s;
-  }
-  .fx-cards.fade{opacity:0}
-  .fx-cards .card{
-    position:fixed;left:0;top:0;transition:none;cursor:default;
-  }
 
   /* ---------- WIN MODAL ---------- */
   #overlay{
@@ -3123,18 +3115,73 @@ function showWin(r){
   openOverlayDialog("btnAgain");
 }
 
-/* ================= win cascade (live card faces, canvas sparkles) ================= */
-let fxTimer = null, fxClearTimer = null, fxCardLayer = null, fxRun = 0;
+/* ================= win cascade (canvas, classic trails) ================= */
+let fxTimer = null, fxClearTimer = null, fxRun = 0;
 // Drop any frame loop and pending canvas clear left behind by an earlier
 // cascade. "Admire the cascade." is usually tapped while the win cascade is
-// still flying: without this both loops share fxTimer and their card layers,
+// still flying: without this both loops share fxTimer and their canvas,
 // and whichever finishes first cancels the other mid-flight — leaving the new
 // run's cards frozen where they launched, on the foundations.
-function stopCascadeLoop(removeCards=true){
+function stopCascadeLoop(){
   if(fxTimer){ cancelAnimationFrame(fxTimer); fxTimer=null }
   if(fxClearTimer){ clearTimeout(fxClearTimer); fxClearTimer=null }
-  if(removeCards && fxCardLayer){ fxCardLayer.remove(); fxCardLayer=null }
   fxRun++;
+}
+function cascadeCanvasFont(style){
+  return `${style.fontStyle} ${style.fontWeight} ${style.fontSize} ${style.fontFamily}`;
+}
+function classicCascadeFace(card,cw,ch,dpr){
+  const source = els.get(card.id);
+  const face = source.querySelector(".front");
+  const bitmap = document.createElement("canvas");
+  bitmap.width = Math.ceil(cw*dpr); bitmap.height = Math.ceil(ch*dpr);
+  const ctx = bitmap.getContext("2d");
+  ctx.scale(dpr,dpr);
+
+  const radius = cw*.085;
+  ctx.save();
+  ctx.beginPath(); ctx.roundRect(0,0,cw,ch,radius); ctx.clip();
+  const palette = getComputedStyle(document.body);
+  const paper = palette.getPropertyValue("--paper").trim();
+  const shade = palette.getPropertyValue("--paper-shade").trim();
+  const wash = ctx.createLinearGradient(0,0,cw,ch);
+  wash.addColorStop(0,paper); wash.addColorStop(.65,paper); wash.addColorStop(1,shade);
+  ctx.fillStyle = wash; ctx.fillRect(0,0,cw,ch);
+
+  const center = source.querySelector(".mid");
+  const art = source.querySelector(".court-art");
+  if(art && art.complete && art.naturalWidth){
+    const boxY = cw*.5-1, boxW = cw+2, boxH = ch-boxY+1;
+    const scale = Math.min(boxW/art.naturalWidth,boxH/art.naturalHeight);
+    const width = art.naturalWidth*scale, height = art.naturalHeight*scale;
+    ctx.drawImage(art,-1+(boxW-width)/2,boxY+boxH-height,width,height);
+  }else if(center){
+    const style = getComputedStyle(center);
+    const size = parseFloat(style.fontSize);
+    ctx.fillStyle = style.color;
+    ctx.font = cascadeCanvasFont(style);
+    ctx.textAlign = "center"; ctx.textBaseline = "middle";
+    ctx.globalAlpha = Number(style.opacity);
+    ctx.fillText(SUITS[card.suit],cw/2,ch/2+size*.15);
+    ctx.globalAlpha = 1;
+  }
+
+  const rank = source.querySelector(".ix i");
+  const suit = source.querySelector(".ix b");
+  const rankStyle = getComputedStyle(rank);
+  const suitStyle = getComputedStyle(suit);
+  const top = cw*.025;
+  ctx.fillStyle = getComputedStyle(face).color;
+  ctx.textBaseline = "top";
+  ctx.textAlign = "left"; ctx.font = cascadeCanvasFont(rankStyle);
+  ctx.fillText(RANKS[card.rank],cw*.045,top);
+  ctx.textAlign = "right"; ctx.font = cascadeCanvasFont(suitStyle);
+  ctx.fillText(SUITS[card.suit],cw*.955,top);
+  ctx.restore();
+
+  ctx.beginPath(); ctx.roundRect(.5,.5,cw-1,ch-1,Math.max(0,radius-.5));
+  ctx.strokeStyle = "rgba(70,60,40,.25)"; ctx.lineWidth = 1; ctx.stroke();
+  return bitmap;
 }
 function cascade(special=false){
   stopCascadeLoop();
@@ -3147,11 +3194,6 @@ function cascade(special=false){
   cv.classList.remove("fade");
   const rect = board.getBoundingClientRect();
   const cw = G.cw, ch = G.ch;
-  fxCardLayer = document.createElement("div");
-  fxCardLayer.className = "fx-cards";
-  fxCardLayer.style.setProperty("--cw", cw+"px");
-  fxCardLayer.style.setProperty("--ch", ch+"px");
-  document.body.appendChild(fxCardLayer);
   // launch order: K→A off each foundation, interleaved
   const queue = [];
   for(let r=12;r>=0;r--) for(let f=0;f<4;f++){
@@ -3159,6 +3201,12 @@ function cascade(special=false){
     const [x,y] = G.slotPos["f"+f];
     if(card) queue.push({ card, x:rect.left+x, y:rect.top+y });
   }
+  // Render each Classic face once, then keep the hot animation path to a
+  // single drawImage call. Vintage already ships as a raster card asset.
+  const faces = new Map(queue.map(({card})=>[
+    card.id,
+    settings.cardStyle === "crehore" ? CARD_IMAGES[card.id] : classicCascadeFace(card,cw,ch,dpr)
+  ]));
   const sprites = [];
   const sparkles = special ? Array.from({length:110},(_,i)=>({
     x:innerWidth*(.18+Math.random()*.64), y:-20-Math.random()*innerHeight*.35,
@@ -3168,6 +3216,12 @@ function cascade(special=false){
   })) : [];
   let qi = 0, last = 0, spawnAcc = 0;
   const start = performance.now();
+  function drawCard(s){
+    const image = faces.get(s.card.id);
+    if(image && (image instanceof HTMLCanvasElement || (image.complete && image.naturalWidth))){
+      ctx.drawImage(image,s.x,s.y,cw,ch);
+    }
+  }
   function frame(t){
     if(run !== fxRun) return;            // superseded by a newer cascade
     const dt = last ? Math.min((t-last)/16.7, 3) : 1;
@@ -3176,22 +3230,8 @@ function cascade(special=false){
     while(qi<queue.length && spawnAcc > 90){
       spawnAcc -= 90;
       const q = queue[qi++];
-      const el = els.get(q.card.id).cloneNode(true);
-      el.removeAttribute("data-id");
-      el.dataset.cascadeId = q.card.id;
-      el.classList.remove("down");
-      el.querySelector(".back")?.remove();
-      const trailEls = Array.from({length:6},()=>{
-        const trail = el.cloneNode(true);
-        trail.classList.add("cascade-trail");
-        trail.hidden = true;
-        fxCardLayer.appendChild(trail);
-        return trail;
-      });
-      fxCardLayer.appendChild(el);
       sprites.push({
-        card:q.card, el, x:q.x, y:q.y,
-        trailEls, history:[],
+        card:q.card, x:q.x, y:q.y,
         vx:(Math.random()<0.5?-1:1)*(2+Math.random()*5),
         vy:-(2+Math.random()*6)
       });
@@ -3201,24 +3241,8 @@ function cascade(special=false){
       s.vy += 0.55*dt;
       s.x += s.vx*dt; s.y += s.vy*dt;
       if(s.y > innerHeight-ch){ s.y = innerHeight-ch; s.vy *= -0.78 }
-      if(s.x < -cw*1.5 || s.x > innerWidth+cw*0.5){
-        s.dead = true;
-        s.el.remove();
-        for(const trail of s.trailEls) trail.remove();
-      }
-      else{
-        const transform = `translate3d(${s.x}px,${s.y}px,0)`;
-        s.el.style.transform = transform;
-        s.history.unshift(transform);
-        if(s.history.length>18) s.history.pop();
-        for(let i=0;i<s.trailEls.length;i++){
-          const trailTransform = s.history[(i+1)*3-1];
-          if(!trailTransform) continue;
-          const trail = s.trailEls[i];
-          trail.hidden = false;
-          trail.style.transform = trailTransform;
-        }
-      }
+      if(s.x < -cw*1.5 || s.x > innerWidth+cw*0.5) s.dead = true;
+      else drawCard(s);
     }
     for(const p of sparkles){
       if(p.dead) continue;
@@ -3234,17 +3258,13 @@ function cascade(special=false){
   fxTimer = requestAnimationFrame(frame);
 }
 function endCascade(){
-  stopCascadeLoop(false);
+  stopCascadeLoop();
   const cv = $("fx");
-  const cardLayer = fxCardLayer;
-  fxCardLayer = null;
   cv.classList.add("fade");
-  if(cardLayer) cardLayer.classList.add("fade");
   fxClearTimer = setTimeout(()=>{
     fxClearTimer = null;
     cv.getContext("2d").clearRect(0,0,cv.width,cv.height);
     cv.classList.remove("fade");
-    if(cardLayer) cardLayer.remove();
   }, 1300);
 }
 

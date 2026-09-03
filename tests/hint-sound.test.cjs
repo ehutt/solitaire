@@ -528,10 +528,16 @@ test("a new cascade cancels the previous run instead of racing it", () => {
   assert.match(functionSource("endCascade"), /fxClearTimer = setTimeout/);
 });
 
-test("the win cascade reuses the rendered card faces", () => {
+test("the win cascade caches themed faces and paints classic trails", () => {
   const cascadeSource = functionSource("cascade");
-  assert.match(cascadeSource, /els\.get\(q\.card\.id\)\.cloneNode\(true\)/);
-  assert.doesNotMatch(cascadeSource, /Iowan Old Style|fillText\(/);
+  const classicFaceSource = functionSource("classicCascadeFace");
+  assert.match(cascadeSource, /CARD_IMAGES\[card\.id\]/);
+  assert.match(cascadeSource, /classicCascadeFace\(card,cw,ch,dpr\)/);
+  assert.match(cascadeSource, /ctx\.drawImage\(image,s\.x,s\.y,cw,ch\)/);
+  assert.doesNotMatch(cascadeSource, /cloneNode|cascade-trail/);
+  assert.match(classicFaceSource, /querySelector\("\.court-art"\)/);
+  assert.match(classicFaceSource, /cascadeCanvasFont\(rankStyle\)/);
+  assert.doesNotMatch(classicFaceSource, /Iowan Old Style/);
 });
 
 test("the settings sheet has its own close control", () => {
