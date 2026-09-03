@@ -382,12 +382,13 @@ test("auto-move setting describes automatic foundation play", () => {
   assert.match(html, /Auto-move<span class="sub2">Send exposed cards to the foundation automatically<\/span>/);
 });
 
-test("out-of-moves dialog prioritizes recovery and keeps stats out of the decision", () => {
+test("out-of-moves dialog prioritizes restarting and keeps stats out of the decision", () => {
   assert.match(html, /"No useful moves left" : "No moves left"/);
   assert.match(html, /\$\("winSub"\)\.textContent = ""/);
-  assert.match(html, /\{id:"btnAdmire",label:"Go back and undo",tone:"primary"\}/);
-  assert.match(html, /\{id:"btnReplayDeal",label:"Restart deal",tone:"secondary"\}/);
+  assert.match(html, /configureDialog\("stuck",\[\s*\{id:"btnReplayDeal",label:"Restart deal",tone:"primary"\}/);
+  assert.match(html, /\{id:"btnAdmire",label:"Go back and undo",tone:"secondary"\}/);
   assert.match(html, /\{id:"btnAgain",label:"New deal",tone:"quiet"\}/);
+  assert.match(html, /openOverlayDialog\("btnReplayDeal"\)/);
   assert.match(html, /\.panel\[data-mode="stuck"\] \.scorecard-only,[^]*display:none/);
   const admireHandler = html.match(/\$\("btnAdmire"\)\.onclick = \(\)=>\{([^]*?)\n\};/)?.[1];
   assert.ok(admireHandler,"found the shared return-to-table handler");

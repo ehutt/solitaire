@@ -663,7 +663,7 @@
   .panel .dialog-action{
     width:100%;max-width:270px;min-height:var(--panel-action-min-height);padding:var(--panel-action-padding);margin:0;
     border:1px solid var(--dialog-button-border);border-radius:999px;
-    font-family:var(--face-chrome);font-size:var(--type-panel-button);
+    font-family:var(--face-chrome);font-size:var(--type-panel-button);line-height:1.1;white-space:nowrap;
   }
   .panel .dialog-action.primary{
     color:var(--dialog-primary-ink);background:var(--dialog-primary-surface);
@@ -672,7 +672,6 @@
     color:var(--dialog-secondary-ink);background:var(--dialog-secondary-surface);
   }
   .panel .dialog-action.quiet{
-    min-height:44px;padding:8px;
     color:var(--ghost-ink,var(--paper-ink-muted));background:transparent;font-weight:500;
   }
 
@@ -1346,7 +1345,7 @@
       --dialog-panel-padding:42px 38px 32px;
       --dialog-panel-width:520px;
       --dialog-action-padding:16px 18px;
-      --dialog-action-direction:row;
+      --dialog-action-direction:column;
       --dialog-score-padding:14px;
       --dialog-score-gap:34px;
       --dialog-score-margin:24px;
@@ -2728,11 +2727,11 @@ function showStuck(){
   $("wNote").textContent = "";
   $("wProgress").textContent = "";
   configureDialog("stuck",[
-    {id:"btnAdmire",label:"Go back and undo",tone:"primary"},
-    {id:"btnReplayDeal",label:"Restart deal",tone:"secondary"},
+    {id:"btnReplayDeal",label:"Restart deal",tone:"primary"},
+    {id:"btnAdmire",label:"Go back and undo",tone:"secondary"},
     {id:"btnAgain",label:"New deal",tone:"quiet"}
   ]);
-  openOverlayDialog("btnAdmire");
+  openOverlayDialog("btnReplayDeal");
 }
 function showDrawOneOffer(){
   stopTimer();

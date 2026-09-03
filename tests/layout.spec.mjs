@@ -310,7 +310,7 @@ for (const cardStyle of STYLES) {
         }
       });
 
-      test("outcome and recovery dialogs use centered pill actions", async ({ page }) => {
+      test("outcome and recovery dialogs use centered, equal pill actions", async ({ page }) => {
         for (const mode of ["win","stuck","draw-one"]) {
           await page.evaluate((nextMode) => {
             closeOverlayDialog(false);
@@ -330,19 +330,50 @@ for (const cardStyle of STYLES) {
           const styles = await page.evaluate(() => {
             const panel = document.getElementById("winPanel");
             const actions = panel.querySelector(".dialog-actions");
+            const visibleActions = [...actions.children]
+              .filter((button) => getComputedStyle(button).display!=="none");
             return {
               textAlign:getComputedStyle(panel).textAlign,
               alignItems:getComputedStyle(actions).alignItems,
               justifyContent:getComputedStyle(actions).justifyContent,
-              radii:[...actions.children]
-                .filter((button) => getComputedStyle(button).display!=="none")
-                .map((button) => parseFloat(getComputedStyle(button).borderRadius))
+              direction:getComputedStyle(actions).flexDirection,
+              buttons:visibleActions.map((button) => {
+                const box = button.getBoundingClientRect();
+                const range = document.createRange();
+                range.selectNodeContents(button);
+                return {
+                  label:button.textContent,
+                  top:box.top,
+                  width:box.width,
+                  height:box.height,
+                  radius:parseFloat(getComputedStyle(button).borderRadius),
+                  lineCount:range.getClientRects().length
+                };
+              })
             };
           });
           expect(styles.textAlign).toBe("center");
           expect(styles.alignItems).toBe("center");
           expect(styles.justifyContent).toBe("center");
-          expect(styles.radii.every((radius) => radius > 100)).toBe(true);
+          expect(styles.buttons.every(({ radius }) => radius > 100)).toBe(true);
+          if(mode==="stuck"){
+            expect(styles.buttons.map(({ label }) => label)).toEqual([
+              "Restart deal","Go back and undo","New deal"
+            ]);
+          }
+          if(viewport.width>=700 && viewport.height>=600){
+            expect(styles.direction).toBe("column");
+            const widths = styles.buttons.map(({ width }) => width);
+            const heights = styles.buttons.map(({ height }) => height);
+            expect(Math.max(...widths)-Math.min(...widths),
+              `${mode} actions have equal widths`).toBeLessThanOrEqual(0.1);
+            expect(Math.max(...heights)-Math.min(...heights),
+              `${mode} actions have equal heights`).toBeLessThanOrEqual(0.1);
+            expect(styles.buttons.every(({ lineCount }) => lineCount===1)).toBe(true);
+            expect(styles.buttons.slice(1).every((button,index) =>
+              button.top>styles.buttons[index].top
+            )).toBe(true);
+          }
         }
       });
 
