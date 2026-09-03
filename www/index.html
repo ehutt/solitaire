@@ -3116,10 +3116,16 @@ function showWin(r){
 }
 
 /* ================= win cascade (canvas, classic trails) ================= */
+// The cascade paints onto one canvas that is never cleared between frames, so
+// every card smears a trail of itself across the table — the classic effect.
+// Each card is stamped from a raster of its own face: Vintage stamps the same
+// image its DOM card shows; Classic rasterizes the live DOM face, reading the
+// theme's fonts, colours, and court artwork from computed style rather than
+// restating them here.
 let fxTimer = null, fxClearTimer = null, fxRun = 0;
 // Drop any frame loop and pending canvas clear left behind by an earlier
 // cascade. "Admire the cascade." is usually tapped while the win cascade is
-// still flying: without this both loops share fxTimer and their canvas,
+// still flying: without this both loops run over one canvas, share fxTimer,
 // and whichever finishes first cancels the other mid-flight — leaving the new
 // run's cards frozen where they launched, on the foundations.
 function stopCascadeLoop(){
@@ -3127,61 +3133,103 @@ function stopCascadeLoop(){
   if(fxClearTimer){ clearTimeout(fxClearTimer); fxClearTimer=null }
   fxRun++;
 }
+
+// Court artwork for Classic stamps. The SVGs carry only a viewBox, which gives
+// WebKit no intrinsic size to draw with, so each is re-issued with explicit
+// dimensions. Loaded at boot so the first king already has its art.
+const CASCADE_COURT_ART = new Map();
+function courtArtImage(src){
+  let image = CASCADE_COURT_ART.get(src);
+  if(image) return image;
+  image = new Image();
+  CASCADE_COURT_ART.set(src, image);
+  fetch(src).then(r=>r.text()).then(svg=>{
+    const viewBox = (svg.match(/viewBox="([^"]+)"/)||[])[1] || "0 0 660 628";
+    const [,, w, h] = viewBox.trim().split(/[\s,]+/).map(Number);
+    const sized = svg.replace(/<svg\b/, `<svg width="${w}" height="${h}"`);
+    image.src = "data:image/svg+xml;charset=utf-8," + encodeURIComponent(sized);
+  }).catch(()=>{});
+  return image;
+}
+for(const suit of CLASSIC_COURT_SUITS) for(const art of Object.values(CLASSIC_COURT_ART))
+  courtArtImage(`assets/cards/classic/courts/${suit}-${art}.svg`);
+
+// Computed `background-image` arrives as
+// "linear-gradient(160deg, rgb(…) 65%, rgb(…))". Anything else paints flat.
+function paintCanvasBackground(ctx, style, w, h){
+  const m = style.backgroundImage.match(/^linear-gradient\(\s*([-\d.]+)deg\s*,(.*)\)$/);
+  const stops = m && m[2].match(/(rgba?\([^)]*\))\s*([\d.]+%)?/g);
+  if(!m || !stops || stops.length < 2){ ctx.fillStyle = style.backgroundColor; ctx.fillRect(0,0,w,h); return }
+  const angle = m[1]*Math.PI/180, dx = Math.sin(angle), dy = -Math.cos(angle);
+  const half = (Math.abs(w*dx) + Math.abs(h*dy))/2;
+  const grad = ctx.createLinearGradient(w/2-dx*half, h/2-dy*half, w/2+dx*half, h/2+dy*half);
+  stops.forEach((stop, i)=>{
+    const [, color, pct] = stop.match(/(rgba?\([^)]*\))\s*([\d.]+%)?/);
+    grad.addColorStop(pct ? parseFloat(pct)/100 : i/(stops.length-1), color);
+  });
+  ctx.fillStyle = grad; ctx.fillRect(0,0,w,h);
+}
 function cascadeCanvasFont(style){
   return `${style.fontStyle} ${style.fontWeight} ${style.fontSize} ${style.fontFamily}`;
 }
-function classicCascadeFace(card,cw,ch,dpr){
-  const source = els.get(card.id);
-  const face = source.querySelector(".front");
-  const bitmap = document.createElement("canvas");
-  bitmap.width = Math.ceil(cw*dpr); bitmap.height = Math.ceil(ch*dpr);
-  const ctx = bitmap.getContext("2d");
-  ctx.scale(dpr,dpr);
-
-  const radius = cw*.085;
+// Text is placed by the box its DOM twin occupies: with textBaseline "middle"
+// the em box centres on the line box exactly as the browser lays it out.
+function paintCanvasText(ctx, node, origin, text, align){
+  const style = getComputedStyle(node), r = node.getBoundingClientRect();
+  const x = align === "left" ? r.left : align === "right" ? r.right : (r.left+r.right)/2;
   ctx.save();
-  ctx.beginPath(); ctx.roundRect(0,0,cw,ch,radius); ctx.clip();
-  const palette = getComputedStyle(document.body);
-  const paper = palette.getPropertyValue("--paper").trim();
-  const shade = palette.getPropertyValue("--paper-shade").trim();
-  const wash = ctx.createLinearGradient(0,0,cw,ch);
-  wash.addColorStop(0,paper); wash.addColorStop(.65,paper); wash.addColorStop(1,shade);
-  ctx.fillStyle = wash; ctx.fillRect(0,0,cw,ch);
-
-  const center = source.querySelector(".mid");
-  const art = source.querySelector(".court-art");
-  if(art && art.complete && art.naturalWidth){
-    const boxY = cw*.5-1, boxW = cw+2, boxH = ch-boxY+1;
-    const scale = Math.min(boxW/art.naturalWidth,boxH/art.naturalHeight);
-    const width = art.naturalWidth*scale, height = art.naturalHeight*scale;
-    ctx.drawImage(art,-1+(boxW-width)/2,boxY+boxH-height,width,height);
-  }else if(center){
-    const style = getComputedStyle(center);
-    const size = parseFloat(style.fontSize);
-    ctx.fillStyle = style.color;
-    ctx.font = cascadeCanvasFont(style);
-    ctx.textAlign = "center"; ctx.textBaseline = "middle";
-    ctx.globalAlpha = Number(style.opacity);
-    ctx.fillText(SUITS[card.suit],cw/2,ch/2+size*.15);
-    ctx.globalAlpha = 1;
+  ctx.font = cascadeCanvasFont(style); ctx.textAlign = align; ctx.textBaseline = "middle";
+  ctx.globalAlpha = parseFloat(style.opacity);
+  ctx.fillStyle = style.color;
+  ctx.fillText(text, x-origin.left, (r.top+r.bottom)/2-origin.top);
+  const stroke = parseFloat(style.webkitTextStrokeWidth);
+  if(stroke > 0){
+    ctx.lineWidth = stroke; ctx.lineJoin = "round"; ctx.strokeStyle = style.webkitTextStrokeColor || style.color;
+    ctx.strokeText(text, x-origin.left, (r.top+r.bottom)/2-origin.top);
   }
-
-  const rank = source.querySelector(".ix i");
-  const suit = source.querySelector(".ix b");
-  const rankStyle = getComputedStyle(rank);
-  const suitStyle = getComputedStyle(suit);
-  const top = cw*.025;
-  ctx.fillStyle = getComputedStyle(face).color;
-  ctx.textBaseline = "top";
-  ctx.textAlign = "left"; ctx.font = cascadeCanvasFont(rankStyle);
-  ctx.fillText(RANKS[card.rank],cw*.045,top);
-  ctx.textAlign = "right"; ctx.font = cascadeCanvasFont(suitStyle);
-  ctx.fillText(SUITS[card.suit],cw*.955,top);
   ctx.restore();
-
-  ctx.beginPath(); ctx.roundRect(.5,.5,cw-1,ch-1,Math.max(0,radius-.5));
-  ctx.strokeStyle = "rgba(70,60,40,.25)"; ctx.lineWidth = 1; ctx.stroke();
-  return bitmap;
+}
+// A drawable copy of one card's face at the current card size. Vintage cards
+// are their artwork already; Classic faces are rendered from the live DOM
+// card's computed styles so the stamps match what the tableau shows.
+function cascadeFaceRaster(card, cw, ch, dpr){
+  if(settings.cardStyle === "crehore"){
+    const image = CARD_IMAGES[card.id];
+    return image && image.complete && image.naturalWidth ? image : null;
+  }
+  const el = els.get(card.id), front = el.querySelector(".front");
+  const origin = front.getBoundingClientRect();
+  const style = getComputedStyle(front);
+  const raster = document.createElement("canvas");
+  raster.width = Math.max(1, Math.round(cw*dpr)); raster.height = Math.max(1, Math.round(ch*dpr));
+  const ctx = raster.getContext("2d");
+  ctx.scale(dpr, dpr);
+  const radius = parseFloat(style.borderTopLeftRadius) || cw*0.085;
+  ctx.beginPath(); ctx.roundRect(0, 0, cw, ch, radius); ctx.clip();
+  paintCanvasBackground(ctx, style, cw, ch);
+  const mid = front.querySelector(".mid");
+  const court = front.querySelector(".court-art");
+  if(court){
+    const image = courtArtImage(court.getAttribute("src"));
+    const box = court.getBoundingClientRect();
+    if(image.complete && image.naturalWidth && box.width && box.height){
+      // object-fit: contain, object-position: center bottom
+      const scale = Math.min(box.width/image.naturalWidth, box.height/image.naturalHeight);
+      const dw = image.naturalWidth*scale, dh = image.naturalHeight*scale;
+      ctx.drawImage(image, box.left+(box.width-dw)/2-origin.left, box.bottom-dh-origin.top, dw, dh);
+    }
+  } else if(mid){
+    paintCanvasText(ctx, mid, origin, mid.textContent, "center");
+  }
+  const rank = front.querySelector(".ix i"), suit = front.querySelector(".ix b");
+  if(rank) paintCanvasText(ctx, rank, origin, rank.textContent, "left");
+  if(suit) paintCanvasText(ctx, suit, origin, suit.textContent, "right");
+  const border = parseFloat(style.borderTopWidth);
+  if(border > 0){
+    ctx.beginPath(); ctx.roundRect(border/2, border/2, cw-border, ch-border, Math.max(0, radius-border/2));
+    ctx.lineWidth = border; ctx.strokeStyle = style.borderTopColor; ctx.stroke();
+  }
+  return raster;
 }
 function cascade(special=false){
   stopCascadeLoop();
@@ -3201,12 +3249,9 @@ function cascade(special=false){
     const [x,y] = G.slotPos["f"+f];
     if(card) queue.push({ card, x:rect.left+x, y:rect.top+y });
   }
-  // Render each Classic face once, then keep the hot animation path to a
-  // single drawImage call. Vintage already ships as a raster card asset.
-  const faces = new Map(queue.map(({card})=>[
-    card.id,
-    settings.cardStyle === "crehore" ? CARD_IMAGES[card.id] : classicCascadeFace(card,cw,ch,dpr)
-  ]));
+  // Render every face once, up front, so the hot animation path is a single
+  // drawImage per card per frame.
+  const faces = new Map(queue.map(({card})=>[card.id, cascadeFaceRaster(card, cw, ch, dpr)]));
   const sprites = [];
   const sparkles = special ? Array.from({length:110},(_,i)=>({
     x:innerWidth*(.18+Math.random()*.64), y:-20-Math.random()*innerHeight*.35,
@@ -3216,12 +3261,6 @@ function cascade(special=false){
   })) : [];
   let qi = 0, last = 0, spawnAcc = 0;
   const start = performance.now();
-  function drawCard(s){
-    const image = faces.get(s.card.id);
-    if(image && (image instanceof HTMLCanvasElement || (image.complete && image.naturalWidth))){
-      ctx.drawImage(image,s.x,s.y,cw,ch);
-    }
-  }
   function frame(t){
     if(run !== fxRun) return;            // superseded by a newer cascade
     const dt = last ? Math.min((t-last)/16.7, 3) : 1;
@@ -3232,6 +3271,7 @@ function cascade(special=false){
       const q = queue[qi++];
       sprites.push({
         card:q.card, x:q.x, y:q.y,
+        face: faces.get(q.card.id),
         vx:(Math.random()<0.5?-1:1)*(2+Math.random()*5),
         vy:-(2+Math.random()*6)
       });
@@ -3242,7 +3282,7 @@ function cascade(special=false){
       s.x += s.vx*dt; s.y += s.vy*dt;
       if(s.y > innerHeight-ch){ s.y = innerHeight-ch; s.vy *= -0.78 }
       if(s.x < -cw*1.5 || s.x > innerWidth+cw*0.5) s.dead = true;
-      else drawCard(s);
+      else if(s.face) ctx.drawImage(s.face, s.x, s.y, cw, ch);
     }
     for(const p of sparkles){
       if(p.dead) continue;

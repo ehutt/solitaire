@@ -326,6 +326,65 @@ test("Classic cascade cards preserve the foundation rank font", async ({ page })
   }
 });
 
+test("Classic cascade stamps carry the ink and artwork of their DOM faces", async ({ page }) => {
+  await boot(page);
+
+  for (const viewport of [{ width: 390, height: 844 }, { width: 844, height: 390 }]) {
+    await page.setViewportSize(viewport);
+    await page.evaluate(() => {
+      stopCascadeLoop();
+      settings.cardStyle = "original";
+      document.body.dataset.cardStyle = "original";
+      P.stock = []; P.waste = []; P.t = Array.from({ length: 7 }, () => []);
+      P.f = Array.from({ length: 4 }, (_, suit) =>
+        cards.filter((card) => card.suit === suit).sort((a, b) => a.rank - b.rank));
+      for (const card of cards) card.faceUp = true;
+      layout();
+    });
+    await page.waitForFunction(() => [...CASCADE_COURT_ART.values()].every((img) => img.complete && img.naturalWidth));
+
+    const faces = await page.evaluate(() => {
+      const dpr = Math.min(devicePixelRatio || 1, 2);
+      const rgb = (s) => s.match(/\d+/g).slice(0, 3).map(Number);
+      const hex = (h) => [1, 3, 5].map((i) => parseInt(h.slice(i, i + 2), 16));
+      const near = (a, b, tol = 40) => a.every((v, i) => Math.abs(v - b[i]) <= tol);
+      const paper = hex(getComputedStyle(document.body).getPropertyValue("--paper").trim());
+      const describe = (card) => {
+        const front = els.get(card.id).querySelector(".front");
+        const raster = cascadeFaceRaster(card, G.cw, G.ch, dpr);
+        const ctx = raster.getContext("2d");
+        const origin = front.getBoundingClientRect();
+        const ink = rgb(getComputedStyle(front).color);
+        // Count opaque pixels inside a child's box that satisfy `test`.
+        const count = (node, test) => {
+          const r = node.getBoundingClientRect();
+          const x = Math.max(0, Math.round((r.left - origin.left) * dpr));
+          const y = Math.max(0, Math.round((r.top - origin.top) * dpr));
+          const w = Math.max(1, Math.round(r.width * dpr)), h = Math.max(1, Math.round(r.height * dpr));
+          const data = ctx.getImageData(x, y, w, h).data;
+          let hits = 0;
+          for (let i = 0; i < data.length; i += 4) if (data[i + 3] > 200 && test([data[i], data[i + 1], data[i + 2]])) hits++;
+          return hits;
+        };
+        return {
+          size: [raster.width, raster.height],
+          expected: [Math.round(G.cw * dpr), Math.round(G.ch * dpr)],
+          rankInk: count(front.querySelector(".ix i"), (px) => near(px, ink)),
+          suitInk: count(front.querySelector(".ix b"), (px) => near(px, ink)),
+          centreArt: count(front.querySelector(".mid"), (px) => !near(px, paper, 24)),
+        };
+      };
+      return { king: describe(P.f[0][12]), redQueen: describe(P.f[2][11]), ace: describe(P.f[3][0]) };
+    });
+    for (const face of Object.values(faces)) {
+      expect(face.size).toEqual(face.expected);
+      expect(face.rankInk).toBeGreaterThan(0);
+      expect(face.suitInk).toBeGreaterThan(0);
+      expect(face.centreArt).toBeGreaterThan(0);
+    }
+  }
+});
+
 test("replaying the cascade clears the previous trails", async ({ page }) => {
   await boot(page);
   const cleared = await page.evaluate(() => {
