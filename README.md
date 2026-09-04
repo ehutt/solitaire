@@ -17,7 +17,7 @@ for a native iOS build.
 - **Adjustable deal mix** — choose five steps from fully Random to fully
   Winnable; verified deals are certified under both draw-1 and draw-3
 - **Daily streak 🔥** — win at least one game a day to keep it alive
-- **Streak freezes ❄️** — every 10 wins earns a freeze (max 3, you start with 1);
+- **Streak freezes ❄️** — every 10 wins earns a freeze (max 3);
   a missed day is quietly covered by a freeze at your next win
 - **Move counter & timer**, personal bests (fastest win, fewest moves), win rate
 - **Undo with a gentle cost** — your first undo each game is free; after that,
@@ -40,12 +40,16 @@ layouts, Palatino/Iowan serif indices — in the playing-card tradition.
 
 ## Architecture
 
-The game itself is one self-contained file with zero runtime dependencies;
-everything around it is packaging.
+The shipped game has zero third-party runtime dependencies. Stable seams keep
+copy, card-placement rules, persistence, and generated deals separate from the
+DOM orchestration.
 
 ```
   www/            # Capacitor webDir — the shipped web app
-  index.html    # markup, CSS, and ~700 lines of vanilla JS
+  index.html    # markup, CSS, and browser orchestration
+  copy.js       # editable interface language and dynamic copy helpers
+  game-rules.js # pure foundation/tableau placement rules
+  persistence.js # validated, versioned local storage with recovery copies
   deal-engine.js # deterministic seeded shuffle + winnable deal selection
   winnable-deals.js # generated, compact seed index shipped with the app
   manifest.json # PWA: installable, standalone, portrait
@@ -58,7 +62,7 @@ scripts/        # corpus generator, replay engine, and solver build helper
 vendor/         # pinned GPLv2 Solvitaire source used only by offline tooling
 ```
 
-- `www/index.html` — markup, CSS, and ~700 lines of vanilla JS
+- `www/index.html` — markup, CSS, and browser orchestration
   - State: `cards[52]` + piles `{stock, waste, f[4], t[7]}`
   - Rendering: absolutely-positioned card divs moved with `transform`
     (layout is a pure function of state + board size)
@@ -66,6 +70,9 @@ vendor/         # pinned GPLv2 Solvitaire source used only by offline tooling
   - Persistence: `localStorage` (`patience.v1.game` / `.stats` / `.settings` —
     key names kept stable across the rename so no one loses a streak)
   - Streak math: local day numbers, freezes consumed at win-reconciliation
+
+See [DEVELOPMENT.md](DEVELOPMENT.md) for local checks, CI, the browser/device
+matrix, safe-refactor rules, and recommended `main` branch protection.
 
 ## Winnable deal corpus
 
