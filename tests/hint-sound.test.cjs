@@ -528,10 +528,23 @@ test("a new cascade cancels the previous run instead of racing it", () => {
   assert.match(functionSource("endCascade"), /fxClearTimer = setTimeout/);
 });
 
-test("the win cascade reuses the rendered card faces", () => {
+test("the win cascade stamps each card from a raster of its rendered face", () => {
   const cascadeSource = functionSource("cascade");
-  assert.match(cascadeSource, /els\.get\(q\.card\.id\)\.cloneNode\(true\)/);
-  assert.doesNotMatch(cascadeSource, /Iowan Old Style|fillText\(/);
+  const rasterSource = functionSource("cascadeFaceRaster");
+  // The canvas is never cleared between frames: that smear is the trail.
+  assert.doesNotMatch(cascadeSource, /clearRect\(|cloneNode|cascade-trail/);
+  assert.match(cascadeSource, /cascadeFaceRaster\(card, cw, ch, dpr\)/);
+  assert.match(cascadeSource, /ctx\.drawImage\(s\.face, s\.x, s\.y, cw, ch\)/);
+  // Classic faces read the live card's computed styles and boxes instead of
+  // restating a font, colour, or offset here — that is how the cascade once
+  // shipped the wrong face.
+  assert.doesNotMatch(cascadeSource + rasterSource, /Iowan Old Style|Palatino|ctx\.font = `/);
+  assert.match(rasterSource, /getComputedStyle\(front\)/);
+  assert.match(rasterSource, /courtArtImage\(court\.getAttribute\("src"\)\)/);
+  assert.match(rasterSource, /CARD_IMAGES\[card\.id\]/);
+  // Court SVGs carry only a viewBox, so they are re-issued with real
+  // dimensions before WebKit rasterizes them.
+  assert.match(functionSource("courtArtImage"), /<svg width="\$\{w\}" height="\$\{h\}"/);
 });
 
 test("the settings sheet has its own close control", () => {

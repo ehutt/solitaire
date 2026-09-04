@@ -288,7 +288,45 @@ test("the end-game cascade does disable the rail, and releases it after", async 
   expect(hintDisabled).toBe(hasWon);
 });
 
-test("Classic cascade cards match their foundation faces in both orientations", async ({ page }) => {
+test("Classic cascade cards preserve the foundation rank font", async ({ page }) => {
+  await boot(page);
+
+  for (const viewport of [
+    { width: 390, height: 844 }, { width: 844, height: 390 },
+    { width: 834, height: 1194 }, { width: 1194, height: 834 },
+  ]) {
+    await page.setViewportSize(viewport);
+    const typography = await page.evaluate(() => {
+      stopCascadeLoop();
+      settings.cardStyle = "original";
+      document.body.dataset.cardStyle = "original";
+      P.stock = []; P.waste = []; P.t = Array.from({ length: 7 }, () => []);
+      P.f = Array.from({ length: 4 }, (_, suit) =>
+        cards.filter((card) => card.suit === suit).sort((a, b) => a.rank - b.rank));
+      for (const card of cards) card.faceUp = true;
+      layout();
+
+      const king = P.f[0][12];
+      const sourceStyle = getComputedStyle(els.get(king.id).querySelector(".ix i"));
+      const normalizer = document.createElement("canvas").getContext("2d");
+      normalizer.font = cascadeCanvasFont(sourceStyle);
+      const expected = normalizer.font;
+      const painted = [];
+      const originalFillText = CanvasRenderingContext2D.prototype.fillText;
+      CanvasRenderingContext2D.prototype.fillText = function(text, ...args) {
+        if (text === "K") painted.push(this.font);
+        return originalFillText.call(this, text, ...args);
+      };
+      cascade();
+      CanvasRenderingContext2D.prototype.fillText = originalFillText;
+      stopCascadeLoop();
+      return { expected, painted };
+    });
+    expect(typography.painted).toContain(typography.expected);
+  }
+});
+
+test("Classic cascade stamps carry the ink and artwork of their DOM faces", async ({ page }) => {
   await boot(page);
 
   for (const viewport of [{ width: 390, height: 844 }, { width: 844, height: 390 }]) {
@@ -302,50 +340,144 @@ test("Classic cascade cards match their foundation faces in both orientations", 
         cards.filter((card) => card.suit === suit).sort((a, b) => a.rank - b.rank));
       for (const card of cards) card.faceUp = true;
       layout();
-      cascade();
     });
-    const kingId = await page.evaluate(() => P.f[0][12].id);
-    await page.waitForSelector(`.fx-cards .card[data-cascade-id="${kingId}"]`, { state: "attached" });
+    await page.waitForFunction(() => [...CASCADE_COURT_ART.values()].every((img) => img.complete && img.naturalWidth));
 
-    await page.waitForFunction((id) => {
-      const clones = [...document.querySelectorAll(`.fx-cards .card[data-cascade-id="${id}"]`)]
-        .filter((clone) => !clone.hidden);
-      return clones.length >= 3 && new Set(clones.map((clone) => clone.style.transform)).size >= 3;
-    }, kingId, { timeout: 1500 });
-
-    const match = await page.evaluate(() => {
-      const source = els.get(P.f[0][12].id);
-      const clones = [...document.querySelectorAll(`.fx-cards .card[data-cascade-id="${source.dataset.id}"]`)]
-        .filter((clone) => !clone.hidden);
-      const faceStyle = (card) => {
-        const style = getComputedStyle(card.querySelector(".front"));
+    const faces = await page.evaluate(() => {
+      const dpr = Math.min(devicePixelRatio || 1, 2);
+      const rgb = (s) => s.match(/\d+/g).slice(0, 3).map(Number);
+      const hex = (h) => [1, 3, 5].map((i) => parseInt(h.slice(i, i + 2), 16));
+      const near = (a, b, tol = 40) => a.every((v, i) => Math.abs(v - b[i]) <= tol);
+      const paper = hex(getComputedStyle(document.body).getPropertyValue("--paper").trim());
+      const describe = (card) => {
+        const front = els.get(card.id).querySelector(".front");
+        const raster = cascadeFaceRaster(card, G.cw, G.ch, dpr);
+        const ctx = raster.getContext("2d");
+        const origin = front.getBoundingClientRect();
+        const ink = rgb(getComputedStyle(front).color);
+        // Count opaque pixels inside a child's box that satisfy `test`.
+        const count = (node, test) => {
+          const r = node.getBoundingClientRect();
+          const x = Math.max(0, Math.round((r.left - origin.left) * dpr));
+          const y = Math.max(0, Math.round((r.top - origin.top) * dpr));
+          const w = Math.max(1, Math.round(r.width * dpr)), h = Math.max(1, Math.round(r.height * dpr));
+          const data = ctx.getImageData(x, y, w, h).data;
+          let hits = 0;
+          for (let i = 0; i < data.length; i += 4) if (data[i + 3] > 200 && test([data[i], data[i + 1], data[i + 2]])) hits++;
+          return hits;
+        };
         return {
-          fontFamily: style.fontFamily,
-          color: style.color,
-          backgroundImage: style.backgroundImage,
-          border: style.border,
+          size: [raster.width, raster.height],
+          expected: [Math.round(G.cw * dpr), Math.round(G.ch * dpr)],
+          rankInk: count(front.querySelector(".ix i"), (px) => near(px, ink)),
+          suitInk: count(front.querySelector(".ix b"), (px) => near(px, ink)),
+          centreArt: count(front.querySelector(".mid"), (px) => !near(px, paper, 24)),
         };
       };
-      return {
-        cloneCount: clones.length,
-        distinctPositions: new Set(clones.map((clone) => clone.style.transform)).size,
-        sameFaceMarkup: clones.every((clone) =>
-          clone.querySelector(".front").innerHTML === source.querySelector(".front").innerHTML),
-        backCount: clones.filter((clone) => clone.querySelector(".back")).length,
-        sourceStyle: faceStyle(source),
-        cloneStyles: clones.map(faceStyle),
-        sourceSize: [source.offsetWidth, source.offsetHeight],
-        cloneSizes: clones.map((clone) => [clone.offsetWidth, clone.offsetHeight]),
-      };
+      return { king: describe(P.f[0][12]), redQueen: describe(P.f[2][11]), ace: describe(P.f[3][0]) };
     });
-    expect(match.cloneCount).toBeGreaterThanOrEqual(3);
-    expect(match.distinctPositions).toBeGreaterThanOrEqual(3);
-    expect(match.sameFaceMarkup).toBe(true);
-    expect(match.backCount).toBe(0);
-    for (const cloneStyle of match.cloneStyles) expect(cloneStyle).toEqual(match.sourceStyle);
-    for (const cloneSize of match.cloneSizes) expect(cloneSize).toEqual(match.sourceSize);
+    for (const face of Object.values(faces)) {
+      expect(face.size).toEqual(face.expected);
+      expect(face.rankInk).toBeGreaterThan(0);
+      expect(face.suitInk).toBeGreaterThan(0);
+      expect(face.centreArt).toBeGreaterThan(0);
+    }
   }
 });
+
+test("replaying the cascade clears the previous trails", async ({ page }) => {
+  await boot(page);
+  const cleared = await page.evaluate(() => {
+    stopCascadeLoop();
+    const canvas = document.getElementById("fx");
+    const context = canvas.getContext("2d");
+    context.fillStyle = "red";
+    context.fillRect(0, 0, 20, 20);
+    P.stock = []; P.waste = []; P.t = Array.from({ length: 7 }, () => []);
+    P.f = [[], [], [], []];
+    cascade();
+    return context.getImageData(0, 0, 1, 1).data[3] === 0;
+  });
+  expect(cleared).toBe(true);
+});
+
+const cascadeViewports = [
+  ["iPhone portrait", { width: 390, height: 844 }],
+  ["iPhone landscape", { width: 844, height: 390 }],
+  ["iPad portrait", { width: 834, height: 1194 }],
+  ["iPad landscape", { width: 1194, height: 834 }],
+];
+
+for (const [cardStyle, styleLabel] of [["original", "Classic"], ["crehore", "Vintage"]]) {
+  for (const [viewportLabel, viewport] of cascadeViewports) {
+    test(`${styleLabel} cascade accumulates classic trails on ${viewportLabel}`, async ({ page }) => {
+      await boot(page);
+      await page.setViewportSize(viewport);
+
+      const coverage = await page.evaluate(async (style) => {
+        stopCascadeLoop();
+        settings.cardStyle = style;
+        document.body.dataset.cardStyle = style;
+        P.stock = []; P.waste = []; P.t = Array.from({ length: 7 }, () => []);
+        const ace = cards.find((card) => card.suit === 0 && card.rank === 1);
+        P.f = [[ace], [], [], []];
+        ace.faceUp = true;
+        layout();
+
+        const faceImage = CARD_IMAGES[ace.id];
+        if (style === "crehore" && !faceImage.complete) {
+          await new Promise((resolve) => {
+            faceImage.addEventListener("load", resolve, { once: true });
+            faceImage.addEventListener("error", resolve, { once: true });
+          });
+        }
+
+        // Drive exactly the same frames in every browser run. A classic
+        // cascade keeps each paint on its canvas; coverage must therefore grow
+        // long after the first complete card face is visible.
+        const frames = new Map();
+        let frameId = 0;
+        window.requestAnimationFrame = (callback) => {
+          const id = ++frameId;
+          frames.set(id, callback);
+          return id;
+        };
+        window.cancelAnimationFrame = (id) => frames.delete(id);
+        const step = (time) => {
+          const callbacks = [...frames.values()];
+          frames.clear();
+          for (const callback of callbacks) callback(time);
+        };
+
+        const values = [.9, 0, 0]; // rightward, slowest horizontal and vertical launch
+        Math.random = () => values.shift() ?? .5;
+        const epoch = performance.now();
+        cascade();
+
+        const paintedPixels = () => {
+          const canvas = document.getElementById("fx");
+          const pixels = canvas.getContext("2d").getImageData(
+            0, 0, canvas.width, canvas.height).data;
+          let count = 0;
+          for (let i = 3; i < pixels.length; i += 4) if (pixels[i]) count++;
+          return count;
+        };
+
+        for (let i = 1; i <= 55; i++) step(epoch + i * 16.7);
+        const early = paintedPixels();
+        for (let i = 56; i <= 110; i++) step(epoch + i * 16.7);
+        const late = paintedPixels();
+        const dpr = Math.min(devicePixelRatio || 1, 2);
+        const cardPixels = G.cw * G.ch * dpr * dpr;
+        stopCascadeLoop();
+        return { early, late, cardPixels };
+      }, cardStyle);
+
+      expect(coverage.early).toBeGreaterThan(coverage.cardPixels * 1.5);
+      expect(coverage.late).toBeGreaterThan(coverage.early * 1.15);
+    });
+  }
+}
 
 test("Classic court faces clip their artwork to every rounded corner", async ({ page }) => {
   await boot(page);
