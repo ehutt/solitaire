@@ -1,0 +1,25 @@
+.build/
+.agents/
+.claude/
+AGENTS.md
+assets/
+data/
+docs/
+ios/
+ios/App/App/public/
+ios/DerivedData/
+node_modules/
+playwright-report/
+test-results/
+vendor/
+README.md
+tests/computed-styles.baseline.json
+www/assets/
+www/index.html
+www/winnable-deals.js
+
+# Existing hand-formatted files can move onto Prettier when they are modularized.
+scripts/
+tests/
+www/deal-engine.js
+www/sw.js
