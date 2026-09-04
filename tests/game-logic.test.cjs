@@ -1,9 +1,14 @@
 const assert = require("node:assert/strict");
 const fs = require("node:fs");
 const test = require("node:test");
+const Rules = require("../www/game-rules.js");
+const Copy = require("../www/copy.js");
 
 const html = fs.readFileSync(new URL("../www/index.html", `file://${__filename}`), "utf8");
 const splash = fs.readFileSync(new URL("../scripts/assets/classic-splash.svg", `file://${__filename}`), "utf8");
+
+// eslint-disable-next-line no-unused-vars -- referenced by functions evaluated from www/index.html
+const topOf = (items) => items[items.length - 1];
 
 function loadFunction(name) {
   const pattern = new RegExp(`function ${name}\\([^]*?^}`, "m");
@@ -12,12 +17,10 @@ function loadFunction(name) {
   return eval(`(${match[0]})`);
 }
 
-const topOf = (cards) => cards[cards.length - 1];
 const reachableDrawThreeCards = loadFunction("reachableDrawThreeCards");
 const localDayNum = loadFunction("localDayNum");
 const normalizeDailyWins = loadFunction("normalizeDailyWins");
 const displayStreak = loadFunction("displayStreak");
-const canSafelyAutoFound = loadFunction("canSafelyAutoFound");
 const winTitleFor = loadFunction("winTitleFor");
 
 test("draw-three reachability excludes cards permanently buried in each packet", () => {
@@ -37,19 +40,17 @@ test("draw-three reachability respects a partially played stock cycle", () => {
 });
 
 test("automatic foundation moves stay conservative above rank two", () => {
-  global.isRed = (suit) => suit === 1 || suit === 2;
-  global.P = { f: [[], [], [], []] };
-  global.canFound = (card) => P.f[card.suit].length === card.rank - 1;
+  const foundations = [[], [], [], []];
 
-  assert.equal(canSafelyAutoFound({ suit: 0, rank: 1 }), true, "aces are always safe");
-  P.f[0] = [{}];
-  assert.equal(canSafelyAutoFound({ suit: 0, rank: 2 }), true, "twos are always safe");
+  assert.equal(Rules.canSafelyAutoFound(foundations, { suit: 0, rank: 1 }), true, "aces are always safe");
+  foundations[0] = [{}];
+  assert.equal(Rules.canSafelyAutoFound(foundations, { suit: 0, rank: 2 }), true, "twos are always safe");
 
-  P.f = [Array(4), Array(3), Array(2), Array(4)];
-  assert.equal(canSafelyAutoFound({ suit: 0, rank: 5 }), false, "waits for both red fours");
-  P.f[1] = Array(4);
-  P.f[2] = Array(4);
-  assert.equal(canSafelyAutoFound({ suit: 0, rank: 5 }), true);
+  const progressed = [Array(4), Array(3), Array(2), Array(4)];
+  assert.equal(Rules.canSafelyAutoFound(progressed, { suit: 0, rank: 5 }), false, "waits for both red fours");
+  progressed[1] = Array(4);
+  progressed[2] = Array(4);
+  assert.equal(Rules.canSafelyAutoFound(progressed, { suit: 0, rank: 5 }), true);
 });
 
 test("local day number advances at local midnight across a DST boundary", () => {
@@ -189,7 +190,7 @@ test("a new player earns their first freeze on their tenth win", () => {
 });
 
 test("new player stats start with no freezes or banked wins", () => {
-  const defaults = html.match(/let stats = loadJSON\(KEY_STATS\) \|\| \{([^]*?)\n\};/)?.[1];
+  const defaults = html.match(/let stats = SolitairePersistence\.loadStats\(localStorage\) \|\| \{([^]*?)\n\};/)?.[1];
   assert.ok(defaults, "found the default stats");
   assert.match(defaults, /freezes:0, winsToward:0/);
   assert.match(defaults, /dailyWinDay:null, dailyWins:0/);
@@ -372,22 +373,26 @@ test("persistent controls stay limited to deal, hint, undo, and settings", () =>
 
 test("deal menu provides new and restart as a deliberate two-step choice", () => {
   assert.match(html, /id="btnDeal"[^>]*aria-controls="dealSheet"/);
-  assert.match(html, /id="btnNewDeal"[^]*?<strong>New deal<\/strong>/);
-  assert.match(html, /id="btnRestartDeal"[^]*?<strong>Restart deal<\/strong>/);
+  assert.match(html, /id="btnNewDeal"[^]*?data-copy="newDeal"/);
+  assert.match(html, /id="btnRestartDeal"[^]*?data-copy="restartDeal"/);
+  assert.equal(Copy.text.newDeal, "New deal");
+  assert.equal(Copy.text.restartDeal, "Restart deal");
   assert.match(html, /\$\("btnRestartDeal"\)\.onclick = \(\)=>beginDeal\(initialDeal\)/);
   assert.doesNotMatch(html, /newConfirm|Tap Confirm|btnDeal\.confirm/);
 });
 
 test("auto-move setting describes automatic foundation play", () => {
-  assert.match(html, /Auto-move<span class="sub2">Send exposed cards to the foundation automatically<\/span>/);
+  assert.match(html, /data-copy-prefix="autoMove"[^]*?data-copy="autoMoveDescription"/);
+  assert.equal(Copy.text.autoMoveDescription, "Send exposed cards to the foundation automatically");
 });
 
 test("out-of-moves dialog prioritizes restarting and keeps stats out of the decision", () => {
-  assert.match(html, /"No useful moves left" : "No moves left"/);
+  assert.equal(Copy.stuckTitle(true), "No useful moves left");
+  assert.equal(Copy.stuckTitle(false), "No moves left");
   assert.match(html, /\$\("winSub"\)\.textContent = ""/);
-  assert.match(html, /configureDialog\("stuck",\[\s*\{id:"btnReplayDeal",label:"Restart deal",tone:"primary"\}/);
-  assert.match(html, /\{id:"btnAdmire",label:"Go back and undo",tone:"secondary"\}/);
-  assert.match(html, /\{id:"btnAgain",label:"New deal",tone:"quiet"\}/);
+  assert.match(html, /configureDialog\("stuck",\[\s*\{id:"btnReplayDeal",label:Copy\.text\.restartDeal,tone:"primary"\}/);
+  assert.match(html, /\{id:"btnAdmire",label:Copy\.text\.goBackAndUndo,tone:"secondary"\}/);
+  assert.match(html, /\{id:"btnAgain",label:Copy\.text\.newDeal,tone:"quiet"\}/);
   assert.match(html, /openOverlayDialog\("btnReplayDeal"\)/);
   assert.match(html, /\.panel\[data-mode="stuck"\] \.scorecard-only,[^]*display:none/);
   const admireHandler = html.match(/\$\("btnAdmire"\)\.onclick = \(\)=>\{([^]*?)\n\};/)?.[1];
@@ -396,30 +401,28 @@ test("out-of-moves dialog prioritizes restarting and keeps stats out of the deci
 });
 
 test("draw recovery explains the rule change without showing game statistics", () => {
-  assert.match(html, /Switch to draw one to reach the card without restarting this deal\./);
+  assert.equal(Copy.text.buriedCardDescription, "Switch to draw one to reach the card without restarting this deal.");
   assert.match(html, /configureDialog\("draw-one",\[/);
   assert.match(html, /\.panel\[data-mode="draw-one"\] \.scorecard-only\{display:none\}/);
 });
 
 test("win dialog uses the locked rotating copy and compact freeze status", () => {
-  const phraseBlock = html.match(/const WIN_PHRASES = \[([^]*?)\n\];/)?.[1];
-  assert.ok(phraseBlock,"found the win phrase pool");
-  assert.equal([...phraseBlock.matchAll(/"[^"\n]+"/g)].length,13);
-  assert.doesNotMatch(phraseBlock,/Order from chaos|The table is yours/);
-  assert.match(html, /"Your streak is secured\."/);
+  assert.equal(Copy.winPhrases.length,13);
+  assert.doesNotMatch(Copy.winPhrases.join("\n"),/Order from chaos|The table is yours/);
+  assert.equal(Copy.text.streakSecured, "Your streak is secured.");
   assert.match(html, /• next in/);
   assert.match(html, /"3 freezes\."/);
-  assert.match(html, /label:"Admire the cascade\."/);
+  assert.match(html, /label:Copy\.text\.admireCascade/);
   assert.match(html, /if\(r\.lifetimeMilestone\) badges\.push\(`\$\{r\.lifetimeMilestone\} wins`\)/);
   assert.doesNotMatch(html,/stats\.wins%5/);
   assert.match(html, /id="wProgress"/);
 });
 
 test("settings and player stats use the locked labels and pill actions", () => {
-  assert.match(html, /Shuffle sound<span class="sub2">Plays when a new deal starts\.<\/span>/);
-  assert.match(html, /<h3>Consecutive wins<\/h3>/);
+  assert.equal(Copy.text.shuffleSoundDescription, "Plays when a new deal starts.");
+  assert.equal(Copy.text.consecutiveWins, "Consecutive wins");
   assert.match(html, /Next deal: \$\{dealMixText\(settings\.winnablePercent\)\.label\.toLowerCase\(\)\}\./);
-  assert.match(html, /Try this first\. It opens another move\./);
+  assert.equal(Copy.text.tryThisFirst, "Try this first. It opens another move.");
   assert.match(html, /--settings-pill-radius:999px/);
   assert.match(html, /#sheet \.seg button\{border-radius:var\(--settings-pill-radius\)\}/);
   assert.match(html, /\.record-link\{[^}]*border-radius:var\(--settings-pill-radius\)/);
@@ -430,20 +433,20 @@ test("streak and freeze counts use style-appropriate labels in the header", () =
   assert.ok(header, "found the header");
   // The streak pill carries a plain engraved label in both styles — no flame
   // glyph at all; freezes live only in the menu sheet's record line.
-  assert.match(header, /id="chipStreak"[^]*?<small>Streak<\/small><b id="vStreak">/);
+  assert.match(header, /id="chipStreak"[^]*?<small data-copy="streak"><\/small><b id="vStreak">/);
   assert.doesNotMatch(header, /🔥|❄️/);
   assert.doesNotMatch(header, /chipFreeze|vFreezes/);
   assert.doesNotMatch(html, /brass-flame|classic-stat-icon|vintage-stat-label/);
   assert.match(html, /\$\("vStreak"\)\.textContent = streak/);
   assert.match(html, /Current streak: \$\{streak\}/);
-  assert.match(html, /current streak <b>\$\{displayStreak\(\)\}<\/b>/);
-  assert.match(html, /streak freezes <b>\$\{stats\.freezes\}<\/b>/);
+  assert.match(html, /\$\{Copy\.text\.currentStreak\} <b>\$\{displayStreak\(\)\}<\/b>/);
+  assert.match(html, /\$\{Copy\.text\.streakFreezes\} <b>\$\{stats\.freezes\}<\/b>/);
 });
 
 test("settings record preview combines draw variants", () => {
   assert.match(html, /wins: draw1\.wins \+ draw3\.wins/);
   assert.match(html, /games: draw1\.games \+ draw3\.games/);
-  assert.match(html, /<b>\$\{winRate\(combined\)\}%<\/b> win rate/);
+  assert.match(html, /<b>\$\{winRate\(combined\)\}%<\/b> \$\{Copy\.text\.winRate\.toLowerCase\(\)\}/);
   assert.doesNotMatch(html, /<strong>Draw (?:One|Three)<\/strong>/);
 });
 
@@ -466,9 +469,9 @@ test("win dialog leaves a little more time to watch the cascade", () => {
 });
 
 test("vintage settings copy and stock treatment preserve the intended hierarchy", () => {
-  assert.match(html, /<h3 id="settingsTitle">Game Settings<\/h3>/);
-  assert.match(html, /settings-section-label">Table<\/h4>[^]*settings-section-label">Play<\/h4>[^]*settings-section-label">Deal<\/h4>[^]*settings-section-label">Record<\/h4>/);
-  assert.match(html, /Win daily to grow your streak\.<br>\s*Every 10 wins earns/);
+  assert.match(html, /<h3 id="settingsTitle" data-copy="settingsTitle"><\/h3>/);
+  assert.match(html, /data-copy="tableSection"[^]*data-copy="playSection"[^]*data-copy="dealSection"[^]*data-copy="recordSection"/);
+  assert.match(Copy.text.settingsNote, /Win daily to grow your streak\.<br>Every 10 wins earns/);
   assert.match(html, /\.card\.stock-card \.face\{box-shadow:none\}/);
   assert.match(html, /classList\.add\("stock-card"\)/);
   assert.doesNotMatch(html, /#controls::before\{\s*content:"◆"/);
@@ -510,7 +513,7 @@ test("game figures use a traditional serif with stable, readable numerals", () =
 });
 
 test("vintage table has wool grain and a soft edge falloff, no heavy vignette", () => {
-  const theme = html.match(/body\[data-card-style="crehore"\]\{([^]*?)\n  \}/)?.[1];
+  const theme = html.match(/body\[data-card-style="crehore"\]\{([^]*?)\n {2}\}/)?.[1];
   assert.ok(theme, "vintage theme exists");
   assert.match(theme, /feTurbulence/);            // SVG wool grain
   assert.match(theme, /radial-gradient\(130% 100% at 35% -12%/); // lamplight
@@ -521,7 +524,7 @@ test("vintage table has wool grain and a soft edge falloff, no heavy vignette", 
 });
 
 test("vintage table uses bright burgundy felt with high-contrast parchment rules", () => {
-  const theme = html.match(/body\[data-card-style="crehore"\]\{([^]*?)\n  \}/)?.[1];
+  const theme = html.match(/body\[data-card-style="crehore"\]\{([^]*?)\n {2}\}/)?.[1];
   assert.ok(theme, "vintage theme exists");
   assert.match(theme, /--felt:#75141e; --felt-deep:#4d0810/);
   assert.match(theme, /--vintage-ink:#efd9a4; --vintage-ink-strong:#f6e3b2/);
@@ -530,7 +533,7 @@ test("vintage table uses bright burgundy felt with high-contrast parchment rules
 
 test("classic cards use a compact fan-safe horizontal index", () => {
   const indexRule = html.match(/body\[data-card-style="original"\] \.ix\{([^}]*)\}/)?.[1];
-  const theme = html.match(/body\[data-card-style="original"\]\{([^]*?)\n  \}/)?.[1];
+  const theme = html.match(/body\[data-card-style="original"\]\{([^]*?)\n {2}\}/)?.[1];
   assert.ok(indexRule, "classic index rule exists");
   assert.ok(theme, "classic theme exists");
   assert.match(theme, /--face-card:-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif/);

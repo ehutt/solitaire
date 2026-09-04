@@ -1,16 +1,22 @@
 /* Better Solitaire — service worker
    Offline-first shell caching. Bump CACHE when assets change so clients
    pick up the new version (old caches are purged on activate). */
-const CACHE = "solitaire-v40";
+const CACHE = "solitaire-v41";
 const CARDS = Array.from({ length: 52 }, (_, id) => {
   const suit = Math.floor(id / 13);
   const rank = (id % 13) + 1;
   return `assets/cards/crehore-1820/cards/${suit}-${rank}.webp`;
 });
+const COURTS = ["spades", "hearts", "diamonds", "clubs"].flatMap((suit) =>
+  ["jack", "queen", "king"].map((rank) => `assets/cards/classic/courts/${suit}-${rank}.svg`)
+);
 const SHELL = [
   ".",
   "index.html",
   "deal-engine.js",
+  "game-rules.js",
+  "persistence.js",
+  "copy.js",
   "winnable-deals.js",
   "manifest.json",
   "assets/audio/card-shuffle.mp3",
@@ -23,6 +29,7 @@ const SHELL = [
   "assets/cards/crehore-1820/cards/back.webp",
   "assets/cards/crehore-1820/manifest.json",
   ...CARDS,
+  ...COURTS,
 ];
 
 self.addEventListener("install", (e) => {

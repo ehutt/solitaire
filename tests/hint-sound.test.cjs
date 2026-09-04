@@ -3,6 +3,7 @@ const fs = require("node:fs");
 const path = require("node:path");
 const test = require("node:test");
 const vm = require("node:vm");
+const SolitaireRules = require("../www/game-rules.js");
 
 const html = fs.readFileSync(path.join(__dirname, "..", "www", "index.html"), "utf8");
 const deckBuilder = fs.readFileSync(path.join(__dirname, "..", "assets", "build-crehore-deck.py"), "utf8");
@@ -406,6 +407,7 @@ function ruleContext(P) {
     settings: { draw3: false },
     isRed: (s) => s === 1 || s === 2,
     topOf: (arr) => arr[arr.length - 1],
+    SolitaireRules,
   };
   vm.createContext(context);
   for (const line of ["PROGRESS_DEPTH", "PROGRESS_NODES"]) {
