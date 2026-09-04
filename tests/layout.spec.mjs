@@ -653,12 +653,13 @@ for (const cardStyle of STYLES) {
           const artBox = els.get(court.id).querySelector(".mid.court").getBoundingClientRect();
           return { card, art, index, artBox };
         });
-        expect(measurements.art.left).toBeGreaterThanOrEqual(measurements.card.left);
-        expect(measurements.art.right).toBeLessThanOrEqual(measurements.card.right);
+        // WebKit can place a clipped SVG edge one device subpixel outside the
+        // parent rectangle even though the pixels remain clipped correctly.
+        const edgeRounding = 0.125;
+        expect(measurements.art.left).toBeGreaterThanOrEqual(measurements.card.left - edgeRounding);
+        expect(measurements.art.right).toBeLessThanOrEqual(measurements.card.right + edgeRounding);
         expect(measurements.art.top).toBeGreaterThan(measurements.card.top);
-        // WebKit and Chromium can report the same clipped edge a few
-        // thousandths of a pixel apart after device-scale rounding.
-        expect(measurements.art.bottom).toBeLessThanOrEqual(measurements.card.bottom + 0.01);
+        expect(measurements.art.bottom).toBeLessThanOrEqual(measurements.card.bottom + edgeRounding);
         expect(measurements.art.height).toBeGreaterThan(measurements.card.height * 0.65);
         expect(measurements.artBox.top - measurements.index.bottom)
           .toBeGreaterThanOrEqual(measurements.card.width * 0.04);
