@@ -145,6 +145,26 @@
     return cardStyle === "original" ? "Classic cards" : "Vintage cards";
   }
 
+  function winCount(count) {
+    return `${count} wins`;
+  }
+
+  function freezeProtection(count) {
+    return `${count} freeze${count === 1 ? "" : "s"} protected your streak.`;
+  }
+
+  function freezeProgress(count, winsRemaining) {
+    return `${count} freeze${count === 1 ? "" : "s"} • next in ${winsRemaining} win${winsRemaining === 1 ? "" : "s"}.`;
+  }
+
+  function freezeCap() {
+    return "3 freezes.";
+  }
+
+  function nextDealToast(label) {
+    return `Next deal: ${label.toLowerCase()}.`;
+  }
+
   return Object.freeze({
     text,
     winPhrases,
@@ -153,5 +173,10 @@
     stuckTitle,
     winTitle,
     cardStyleToast,
+    winCount,
+    freezeProtection,
+    freezeProgress,
+    freezeCap,
+    nextDealToast,
   });
 });

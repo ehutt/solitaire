@@ -18,6 +18,16 @@ test("dynamic deal, stuck, and win copy is generated from the catalog", () => {
   assert.equal(Copy.winTitle({ dailyMilestone: 10, firstWinToday: false }), "10th win of the day!");
 });
 
+test("win progress and next-deal messages are generated from the catalog", () => {
+  assert.equal(Copy.winCount(100), "100 wins");
+  assert.equal(Copy.freezeProtection(1), "1 freeze protected your streak.");
+  assert.equal(Copy.freezeProtection(2), "2 freezes protected your streak.");
+  assert.equal(Copy.freezeProgress(1, 1), "1 freeze • next in 1 win.");
+  assert.equal(Copy.freezeProgress(2, 4), "2 freezes • next in 4 wins.");
+  assert.equal(Copy.freezeCap(), "3 freezes.");
+  assert.equal(Copy.nextDealToast("75% winnable"), "Next deal: 75% winnable.");
+});
+
 test("copy hydration supports text, prefix, and trusted line-break content", () => {
   const writes = [];
   const element = (key, mode) => ({

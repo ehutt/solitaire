@@ -21,7 +21,7 @@ test("a saved deal resumes with the same cards and counters", async ({ page }) =
 });
 
 test("invalid stored records retain an exact recovery copy", async ({ page }) => {
-  const invalidStats = '{"wins":27,"records":';
+  const invalidStats = '{"wins":"27","streak":4,"longest":8}';
   const invalidGame = '{"deal":[0,1,2]';
   await page.addInitScript(
     ({ invalidStats, invalidGame }) => {

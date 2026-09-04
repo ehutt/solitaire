@@ -410,10 +410,12 @@ test("win dialog uses the locked rotating copy and compact freeze status", () =>
   assert.equal(Copy.winPhrases.length,13);
   assert.doesNotMatch(Copy.winPhrases.join("\n"),/Order from chaos|The table is yours/);
   assert.equal(Copy.text.streakSecured, "Your streak is secured.");
-  assert.match(html, /• next in/);
-  assert.match(html, /"3 freezes\."/);
+  assert.equal(Copy.freezeProgress(1, 4), "1 freeze • next in 4 wins.");
+  assert.equal(Copy.freezeCap(), "3 freezes.");
+  assert.match(html, /Copy\.freezeProgress\(stats\.freezes,remaining\)/);
+  assert.match(html, /Copy\.freezeCap\(\)/);
   assert.match(html, /label:Copy\.text\.admireCascade/);
-  assert.match(html, /if\(r\.lifetimeMilestone\) badges\.push\(`\$\{r\.lifetimeMilestone\} wins`\)/);
+  assert.match(html, /if\(r\.lifetimeMilestone\) badges\.push\(Copy\.winCount\(r\.lifetimeMilestone\)\)/);
   assert.doesNotMatch(html,/stats\.wins%5/);
   assert.match(html, /id="wProgress"/);
 });
@@ -421,7 +423,7 @@ test("win dialog uses the locked rotating copy and compact freeze status", () =>
 test("settings and player stats use the locked labels and pill actions", () => {
   assert.equal(Copy.text.shuffleSoundDescription, "Plays when a new deal starts.");
   assert.equal(Copy.text.consecutiveWins, "Consecutive wins");
-  assert.match(html, /Next deal: \$\{dealMixText\(settings\.winnablePercent\)\.label\.toLowerCase\(\)\}\./);
+  assert.match(html, /Copy\.nextDealToast\(dealMixText\(settings\.winnablePercent\)\.label\)/);
   assert.equal(Copy.text.tryThisFirst, "Try this first. It opens another move.");
   assert.match(html, /--settings-pill-radius:999px/);
   assert.match(html, /#sheet \.seg button\{border-radius:var\(--settings-pill-radius\)\}/);

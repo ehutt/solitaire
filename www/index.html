@@ -3079,18 +3079,18 @@ function showWin(r){
   if(r.bestT && stats.wins>1) badges.push(Copy.text.bestTime);
   if(r.bestM && stats.wins>1) badges.push(Copy.text.fewestMoves);
   if(r.earned) badges.push(Copy.text.freezeEarned);
-  if(r.lifetimeMilestone) badges.push(`${r.lifetimeMilestone} wins`);
+  if(r.lifetimeMilestone) badges.push(Copy.winCount(r.lifetimeMilestone));
   $("wBadges").innerHTML = badges.map(b=>`<span class="badge">${b}</span>`).join("");
   let note = "";
-  if(r.usedFreeze) note = `${r.usedFreeze} freeze${r.usedFreeze>1?"s":""} protected your streak.`;
+  if(r.usedFreeze) note = Copy.freezeProtection(r.usedFreeze);
   $("wNote").textContent = note;
   if(r.usedFreeze){
     $("wProgress").textContent = "";
   }else if(stats.freezes<3){
     const remaining = 10-stats.winsToward;
-    $("wProgress").textContent = `${stats.freezes} freeze${stats.freezes===1?"":"s"} • next in ${remaining} win${remaining===1?"":"s"}.`;
+    $("wProgress").textContent = Copy.freezeProgress(stats.freezes,remaining);
   }else if(stats.freezes>=3){
-    $("wProgress").textContent = "3 freezes.";
+    $("wProgress").textContent = Copy.freezeCap();
   }else $("wProgress").textContent = "";
   if(r.firstWinToday) $("winSub").textContent = Copy.text.streakSecured;
   else $("winSub").textContent = WIN_PHRASES[Math.floor(Math.random()*WIN_PHRASES.length)];
@@ -3440,7 +3440,7 @@ $("dealMix").oninput = event=>{
 $("dealMix").onchange = ()=>{
   saveJSON(KEY_SET,settings);
   updateDealMix();
-  toast(`Next deal: ${dealMixText(settings.winnablePercent).label.toLowerCase()}.`);
+  toast(Copy.nextDealToast(dealMixText(settings.winnablePercent).label));
 };
 $("segAutoOn").onclick = ()=>{ settings.autoComplete=true; saveJSON(KEY_SET,settings); refreshSheet(); updateButtons(); maybeAutoFinish() };
 $("segAutoOff").onclick = ()=>{

@@ -94,17 +94,161 @@
     return value !== null && typeof value === "object" && !Array.isArray(value);
   }
 
+  function hasOwn(value, key) {
+    return Object.prototype.hasOwnProperty.call(value, key);
+  }
+
+  function isOptional(value, validate) {
+    return value === undefined || validate(value);
+  }
+
+  function isNullableNonNegativeInteger(value) {
+    return value === null || isNonNegativeInteger(value);
+  }
+
   function isSettings(value) {
-    return isRecord(value);
+    if (!isRecord(value)) return false;
+    const knownKeys = [
+      "schemaVersion",
+      "draw3",
+      "winnablePercent",
+      "dealMode",
+      "autoComplete",
+      "sound",
+      "haptics",
+      "cardStyle",
+    ];
+    if (!knownKeys.some((key) => hasOwn(value, key))) return false;
+    if (value.schemaVersion !== undefined && value.schemaVersion !== SCHEMA_VERSION) return false;
+    if (
+      ![value.draw3, value.autoComplete, value.sound, value.haptics].every((field) =>
+        isOptional(field, (item) => typeof item === "boolean")
+      )
+    ) {
+      return false;
+    }
+    if (
+      !isOptional(
+        value.winnablePercent,
+        (percent) => Number.isFinite(percent) && percent >= 0 && percent <= 100
+      )
+    ) {
+      return false;
+    }
+    if (!isOptional(value.dealMode, (mode) => mode === "random" || mode === "winnable")) {
+      return false;
+    }
+    return isOptional(value.cardStyle, (style) => style === "original" || style === "crehore");
+  }
+
+  function normalizeSettings(value) {
+    const dealMixSteps = [0, 25, 50, 75, 100];
+    const requestedPercent = Number.isFinite(value.winnablePercent)
+      ? value.winnablePercent
+      : value.dealMode === "random"
+        ? 0
+        : 100;
+    const winnablePercent = dealMixSteps.reduce(
+      (nearest, step) =>
+        Math.abs(step - requestedPercent) < Math.abs(nearest - requestedPercent) ? step : nearest,
+      0
+    );
+    const settings = {
+      ...value,
+      schemaVersion: SCHEMA_VERSION,
+      draw3: value.draw3 ?? false,
+      winnablePercent,
+      autoComplete: value.autoComplete ?? true,
+      sound: value.sound ?? true,
+      haptics: value.haptics ?? true,
+      cardStyle: value.cardStyle ?? "crehore",
+    };
+    delete settings.dealMode;
+    return settings;
+  }
+
+  function isVariantRecord(value) {
+    if (!isRecord(value)) return false;
+    const counters = [
+      "games",
+      "wins",
+      "winningMovesTotal",
+      "winningTimeTotal",
+      "winsWithoutUndo",
+      "winsWithoutHints",
+      "currentWinStreak",
+      "longestWinStreak",
+    ];
+    const ranges = ["shortestMoves", "longestMoves", "shortestTime", "longestTime"];
+    return (
+      counters.every((key) => isOptional(value[key], isNonNegativeInteger)) &&
+      ranges.every((key) => isOptional(value[key], isNullableNonNegativeInteger))
+    );
+  }
+
+  function emptyVariantRecord() {
+    return {
+      games: 0,
+      wins: 0,
+      winningMovesTotal: 0,
+      winningTimeTotal: 0,
+      shortestMoves: null,
+      longestMoves: null,
+      shortestTime: null,
+      longestTime: null,
+      winsWithoutUndo: 0,
+      winsWithoutHints: 0,
+      currentWinStreak: 0,
+      longestWinStreak: 0,
+    };
+  }
+
+  function normalizeVariantRecord(value) {
+    return { ...emptyVariantRecord(), ...(value || {}) };
   }
 
   function isStats(value) {
     if (!isRecord(value)) return false;
+    if (value.schemaVersion !== undefined && value.schemaVersion !== SCHEMA_VERSION) return false;
+    if (![value.wins, value.streak, value.longest].every(isNonNegativeInteger)) return false;
+    if (
+      ![value.freezes, value.winsToward, value.dailyWins].every((field) =>
+        isOptional(field, isNonNegativeInteger)
+      )
+    ) {
+      return false;
+    }
+    if (
+      ![value.lastWin, value.bestTime, value.bestMoves, value.dailyWinDay].every((field) =>
+        isOptional(field, isNullableNonNegativeInteger)
+      )
+    ) {
+      return false;
+    }
     if (value.records === undefined) return true;
     if (!isRecord(value.records)) return false;
     return [value.records.draw1, value.records.draw3].every(
-      (record) => record === undefined || isRecord(record)
+      (record) => record === undefined || isVariantRecord(record)
     );
+  }
+
+  function normalizeStats(value) {
+    return {
+      ...value,
+      schemaVersion: SCHEMA_VERSION,
+      lastWin: value.lastWin ?? null,
+      freezes: value.freezes ?? 0,
+      winsToward: value.winsToward ?? 0,
+      bestTime: value.bestTime ?? null,
+      bestMoves: value.bestMoves ?? null,
+      dailyWinDay: value.dailyWinDay ?? null,
+      dailyWins: value.dailyWins ?? 0,
+      records: {
+        ...(value.records || {}),
+        draw1: normalizeVariantRecord(value.records?.draw1),
+        draw3: normalizeVariantRecord(value.records?.draw3),
+      },
+    };
   }
 
   function isValidSavedGame(game) {
@@ -164,19 +308,23 @@
   }
 
   function loadSettings(storage, logger = console) {
-    return loadJSON(storage, KEYS.settings, { draw3: false }, isSettings, logger);
+    const settings = loadJSON(storage, KEYS.settings, { draw3: false }, isSettings, logger);
+    return normalizeSettings(settings);
   }
 
   function loadStats(storage, logger = console) {
-    return loadJSON(storage, KEYS.stats, null, isStats, logger);
+    const stats = loadJSON(storage, KEYS.stats, null, isStats, logger);
+    return stats ? normalizeStats(stats) : null;
   }
 
   function saveSettings(storage, settings, logger = console) {
-    return saveJSON(storage, KEYS.settings, settings, logger, isSettings);
+    const versioned = { ...settings, schemaVersion: SCHEMA_VERSION };
+    return saveJSON(storage, KEYS.settings, versioned, logger, isSettings);
   }
 
   function saveStats(storage, stats, logger = console) {
-    return saveJSON(storage, KEYS.stats, stats, logger, isStats);
+    const versioned = { ...stats, schemaVersion: SCHEMA_VERSION };
+    return saveJSON(storage, KEYS.stats, versioned, logger, isStats);
   }
 
   function saveGame(storage, game, logger = console) {
