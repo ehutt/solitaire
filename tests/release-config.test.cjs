@@ -42,6 +42,13 @@ test("fork pull requests run without trusted credentials or write permission", (
   assert.equal(read(".github/CODEOWNERS").trim(), "* @ehutt");
 });
 
+test("CI actions use the supported Node.js runtime", () => {
+  const workflows = `${read(".github/workflows/ci.yml")}\n${read(".github/workflows/ios.yml")}`;
+  assert.match(workflows, /actions\/checkout@v6/);
+  assert.match(workflows, /actions\/setup-node@v6/);
+  assert.doesNotMatch(workflows, /actions\/(?:checkout|setup-node)@v4/);
+});
+
 test("computed-style baselines run on the platform they were recorded on", () => {
   const workflow = read(".github/workflows/ci.yml");
   assert.match(workflow, /name: Browser \(\$\{\{ matrix\.project \}\}\)[^]*?runs-on: macos-latest/);
