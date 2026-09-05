@@ -16,10 +16,8 @@ concurrency:
 jobs:
   quality:
     name: Web quality
-    # The committed baseline includes system-font geometry. Run it on the same
-    # platform used to record the baseline and ship the app.
-    runs-on: macos-latest
-    timeout-minutes: 20
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
@@ -41,17 +39,43 @@ jobs:
       - name: Lint and test logic
         run: npm run check
 
+  browser:
+    name: Browser (${{ matrix.project }})
+    needs: quality
+    # The committed baseline includes system-font geometry, and WebKit should
+    # match the platform used by the iOS app.
+    runs-on: macos-latest
+    timeout-minutes: 25
+    strategy:
+      fail-fast: false
+      matrix:
+        project: [chromium, webkit]
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .node-version
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
       - name: Install browsers
-        run: npx playwright install chromium webkit
+        run: npx playwright install ${{ matrix.project }}
 
       - name: Test browser behavior and layout
-        run: npm run test:layout
+        run: npm run test:layout:${{ matrix.project }}
 
       - name: Upload failure traces
         if: failure()
         uses: actions/upload-artifact@v4
         with:
-          name: playwright-results
+          name: playwright-results-${{ matrix.project }}
           path: test-results/
           if-no-files-found: ignore
           retention-days: 7

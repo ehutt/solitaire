@@ -44,7 +44,8 @@ test("fork pull requests run without trusted credentials or write permission", (
 
 test("computed-style baselines run on the platform they were recorded on", () => {
   const workflow = read(".github/workflows/ci.yml");
-  assert.match(workflow, /name: Web quality[^]*?runs-on: macos-latest/);
-  assert.match(workflow, /run: npm run test:layout/);
+  assert.match(workflow, /name: Browser \(\$\{\{ matrix\.project \}\}\)[^]*?runs-on: macos-latest/);
+  assert.match(workflow, /project: \[chromium, webkit\]/);
+  assert.match(workflow, /run: npm run test:layout:\$\{\{ matrix\.project \}\}/);
   assert.doesNotMatch(workflow, /playwright install --with-deps/);
 });

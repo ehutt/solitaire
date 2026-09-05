@@ -32,7 +32,14 @@ generated Capacitor project, and builds the iOS app with the submission SDK.
 
 ## Main branch protection
 
-After the new workflows have run once on GitHub, protect `main` with pull requests required, required `Web quality` and `iOS simulator build` checks, conversation resolution, and no force pushes or deletions. Keep administrator bypass available for repository recovery. Because this is currently a one-person project, do not require an approval on the owner's own pull requests; GitHub does not allow self-approval, and outside contributors cannot merge without repository write access. `.github/CODEOWNERS` still routes every outside change to `@ehutt`. If another maintainer gains write access, add one required code-owner approval and dismiss stale approvals.
+After the new workflows have run once on GitHub, protect `main` with pull requests required. Require
+`Web quality`, `Browser (chromium)`, `Browser (webkit)`, and `iOS simulator build`. Also require
+conversation resolution and disable force pushes and deletions. Keep administrator bypass available
+for repository recovery. Because this is currently a one-person project, do not require approval on
+the owner's own pull requests. GitHub does not allow self-approval, and outside contributors cannot
+merge without repository write access. `.github/CODEOWNERS` still routes every outside change to
+`@ehutt`. If another maintainer gains write access, require one code-owner approval and dismiss stale
+approvals.
 
 The workflows use read-only repository permissions, do not receive secrets on fork pull requests, and avoid `pull_request_target`. This lets outside contributors propose changes without giving their code access to trusted credentials.
 
