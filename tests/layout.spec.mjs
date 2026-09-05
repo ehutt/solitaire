@@ -191,7 +191,8 @@ for (const cardStyle of STYLES) {
 // are one nowrap row, and if the fit overshoots they collide.
 for (const cardStyle of STYLES) {
   for (const viewport of VIEWPORTS) {
-    test(`${cardStyle} — ${viewport.name} — the HUD fills its row without colliding`, async ({ page }) => {
+    const testSharedHudRow = viewport.width > viewport.height ? test : test.skip;
+    testSharedHudRow(`${cardStyle} — ${viewport.name} — the HUD fills its row without colliding`, async ({ page }) => {
       await load(page, cardStyle, viewport);
       const hud = await page.evaluate(() => {
         const el = document.querySelector("#hud"), cs = getComputedStyle(el);
@@ -208,8 +209,6 @@ for (const cardStyle of STYLES) {
       // Every screen is fitted — measuring each against its own row is what
       // keeps a tablet ahead of a phone without hand-tuned sizes per breakpoint.
       expect(hud.fit).not.toBe("");
-      test.skip(viewport.width <= viewport.height,
-        "portrait stacks the marquee and the chips, so there is no shared row");
       expect(hud.clearance).toBeGreaterThanOrEqual(hud.gap - 0.5);
       // A shared row that uses half its width is type left on the table.
       expect(hud.used).toBeGreaterThan(0.8);
@@ -220,6 +219,9 @@ for (const cardStyle of STYLES) {
 for (const cardStyle of STYLES) {
   for (const viewport of VIEWPORTS) {
     test.describe(`${cardStyle} — ${viewport.name}`, () => {
+      const testLandscape = viewport.width > viewport.height ? test : test.skip;
+      const testClassic = cardStyle === "original" ? test : test.skip;
+
       test.beforeEach(async ({ page }) => { await load(page, cardStyle, viewport) });
 
       test("recovery dialogs fit the viewport and omit the win scorecard", async ({ page }) => {
@@ -532,9 +534,8 @@ for (const cardStyle of STYLES) {
       // `gap` away it reads as an eighth and ninth column, which is what
       // happened on tablets: the nine columns filled the width exactly, so the
       // outward nudge had no slack to use and silently collapsed to zero.
-      test("side rails stand clear of the tableau in landscape", async ({ page }) => {
+      testLandscape("side rails stand clear of the tableau in landscape", async ({ page }) => {
         const lanes = await page.evaluate(() => {
-          if (!G.landscape) return null;
           const { cw, gap, slotPos, xs } = G;
           return {
             gap,
@@ -542,8 +543,6 @@ for (const cardStyle of STYLES) {
             right: slotPos.stock[0] - (xs(6) + cw)        // tableau -> stock
           };
         });
-        test.skip(lanes === null, "portrait arrangement has no side rails");
-
         // Comfortably wider than the gap between two tableau columns, and
         // symmetric. 2.5x is below what every device produces (phones ~2.9x,
         // tablets ~3.7x) so this pins the intent without pinning the ratio.
@@ -552,19 +551,16 @@ for (const cardStyle of STYLES) {
         expect(Math.abs(lanes.left - lanes.right)).toBeLessThan(1);
       });
 
-      test("landscape tableau columns keep only a minimal gap", async ({ page }) => {
+      testLandscape("landscape tableau columns keep only a minimal gap", async ({ page }) => {
         const spacing = await page.evaluate(() => {
-          if (!G.landscape) return null;
           return { card: G.cw, gap: G.xs(1) - G.xs(0) - G.cw, baseGap: G.gap };
         });
-        test.skip(spacing === null, "portrait uses the conventional seven-column layout");
 
         expect(spacing.gap).toBeLessThanOrEqual(spacing.baseGap + 0.5);
         expect(spacing.gap).toBeLessThanOrEqual(spacing.card * 0.1);
       });
 
-      test("Classic indices stay legible and horizontal in compact card fans", async ({ page }) => {
-        test.skip(cardStyle !== "original", "Vintage card faces are artwork");
+      testClassic("Classic indices stay legible and horizontal in compact card fans", async ({ page }) => {
         const fit = await page.evaluate(() => {
           settings.draw3 = true;
           for (const el of els.values()) {
@@ -643,8 +639,7 @@ for (const cardStyle of STYLES) {
         expect(fit.tableauQueenClearance, JSON.stringify(fit)).toBeGreaterThanOrEqual(fit.tableauClearanceFloor);
       });
 
-      test("Classic court artwork stays inside the card face", async ({ page }) => {
-        test.skip(cardStyle !== "original", "Vintage card faces are artwork");
+      testClassic("Classic court artwork stays inside the card face", async ({ page }) => {
         const measurements = await page.evaluate(() => {
           const court = cards.find(card => card.rank === 12);
           const card = els.get(court.id).getBoundingClientRect();
