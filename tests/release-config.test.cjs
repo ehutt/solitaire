@@ -41,3 +41,10 @@ test("fork pull requests run without trusted credentials or write permission", (
   assert.doesNotMatch(workflows, /pull_request_target|\bsecrets\./);
   assert.equal(read(".github/CODEOWNERS").trim(), "* @ehutt");
 });
+
+test("computed-style baselines run on the platform they were recorded on", () => {
+  const workflow = read(".github/workflows/ci.yml");
+  assert.match(workflow, /name: Web quality[^]*?runs-on: macos-latest/);
+  assert.match(workflow, /run: npm run test:layout/);
+  assert.doesNotMatch(workflow, /playwright install --with-deps/);
+});

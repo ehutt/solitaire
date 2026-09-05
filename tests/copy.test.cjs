@@ -1,12 +1,22 @@
 const assert = require("node:assert/strict");
+const fs = require("node:fs");
 const test = require("node:test");
 
 const Copy = require("../www/copy.js");
 
+test("every declarative copy key exists in the catalog", () => {
+  const html = fs.readFileSync(new URL("../www/index.html", `file://${__filename}`), "utf8");
+  const keys = [...html.matchAll(/data-copy(?:-prefix|-html)?="([^"]+)"/g)].map(
+    (match) => match[1]
+  );
+
+  for (const key of keys) assert.ok(Object.hasOwn(Copy.text, key), `missing copy key: ${key}`);
+});
+
 test("editable interface copy lives in one catalog", () => {
   assert.equal(Copy.text.brandTitle, "Better Solitaire");
   assert.equal(Copy.text.settingsTitle, "Game Settings");
-  assert.match(Copy.text.settingsNote, /no ads, ever/);
+  assert.match(Copy.text.settingsNote, /^Better Solitaire\. No ads, ever\./);
 });
 
 test("dynamic deal, stuck, and win copy is generated from the catalog", () => {

@@ -55,7 +55,7 @@
     yourRecord: "Your record",
     detailedStats: "View detailed stats",
     settingsNote:
-      "Better Solitaire — no ads, ever. ♣︎<br>Win daily to grow your streak.<br>Every 10 wins earns a streak freeze (maximum 3).<br>Your first undo each game is free; after that, undos count as a move.",
+      "Better Solitaire. No ads, ever. ♣︎<br>Win daily to grow your streak.<br>Every 10 wins earns a streak freeze (maximum 3).<br>Your first undo each game is free; after that, undos count as a move.",
     statsTitle: "Player Stats",
     drawOne: "Draw One",
     drawThree: "Draw Three",
@@ -132,17 +132,17 @@
   }
 
   function stuckTitle(onlyShuffles) {
-    return onlyShuffles ? "No useful moves left" : "No moves left";
+    return onlyShuffles ? text.noUsefulMoves : text.noMoves;
   }
 
   function winTitle(result) {
     if (result.dailyMilestone) return `${result.dailyMilestone}th win of the day!`;
     if (result.firstWinToday) return "First win of the day!";
-    return "You won!";
+    return text.winFallbackTitle;
   }
 
   function cardStyleToast(cardStyle) {
-    return cardStyle === "original" ? "Classic cards" : "Vintage cards";
+    return `${cardStyle === "original" ? text.classic : text.vintage} cards`;
   }
 
   function winCount(count) {

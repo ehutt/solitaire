@@ -13,8 +13,8 @@ Checked against Apple's published requirements on September 3, 2026.
 ## Complete in App Store Connect before submission
 
 - Enroll in the Apple Developer Program and create the app record for bundle ID `dev.ehutt.solitaire`.
-- Publish [PRIVACY.md](PRIVACY.md) at a stable public URL and provide that privacy policy URL even though the app does not collect data. Answer the App Privacy questionnaire as “No, we do not collect data from this app” unless app behavior changes.
-- Complete the current age-rating questionnaire. Solitaire should be straightforward, but the answers—not an assumed rating—are required.
+- Publish [PRIVACY.md](PRIVACY.md) at a stable public URL. Add that link to the app and its App Store Connect privacy field. Answer the App Privacy questionnaire as "No, we do not collect data from this app" unless app behavior changes.
+- Complete the current age-rating questionnaire. Submit the questionnaire answers instead of assuming a rating.
 - Add the app name, subtitle, description, category, support URL, copyright, keywords, and review contact information.
 - Upload current iPhone and iPad screenshots, then test the exact candidate build through TestFlight before review.
 - Confirm distribution rights and retain source/license records for the vintage scans, classic court artwork, fonts, audio, and icons.

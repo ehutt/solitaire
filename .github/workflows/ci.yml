@@ -16,7 +16,9 @@ concurrency:
 jobs:
   quality:
     name: Web quality
-    runs-on: ubuntu-latest
+    # The committed baseline includes system-font geometry. Run it on the same
+    # platform used to record the baseline and ship the app.
+    runs-on: macos-latest
     timeout-minutes: 20
     steps:
       - name: Check out repository
@@ -40,7 +42,7 @@ jobs:
         run: npm run check
 
       - name: Install browsers
-        run: npx playwright install --with-deps chromium webkit
+        run: npx playwright install chromium webkit
 
       - name: Test browser behavior and layout
         run: npm run test:layout

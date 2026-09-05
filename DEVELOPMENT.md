@@ -10,9 +10,15 @@ npm run test:layout
 npm run sync
 ```
 
-`npm run check` runs ESLint, the formatting check, and the fast logic/configuration tests. `npm run test:layout` runs behavior and rendered-geometry tests in Chromium and WebKit across both card styles, iPhone and iPad viewports, and portrait and landscape. WebKit is included because it is the browser engine inside the iOS app.
+`npm run check` runs ESLint, the formatting check, and the fast logic/configuration tests.
+`npm run test:layout` runs behavior and rendered-geometry tests in Chromium and WebKit across
+both card styles, iPhone and iPad viewports, and both orientations. WebKit is the browser engine
+inside the iOS app. Run the exact computed-style baseline on macOS because it records system-font
+geometry.
 
-The pre-commit hook formats and lints staged files, then runs the fast test suite. CI repeats those checks from a clean install, verifies production dependencies, runs the browser matrix, confirms the generated Capacitor project is current, and builds the iOS app with the submission SDK.
+The pre-commit hook formats and lints staged files, then runs the fast test suite. CI repeats those
+checks from a clean install, audits production dependencies, runs the browser matrix, checks the
+generated Capacitor project, and builds the iOS app with the submission SDK.
 
 ## Safe refactors
 

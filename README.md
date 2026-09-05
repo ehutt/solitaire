@@ -40,9 +40,8 @@ layouts, Palatino/Iowan serif indices — in the playing-card tradition.
 
 ## Architecture
 
-The shipped game has zero third-party runtime dependencies. Stable seams keep
-copy, card-placement rules, persistence, and generated deals separate from the
-DOM orchestration.
+The shipped game has no third-party runtime dependencies. Copy, card-placement
+rules, persistence, and generated deals live outside the DOM code.
 
 ```
   www/            # Capacitor webDir — the shipped web app

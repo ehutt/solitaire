@@ -27,6 +27,14 @@
     }
   }
 
+  function preserveBackupCopy(storage, key, raw, logger) {
+    try {
+      storage.setItem(`${key}.backup`, raw);
+    } catch (error) {
+      report(logger, "warn", `Could not preserve backup data for ${key}`, error);
+    }
+  }
+
   function loadJSON(storage, key, fallback = null, validate = () => true, logger = console) {
     let raw;
     try {
@@ -56,7 +64,7 @@
       if (previous !== null && previous !== serialized) {
         try {
           JSON.parse(previous);
-          storage.setItem(`${key}.backup`, previous);
+          preserveBackupCopy(storage, key, previous, logger);
         } catch {
           preserveRecoveryCopy(storage, key, previous, logger);
         }

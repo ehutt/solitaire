@@ -81,6 +81,28 @@ test("a valid previous value is backed up before a write", () => {
   assert.deepEqual(JSON.parse(storage.getItem(Persistence.KEYS.stats)), { wins: 9 });
 });
 
+test("a backup failure does not block the current write", () => {
+  const key = Persistence.KEYS.stats;
+  let current = JSON.stringify({ wins: 8 });
+  const warnings = [];
+  const storage = {
+    getItem(candidate) {
+      return candidate === key ? current : null;
+    },
+    setItem(candidate, value) {
+      if (candidate === `${key}.backup`) throw new Error("quota exceeded");
+      if (candidate === key) current = String(value);
+    },
+  };
+
+  assert.equal(
+    Persistence.saveJSON(storage, key, { wins: 9 }, { warn: (...args) => warnings.push(args) }),
+    true
+  );
+  assert.deepEqual(JSON.parse(current), { wins: 9 });
+  assert.equal(warnings.length, 1);
+});
+
 test("write failures are reported without crashing gameplay", () => {
   const errors = [];
   const storage = {
