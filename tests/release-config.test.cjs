@@ -57,5 +57,5 @@ test("computed-style baselines run on the platform they were recorded on", () =>
   assert.match(workflow, /shard: \[1, 2\]/);
   assert.match(workflow, /run: npm run test:layout:\$\{\{ matrix\.project \}\} -- --shard=\$\{\{ matrix\.shard \}\}\/2/);
   assert.doesNotMatch(workflow, /playwright install --with-deps/);
-  assert.match(playwright, /workers: process\.env\.CI \? 2 : undefined/);
+  assert.match(playwright, /workers: process\.env\.CI \? 1 : undefined/);
 });
