@@ -4,7 +4,7 @@ export default defineConfig({
   testDir: "tests",
   testMatch: /(layout|computed-styles|controls|persistence)\.spec\.mjs/,
   fullyParallel: true,
-  workers: process.env.CI ? 4 : undefined,
+  workers: process.env.CI ? 2 : undefined,
   reporter: [["list"]],
   use: {
     baseURL: "http://127.0.0.1:4173",

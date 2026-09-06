@@ -24,11 +24,18 @@ export function caseKey(cardStyle, viewport) {
   return `${cardStyle} — ${viewport.name}`;
 }
 
+async function settle(page) {
+  await page.evaluate(async () => {
+    await document.fonts.ready;
+    await new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+  });
+}
+
 /** Load the app with a fixed record so the stats screens render stable content. */
 export async function loadCase(page, cardStyle, viewport) {
   await page.setViewportSize({ width: viewport.width, height: viewport.height });
   if (!seeded.has(page)) { await page.addInitScript(SEED_SCRIPT); seeded.add(page) }
-  await page.goto("/index.html");
+  await page.goto("/index.html", { waitUntil: "domcontentloaded" });
   await page.evaluate((style) => {
     // Write the app's own defaults alongside the card style. Setting only
     // `cardStyle` left every other option undefined, which is a state no real
@@ -40,7 +47,7 @@ export async function loadCase(page, cardStyle, viewport) {
     localStorage.removeItem("patience.v1.stats");
     localStorage.removeItem("patience.v1.game");
   }, cardStyle);
-  await page.reload();
+  await page.reload({ waitUntil: "domcontentloaded" });
   await page.waitForFunction(() => document.body.dataset.cardStyle);
   // Media queries must be evaluating against the intended viewport before
   // anything is measured; a resize that lands late silently changes breakpoints.
@@ -48,39 +55,38 @@ export async function loadCase(page, cardStyle, viewport) {
     ([w, h]) => innerWidth === w && innerHeight === h,
     [viewport.width, viewport.height]
   );
-  await page.waitForTimeout(900);
   // Freeze animations so a mid-transition frame can never enter the snapshot.
   await page.addStyleTag({ content: "*,*::before,*::after{animation:none !important;transition:none !important}" });
-  await page.waitForTimeout(100);
+  await settle(page);
 }
 
 const SHOW = {
   board: async () => {},
   deal: async (page) => {
     await page.click("#btnDeal");
-    await page.waitForTimeout(150);
+    await settle(page);
   },
   sheet: async (page) => {
     await page.click("#btnMenu");
-    await page.waitForTimeout(150);
+    await settle(page);
   },
   stats: async (page) => {
     await page.click("#btnMenu");
-    await page.waitForTimeout(100);
+    await settle(page);
     await page.click("#btnStats");
-    await page.waitForTimeout(200);
+    await settle(page);
   },
   panel: async (page) => {
     await page.evaluate(() => document.getElementById("overlay").classList.add("show"));
-    await page.waitForTimeout(150);
+    await settle(page);
   },
   "panel-stuck": async (page) => {
     await page.evaluate(() => showStuck());
-    await page.waitForTimeout(150);
+    await settle(page);
   },
   "panel-draw": async (page) => {
     await page.evaluate(() => showDrawOneOffer());
-    await page.waitForTimeout(150);
+    await settle(page);
   }
 };
 

@@ -17,17 +17,24 @@ const VIEWPORTS = [
   { name: "iPad landscape",   width: 1180, height: 820 }
 ];
 
+async function settle(page) {
+  await page.evaluate(async () => {
+    await document.fonts.ready;
+    await new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+  });
+}
+
 /** Load the app with a card style seeded into localStorage before first paint. */
 async function load(page, cardStyle, viewport) {
   await page.setViewportSize({ width: viewport.width, height: viewport.height });
   await page.addInitScript((style) => {
     localStorage.setItem("patience.v1.settings", JSON.stringify({ cardStyle: style }));
   }, cardStyle);
-  await page.goto("/index.html");
+  await page.goto("/index.html", { waitUntil: "domcontentloaded" });
   await page.waitForFunction(() => document.body.dataset.cardStyle);
   expect(await page.evaluate(() => document.body.dataset.cardStyle)).toBe(cardStyle);
-  // let the deal animation settle
-  await page.waitForTimeout(900);
+  await page.addStyleTag({ content: "*,*::before,*::after{animation:none !important;transition:none !important}" });
+  await settle(page);
 }
 
 /**
@@ -63,14 +70,14 @@ async function capBand(page, selector) {
 /** Open the settings sheet and wait for its slide-in transition to finish. */
 async function openSheet(page) {
   await page.click("#btnMenu");
-  await page.waitForTimeout(500);
+  await settle(page);
 }
 
 /** Open the stats page (reachable only through the sheet) and let it settle. */
 async function openStats(page) {
   await openSheet(page);
   await page.click("#btnStats");
-  await page.waitForTimeout(500);
+  await settle(page);
 }
 
 async function centreY(page, selector) {

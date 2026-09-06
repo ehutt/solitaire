@@ -52,9 +52,10 @@ test("CI actions use the supported Node.js runtime", () => {
 test("computed-style baselines run on the platform they were recorded on", () => {
   const workflow = read(".github/workflows/ci.yml");
   const playwright = read("playwright.config.mjs");
-  assert.match(workflow, /name: Browser \(\$\{\{ matrix\.project \}\}\)[^]*?runs-on: macos-latest/);
+  assert.match(workflow, /name: Browser \(\$\{\{ matrix\.project \}\}, shard \$\{\{ matrix\.shard \}\}\/2\)[^]*?runs-on: macos-latest/);
   assert.match(workflow, /project: \[chromium, webkit\]/);
-  assert.match(workflow, /run: npm run test:layout:\$\{\{ matrix\.project \}\}/);
+  assert.match(workflow, /shard: \[1, 2\]/);
+  assert.match(workflow, /run: npm run test:layout:\$\{\{ matrix\.project \}\} -- --shard=\$\{\{ matrix\.shard \}\}\/2/);
   assert.doesNotMatch(workflow, /playwright install --with-deps/);
-  assert.match(playwright, /workers: process\.env\.CI \? 4 : undefined/);
+  assert.match(playwright, /workers: process\.env\.CI \? 2 : undefined/);
 });
