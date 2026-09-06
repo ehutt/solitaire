@@ -5,6 +5,7 @@ const fs = require("node:fs");
 const path = require("node:path");
 const test = require("node:test");
 const vm = require("node:vm");
+const Copy = require("../www/copy.js");
 const {
   replay,
   seededShuffle,
@@ -27,16 +28,13 @@ vm.runInContext(
 );
 
 test("settings expose a stepped Random to Winnable deal mix", () => {
-  assert.match(
-    html,
-    /<span>Random<\/span><span>Winnable<\/span>/,
-  );
+  assert.match(html, /data-copy="random"[^]*data-copy="winnable"/);
   assert.match(
     html,
     /id="dealMix" type="range" min="0" max="100" step="25" value="100"/,
   );
   assert.match(html, /\.deal-mix\{width:min\(220px,46vw\)\}/);
-  assert.match(html, /summary:`\$\{percent\}% verified, \$\{100-percent\}% random`/);
+  assert.deepEqual(Copy.dealMixText(50), { label: "50% winnable", summary: "50% verified, 50% random" });
   assert.match(
     html,
     /settings\.winnablePercent = settings\.dealMode === "random" \? 0 : 100/,
@@ -50,25 +48,21 @@ test("settings expose a stepped Random to Winnable deal mix", () => {
 });
 
 test("table settings keep their labels and preferred order", () => {
-  const cardStyle = html.indexOf("<div>Card style");
-  const draw = html.indexOf("<div>Draw<span");
-  const autoMove = html.indexOf("<div>Auto-move");
-  const sound = html.indexOf("<div>Shuffle sound<span");
-  const haptics = html.indexOf("<div>Haptics");
-  const dealMix = html.indexOf("<div>Deal mix");
-  const restart = html.indexOf("<div>Restart this deal");
-  const record = html.indexOf("<div>Your record");
+  const cardStyle = html.indexOf('data-copy-prefix="cardStyle"');
+  const draw = html.indexOf('data-copy-prefix="draw"');
+  const autoMove = html.indexOf('data-copy-prefix="autoMove"');
+  const sound = html.indexOf('data-copy-prefix="shuffleSound"');
+  const haptics = html.indexOf('data-copy-prefix="haptics"');
+  const dealMix = html.indexOf('data-copy-prefix="dealMix"');
+  const restart = html.indexOf('data-copy-prefix="restartThisDeal"');
+  const record = html.indexOf('data-copy="yourRecord"');
 
   assert.deepEqual(
     [cardStyle, draw, autoMove, sound, haptics, dealMix, restart, record],
     [cardStyle, draw, autoMove, sound, haptics, dealMix, restart, record]
       .toSorted((left, right) => left - right),
   );
-  assert.match(
-    html,
-    /Card style<span class="sub2">Change the theme without restarting your deal<\/span>/,
-  );
-  assert.doesNotMatch(html, /Change the deck without restarting your deal/);
+  assert.equal(Copy.text.cardStyleDescription, "Change the theme without restarting your deal");
 });
 
 test("deal mix probability includes exact Random and Winnable endpoints", () => {

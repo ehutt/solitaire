@@ -25,6 +25,7 @@ const vm = require("node:vm");
 const {
   applyAction, createState, isWon, seededShuffle, solve,
 } = require("./klondike-core.cjs");
+const SolitaireRules = require("../www/game-rules.js");
 
 const ROOT = path.resolve(__dirname, "..");
 const html = fs.readFileSync(path.join(ROOT, "www", "index.html"), "utf8");
@@ -59,6 +60,7 @@ function hintSandbox(draw3) {
     settings: { draw3 },
     isRed: (suit) => suit === 1 || suit === 2,
     topOf: (arr) => arr[arr.length - 1],
+    SolitaireRules,
   };
   vm.createContext(sandbox);
   for (const name of HINT_CONSTS) {

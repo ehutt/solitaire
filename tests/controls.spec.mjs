@@ -26,7 +26,6 @@ async function sampleWhile(page, run, ms) {
       undo: undo.disabled
     });
     tick();
-    // eslint-disable-next-line no-new-func
     new Function(source)();
     await new Promise((done) => {
       const id = setInterval(tick, 40);

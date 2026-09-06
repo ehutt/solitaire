@@ -9,6 +9,11 @@ import { test, expect } from "@playwright/test";
 import { readFileSync } from "node:fs";
 import { caseKey, snapshotCase, SNAPSHOT_STYLES, SNAPSHOT_VIEWPORTS } from "./snapshot-driver.mjs";
 
+// Snapshot collection reloads every UI surface and is CPU-heavy on GitHub's
+// macOS runners. Keep these exact comparisons serial while the rest of the
+// browser suite uses parallel workers.
+test.describe.configure({ mode: "serial", timeout: 90_000 });
+
 const baseline = JSON.parse(readFileSync(new URL("./computed-styles.baseline.json", import.meta.url), "utf8"));
 
 for (const cardStyle of SNAPSHOT_STYLES) {
