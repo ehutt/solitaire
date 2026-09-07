@@ -35,8 +35,8 @@ for a native iOS build.
 
 A midnight card room: deep pine felt `#0F2E25`, warm paper cards `#FAF5E9`,
 carmine `#BF3B33` and ink `#26282E` suits, brass `#D9A648` reserved for the
-streak flame, hints, and celebration. Card faces are typographic — real pip
-layouts, Palatino/Iowan serif indices — in the playing-card tradition.
+streak flame, hints, and celebration. Card faces are typographic, with real pip
+layouts and large New York serif indices in the playing-card tradition.
 
 ## Architecture
 

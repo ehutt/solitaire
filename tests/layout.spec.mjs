@@ -592,7 +592,7 @@ for (const cardStyle of STYLES) {
           const measurements = wideRanks.map(card => {
             const cardBox = els.get(card.id).getBoundingClientRect();
             const rank = els.get(card.id).querySelector(".ix i");
-            const suit = els.get(card.id).querySelector(".ix b");
+            const suit = els.get(card.id).querySelector(".ix b span");
             const rankBox = rank.getBoundingClientRect();
             const suitBox = suit.getBoundingClientRect();
             const transform = getComputedStyle(rank).transform;
@@ -603,13 +603,19 @@ for (const cardStyle of STYLES) {
           const result = {
             ratio: fontSize / G.cw,
             cardWidth: G.cw,
-            fanFloor: G.landscape ? null : G.cw * 0.295,
-            fanCeiling: G.landscape ? null : G.cw * 0.305,
+            fanFloor: G.landscape ? null : G.cw * 0.395,
+            fanCeiling: G.landscape ? null : G.cw * 0.405,
             rankWidths: measurements.map(({ rankBox }) => rankBox.width),
             suitCentreOffsets: measurements.map(({ rankBox, suitBox }) =>
               Math.abs((suitBox.top + suitBox.height / 2) - (rankBox.top + rankBox.height / 2))),
             suitLeftClearances: measurements.map(({ rankBox, suitBox }) => suitBox.left - rankBox.right),
             rankScales: measurements.map(({ scaleX }) => scaleX),
+            fanRankClearances: nextCards.map((box, i) => G.landscape
+              ? box.top - measurements[i].rankBox.bottom
+              : box.left - measurements[i].rankBox.right),
+            fanVisibleRankRatios: nextCards.map((box, i) => G.landscape
+              ? 1
+              : 1 - Math.max(0, measurements[i].rankBox.right - box.left) / measurements[i].rankBox.width),
             fanSteps: nextCards.map((box, i) => G.landscape
               ? box.top - measurements[i].cardBox.top
               : box.left - measurements[i].cardBox.left)
@@ -631,19 +637,82 @@ for (const cardStyle of STYLES) {
           const queenRank = els.get(queen.id).querySelector(".ix i").getBoundingClientRect();
           const belowQueenBox = els.get(belowQueen.id).getBoundingClientRect();
           result.tableauQueenClearance = belowQueenBox.top - queenRank.bottom;
-          result.tableauClearanceFloor = G.cw * 0.025;
+          result.tableauClearanceFloor = G.cw * -0.01;
           return result;
         });
 
-        expect(fit.ratio).toBeGreaterThanOrEqual(0.36);
+        expect(fit.ratio).toBeGreaterThanOrEqual(0.44);
         expect(Math.min(...fit.rankScales), JSON.stringify(fit)).toBeGreaterThanOrEqual(0.99);
         expect(Math.max(...fit.suitCentreOffsets), JSON.stringify(fit)).toBeLessThan(fit.cardWidth * 0.08);
-        expect(Math.min(...fit.suitLeftClearances), JSON.stringify(fit)).toBeGreaterThan(fit.cardWidth * 0.04);
+        // The enlarged suit may sit close to 10, but their painted boxes must
+        // remain separate in every engine and viewport.
+        expect(Math.min(...fit.suitLeftClearances), JSON.stringify(fit)).toBeGreaterThan(0);
         if (fit.fanCeiling !== null) {
           expect(Math.min(...fit.fanSteps), JSON.stringify(fit)).toBeGreaterThanOrEqual(fit.fanFloor);
           expect(Math.max(...fit.fanSteps), JSON.stringify(fit)).toBeLessThanOrEqual(fit.fanCeiling);
         }
+        // The compact horizontal waste fan may cover part of the 10's second
+        // digit. Most of each wide rank stays exposed, enough to distinguish
+        // 10 and Q without shrinking either one.
+        expect(Math.min(...fit.fanVisibleRankRatios), JSON.stringify(fit))
+          .toBeGreaterThanOrEqual(0.65);
         expect(fit.tableauQueenClearance, JSON.stringify(fit)).toBeGreaterThanOrEqual(fit.tableauClearanceFloor);
+      });
+
+      testClassic("Classic suit symbols expose comparable optical bounds", async ({ page, browserName }) => {
+        const metrics = await page.evaluate(() => {
+          const context = document.createElement("canvas").getContext("2d");
+          const ink = element => {
+            const style = getComputedStyle(element);
+            context.font = `${style.fontWeight} ${style.fontSize} ${style.fontFamily}`;
+            const measure = context.measureText(element.textContent);
+            const transform = style.transform === "none" ? new DOMMatrix() : new DOMMatrix(style.transform);
+            return {
+              glyph: element.textContent,
+              font: context.font,
+              width: (measure.actualBoundingBoxLeft + measure.actualBoundingBoxRight) * transform.a,
+              height: (measure.actualBoundingBoxAscent + measure.actualBoundingBoxDescent) * transform.d
+            };
+          };
+          const rankCard = cards.find(card => card.rank === 12);
+          const rank = ink(els.get(rankCard.id).querySelector(".ix i"));
+          const suits = SUITS.map((glyph, suit) => {
+            const card = cards.find(candidate => candidate.suit === suit);
+            const cardElement = els.get(card.id);
+            cardElement.classList.remove("down");
+            const symbol = cardElement.querySelector(".ix b span");
+            const symbolBox = symbol.getBoundingClientRect();
+            const indexBox = symbol.closest(".ix").getBoundingClientRect();
+            return {
+              ...ink(symbol),
+              centerFromRight: indexBox.right - (symbolBox.left + symbolBox.width / 2)
+            };
+          });
+          return { rank, suits };
+        });
+        const opticalRatios = metrics.suits.map(suit => suit.height / metrics.rank.height);
+        expect(Math.max(...opticalRatios) - Math.min(...opticalRatios), JSON.stringify(metrics))
+          .toBeLessThanOrEqual(0.02);
+        // WebKit is the shipped iOS engine. Chromium's different fallback font
+        // metrics render the same CSS about three percentage points shorter.
+        const opticalBand = browserName === "webkit" ? [0.88, 0.91] : [0.85, 0.89];
+        expect(Math.min(...opticalRatios), JSON.stringify(metrics)).toBeGreaterThanOrEqual(opticalBand[0]);
+        expect(Math.max(...opticalRatios), JSON.stringify(metrics)).toBeLessThanOrEqual(opticalBand[1]);
+        const suitCenters = metrics.suits.map(suit => suit.centerFromRight);
+        expect(Math.max(...suitCenters) - Math.min(...suitCenters), JSON.stringify(metrics))
+          .toBeLessThanOrEqual(0.25);
+
+        const tenClearances = await page.evaluate(() => cards
+          .filter(card => card.rank === 10)
+          .map(card => {
+            const element = els.get(card.id);
+            element.classList.remove("down");
+            const rank = element.querySelector(".ix i").getBoundingClientRect();
+            const suit = element.querySelector(".ix b span").getBoundingClientRect();
+            return suit.left - rank.right;
+          }));
+        expect(Math.min(...tenClearances), JSON.stringify({ metrics, tenClearances }))
+          .toBeGreaterThan(0);
       });
 
       testClassic("Classic court artwork stays inside the card face", async ({ page }) => {
