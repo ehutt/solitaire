@@ -17,7 +17,7 @@
   /* Bundled display faces (SIL OFL — see assets/fonts/LICENSES.txt).
      IM Fell English carries the Vintage table. Classic uses Limelight for the
      marquee and Marcellus for its interface; card ranks use iOS's native
-     Charter face, and game figures use Georgia. Suits and courts fall back to
+     New York face, and game figures use Georgia. Suits and courts fall back to
      --serif. */
   @font-face{
     font-family:"IM Fell English";
@@ -40,7 +40,7 @@
        felt      #0F2E25   felt-deep #08201A   line #2C5A49
        paper     #FAF5E9   shade     #EDE4D0
        carmine   #BF3B33   ink       #26282E   brass #D9A648
-     Type: Classic runs on Limelight (marquee), Charter (cards), and Marcellus;
+     Type: Classic runs on Limelight (marquee), New York (cards), and Marcellus;
            Vintage on IM Fell English; both use Georgia for game figures
      ============================================================ */
   :root{
@@ -228,13 +228,16 @@
        the control buttons share that brightness, nothing else does. */
     --chip-ink:#f0e8d2;
     --control-ink:#f0e8d2;
-    /* Limelight is reserved for the marquee. The card index uses the native
-       UI face at a heavy weight: its open counters and broad figures hold up
-       better than a decorative serif in the narrow tableau reveal. */
+    /* Limelight is reserved for the marquee. New York gives the card index a
+       traditional serif without sacrificing the open counters and sturdy
+       figures a narrow tableau reveal needs. ui-serif keeps the role intact
+       on platforms that do not ship Apple's face. */
     --face-display:"Limelight",var(--serif);
-    --face-card:-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;
+    --face-card:"New York",ui-serif,"Iowan Old Style",Georgia,serif;
     --card-rank-stroke:0;
-    --type-card-index-suit:1.15em;
+    /* Keep a compact layout box beside 10; the glyph itself is optically scaled
+       below because the fallback suit face draws smaller than New York. */
+    --type-card-index-suit:1.12em;
     --face-label:"Marcellus",var(--serif);
     --face-title:"Marcellus",var(--serif);
     --face-sheet:"Marcellus",var(--serif);
@@ -355,9 +358,19 @@
      theme choices, so they live here as one declaration each rather than inside
      the Classic block — nothing overrides them and nothing needs to. */
   .ix,.mid,.bk{display:none}
-  .ix{font-size:2.75em}
+  .ix{font-size:3.2em}
   .ix i,.ix.court i{font-size:1em}
-  .ix b{font-size:var(--type-card-index-suit)}
+  .ix.ten i{letter-spacing:-.04em}
+  .ix b{
+    font-size:var(--type-card-index-suit);
+    inline-size:.72em;text-align:center;
+  }
+  .ix b span{
+    display:inline-block;
+    transform:scale(var(--suit-optical-scale,1.18));transform-origin:center;
+  }
+  /* Apple Symbols draws spades and clubs a shade shorter than the round suits. */
+  .ix b[data-suit="0"],.ix b[data-suit="3"]{--suit-optical-scale:1.2}
   .mid{font-size:5.45em;transform:translateY(.15em)}
   .mid.ace{font-size:6.05em}
   .court-art{
@@ -368,8 +381,8 @@
     background:linear-gradient(160deg,var(--paper) 65%,var(--paper-shade));
     border:1px solid rgba(70,60,40,.25);
     color:var(--ink);
-    /* The rank inherits the heavy native face. Suit glyphs fall back to the
-       serif so their familiar silhouettes stay intact. */
+    /* The rank inherits New York. Suit glyphs fall back to the established
+       serif stack so their familiar silhouettes stay intact. */
     font-family:var(--face-card);
   }
   body[data-card-style="original"] .card.red .front{color:var(--red)}
@@ -399,8 +412,8 @@
     display:flex;align-items:center;justify-content:space-between;
     line-height:.82;font-weight:700;letter-spacing:-.025em;
   }
-  /* The rank is intentionally plain. Weight and width do the work, with no
-     outline or display-face ornament competing with the card art. */
+  /* Let New York keep its natural proportions. The two-character 10 keeps the
+     same height as every other rank and uses only a small tracking correction. */
   body[data-card-style="original"] .ix i{
     display:inline-block;font-style:normal;font-weight:700;
     -webkit-text-stroke:var(--card-rank-stroke) currentColor;
@@ -408,7 +421,7 @@
   body[data-card-style="original"] .ix b{
     flex:none;font-family:var(--serif);font-weight:700;line-height:.82;
   }
-  body[data-card-style="original"] .ix.tl{top:calc(var(--cw)*.025)}
+  body[data-card-style="original"] .ix.tl{top:calc(var(--cw)*.02)}
   /* Centre pips sit a touch low, matching the index suit. Court artwork starts
      below the index band and uses the full card width; each SVG owns the same
      approved side-edge crop, so every rank and suit keeps one scale. */
@@ -1919,7 +1932,7 @@ function originalFaceHTML(card){
   /* Paint the index after the centre art instead of promoting it with z-index.
      WKWebView can composite a promoted child through its parent's hidden back
      face, leaking a face-down card's value onto the card back. */
-  return `${center}<div class="ix tl${indexClass}"><i>${rank}</i><b>${suit}</b></div>`;
+  return `${center}<div class="ix tl${indexClass}"><i>${rank}</i><b data-suit="${card.suit}"><span>${suit}</span></b></div>`;
 }
 
 /* ================= layout ================= */
@@ -1994,7 +2007,7 @@ function computeGeometry(){
     // Drawn cards open directly above the right-side stock. Classic spends the
     // available height on a larger three-card fan so each enlarged rank remains
     // exposed; Vintage keeps its compact artwork fan.
-    const wantedWasteReveal = settings.cardStyle === "original" ? .28 : .12;
+    const wantedWasteReveal = settings.cardStyle === "original" ? .30 : .12;
     const availableWasteReveal = (stockY-topY-gap-ch)/(2*ch);
     wasteFanReveal = Math.max(.12,Math.min(wantedWasteReveal,availableWasteReveal));
     const wasteY = Math.max(topY,stockY-ch*(1+2*wasteFanReveal)-gap);
@@ -2114,7 +2127,10 @@ function layout(){
   // landscape right rail. Older draw-three cards keep a readable fan.
   const fanN = settings.draw3 ? 3 : 1;
   const n = P.waste.length;
-  const fanOff = cw*.3;
+  // New York stays at its natural width and the 10 keeps the same height as the
+  // other ranks. A compact portrait fan leaves enough of its second digit to
+  // read while avoiding the loose spacing of a second row across the table.
+  const fanOff = cw*.40;
   const [wasteX,wasteY] = slotPos.waste;
   P.waste.forEach((card,i)=>{
     const fromTop = n-1-i;                       // 0 = top card
@@ -3152,7 +3168,10 @@ function paintCanvasBackground(ctx, style, w, h){
   ctx.fillStyle = grad; ctx.fillRect(0,0,w,h);
 }
 function cascadeCanvasFont(style){
-  return `${style.fontStyle} ${style.fontWeight} ${style.fontSize} ${style.fontFamily}`;
+  const transform = style.transform === "none" ? new DOMMatrix() : new DOMMatrix(style.transform);
+  const scale = Math.hypot(transform.a,transform.b) || 1;
+  const size = parseFloat(style.fontSize)*scale;
+  return `${style.fontStyle} ${style.fontWeight} ${size}px ${style.fontFamily}`;
 }
 // Text is placed by the box its DOM twin occupies: with textBaseline "middle"
 // the em box centres on the line box exactly as the browser lays it out.
@@ -3203,7 +3222,7 @@ function cascadeFaceRaster(card, cw, ch, dpr){
   } else if(mid){
     paintCanvasText(ctx, mid, origin, mid.textContent, "center");
   }
-  const rank = front.querySelector(".ix i"), suit = front.querySelector(".ix b");
+  const rank = front.querySelector(".ix i"), suit = front.querySelector(".ix b span");
   if(rank) paintCanvasText(ctx, rank, origin, rank.textContent, "left");
   if(suit) paintCanvasText(ctx, suit, origin, suit.textContent, "right");
   const border = parseFloat(style.borderTopWidth);

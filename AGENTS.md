@@ -27,13 +27,19 @@ stray selector to out-rank.
   component-specific ones (`--chip-ink`, `--control-ink`, `--seg-on-*`,
   `--confirm-*`, `--focus-ring`). Colour literals live only in these
   declarations.
-- Classic runs on exactly two bundled faces: Limelight for the marquee title
-  (`--face-display`) and Marcellus for every other role — cards, rail, chips,
-  sheet, stats, dialogs. Adding a third is a design decision, not a detail: a
-  face is only legible enough for the card index if it holds up through the
-  ~24px sliver a fanned tableau pile reveals, which is where Limelight failed
-  and Cinzel's small-caps lowercase ruled it out of popup text. Neither bundled
-  face carries pip or chess glyphs, so suits and courts fall back to `--serif`.
+- Classic uses Limelight for the marquee title (`--face-display`), Marcellus for
+  the interface, and Apple's New York for card ranks. New York is intentionally
+  left at its natural width; the portrait waste fan reveals 46% of each card,
+  while the two-character 10 gets a smaller optical size. Non-Apple platforms
+  fall back through `ui-serif`, Iowan Old Style, and Georgia. The bundled faces
+  do not carry pip or chess glyphs, so suits and courts fall back to `--serif`.
+- The portrait draw-three waste fan advances by 40% of a card width. The 10
+  keeps the same height as every other New York rank; the next card may overlap
+  part of its second digit, but it must remain recognizable.
+- Classic suit glyphs target 90% of the New York rank's apparent height on
+  WebKit. Their 1.12em layout box is optically scaled 1.18, or 1.2 for the
+  slightly shorter spade and club. Every suit is centered in the same .72em
+  cell, so the wider club does not shift left and no suit collides with 10.
 - Why: theme selectors like `body[data-card-style="…"] #sheet h3` (1,1,2)
   silently out-rank a responsive block's `#sheet h3` (1,0,1). That shipped —
   the iPad rendered phone-sized sheet titles for months and nothing flagged it.
