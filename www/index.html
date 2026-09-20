@@ -3045,7 +3045,7 @@ function recordWin(){
   const bestM = stats.bestMoves==null || moves<stats.bestMoves;
   if(bestT) stats.bestTime = elapsed;
   if(bestM) stats.bestMoves = moves;
-  const dailyMilestone = stats.dailyWins%10===0 ? stats.dailyWins : 0;
+  const dailyMilestone = stats.dailyWins%5===0 ? stats.dailyWins : 0;
   const lifetimeMilestone = stats.wins%100===0 ? stats.wins : 0;
   saveJSON(KEY_STATS, stats);
   return {

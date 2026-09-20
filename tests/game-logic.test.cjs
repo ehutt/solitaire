@@ -135,13 +135,13 @@ test("daily and lifetime win milestones stay independent", () => {
     dailyWinDay: today,
   };
 
-  global.stats = { ...base, wins:40, dailyWins:9 };
+  global.stats = { ...base, wins:40, dailyWins:4 };
   const daily = recordWin();
-  assert.equal(daily.dailyMilestone,10);
+  assert.equal(daily.dailyMilestone,5);
   assert.equal(daily.lifetimeMilestone,0);
-  assert.equal(winTitleFor(daily),"10th win of the day!");
+  assert.equal(winTitleFor(daily),"5th win of the day!");
 
-  global.stats = { ...base, wins:99, dailyWins:4 };
+  global.stats = { ...base, wins:99, dailyWins:5 };
   const lifetime = recordWin();
   assert.equal(lifetime.dailyMilestone,0);
   assert.equal(lifetime.lifetimeMilestone,100);
@@ -152,6 +152,12 @@ test("daily and lifetime win milestones stay independent", () => {
   assert.equal(both.dailyMilestone,10);
   assert.equal(both.lifetimeMilestone,200);
   assert.equal(winTitleFor(both),"10th win of the day!");
+
+  global.stats = { ...base, wins:240, dailyWins:14 };
+  const fifteenth = recordWin();
+  assert.equal(fifteenth.dailyMilestone,15);
+  assert.equal(fifteenth.lifetimeMilestone,0);
+  assert.equal(winTitleFor(fifteenth),"15th win of the day!");
   assert.equal(
     winTitleFor({ dailyMilestone:0, firstWinToday:true }),
     "First win of the day!"
