@@ -28,6 +28,23 @@ test("the app privacy declaration is bundled and declares no collection", () => 
   assert.match(privacy, /<key>NSPrivacyAccessedAPITypes<\/key>\s*<array>\s*<\/array>/);
 });
 
+test("the native wrapper adopts the required UIKit scene lifecycle", () => {
+  const project = read("ios/App/App.xcodeproj/project.pbxproj");
+  const info = read("ios/App/App/Info.plist");
+  const sceneDelegate = read("ios/App/App/SceneDelegate.swift");
+
+  assert.match(project, /SceneDelegate\.swift in Sources/);
+  assert.match(info, /<key>UIApplicationSceneManifest<\/key>/);
+  assert.match(info, /<key>UIApplicationSupportsMultipleScenes<\/key>\s*<false\/>/);
+  assert.match(info, /<key>UISceneDelegateClassName<\/key>\s*<string>\$\(PRODUCT_MODULE_NAME\)\.SceneDelegate<\/string>/);
+  assert.match(sceneDelegate, /class SceneDelegate: UIResponder, UIWindowSceneDelegate/);
+  assert.match(sceneDelegate, /window = UIWindow\(windowScene: windowScene\)/);
+  assert.match(sceneDelegate, /window\?\.rootViewController = CAPBridgeViewController\(\)/);
+  assert.match(sceneDelegate, /window\?\.makeKeyAndVisible\(\)/);
+  assert.match(sceneDelegate, /SceneDelegateProxy\.shared\.scene/);
+  assert.match(read("ios/App/App/AppDelegate.swift"), /configurationForConnecting connectingSceneSession/);
+});
+
 test("CI enforces Apple's current submission SDK and a reproducible Capacitor sync", () => {
   const workflow = read(".github/workflows/ios.yml");
   assert.match(workflow, /show-sdk-version[^]*-ge 26/);
